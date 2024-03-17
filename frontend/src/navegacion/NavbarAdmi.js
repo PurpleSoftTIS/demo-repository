@@ -1,33 +1,43 @@
 import React from 'react'
+import './NavbarAdmi.css';
+import {Link} from 'react-router-dom'
 
-export const navbar = () => {
+const navbarAdmi = () => {
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <div className='barraNavAdmi' >
+      <nav className="navbar navbar-expand-lg">
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">Navbar</a>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" 
-                  aria-expanded="false" aria-label="Toggle navigation">
+          <Link to='/'> 
+            <img src='./logoTIS.png' width='50px'/>
+          </Link>
+          <div className='nombre_empresa'>
+            <p id='nomb'>Purple-soft</p>
+          </div>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"                   aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
+            <ul className="navbar-nav mx-auto">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">Home</a>
+                <Link className="nav-link" to='/'>Inicio</Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">Features</a>
+                <Link className="nav-link" to='/'>Solicitudes</Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">Pricing</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link disabled" aria-disabled="true">Disabled</a>
-              </li>
+                <Link className="nav-link" to='/'>Registrar</Link>
+              </li>              
             </ul>
           </div>
+
+          <button className="usuario">
+                <img src='./logoTIS.png' width='50px'/>
+                <p id="admi" >Administrador</p>
+          </button>
         </div>
       </nav>
     </div>
   )
 }
+
+export default navbarAdmi

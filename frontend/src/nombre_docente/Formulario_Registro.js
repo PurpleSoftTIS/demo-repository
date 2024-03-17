@@ -1,7 +1,9 @@
 import React from 'react'
 
-export const formulario_Registro = () => {
+const formulario_Registro = () => {
   return (
-    <div>formulario_Registro</div>
+    <div>Registro datos de los </div>
   )
 }
+
+export default formulario_Registro
