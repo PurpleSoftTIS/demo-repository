@@ -1,8 +1,15 @@
-import React from 'react'
-import './App.css';
+import React from 'react';
 
+
+import './App.css';
+import { Navbar } from './Components/Navbar'; 
+import  {Dias_Horas} from './Components/Dias_Horas';
 export default function App(){
   return(
-    <h1>Hola Mundo</h1>
+    <div>
+      <Navbar />
+      <Dias_Horas />
+    </div>
+    
   )
 }
