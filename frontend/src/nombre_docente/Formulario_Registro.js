@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 
 const Formulario_Registro = () => {
   return (
-    <div className='homeAdmi'>
+    <div className='datosDocente'>
     <div className='barraNavAdmi' >
       <nav className="navbar navbar-expand-lg">
         <div className="container-fluid">

@@ -1,9 +1,9 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 
-const HomeUno = () => {
+const RegistrarDiaHora = () => {
   return (
-    <div className='homeAdmi'>
+<div className='diaHora'>
     <div className='barraNavAdmi' >
       <nav className="navbar navbar-expand-lg">
         <div className="container-fluid">
@@ -22,7 +22,7 @@ const HomeUno = () => {
                 <Link className="nav-link" to='/'>Inicio</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to='/solicitud'>Solicitudes</Link>
+                <Link className="nav-link" to='/solicitudes'>Solicitudes</Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to='/registrar'>Registrar</Link>
@@ -37,10 +37,9 @@ const HomeUno = () => {
       </nav>
     </div> 
     
-    <h1>Esta es la pagina principal</h1>
+    <h1>Pagina para registrar dia y hora</h1>
     
-    </div>
-    )
+    </div>  )
 }
 
-export default HomeUno
+export default RegistrarDiaHora
