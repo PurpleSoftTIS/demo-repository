@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 import './App.css';
-import {BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Importa Routes en lugar de Route
 import NavbarAdmi from './navegacion/NavbarAdmi';
-import Registrar_ambientes from './ambientes/Registrar_ambientes';
-import Registrar_dia_hora from './dia_hora/Registrar_dia_hora';
+
+import Formulario_Registro from './nombre_docente/Formulario_Registro';
 import HomeUno from './inicio/HomeUno';
 
 function App() {
@@ -11,16 +11,13 @@ function App() {
     <div className='App'>
       <Router>
         <NavbarAdmi />
-        {/*<Switch>
-          <Route path='/HomeUno' exact component={HomeUno} />
-          <Route path='/ambientes' component={Registrar_ambientes} />
-          <Route path='/dia_hora' component={Registrar_dia_hora} />
-        </Switch>*/}
+        <Routes> {/* Usa Routes como contenedor de nuestrars rutas  */}
+          <Route path='/HomeUno' element={<HomeUno />} /> {/* Usa el prop "element" en lugar de "component" */}
+          <Route path='/nombre_docente' component={<Formulario_Registro />} />
+        </Routes>
       </Router>
     </div>
   );
 }
 
 export default App;
-
-

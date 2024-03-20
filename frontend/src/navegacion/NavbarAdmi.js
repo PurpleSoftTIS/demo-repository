@@ -4,11 +4,12 @@ import {Link} from 'react-router-dom'
 
 const navbarAdmi = () => {
   return (
+    <div className='homeAdmi'>
     <div className='barraNavAdmi' >
       <nav className="navbar navbar-expand-lg">
         <div className="container-fluid">
           <Link to='/'> 
-            <img src='./logoTIS.png' width='50px'/>
+            <img src='./logoTIS.png' width='50px' alt="Logo de la empresa"/>
           </Link>
           <div className='nombre_empresa'>
             <p id='nomb'>Purple-soft</p>
@@ -29,13 +30,16 @@ const navbarAdmi = () => {
               </li>              
             </ul>
           </div>
-
           <button className="usuario">
-                <img src='./logoTIS.png' width='50px'/>
+                <img src='./logoTIS.png' width='50px' alt="Foto de perfil del usuario"/>
                 <p id="admi" >Administrador</p>
           </button>
         </div>
       </nav>
+    </div> 
+    
+    <h1>Esta es la pagina principal</h1>
+    
     </div>
   )
 }
