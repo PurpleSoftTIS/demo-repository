@@ -7,23 +7,17 @@ use Illuminate\Http\Request;
 
 class controladorTIS extends Controller
 {
-    public function obtenerUsuarios(){
-        $usuarios = usuario::all(); 
-        return response()->json($usuarios);    }
-}
-/**namespace App\Http\Controllers;
-
-use App\Models\Usuario; // Asegúrate de importar el modelo de Usuario si estás utilizando Eloquent
-
-class ControladorTIS extends Controller
-{
-    public function obtenerUsuarios()
+    public function index()
     {
-        $usuarios = Usuario::all(); // Esto supone que tienes un modelo Usuario con una tabla correspondiente en tu base de datos
-        return response()->json($usuarios);
+        $usuarios = usuario::all();
+        return view('usuarios.index', ['usuarios' => $usuarios]);
+    }
+
+    public function store(Request $request)
+    {
+        $nuevoUsuario = new usuario;
+        $nuevoUsuario->nombre = $request->input('nombre');
+        $nuevoUsuario->save();
+        return redirect()->route('usuarios.index');
     }
 }
-
- * 
- * 
- */
