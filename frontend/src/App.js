@@ -3,8 +3,8 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomeUno from './inicio/HomeUno';
 import Solicitar from './solicitar/Solicitar';
-import RegistrarAmbiente from './Registrar/ambientes/RegistrarAmbiente';
-import FormularioDocente from './Registrar/docentes/FormularioDocente';
+import Ambientes from './Registrar/ambientes/Ambientes';
+import Docentes from './Registrar/docentes/Docentes';
 import Navbar from './navegador/Navbar';
 import RegistrarMateria from './Registrar/materias/RegistrarMateria';
 
@@ -16,9 +16,9 @@ function App() {
       <Routes>
         <Route path='/' element={<HomeUno />} />
         <Route path='/Solicitar' element={<Solicitar />} />
-        <Route path='/Ambiente' element={<RegistrarAmbiente />} />
-        <Route path='/Materia' element={<RegistrarMateria />} />
-        <Route path='/Docentes' element={<FormularioDocente />} />
+        <Route path='/Registro/Ambientes' element={<Ambientes />} />
+        <Route path='/Registro/Materias' element={<RegistrarMateria />} />
+        <Route path='/Registro/Docentes' element={<Docentes />} />
       </Routes>
     </div>
   </Router>
