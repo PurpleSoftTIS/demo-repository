@@ -1,0 +1,87 @@
+.barraNavAdmi {
+    background-color: #271d3b;
+  }
+.navbar-nav .nav-link {
+   color: white;
+   font-size: 20px;
+   font-family: inherit;
+}
+.imageUno{
+    left: 50px;
+}
+.nav-link:hover {
+    text-decoration: underline; 
+ }
+ .registrar{
+    position: relative;
+    background-color: #271d3b;
+    color: white;
+    font-size: 20px;
+    font-family: inherit;
+    border: 0;
+    top: 7px;
+ }
+ .registrar:hover{
+    text-decoration: underline; 
+
+ }
+.perfil{
+    background-color: #271d3b;
+    border: 0;
+    color: white;
+    font-size: 20px;
+    font-family: inherit;
+    display: block;
+    text-decoration: none;
+
+}
+.foto{
+    border: 0;
+    background-color: #271d3b;
+
+
+}
+.rol{
+    border: 0;
+    background-color: #271d3b;
+    color: white;
+    font-size: 18px;
+    font-family: inherit;
+}
+.logo{
+  margin-left: 40px;
+}
+.nombre_empresa{
+    display: flex;
+    color: white;
+    font-size: 30px;
+    margin-left: 50px;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+.menu {
+    position: absolute;
+    top: 100px;
+    left: 56%;   
+    background: #64469f;
+    border-radius: 10%;
+}
+.opciones{
+    display: block; 
+    color: white;
+    font-size: 18px;
+    font-family: inherit;
+    text-decoration: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 130px;
+}
+
+
+.opciones:hover {
+    text-decoration: underline; 
+ }
+
+  
+  

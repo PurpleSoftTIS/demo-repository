@@ -1,7 +1,9 @@
 import React from 'react'
 
-export const HomeUno = () => {
+const HomeUno = () => {
   return (
-    <div>HomeUno</div>
+    <h1>Esta es la pagina principal</h1>
   )
 }
+
+export default HomeUno
