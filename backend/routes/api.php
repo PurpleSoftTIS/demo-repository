@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\usuario;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/usuarios', function () {
-    $usuarios = usuario::all();
-    return view('usuarios.index', ['usuarios' => $usuarios]);
-});
+Route::get('/usuarios', 'UsuarioController@index')->name('usuarios.index');
+Route::get('/usuarios/{id}', 'UsuarioController@mostrarUsuario')->name('usuarios.mostrar');
