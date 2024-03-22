@@ -1,0 +1,186 @@
+.square {
+    width: 750px; 
+    height: 470px; 
+    border-radius: 10px; 
+    padding: 20px; 
+    background-color: #F2F0F2
+    ;
+    border: 1px solid #ced4da;
+    box-shadow: 0px -10px 20px rgba(0, 0, 0, 0.2), 
+                0px 0px 0px 1px rgba(0, 0, 0, 0); 
+}
+
+
+ .square3 {
+        width: 750px; 
+       height: 100px; 
+       
+       background-color: #F2F0F2
+; 
+        margin-top: -100px; 
+
+     }
+         .custom-btn {
+          width: 600px; /* Ancho del cuadrado */
+          height: 50px;  
+         font-size: 15px; /* Cambia el tamaño de la fuente del botón */
+         padding: 10px 20px; /* Ajusta el relleno del botón */
+         background-color:#2A2040
+        ; /* Cambia el color de fondo del botón a verde */
+         border-color: #2A2040; /* Cambia el color del borde del botón a verde */
+      }
+         h4 {
+     margin-top: 0px; /* Ajusta el margen superior */
+    margin-left: -20px; /* Ajusta el margen izquierdo */
+    margin-bottom: 10px; /* Agrega un margen inferior para separar del contenido */
+    font-size: 18px;
+}
+/* Oculta el checkbox */
+/* Estilo del contenedor de la form-check */
+.form-check {
+    display: flex;
+    align-items: center; /* Alinea verticalmente los elementos */
+    font-size: 15px;
+}
+
+/* Oculta el checkbox */
+.form-check-input {
+    position: absolute;
+    opacity: 0;
+}
+
+/* Estilo del checkbox personalizado */
+.form-check-label {
+    cursor: pointer;
+}
+
+/* Pseudo-elemento para simular el checkbox personalizado */
+.form-check-label::before {
+    content: '';
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+    margin-right: 8px;
+    position: relative; }
+
+.form-check-input:checked + .form-check-label::before {
+    background-color: #2A2040;
+}
+
+.form-check-input:checked + .form-check-label::before {
+    content: '\2713'; /* Unicode para la marca de verificación */
+    color: #fff;
+    font-size: 14px; /* Ajusta el tamaño de la marca de verificación */
+    text-align: center;
+    line-height: 12px;
+    font-weight: bold; /* Hace la marca de verificación más gruesa */
+}
+
+.square2 ul li {
+    margin-bottom: 15px; /* Agrega espacio entre los elementos de la lista */
+}
+
+        .square2 {
+           width: 400px; /* Ancho del cuadrado */
+            height: 150px; /* Altura del cuadrado */
+            background-color: #F2F0F2; /* Color de fondo (blanco) */
+            border: 1px solid #ced4da; /* Borde del cuadrado */
+            box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.9); /* Sombra del cuadrado */
+            padding: 20px; /* Espaciado interno */
+            border-radius: 10px; /* Borde redondeado */
+            margin-top: -20px;
+        
+        
+        }
+        .square4 ul li {
+            margin-bottom: 20px; /* Agrega espacio entre los elementos de la lista */
+        }
+        
+        .square4 {
+            width: 400px; /* Ancho del cuadrado */
+             height: 300px; /* Altura del cuadrado */
+             background-color: #F2F0F2; /* Color de fondo (blanco) */
+             border: 1px solid #ced4da; /* Borde del cuadrado */
+             box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.9); /* Sombra del cuadrado */
+             padding: 20px; /* Espaciado interno */
+             border-radius: 8px; /* Borde redondeado */
+             position: relative; /* O absolute, según sea necesario */
+             top: -50px;
+           
+             
+         }
+        
+         .day-btn {
+            font-size: 15px; /* Cambiar el tamaño del texto */
+            padding: 3px 50px; /* Ajustar el relleno del botón */
+            min-width: 200px; /* Establecer un ancho mínimo */
+            margin-bottom: 20px; /* Agregar margen inferior */
+            border: 1px solid #d1d5db;
+            border-radius: 8px;  
+            color: #1f2937;
+        
+        }
+        .selected {
+    background-color:  #66578b; /* Cambiar el color de fondo cuando esté seleccionado */
+}
+          
+          
+@media only screen and (max-width: 600px) {
+    .square {
+        width: auto; 
+        height: auto; 
+        padding: 10px; 
+        margin-bottom: 20px; 
+    }
+
+    .square2 {
+        width: auto;
+        height: auto; 
+        margin-top: 10px; 
+    }
+    .square4 {
+        width: auto;
+        height: auto; 
+        margin-top: 10px; 
+    }
+
+    .square3 {
+        width: auto; /* Ancho automático */
+        height: auto; /* Altura automática */
+        margin-top: -53px; /* Ajusta el margen superior */
+    }
+
+    .custom-btn {
+        width: 320px; /* Ancho automático */
+        font-size: 12px; /* Reduce el tamaño de la fuente del botón */
+        padding: 8px 15px; /* Ajusta el relleno del botón */
+        margin-top: 10px; /* Ajusta el margen superior */
+    }
+
+    h4 {
+        margin-left: 0; 
+    }
+
+  
+    .form-check {
+        font-size: 12px; 
+    }
+    .square2 ul,
+    .square3 ul {
+        margin: 0; 
+        padding: 0; 
+        list-style: none; 
+    }
+
+    
+    .square2 ul li,
+    .square3 ul li {
+        margin: 0; 
+        padding: 0; 
+    }
+
+
+}
