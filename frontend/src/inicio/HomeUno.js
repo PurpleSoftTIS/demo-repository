@@ -12,18 +12,18 @@ const HomeUno = () => {
       <div className="row">
         <div className="col-md-6">
           <div className="row">
-            <div className="col-6 pr-0"> {/* En dispositivos pequeños, ocupa 6 columnas */}
+            <div className="col-6 pr-0">
               <img src={imagesf} alt="images 1" className="img-fluid imagen img-pequena" />
             </div>
-            <div className="col-6 pl-0"> {/* En dispositivos pequeños, ocupa 6 columnas */}
+            <div className="col-6 pl-0">
               <img src={descarga} alt="Imagen 2" className="img-fluid imagen img-grande" />
             </div>
           </div>
           <div className="row mt-3">
-            <div className="col-6 pr-0"> {/* En dispositivos pequeños, ocupa 6 columnas */}
+            <div className="col-6 pr-0"> 
               <img src={laboratorios_fcyt} alt="Imagen 3" className="img-fluid imagen img-grande" />
             </div>
-            <div className="col-6 pl-0"> {/* En dispositivos pequeños, ocupa 6 columnas */}
+            <div className="col-6 pl-0"> 
               <img src={images} alt="Imagen 4" className="img-fluid imagen img-pequena" />
             </div>
           </div>
