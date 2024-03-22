@@ -1,0 +1,7 @@
+.FONDO{
+    background:
+      conic-gradient(from 150deg at 50% 33%,#0000,#f2f0f2 .5deg 60deg,#0000 60.5deg) 
+        calc(32px/2) calc(32px/1.4),
+      conic-gradient(from -30deg at 50% 66%,#0000,#ffffff .5deg 60deg,#ffffff 60.5deg);
+background-size: 32px calc(32px/1.154);
+}
