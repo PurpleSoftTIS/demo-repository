@@ -1,4 +1,10 @@
 import React from 'react'
+import imagesf from '../assets/imagesf.jpg';
+import descarga from '../assets/descarga.jpg';
+import laboratorios_fcyt from '../assets/laboratorios_fcyt.jpg';
+import images from '../assets/images.png';
+import { Link } from 'react-router-dom';
+import './HomeUno.css';
 
 const HomeUno = () => {
   return (
