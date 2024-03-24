@@ -15,7 +15,7 @@ class Usuario extends Model
         "apellido_materno",
         "correo_electronico"
     ];
-    function docentes(){
+    function docentes() {
         return $this->hasMany(Docente::class);
     }
 }
