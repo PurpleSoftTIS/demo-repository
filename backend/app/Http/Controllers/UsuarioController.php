@@ -9,13 +9,11 @@ class UsuarioController extends Controller
 {
     public function index()
     {
-        $usuarios = Usuario::all();
-        return view('usuarios.index', ['usuarios' => $usuarios]);
+        $consultarUsuarios = Usuario::with('docentes')->get();
+        return[
+            "consulta"=>$consultarUsuarios
+        ];
     }
 
-    public function mostrarUsuarios()
-{
-    $usuarios = Usuario::all();
-    dd($usuarios); // Esto mostrará los datos en la consola
-}
+    
 }
