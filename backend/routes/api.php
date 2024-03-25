@@ -3,7 +3,7 @@
 use App\Models\usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\AmbienteController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,3 +21,4 @@ Route::get('/usuarios', function () {
     $usuarios = usuario::all();
     return view('usuarios.index', ['usuarios' => $usuarios]);
 });
+Route::post('/registrarambiente', [AmbienteController::class, 'guardarAmbiente']);

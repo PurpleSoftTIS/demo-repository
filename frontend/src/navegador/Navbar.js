@@ -74,6 +74,8 @@ const Navbar = () => {
                           <NavLink className="opciones" to='/Registro/Ambientes' activeClassName="active">Ambiente</NavLink>
                           <NavLink className="opciones" to='/Registro/Docentes' activeClassName="active">Docente</NavLink>
                           <NavLink className="opciones" to='/Registro/Materias' activeClassName="active">Materia</NavLink>
+                          <NavLink className="opciones" to='/Registro/DiaHora' activeClassName="active">DiaHora</NavLink>
+
                       </div>
                   )}
               </div>
