@@ -1,0 +1,362 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+body {
+  margin: 0;
+  line-height: normal;
+}
+
+@keyframes scale-up {
+  0% {
+    transform: scale(0.5);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes slide-in-top {
+  0% {
+    transform: translateY(-200px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.checkout,
+.line {
+  position: relative;
+}
+.line {
+  width: 101px;
+  border-top: 1px solid #d1d5db;
+  box-sizing: border-box;
+  height: 1px;
+}
+.checkout {
+  align-self: stretch;
+  line-height: 20px;
+  font-weight: 600;
+}
+.checkout-wrapper {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-size: 20px;
+  color: #1f2937;
+}
+.label-here {
+  align-self: stretch;
+  position: relative;
+  line-height: 12px;
+  font-weight: 500;
+}
+.input,
+.input11 {
+  align-self: stretch;
+  display: flex;
+  justify-content: flex-start;
+}
+.input11 {
+  border: 1px solid #d1d5db;
+  outline: 0;
+  font-weight: 500;
+  font-family: Inter;
+  font-size: 14px;
+  background-color: transparent;
+  border-radius: 4px;
+  flex-direction: row;
+  align-items: center;
+  padding: 12px 16px;
+  color: #1f2937;
+}
+.input11:hover,
+.input12,.input13,.input14,.input16:hover {
+  border: 1px solid #2a2040;
+  box-sizing: border-box;
+}
+.input {
+  border-radius: 6px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+.input12,.input13,.input14,.input16
+.label-here1 {
+  font-weight: 500;
+  align-self: stretch;
+}
+.label-here1 {
+  position: relative;
+  line-height: 12px;
+  display: inline-block;
+  height: 14px;
+  flex-shrink: 0;
+}
+.input12,.input13,.input14,.input16 {
+  border: 1px solid #d1d5db;
+  outline: 0;
+  font-family: Inter;
+  font-size: 14px;
+  background-color: transparent;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 12px 16px;
+  color: #1f2937;
+}
+.input12,.input13,.input14,.input16:focus {
+  border: 1px solid #2a2040;
+  box-sizing: border-box;
+}
+.input2 {
+  flex: 1;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 8px;
+}
+.input-group {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 16px;
+}
+.input-parent,
+.input8 {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.input-parent {
+  gap: 24px;
+}
+.input8 {
+  border-radius: 6px;
+}
+.input15_2 {
+  margin: 0;
+  height: 17px;
+  width: 23px;
+  border-radius: 2px;
+  filter: drop-shadow(0 5px 12px -5px rgba(42, 32, 64, 0.06))
+    drop-shadow(0 5px 30px -5px rgba(160, 160, 160, 0.1));
+}
+.input15_2:hover {
+  mix-blend-mode: normal;
+}
+.cotton-blend {
+  flex: 1;
+  position: relative;
+  line-height: 14px;
+}
+.frame-group,
+.frame-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.frame-group {
+  align-self: stretch;
+  flex-direction: row;
+  gap: 16px;
+}
+.frame-wrapper {
+  flex: 1;
+  flex-direction: column;
+  padding: 16px;
+}
+.input15 {
+  margin: 0;
+  width: 16px;
+  position: relative;
+  border-radius: 2px;
+  box-shadow: 0 5px 12px -5px rgba(174, 174, 174, 0.06),
+    0 5px 30px -5px rgba(160, 160, 160, 0.1);
+  border: 1px solid #d1d5db;
+  box-sizing: border-box;
+  height: 16px;
+}
+.input15:focus {
+  background-color: #2a2040;
+}
+.input15:checked {
+  background-color: #2a2040;
+  border: 1px solid #2a2040;
+  box-sizing: border-box;
+}
+.frame-container,
+.frame-parent {
+  display: flex;
+  justify-content: flex-start;
+}
+.frame-container {
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  color: #4b5563;
+}
+.frame-parent {
+  align-self: stretch;
+  height: 21px;
+  flex-direction: row;
+  align-items: flex-start;
+}
+.billing-info,
+.filter-02,
+.input-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.filter-02 {
+  width: 642px;
+  height: 50px;
+  border-radius: 6px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  align-items: center;
+  padding: 0 8px 25px;
+  box-sizing: border-box;
+  color: #2a2040;
+}
+.billing-info,
+.input-container {
+  align-items: flex-start;
+}
+.input-container {
+  align-self: stretch;
+  gap: 9px;
+}
+.billing-info {
+  width: 706px;
+  border-radius: 12px 12px 0 0;
+  background-color: #fff;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) inset;
+  overflow: hidden;
+  padding: 32px;
+  box-sizing: border-box;
+  gap: 24px;
+  opacity: 1;
+  margin-top: -7px;
+}
+.billing-info.animate {
+  animation: 1s ease 0s 1 normal forwards scale-up;
+}
+.button-cta {
+  position: relative;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+  line-height: 16px;
+  font-weight: 500;
+  font-family: Inter;
+  color: #fff;
+  text-align: center;
+}
+.button {
+  cursor: pointer;
+  border: 0;
+  padding: 16px 20px;
+  background-color: #2a2040;
+  align-self: stretch;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.button:hover {
+  background-color: #66578b;
+}
+.checkout1,
+.contact-6 {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+.checkout1 {
+  width: 706px;
+  border-radius: 0 0 12px 12px;
+  background-color: #f3f4f6;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 32px;
+  opacity: 0;
+  margin-top: -7px;
+}
+.checkout1.animate {
+  animation: 1s ease 0s 1 normal forwards slide-in-top;
+}
+.contact-6 {
+  width: 100%;
+  position: relative;
+  background-color: #fff;
+  height: 863px;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 80px;
+  text-align: left;
+  font-size: 14px;
+  color: #4b5563;
+  font-family: Inter;
+}
+@media screen and (max-width: 960px) {
+  .input2 {
+    flex: unset;
+    align-self: stretch;
+  }
+  .input-group {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-end;
+    justify-content: center;
+  }
+}
+@media screen and (max-width: 450px) {
+  .filter-02,
+  .frame-container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .filter-02 {
+    align-self: stretch;
+    width: auto;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .input-container {
+    flex-direction: column;
+  }
+  .billing-info {
+    display: flex;
+    height: auto;
+    gap: 10px 24px;
+    align-items: center;
+    justify-content: center;
+    padding-left: 20px;
+    padding-top: 32px;
+    padding-right: 20px;
+    box-sizing: border-box;
+  }
+  .billing-info,
+  .checkout1 {
+    align-self: stretch;
+    width: auto;
+  }
+  .contact-6 {
+    padding-left: 40px;
+    padding-right: 40px;
+    box-sizing: border-box;
+  }
+}

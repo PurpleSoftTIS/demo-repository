@@ -1,0 +1,96 @@
+.navbar {
+    background-color: #0d0d46;
+  }
+.navbar-nav .nav-link,
+.navbar-nav .dropdown-toggle {
+     color: white;
+     font-size: 20px;
+     font-family: inherit;
+}
+.navbar-nav .nav-link:hover,
+.navbar-nav .dropdown-toggle:hover,
+.opciones:hover {
+  color: white !important;
+  text-decoration: underline; 
+  text-decoration-color: white;
+  font-weight: bold;
+  border: none;
+}
+.nav-link:focus,
+.dropdown-toggle:focus,
+.opciones:focus {
+  color: white !important;
+  
+}
+.active {
+    font-weight: bold !important;
+    text-decoration: underline !important;
+    text-decoration-color: white !important;
+    color: white !important;
+
+}
+.usuario{
+    background-color: #271d3b;
+    color: white;
+    font-size: 20px;
+    border: none;
+}
+.nombre_empresa{
+    color: white ;
+    font-size: 25px;
+    margin-top: 10px;
+    text-decoration: none ;
+    font-weight:inherit ;
+}
+.logo-container {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+.logo-link {
+    text-decoration: none;
+}
+.burger-menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #271d3b;
+    padding: 20px;
+}
+.burger-menu .nav-link {
+    color: white;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+.dropdown-container {
+    position: relative; 
+    display: inline-block;
+}
+.menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0; 
+    background: rgb(11, 11, 119);
+    border-radius: 10%;
+    z-index: 9999; 
+}
+.opciones{
+    display: block; 
+    color: white;
+    font-size: 18px;
+    font-family: inherit;
+    text-decoration: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    width: 130px;
+}
+.barraNavAdmi{
+    background:
+      conic-gradient(from 150deg at 50% 33%,#0000,#f2f0f2 .5deg 60deg,#0000 60.5deg) 
+        calc(32px/2) calc(32px/1.4),
+      conic-gradient(from -30deg at 50% 66%,#0000,#ffffff .5deg 60deg,#ffffff 60.5deg);
+    background-size: 32px calc(32px/1.154);
+}
