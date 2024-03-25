@@ -4,22 +4,21 @@ import "./Ambientes.css";
 const Ambientes = () => {
   const handleRegistroAmbiente = () => {
     // Obtener los valores de los campos del formulario
-    const numeroAula = document.querySelector(".input12").value;
-    const capacidadEstudiantes = document.querySelector(".input12").value;
+    const nombreAula = document.querySelector(".input12").value;
+    const capacidadEstudiantes = document.querySelector(".input13").value;
     const edificio = document.querySelector(".input16").value;
     const piso = document.querySelector(".input18").value;
   
     // Crear el objeto de datos a enviar al servidor
     const datosAmbiente = {
-      numeroAula,
+      nombreAula,
       capacidadEstudiantes,
       edificio,
       piso
     };
   
-    console.log("Datos a enviar:", datosAmbiente); // Imprimir los datos a enviar
+    console.log("Datos a enviar:", datosAmbiente); 
     
-    // Enviar los datos al servidor utilizando fetch
     fetch("http://localhost:8000/api/registrarambiente", {
       method: "POST",
       headers: {
@@ -86,7 +85,7 @@ const Ambientes = () => {
           </div>
           <div className="input11">
             <div className="label-here6">Capacidad de Estudiantes</div>
-            <input className="input12" placeholder="90" type="text" />
+            <input className="input13" placeholder="90" type="text" />
           </div>
           <div className="label-here8">Ubicacion</div>
           <div className="input-parent1">
@@ -112,4 +111,3 @@ const Ambientes = () => {
 };
 
 export default Ambientes;
-

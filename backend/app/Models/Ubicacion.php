@@ -9,7 +9,6 @@ class Ubicacion extends Model
 {
     use HasFactory;
     protected $primaryKey = 'id_ubicacion';
-
     protected $table = 'ubicacion';
     public $timestamps = false;
 

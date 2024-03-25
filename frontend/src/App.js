@@ -1,15 +1,31 @@
 import React from 'react';
-
-
 import './App.css';
-import { Navbar } from './Components/Navbar'; 
-import  {Dias_Horas} from './Components/Dias_Horas';
-export default function App(){
-  return(
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomeUno from './inicio/HomeUno';
+import Solicitar from './solicitar/Solicitar';
+import Ambientes from './Registrar/ambientes/Ambientes';
+import Docentes from './Registrar/docentes/Docentes';
+import Navbar from './navegador/Navbar';
+import RegistrarMateria from './Registrar/materias/RegistrarMateria';
+import RegistrarDiaHora from './Registrar/dia_hora/RegistrarDiaHora';
+function App() {
+  return (
+    <Router>
     <div>
       <Navbar />
-      <Dias_Horas />
+      <Routes>
+        <Route path='/' element={<HomeUno />} />
+        <Route path='/Solicitar' element={<Solicitar />} />
+        <Route path='/Registro/Ambientes' element={<Ambientes />} />
+        <Route path='/Registro/Materias' element={<RegistrarMateria />} />
+        <Route path='/Registro/Docentes' element={<Docentes />} />
+        <Route path='/Registro/DiaHora' element={<RegistrarDiaHora />} />
+
+      </Routes>
     </div>
-    
-  )
+  </Router>
+  
+  );
 }
+
+export default App;
