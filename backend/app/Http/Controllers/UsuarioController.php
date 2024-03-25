@@ -9,10 +9,10 @@ class UsuarioController extends Controller
 {
     public function index()
     {
-        $consultarUsuarios = Usuario::with('docentes')->get();
-        return[
-            "consulta"=>$consultarUsuarios
-        ];
+
+        $usuariosConDocentes = Usuario::get();        
+            return response()->json($usuariosConDocentes, 200);      
+        
     }
 
     

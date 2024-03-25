@@ -16,7 +16,4 @@ class Docente extends Model
         "tipo_docente"
     ];
 
-    function usuarios() {
-        return $this->hasMany(Usuario::class);
-    }
 }
