@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Navbar.css';
 import { NavLink } from 'react-router-dom';
-import logo from '../assets/logoTIS.png';
+import logo from '../assets/LogoSIS.jpeg';
 import { FaBars } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -44,10 +44,10 @@ const Navbar = () => {
         <div className="container-fluid">
           <div className="logo-container">
             <NavLink className="navbar-brand" to='/'>         
-             <img className="" src={logo} alt="logo" width='50px' />
+             <img className="" src={logo} alt="logo" width='60px' height='70px' />
             </NavLink>
             <div className='nombre_empresa'>
-              <p id='nomb'>Purple-soft</p>
+              <p id='nomb'>SIRA-FCYT</p>
             </div>
           </div>
           <button className="navbar-toggler" type="button" onClick={() => setIsOpen(!isOpen)}>
@@ -81,7 +81,7 @@ const Navbar = () => {
           </div>
           {!isOpen && (
             <button className="usuario">
-              <img className="" src={logo} alt="logo" width='50px' />
+              <img className="" src={logo} alt="logo" width='60px' height='70px' />
               <p id="admi">Administrador</p>
             </button>
           )}
