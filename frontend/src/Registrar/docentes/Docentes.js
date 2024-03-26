@@ -29,35 +29,29 @@ const Docentes = () => {
 
     console.log("Datos a enviar:", datosDocente);
 
-    fetch("http://http://127.0.0.1:8000/api/docentesRegistrar", {
+    fetch("http://127.0.0.1:8000/api/docentesRegistrar", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(datosDocente),
+      body: JSON.stringify(datosDocente)
     })
-      .then((response) => {
+      .then(response => {
         console.log("Respuesta del servidor:", response); // Imprimir la respuesta del servidor
         return response.json();
       })
-      .then((data) => {
+      .then(data => {
         // Manejar la respuesta del servidor
         console.log("Registro exitoso:", data);
-        // Limpiar campos del formulario
-        document.querySelector(".input11").value = "";
-        document.querySelector(".input12").value = "";
-        document.querySelector(".input13").value = "";
-        document.querySelector(".input14").value = "";
-        document.querySelector(".input15").checked = false;
-        document.querySelector(".input15_2").checked = false;
-        document.querySelector(".input16").value = "";
         // Aquí puedes mostrar un mensaje de éxito o redirigir a otra página
       })
-      .catch((error) => {
+      .catch(error => {
         console.error("Error al registrar el ambiente:", error);
         // Aquí puedes mostrar un mensaje de error al usuario
       });
+ 
   };
+ 
 
   useEffect(() => {
     const scrollAnimElements = document.querySelectorAll(
