@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import './RegistrarDiaHora.css';
+import { useLocation } from 'react-router-dom';
 
 const DiasHoras = () => {
   const [selectedDay, setSelectedDay] = useState(""); // Estado para almacenar el día seleccionado
   const [selectedHours, setSelectedHours] = useState({}); // Estado para almacenar los horarios seleccionados
+  const { state: datosAmbiente } = useLocation();
 
   // Función para manejar el cambio de día seleccionado
   const handleDayClick = (day) => {
@@ -39,24 +41,24 @@ const DiasHoras = () => {
     <div className="col">
       <ul className="list-unstyled">
       <li className="form-check">
-                      <input className="form-check-input" type="checkbox" id="6:15" checked={selectedHours[selectedDay]['6:15']} onChange={handleHourChange} />
-                      <label className="form-check-label" htmlFor="6:15">6:45-8:15</label>
+                      <input className="form-check-input" type="checkbox" id="6:15-8:15" checked={selectedHours[selectedDay]['6:15-8:15']} onChange={handleHourChange} />
+                      <label className="form-check-label" htmlFor="6:15-8:15">6:45-8:15</label>
                     </li>
                     <li className="form-check">
-                      <input className="form-check-input" type="checkbox" id="8:15" checked={selectedHours[selectedDay]['8:15']} onChange={handleHourChange} />
-                      <label className="form-check-label" htmlFor="8:15">8:15-9:45</label>
+                      <input className="form-check-input" type="checkbox" id="8:15-9:45" checked={selectedHours[selectedDay]['8:15-9:45']} onChange={handleHourChange} />
+                      <label className="form-check-label" htmlFor="8:15-9:45">8:15-9:45</label>
                     </li>
                     <li className="form-check">
-                      <input className="form-check-input" type="checkbox" id="9:45" checked={selectedHours[selectedDay]['9:45']} onChange={handleHourChange} />
-                      <label className="form-check-label" htmlFor="9:45">9:45-11:15</label>
+                      <input className="form-check-input" type="checkbox" id="9:45-11:15" checked={selectedHours[selectedDay]['9:45-11:15']} onChange={handleHourChange} />
+                      <label className="form-check-label" htmlFor="9:45-11:15">9:45-11:15</label>
                     </li>
                     <li className="form-check">
-                      <input className="form-check-input" type="checkbox" id="11:15" checked={selectedHours[selectedDay]['11:15']} onChange={handleHourChange} />
-                      <label className="form-check-label" htmlFor="11:15">11:15-12:45</label>
+                      <input className="form-check-input" type="checkbox" id="11:15-12:45" checked={selectedHours[selectedDay]['11:15-12:45']} onChange={handleHourChange} />
+                      <label className="form-check-label" htmlFor="11:15-12:45">11:15-12:45</label>
                     </li>
                     <li className="form-check">
-                      <input className="form-check-input" type="checkbox" id="12:45" checked={selectedHours[selectedDay]['12:45']} onChange={handleHourChange} />
-                      <label className="form-check-label" htmlFor="12:45">12:45-14:15</label>
+                      <input className="form-check-input" type="checkbox" id="12:45-14:15" checked={selectedHours[selectedDay]['12:45-14:15']} onChange={handleHourChange} />
+                      <label className="form-check-label" htmlFor="12:45-14:15">12:45-14:15</label>
                     </li>
        
       </ul>
@@ -64,24 +66,24 @@ const DiasHoras = () => {
     <div className="col">
       <ul className="list-unstyled">
       <li className="form-check">
-                      <input className="form-check-input" type="checkbox" id="14:15" checked={selectedHours[selectedDay]['14:15']} onChange={handleHourChange} />
-                      <label className="form-check-label" htmlFor="14:15">14:15-15:45</label>
+                      <input className="form-check-input" type="checkbox" id="14:15-15:45" checked={selectedHours[selectedDay]['14:15-15:45']} onChange={handleHourChange} />
+                      <label className="form-check-label" htmlFor="14:15-15:45">14:15-15:45</label>
                     </li>
                     <li className="form-check">
-                      <input className="form-check-input" type="checkbox" id="15:45" checked={selectedHours[selectedDay]['15:45']} onChange={handleHourChange} />
-                      <label className="form-check-label" htmlFor="15:45">15:45-17:15</label>
+                      <input className="form-check-input" type="checkbox" id="15:45-17:15" checked={selectedHours[selectedDay]['15:45-17:15']} onChange={handleHourChange} />
+                      <label className="form-check-label" htmlFor="15:45-17:15">15:45-17:15</label>
                     </li>
                     <li className="form-check">
-                      <input className="form-check-input" type="checkbox" id="17:15" checked={selectedHours[selectedDay]['17:15']} onChange={handleHourChange} />
-                      <label className="form-check-label" htmlFor="17:15">17:45-18:45</label>
+                      <input className="form-check-input" type="checkbox" id="17:45-18:45" checked={selectedHours[selectedDay]['17:45-18:45']} onChange={handleHourChange} />
+                      <label className="form-check-label" htmlFor="17:45-18:45">17:45-18:45</label>
                     </li>
                     <li className="form-check">
-                      <input className="form-check-input" type="checkbox" id="18:45" checked={selectedHours[selectedDay]['18:45']} onChange={handleHourChange} />
-                      <label className="form-check-label" htmlFor="18:45">18:45-20:15</label>
+                      <input className="form-check-input" type="checkbox" id="18:45-20:15" checked={selectedHours[selectedDay]['18:45-20:15']} onChange={handleHourChange} />
+                      <label className="form-check-label" htmlFor="18:45-20:15">18:45-20:15</label>
                     </li>
                     <li className="form-check">
-                      <input className="form-check-input" type="checkbox" id="20:15" checked={selectedHours[selectedDay]['20:15']} onChange={handleHourChange} />
-                      <label className="form-check-label" htmlFor="20:15">20:15-21:45</label>
+                      <input className="form-check-input" type="checkbox" id="20:15-21:45" checked={selectedHours[selectedDay]['20:15-21:45']} onChange={handleHourChange} />
+                      <label className="form-check-label" htmlFor="20:15-21:45">20:15-21:45</label>
                     </li>
        
       </ul>
@@ -95,7 +97,46 @@ const DiasHoras = () => {
       return null;
     }
   };
+  const createJSON = () => {
+    // Combinar los datos del ambiente con los días y horas seleccionados
+    const json = {
+      datosAmbiente, // Datos del ambiente
+      diasHoras: {} // Días y horas seleccionados
+    };
+    for (const day in selectedHours) {
+      const hours = selectedHours[day];
+      json.diasHoras[day] = Object.keys(hours).filter(hour => hours[hour]);
+    }
+    return JSON.stringify(json, null, 2);
+  };
 
+  // Función para manejar el evento de clic en el botón "Registrar Ambiente"
+  const handleRegistrarAmbiente = () => {
+    const json = createJSON();
+    console.log("Datos a enviar:", json); // Imprimir el JSON en la consola
+
+    // Aquí puedes enviar el JSON a una API
+    fetch("http://127.0.0.1:8000/api/registrarambiente", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: json
+    })
+    .then(response => {
+      if (response.ok) {
+        console.log("Registro exitoso");
+        // Aquí puedes hacer algo después de un registro exitoso
+      } else {
+        console.error("Error en el registro");
+        // Aquí puedes manejar errores en el registro
+      }
+    })
+    .catch(error => {
+      console.error("Error en la solicitud:", error);
+      // Aquí puedes manejar errores de red u otros errores
+    });
+  };
   return (
     <div className="container text-center mt-5">
        <div className="container text-center mt-5">
@@ -112,7 +153,7 @@ const DiasHoras = () => {
                 <button className={`day-btn ${selectedDay === "Miércoles" && "selected"}`} onClick={() => handleDayClick("Miércoles")}>Miércoles</button>
                 <button className={`day-btn ${selectedDay === "Jueves" && "selected"}`} onClick={() => handleDayClick("Jueves")}>Jueves</button>
                 <button className={`day-btn ${selectedDay === "Viernes" && "selected"}`} onClick={() => handleDayClick("Viernes")}>Viernes</button>
-                {/* Agrega más días aquí */}
+             
               </div>
             </div>
             {showHours()}
@@ -120,7 +161,8 @@ const DiasHoras = () => {
         </div>
       </div>
       <div className="square3 mx-auto d-flex justify-content-center align-items-center">
-        <button type="button" className="btn btn-primary custom-btn">Registrar Ambiente</button>
+        <button type="button" className="btn btn-primary custom-btn" onClick={handleRegistrarAmbiente}>Registrar Ambiente</button>
+
       </div>
     </div>
   );

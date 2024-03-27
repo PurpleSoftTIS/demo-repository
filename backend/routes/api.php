@@ -22,3 +22,4 @@ Route::get('/usuarios', function () {
     return view('usuarios.index', ['usuarios' => $usuarios]);
 });
 Route::post('/registrarambiente', [AmbienteController::class, 'guardarAmbiente']);
+Route::get ('/obtenetambiente', [AmbienteController::class, 'obtenerambientes']);

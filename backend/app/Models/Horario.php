@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Ubicacion extends Model
+class Horario extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'ID_UBICACION';
-    protected $table = 'ubicacion';
     
+  protected $table = 'horario';
+  public $timestamps = false;
+  public $incrementing = false;
 
-    
 }

@@ -9,7 +9,7 @@ class Ambiente extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $primaryKey = 'id_ambiente';
+    protected $primaryKey = 'ID_AMBIENTE';
     protected $table = 'ambiente';
  
 }
