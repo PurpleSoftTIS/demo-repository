@@ -1,5 +1,5 @@
 import React from 'react'
-import imagenFacu from '../assets/imagenFacu.jpg'
+import Sillas from '../assets/Sillas.JPG'
 import { Link } from 'react-router-dom';
 import './HomeUno.css';
 
@@ -10,7 +10,7 @@ const HomeUno = () => {
         <div className="col-md-6">
           <div className="row">            
             <div className="col-6 pl-0">
-              <img src={imagenFacu} alt="Imagen 2" className="img-fluid imagen img-grande"/>
+              <img src={Sillas} alt="Imagen 2" className="img-fluid imagen img-grande"/>
             </div>
           </div>
           <div className="row mt-3">           
