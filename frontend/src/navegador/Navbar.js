@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Navbar.css';
 import { NavLink } from 'react-router-dom';
-import logo from '../assets/LogoSIS.jpeg';
+import logo from '../assets/LogoDefinitivo.jpeg';
 import { FaBars } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 

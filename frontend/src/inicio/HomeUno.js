@@ -1,5 +1,5 @@
 import React from 'react'
-import imagenFacu from '../assets/imagenFacu.jpg'
+import imagenFacu from '../assets/Sillas.jpeg'
 import { Link } from 'react-router-dom';
 import './HomeUno.css';
 
