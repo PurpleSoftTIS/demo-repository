@@ -30,7 +30,7 @@
 
 }
 .usuario{
-    background-color: #271d3b;
+    background-color: #0d0d46;
     color: white;
     font-size: 20px;
     border: none;
@@ -93,4 +93,11 @@
         calc(32px/2) calc(32px/1.4),
       conic-gradient(from -30deg at 50% 66%,#0000,#ffffff .5deg 60deg,#ffffff 60.5deg);
     background-size: 32px calc(32px/1.154);
+}
+.InicioSesion{
+    display: flex;
+}
+.nomb{
+  font-size: 24px;
+  
 }

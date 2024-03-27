@@ -38,7 +38,7 @@ const LoginForm = () => {
                                                             <input type="password" name="logpass" className="form-style" placeholder="Tu Contraseña" id="logpass" autoComplete="off" />
                                                             <FaLock className="input-icon" />
                                                         </div>
-                                                        <Link to="/HomeUno">
+                                                        <Link to="../inicio/HomeUno">
                                                             <div className="botones mt-4" >Ingresar</div>
                                                         </Link>
                                                         <p className="mb-0 mt-4 text-center"><a href="#0" className="link">¿Olvidaste tu Contraseña?</a></p>
