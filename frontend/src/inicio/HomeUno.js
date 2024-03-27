@@ -1,5 +1,5 @@
 import React from 'react'
-import imagenFacu from '../assets/imagenFacu.jpg'
+import imagenFacu from '../assets/Sillas.jpeg'
 import { Link } from 'react-router-dom';
 import './HomeUno.css';
 
@@ -18,8 +18,9 @@ const HomeUno = () => {
         </div>
         <div className="col-md-6 d-flex flex-column align-items-center justify-content-center">
           <div>
-            <p className="titulo-personalizado">Bienvenidos al Sistema de Reserva de Ambientes FCyT UMSS</p>
-            <p className="texto-personalizado">Sistema de ayuda al docente en la reserva de ambientes de la Facultad de Ciencias y Tecnologia</p>
+            <p className="titulo-personalizado">Bienvenidos al Sistema de Gestion de Reservacion de Ambientes FCyT UMSS</p>
+            <p className="texto-personalizado">Sistema de ayuda al administrador en la gestion de ambientes de la Facultad de 
+            Ciencias y Tecnologia</p>
             
             <Link to="/Solicitar">
               <button className="btn btn-solicitudes" >Solicitudes</button>
