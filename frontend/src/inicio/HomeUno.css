@@ -1,5 +1,6 @@
 
 .imagen {
+<<<<<<< HEAD
     margin-bottom: 10px;
   }
   
@@ -23,14 +24,52 @@
   .texto-personalizado {
     font-family: 'Inter', sans-serif;  
     color: #4B5563; 
+=======
+  margin-bottom: 10px;
+}
+>>>>>>> rama_antes_de_la_main
 
-  }
-  .btn-solicitudes {
-    background-color: #2A2040; 
-    color: #fff; 
-  }
-  
-  .btn-solicitudes:hover {
-    background-color: #2A2040; 
-  }
-  
+.texto {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.img-container {
+  position: relative; /* Para permitir que los elementos hijos se posicionen de forma absoluta con respecto a este contenedor */
+}
+
+.blue-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%; /* La mitad del ancho de su contenedor */
+  height: 100%; /* Igual al alto de su contenedor */
+  background-color: #2A2040; /* Color azul */
+  opacity: 0.7; /* Opacidad del fondo azul */
+}
+
+.img-grande {
+  width: 500px;
+  height: 700px;
+}
+
+.titulo-personalizado {
+  font-family: 'Inter', sans-serif;
+  font-size: 30px;
+  color: #1F2937;
+  font-weight: 700;
+}
+
+.texto-personalizado {
+  font-family: 'Inter', sans-serif;
+  color: #4B5563;
+}
+
+.btn-solicitudes {
+  background-color: #2A2040;
+  color: #fff;
+}
+
+.btn-solicitudes:hover {
+  background-color: #2A2040;
+}

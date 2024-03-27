@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Navbar.css';
 import { NavLink } from 'react-router-dom';
-import logo from '../assets/LogoSIS.jpeg';
+import logo from '../assets/LogoDefinitivo.jpeg';
 import { FaBars } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -43,8 +43,8 @@ const Navbar = () => {
       <nav className="navbar navbar-expand-lg">
         <div className="container-fluid">
           <div className="logo-container">
-            <NavLink className="navbar-brand" to='/'>         
-             <img className="" src={logo} alt="logo" width='60px' height='70px' />
+            <NavLink className="navbar-brand" to='/Inicio/HomeUno'>         
+             <img className="" src={logo} alt="logo" width='60px' height='60px' />
             </NavLink>
             <div className='nombre_empresa'>
               <p id='nomb'>SIRA-FCYT</p>
@@ -54,15 +54,20 @@ const Navbar = () => {
             <FaBars style={{ color: 'white' }} /> 
           </button>
           {isOpen && (
-            <button className="usuario">
-              <img className="" src={logo} alt="logo" width='50px' />
-              <p id="admi">Administrador</p>
-            </button>
+            <div className='InicioSesion'>
+              <button className="usuario">
+                <img className="" src={logo} alt="logo" width='60px' height='60px' />
+              </button>
+              <button>
+                <p id="admi">Administrador</p>
+              </button>
+            </div>
+            
           )}
           <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarNav">
             <ul className="navbar-nav mx-auto">
               <li className="nav-item">
-                <NavLink className="nav-link" to='/' exact>Inicio</NavLink> 
+                <NavLink className="nav-link" to='/Inicio/HomeUno' exact>Inicio</NavLink> 
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to='/Solicitar'>Solicitudes</NavLink>
