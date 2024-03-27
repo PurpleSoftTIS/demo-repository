@@ -1,20 +1,15 @@
 import React from 'react'
 import imagenFacu from '../assets/Sillas.jpeg'
 import { Link } from 'react-router-dom';
-import './HomeUno.css';
+import './InicioAdmi.css';
 
 const HomeUno = () => {
   return (
     <div className="container mt-5">
       <div className="row">
-        <div className="col-md-6">
-          <div className="row">            
-            <div className="col-6 pl-0">
-              <img src={imagenFacu} alt="Imagen 2" className="img-fluid imagen img-grande"/>
-            </div>
-          </div>
-          <div className="row mt-3">           
-          </div>
+        <div className="col-md-6 d-flex align-items-center justify-content-center img-container">
+          <div className="blue-overlay"></div>
+          <img src={imagenFacu} alt="Imagen 2" className="img-fluid imagen img-grande"/>
         </div>
         <div className="col-md-6 d-flex flex-column align-items-center justify-content-center">
           <div>
