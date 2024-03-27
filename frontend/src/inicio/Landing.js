@@ -29,7 +29,6 @@ const Landing = () => {
         </button>
         <div className="menus">
           <button className="about">Acerca de</button>
-          <button className="about">Reservas</button>
           <button className="pricing" onClick={onPricingClick}>
             UMSS
           </button>

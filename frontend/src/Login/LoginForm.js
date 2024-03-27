@@ -1,7 +1,7 @@
 import React from 'react';
 import "./LoginForm.css"
 import { FaAt, FaLock} from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import logo from "../assets/logoSIS.png";
 
 const LoginForm = () => {
@@ -38,7 +38,9 @@ const LoginForm = () => {
                                                             <input type="password" name="logpass" className="form-style" placeholder="Tu Contraseña" id="logpass" autoComplete="off" />
                                                             <FaLock className="input-icon" />
                                                         </div>
-                                                        <button className="botones mt-4" >Ingresar</button>
+                                                        <Link to="/HomeUno">
+                                                            <div className="botones mt-4" >Ingresar</div>
+                                                        </Link>
                                                         <p className="mb-0 mt-4 text-center"><a href="#0" className="link">¿Olvidaste tu Contraseña?</a></p>
                                                     </div>
                                                 </div>
