@@ -1,8 +1,52 @@
-![Auto Assign](https://github.com/PurpleSoftTIS/demo-repository/actions/workflows/auto-assign.yml/badge.svg)
+Comando de git:
 
-![Proof HTML](https://github.com/PurpleSoftTIS/demo-repository/actions/workflows/proof-html.yml/badge.svg)
+git branch
+Con este comando, sabrar en que rama te encuantra y tambien te mostrara la ramas que hayas creado localmente y remotamente 
 
-# Welcome to your organization's demo respository
-This code repository (or "repo") is designed to demonstrate the best GitHub has to offer with the least amount of noise.
+git branch nombre_de_la_rama
+Con este comando vamos estar creando una nueva rama local
 
-The repo includes an `index.html` file (so it can render a web page), two GitHub Actions workflows, and a CSS stylesheet dependency.
+git status
+Con este comando sabras los cambios guardados y nos guardados que hayas tenido en tu rama actual
+
+git switch
+Con este comando podran ir altermando entre rama y rama 
+
+git add .
+Con este comando vamos a guardar los cambios mostrador con el comando git status de manera local
+
+git commit -m "Mensaje descriptivo"
+Con este momando vamos guardar los cambios mostrador con el comando git status de manera local, este procedimiento se guardara 
+
+git pull
+Con este comando vamos bajar los cambios a nuestra rama
+
+git push
+Con este comando vamos subir al repositorio la rama
+
+git pull origin nombre_de_rama
+Con este comando vamos bajar los cambios de una rama salecionada a nuestra rama
+
+git push origin nombre_de_rama
+Con este comando vamos subir al repositorio en una rama especifica nuestro cambios la rama
+
+git merge
+Esto nos sirve para unir dos ramas, tenga cuidado y hya cinflintos 
+
+git log
+Con este comando vamos ver el historia de commits de todos lo colaboradores
+
+Ejecuion del Frontend
+npm install
+npm start
+
+Ejecuion del Backend
+php artisan serve
+
+IMPORTANTE 
+- Asegurece de estar en la ram correcta 
+- Antes de subir cambios, siempre ejecute git pull origin nombre_de_rama, este en caso de estar trabanjando con otra perosna en una misma rama
+- No olvide no puede subir cambios a la main si antes entrar en concenso con el resto de colaboradores 
+
+
+ 

@@ -15,4 +15,6 @@ class Usuario extends Model
         "apellido_materno",
         "correo_electronico"
     ];
+    
+    
 }

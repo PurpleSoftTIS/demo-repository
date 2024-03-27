@@ -11,8 +11,6 @@ class Ubicacion extends Model
     protected $table = 'ubicacion';
     protected $fillable =[
         "numero_piso",
-        "edificio"
-        
+        "edificio"        
     ];
-
 }
