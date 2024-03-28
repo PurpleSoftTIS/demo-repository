@@ -48,7 +48,15 @@ class AmbienteController extends Controller
         info('Se ha guardado correctamente el ambiente.');
         $diasHoras =$request -> input ('diasHoras');
         info('Horarios seleccionados:', $diasHoras);
-       
+        foreach ($diasHoras as $day=> $horas) {
+            $dia= new Dia();
+          
+            $dia->NOMBRE = $day ;
+            $dia -> save();
+            $iddia=$dia->ID_DIA;
+           
+           }
+
        
 
      return response()->json(['message' => 'Ubicación y ambiente guardados correctamente']);
