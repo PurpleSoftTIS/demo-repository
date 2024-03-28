@@ -1,3 +1,4 @@
+// Navbar.js
 import React, { useState, useEffect, useRef } from 'react';
 import './Navbar.css';
 import { NavLink } from 'react-router-dom';
@@ -59,12 +60,11 @@ const Navbar = () => {
 
           <button className="navbar-toggler" type="button" onClick={() => setIsOpen(!isOpen)}>
             <FaBars style={{ color: 'white' }} /> 
-          </button>         
-
+          </button>
           <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarNav">
             <ul className="navbar-nav mx-auto">
               <li className="nav-item">
-                <NavLink className="nav-link" to='/Inicio/HomeUno' exact>Inicio</NavLink> 
+                <NavLink className="nav-link" to='/inicio/HomeUno' exact>Inicio</NavLink> 
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to='/Solicitar'>Solicitudes</NavLink>

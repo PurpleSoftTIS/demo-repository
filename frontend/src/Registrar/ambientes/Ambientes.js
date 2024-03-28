@@ -64,11 +64,11 @@ const Ambientes = () => {
           <h3 className="checkout2">Registro de Ambientes</h3>
         </div>
         <div className="frame-div">
-          <div className="input11">
+          <div className="input111">
             <div className="label-here6">Numero de Aula</div>
             <input className="input12" placeholder="690E" type="text" onChange={(e) => setNombreAula(e.target.value)}/>
           </div>
-          <div className="input11">
+          <div className="input111">
             <div className="label-here6">Capacidad de Estudiantes</div>
             <input className="input13" placeholder="90" type="text" onChange={(e) => setCapacidadEstudiantes(e.target.value)}/>
           </div>
@@ -87,6 +87,10 @@ const Ambientes = () => {
                 value={piso}
                 onChange={(e) => setPiso(e.target.value)}
               />            </div>
+          </div>
+          <div className="input111">
+            <div className="label-here6">Tipo de Aula</div>
+            <input className="input-ta" placeholder="Aula comun, Laboratorio" type="text" />
           </div>
         </div>
       </div>

@@ -115,6 +115,7 @@
 }
 
 .barraNavAdmi{
+    height: 70px;
     background:
       conic-gradient(from 150deg at 50% 33%,#0000,#f2f0f2 .5deg 60deg,#0000 60.5deg) 
         calc(32px/2) calc(32px/1.4),

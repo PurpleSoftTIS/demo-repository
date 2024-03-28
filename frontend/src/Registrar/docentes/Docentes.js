@@ -158,7 +158,7 @@ const Docentes = () => {
           <div className="checkout">Registro de Docentes</div>
         </div>
         <div className="input-parent">
-          <div className="input1">
+          <div className="input">
             <div className="label-here">Nombres</div>
             <input className="input11" placeholder="Nombres" type="text" value={nombres} onChange={(e) => setNombres(e.target.value)}/>
             {errorNombres && <p className="error">{errorNombres}</p>}
