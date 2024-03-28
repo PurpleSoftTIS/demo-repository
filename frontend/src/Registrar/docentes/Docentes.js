@@ -32,9 +32,7 @@ const Docentes = () => {
       setErrorIncompleto("");
       setErrorNombres(""); 
       setErrorCodigo("");
-
-    }
-    
+    }    
     const nombrePattern = /^[a-zA-Z\s]*$/;
     const codigoDocentePattern = /^\d+$/;
 
