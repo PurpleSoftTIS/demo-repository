@@ -14,13 +14,13 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/Landing' element={<Landing />} />
+        <Route path='/' element={<Landing />} />
         <Route path='/Login' element={<LoginForm />} />
         <Route path='*' element={
           <div>
             <Navbar />
             <Routes>
-              <Route path='/' element={<HomeUno />} />
+              <Route path='/inicio/HomeUno' element={<HomeUno />} />
               <Route path='/Solicitar' element={<Solicitar />} />
               <Route path='/Registro/Ambientes' element={<Ambientes />} />
               <Route path='/Registro/Materias' element={<RegistrarMateria />} />

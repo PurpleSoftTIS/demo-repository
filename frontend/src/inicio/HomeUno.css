@@ -1,75 +1,62 @@
-
-.imagen {
-<<<<<<< HEAD
-    margin-bottom: 10px;
+/* InicioAdmi.css */
+.img-grande {
+    height: 700px;
+    width: auto;
   }
   
   .texto {
     font-size: 16px;
     font-weight: bold;
   }
-  .img-grande {
-    width: 300px; /* Cambia este valor al ancho deseado */
-    height: auto; /* Mantenemos la altura automática para conservar la proporción */
-    margin-left: 0; /* Mantenemos el margen izquierdo en cero */
-}
+  
 
   
+  .img-fluid {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  @keyframes abrirPuerta {
+    from {
+      transform: perspective(600px) rotateY(0deg);
+    }
+    to {
+      transform: perspective(600px) rotateY(180deg);
+    }
+  }
+  
+  .animacion-puerta {
+    animation: abrirPuerta 2s ease-in-out forwards;
+  }
+    
+  
+  
   .titulo-personalizado {
-    font-family: 'Inter', sans-serif; 
-    font-size: 30px; 
-    color: #1F2937; 
+    font-family: 'Inter', sans-serif;
+    font-size: 30px;
+    color: #1F2937;
     font-weight: 700;
   }
+  
   .texto-personalizado {
-    font-family: 'Inter', sans-serif;  
-    color: #4B5563; 
-=======
-  margin-bottom: 10px;
-}
->>>>>>> rama_antes_de_la_main
+    font-family: 'Inter', sans-serif;
+    color: #4B5563;
+  }
+  
+  
 
-.texto {
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.img-container {
-  position: relative; /* Para permitir que los elementos hijos se posicionen de forma absoluta con respecto a este contenedor */
-}
-
-.blue-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50%; /* La mitad del ancho de su contenedor */
-  height: 100%; /* Igual al alto de su contenedor */
-  background-color: #2A2040; /* Color azul */
-  opacity: 0.7; /* Opacidad del fondo azul */
-}
-
-.img-grande {
-  width: 500px;
-  height: 700px;
-}
-
-.titulo-personalizado {
-  font-family: 'Inter', sans-serif;
-  font-size: 30px;
-  color: #1F2937;
-  font-weight: 700;
-}
-
-.texto-personalizado {
-  font-family: 'Inter', sans-serif;
-  color: #4B5563;
-}
-
-.btn-solicitudes {
-  background-color: #2A2040;
-  color: #fff;
-}
-
-.btn-solicitudes:hover {
-  background-color: #2A2040;
-}
+  .imagen-arriba  {
+    width: 150px; 
+    height: auto;
+    
+  }
+  .btn-solicitudes {
+    background-color: #0d0d46;
+    color: white; /* Cambiar el color del texto a blanco */
+  }
+    
+  
+  
+  
+ 
+    
