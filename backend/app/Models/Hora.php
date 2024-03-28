@@ -11,6 +11,6 @@ class Hora extends Model
     protected $table = 'hora';
     protected $fillable =[
         "hora_inicio",
-        "hora_fin" 
+        "hora_fin"        
     ];
 }

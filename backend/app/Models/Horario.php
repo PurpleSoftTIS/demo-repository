@@ -11,6 +11,6 @@ class Horario extends Model
     protected $table = 'horario';
     protected $fillable =[
         "id_dia",
-        "id_hora" 
+        "id_hora"       
     ];
 }

@@ -39,6 +39,10 @@ body {
   justify-content: flex-start;
 }
 .input12,
+.input11,
+.input14,
+.input13,
+.input-ta,
 .label-here6 {
   font-weight: 500;
   align-self: stretch;
@@ -47,7 +51,11 @@ body {
   position: relative;
   line-height: 12px;
 }
-.input12 {
+.input12,
+.input11,
+.input14,
+.input-ta,
+.input13 {
   border: 1px solid #d1d5db;
   outline: 0;
   font-family: Inter;
@@ -61,15 +69,23 @@ body {
   padding: 12px 16px;
   color: #1f2937;
 }
-.input12:hover {
-  border: 1px solid #292040;
+.input12:hover,
+.input11:hover,
+.input14:hover,
+.input13:hover,
+.input-ta:hover {
+  border: 1px solid #010a26;
   box-sizing: border-box;
 }
-.input12:focus {
-  border: 1px solid #292040;
+.input12:focus,
+.input11:focus,
+.input14:focus,
+.input13:focus,
+.input-ta:focus {
+  border: 1px solid #010a26;
   box-sizing: border-box;
 }
-.input11 {
+.input111 {
   align-self: stretch;
   border-radius: 6px;
   display: flex;
@@ -104,11 +120,11 @@ body {
   color: #1f2937;
 }
 .input16:hover {
-  border: 1px solid #292040;
+  border: 1px solid #010a26;
   box-sizing: border-box;
 }
 .input16:focus {
-  border: 1px solid #292040;
+  border: 1px solid #010a26;
   box-sizing: border-box;
 }
 .input15 {
@@ -147,11 +163,11 @@ body {
   color: #1f2937;
 }
 .input18:hover {
-  border: 1px solid #292040;
+  border: 1px solid #010a26;
   box-sizing: border-box;
 }
 .input18:focus {
-  border: 1px solid #292040;
+  border: 1px solid #010a26;
   box-sizing: border-box;
 }
 .input17 {
@@ -186,7 +202,7 @@ body {
 }
 .billing-info1 {
   width: 705px;
-  height: 413px;
+  height: 473px;
   border-radius: 12px 12px 0 0;
   background-color: #fff;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) inset;
@@ -220,7 +236,7 @@ body {
   cursor: pointer;
   border: 0;
   padding: 16px 20px;
-  background-color: #2a2040;
+  background-color: #050259;
   align-self: stretch;
   border-radius: 6px;
   display: flex;
@@ -229,7 +245,7 @@ body {
   justify-content: center;
 }
 .button1:hover {
-  background-color: #66578b;
+  background-color: #010a26;
 }
 .checkout3,
 .contact-4 {

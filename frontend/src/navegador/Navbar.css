@@ -1,8 +1,12 @@
 .navbar {
-    background-color: #0d0d46;
-    height: 100%;
-    
+    background-color: #050259;
   }
+.navbar-nav .nav-link,
+.navbar-nav .dropdown-toggle {
+     color: white;
+     font-size: 20px;
+     font-family: inherit;
+}
 .navbar-nav .nav-link,
 .navbar-nav .dropdown-toggle {
      color: white;
@@ -33,16 +37,15 @@
 }
 .usuario{
     background-color: #0d0d46;
-    ;
     color: white;
-    font-size: 20px;
+    font-size: 25px;
     border: none;
 }
+
 .nombre_empresa{
     color: white ;
-    font-size: 25px;
-    margin-top: 10px;
-    text-decoration: none ;
+    font-size: 25px !important;
+    margin-top: 5px;
     font-weight:inherit ;
 }
 .logo-container {
@@ -53,6 +56,7 @@
 .logo-link {
     text-decoration: none;
 }
+
 .burger-menu {
     display: flex;
     flex-direction: column;
@@ -61,9 +65,16 @@
     right: 0;
     background-color: #271d3b;
     padding: 20px;
+    padding: 20px;
 }
 .burger-menu .nav-link {
     color: white;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+.dropdown-container {
+    position: relative; 
+    display: inline-block;
     font-size: 20px;
     margin-bottom: 10px;
 }
@@ -79,6 +90,17 @@
     border-radius: 10%;
     z-index: 9999; 
 }
+.sesion{
+    position: absolute;
+    top: calc(100% + 0px);
+    height: 50px;
+    text-align: center;
+    background: rgb(11, 11, 119);
+    border-radius: 10%;
+    z-index: 9999;
+    margin-top: 10px;
+    margin-left: -60px;
+}
 .opciones{
     display: block; 
     color: white;
@@ -88,8 +110,10 @@
     margin-top: 10px;
     margin-bottom: 10px;
     margin-left: 10px;
+    margin-left: 10px;
     width: 130px;
 }
+
 .barraNavAdmi{
     height: 70px;
     background:
@@ -98,10 +122,23 @@
       conic-gradient(from -30deg at 50% 66%,#0000,#ffffff .5deg 60deg,#ffffff 60.5deg);
     background-size: 32px calc(32px/1.154);
 }
-.logo-container img {
-    margin-right: 10px; 
-  }
-.nombre_empresa {
-    color: #ffffff; /* Color del texto */
-  }
-  
+.InicioSesion{
+    display: flex;
+}
+.nomb{
+  font-size: 24px !important;  
+}
+.Rol{
+    text-decoration: none;
+    background-color: #0d0d46;
+    color: white;
+    font-size: 20px;
+    
+    height: 50px;
+    border: none;
+    margin-top: 5px;
+}
+.Rol:hover{
+    font-size: 20px ;
+    font-weight: bold;
+}
