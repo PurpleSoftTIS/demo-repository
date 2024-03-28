@@ -53,12 +53,12 @@ body {
   font-weight: 500;
 }
 .input,
-.input11 {
+.input1 {
   align-self: stretch;
   display: flex;
   justify-content: flex-start;
 }
-.input11 {
+.input1 {
   border: 1px solid #d1d5db;
   outline: 0;
   font-weight: 500;
@@ -71,9 +71,9 @@ body {
   padding: 12px 16px;
   color: #1f2937;
 }
-.input11:hover,
-.input12,.input13,.input14,.input16:hover {
-  border: 1px solid #2a2040;
+.input1:hover,
+.input3:hover {
+  border: 1px solid #010a26;
   box-sizing: border-box;
 }
 .input {
@@ -82,7 +82,7 @@ body {
   align-items: flex-start;
   gap: 8px;
 }
-.input12,.input13,.input14,.input16
+.input3,
 .label-here1 {
   font-weight: 500;
   align-self: stretch;
@@ -94,7 +94,7 @@ body {
   height: 14px;
   flex-shrink: 0;
 }
-.input12,.input13,.input14,.input16 {
+.input3 {
   border: 1px solid #d1d5db;
   outline: 0;
   font-family: Inter;
@@ -108,8 +108,8 @@ body {
   padding: 12px 16px;
   color: #1f2937;
 }
-.input12,.input13,.input14,.input16:focus {
-  border: 1px solid #2a2040;
+.input3:focus {
+  border: 1px solid #010a26;
   box-sizing: border-box;
 }
 .input2 {
@@ -143,7 +143,7 @@ body {
 .input8 {
   border-radius: 6px;
 }
-.input15_2 {
+.frame-input {
   margin: 0;
   height: 17px;
   width: 23px;
@@ -151,7 +151,7 @@ body {
   filter: drop-shadow(0 5px 12px -5px rgba(42, 32, 64, 0.06))
     drop-shadow(0 5px 30px -5px rgba(160, 160, 160, 0.1));
 }
-.input15_2:hover {
+.frame-input:hover {
   mix-blend-mode: normal;
 }
 .cotton-blend {
@@ -175,7 +175,7 @@ body {
   flex-direction: column;
   padding: 16px;
 }
-.input15 {
+.rectangle-input {
   margin: 0;
   width: 16px;
   position: relative;
@@ -186,12 +186,12 @@ body {
   box-sizing: border-box;
   height: 16px;
 }
-.input15:focus {
-  background-color: #2a2040;
+.rectangle-input:focus {
+  background-color: #010a26;
 }
-.input15:checked {
-  background-color: #2a2040;
-  border: 1px solid #2a2040;
+.rectangle-input:checked {
+  background-color: #010a26;
+  border: 1px solid #010a26;
   box-sizing: border-box;
 }
 .frame-container,
@@ -228,7 +228,7 @@ body {
   align-items: center;
   padding: 0 8px 25px;
   box-sizing: border-box;
-  color: #2a2040;
+  color: #010a26;
 }
 .billing-info,
 .input-container {
@@ -267,7 +267,7 @@ body {
   cursor: pointer;
   border: 0;
   padding: 16px 20px;
-  background-color: #2a2040;
+  background-color: #050259;
   align-self: stretch;
   border-radius: 6px;
   display: flex;
@@ -276,7 +276,7 @@ body {
   justify-content: center;
 }
 .button:hover {
-  background-color: #66578b;
+  background-color: #010a26;
 }
 .checkout1,
 .contact-6 {
@@ -359,4 +359,13 @@ body {
     padding-right: 40px;
     box-sizing: border-box;
   }
+}
+.error {
+  color: red;
+  font-family: inherit;
+  font-size: 16px;
+  border-radius: 12px 12px 12px 12px;
+  background-color: #f9fafb;
+  text-align: justify;
+
 }
