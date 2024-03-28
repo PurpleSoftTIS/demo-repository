@@ -50,39 +50,24 @@ const Navbar = () => {
         <div className="container-fluid">
           <div className="logo-container">
             <NavLink className="navbar-brand" to='/Inicio/HomeUno'>         
-             <img className="" src={logo} alt="logo" width='60px' height='60px' />
-            <NavLink className="navbar-brand" to='/Inicio/HomeUno'>         
-             <img className="" src={logo} alt="logo" width='60px' height='60px' />
+              <img className="" src={logo} alt="logo" width='60px' height='60px' />
             </NavLink>
             <div className='nombre_empresa'>
               SIRA-FCYT
             </div>
           </div>
-          <button className="navbar-toggler" type="button" onClick={() => setIsOpen(!isOpen)}>
-            <FaBars style={{ color: 'white' }} /> 
+
           <button className="navbar-toggler" type="button" onClick={() => setIsOpen(!isOpen)}>
             <FaBars style={{ color: 'white' }} /> 
           </button>
-          
-           
-            
-          
-          {isOpen && (
-            <div className='InicioSesion'>
-              <button className="usuario">
-                <img className="" src={logo} alt="logo" width='60px' height='60px' />
-              </button>
-              <button>
-                <p id="admi">Administrador</p>
-              </button>
-            </div>
-            
-          )}
+          <button className="navbar-toggler" type="button" onClick={() => setIsOpen(!isOpen)}>
+            <FaBars style={{ color: 'white' }} /> 
+          </button>
+
           <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarNav">
             <ul className="navbar-nav mx-auto">
               <li className="nav-item">
                 <NavLink className="nav-link" to='/Inicio/HomeUno' exact>Inicio</NavLink> 
-                <NavLink className="nav-link" to='/Inicio/HomeUno' exact>Inicio</NavLink> 
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to='/Solicitar'>Solicitudes</NavLink>
@@ -95,22 +80,11 @@ const Navbar = () => {
                           <NavLink className="opciones" to='/Registro/Ambientes' activeClassName="active">Ambiente</NavLink>
                           <NavLink className="opciones" to='/Registro/Docentes' activeClassName="active">Docente</NavLink>
                           <NavLink className="opciones" to='/Registro/Materias' activeClassName="active">Materia</NavLink>
-                      </div>
-              <div className="dropdown-container" ref={dropdownRef}>
-                  <button className="nav-link dropdown-toggle" onClick={toggleDropdown} style={{ cursor: 'pointer' }}>Registrar</button>
-                  {showDropdown && (
-                      <div className="menu">
-                          <NavLink className="opciones" to='/Registro/Ambientes' activeClassName="active">Ambiente</NavLink>
-                          <NavLink className="opciones" to='/Registro/Docentes' activeClassName="active">Docente</NavLink>
-                          <NavLink className="opciones" to='/Registro/Materias' activeClassName="active">Materia</NavLink>
-                      </div>
-                     
-                  )}
-              </div>
+                      </div>              
+                  )}              
               </div>
             </ul>
-          </div>
-          
+          </div>          
             <div className='InicioSesion'>
               <button className="usuario" onClick={toggleSesion} >
                 <img className="" src={userLogo} alt="logo" width='50px' height='50px' />
@@ -126,9 +100,8 @@ const Navbar = () => {
         </div>
       </nav>
     </div>
-  )
+  
   )
 }
 
-export default Navbar;
 export default Navbar;
