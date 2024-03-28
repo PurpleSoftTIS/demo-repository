@@ -59,10 +59,7 @@ const Navbar = () => {
 
           <button className="navbar-toggler" type="button" onClick={() => setIsOpen(!isOpen)}>
             <FaBars style={{ color: 'white' }} /> 
-          </button>
-          <button className="navbar-toggler" type="button" onClick={() => setIsOpen(!isOpen)}>
-            <FaBars style={{ color: 'white' }} /> 
-          </button>
+          </button>         
 
           <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarNav">
             <ul className="navbar-nav mx-auto">
@@ -70,7 +67,6 @@ const Navbar = () => {
                 <NavLink className="nav-link" to='/Inicio/HomeUno' exact>Inicio</NavLink> 
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to='/Solicitar'>Solicitudes</NavLink>
                 <NavLink className="nav-link" to='/Solicitar'>Solicitudes</NavLink>
               </li>
               <div className="dropdown-container" ref={dropdownRef}>

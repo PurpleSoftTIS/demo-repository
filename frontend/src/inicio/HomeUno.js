@@ -7,12 +7,7 @@ const HomeUno = () => {
   return (
     <div className="container mt-5">
       <div className="row">
-        <div className="col-md-6">
-          <div className="row">            
-            <div className="col-6 pl-0">
-              <img src={imagenFacu} alt="Imagen 2" className="img-fluid imagen img-grande"/>
-            </div>
-          </div>
+        <div className="col-md-6">          
           <div className="row mt-3">           
           </div>
         </div>
@@ -25,6 +20,11 @@ const HomeUno = () => {
             <Link to="/Solicitar">
               <button className="btn btn-solicitudes" >Solicitudes</button>
             </Link>
+          </div>
+          <div className="row">            
+            <div className="col-6 pl-0">
+              <img src={imagenFacu} alt="Imagen 2" className="img-fluid imagen img-grande"/>
+            </div>
           </div>
         </div>
       </div>
