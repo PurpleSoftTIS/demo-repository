@@ -5,11 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Ubicacion extends Model
+class Hora extends Model
 {
     use HasFactory;
-    protected $table = 'ubicacion';
-    protected $fillable =[
-        "edificio"        
-    ];
 }
