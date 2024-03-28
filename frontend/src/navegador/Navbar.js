@@ -61,10 +61,7 @@ const Navbar = () => {
           <button className="navbar-toggler" type="button" onClick={() => setIsOpen(!isOpen)}>
             <FaBars style={{ color: 'white' }} /> 
           </button>
-          
-           
-            
-          
+
           <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarNav">
             <ul className="navbar-nav mx-auto">
               <li className="nav-item">
