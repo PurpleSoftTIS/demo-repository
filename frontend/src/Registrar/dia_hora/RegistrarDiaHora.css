@@ -10,7 +10,6 @@
                 0px 0px 0px 1px rgba(0, 0, 0, 0); 
 }
 
-
  .square3 {
         width: 750px; 
        height: 100px; 
@@ -25,9 +24,9 @@
           height: 50px;  
          font-size: 15px; /* Cambia el tamaño de la fuente del botón */
          padding: 10px 20px; /* Ajusta el relleno del botón */
-         background-color:#2A2040
+         background-color:#010A26
         ; /* Cambia el color de fondo del botón a verde */
-         border-color: #2A2040; /* Cambia el color del borde del botón a verde */
+         border-color: #010A26; /* Cambia el color del borde del botón a verde */
       }
          h4 {
      margin-top: 0px; /* Ajusta el margen superior */
@@ -67,7 +66,7 @@
     position: relative; }
 
 .form-check-input:checked + .form-check-label::before {
-    background-color: #2A2040;
+    background-color: #010A26;
 }
 
 .form-check-input:checked + .form-check-label::before {
@@ -124,7 +123,8 @@
         
         }
         .selected {
-    background-color:  #66578b; /* Cambiar el color de fondo cuando esté seleccionado */
+    background-color:  #010A26; /* Cambiar el color de fondo cuando esté seleccionado */
+    color: #fff;
 }
           
           
