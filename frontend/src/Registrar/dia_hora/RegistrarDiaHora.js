@@ -143,7 +143,7 @@ const RegistrarDiaHora = () => {
          <div className="container text-center mt-5">
           <div className="square mx-auto my-5 text-center ">
          
-      <h4>Días y Horas Hábiles Para el Ambiente</h4>
+      <h4>Días y Horas Hábiles para el Ambiente</h4>
     
             <div className="row justify-content-center">
               <div className="col-md-6 text-center ">
