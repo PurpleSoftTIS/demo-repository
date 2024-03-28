@@ -58,6 +58,8 @@ const Navbar = () => {
           </div>
           <button className="navbar-toggler" type="button" onClick={() => setIsOpen(!isOpen)}>
             <FaBars style={{ color: 'white' }} /> 
+          <button className="navbar-toggler" type="button" onClick={() => setIsOpen(!isOpen)}>
+            <FaBars style={{ color: 'white' }} /> 
           </button>
           
            
@@ -70,6 +72,7 @@ const Navbar = () => {
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to='/Solicitar'>Solicitudes</NavLink>
+                <NavLink className="nav-link" to='/Solicitar'>Solicitudes</NavLink>
               </li>
               <div className="dropdown-container" ref={dropdownRef}>
                   <button className="nav-link dropdown-toggle" onClick={toggleDropdown} style={{ cursor: 'pointer' }}>Registrar</button>
@@ -79,7 +82,16 @@ const Navbar = () => {
                           <NavLink className="opciones" to='/Registro/Docentes' activeClassName="active">Docente</NavLink>
                           <NavLink className="opciones" to='/Registro/Materias' activeClassName="active">Materia</NavLink>
                       </div>
+              <div className="dropdown-container" ref={dropdownRef}>
+                  <button className="nav-link dropdown-toggle" onClick={toggleDropdown} style={{ cursor: 'pointer' }}>Registrar</button>
+                  {showDropdown && (
+                      <div className="menu">
+                          <NavLink className="opciones" to='/Registro/Ambientes' activeClassName="active">Ambiente</NavLink>
+                          <NavLink className="opciones" to='/Registro/Docentes' activeClassName="active">Docente</NavLink>
+                          <NavLink className="opciones" to='/Registro/Materias' activeClassName="active">Materia</NavLink>
+                      </div>
                   )}
+              </div>
               </div>
             </ul>
           </div>
@@ -100,6 +112,8 @@ const Navbar = () => {
       </nav>
     </div>
   )
+  )
 }
 
+export default Navbar;
 export default Navbar;

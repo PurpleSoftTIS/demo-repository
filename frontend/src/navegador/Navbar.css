@@ -6,6 +6,11 @@
      color: white;
      font-size: 20px;
      font-family: inherit;
+.navbar-nav .nav-link,
+.navbar-nav .dropdown-toggle {
+     color: white;
+     font-size: 20px;
+     font-family: inherit;
 }
 .navbar-nav .nav-link:hover,
 .navbar-nav .dropdown-toggle:hover,
@@ -56,11 +61,25 @@
     position: absolute;
     top: 0;
     right: 0;
+.burger-menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    right: 0;
     background-color: #271d3b;
+    padding: 20px;
     padding: 20px;
 }
 .burger-menu .nav-link {
+.burger-menu .nav-link {
     color: white;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+.dropdown-container {
+    position: relative; 
+    display: inline-block;
     font-size: 20px;
     margin-bottom: 10px;
 }
@@ -95,6 +114,7 @@
     text-decoration: none;
     margin-top: 10px;
     margin-bottom: 10px;
+    margin-left: 10px;
     margin-left: 10px;
     width: 130px;
 }
