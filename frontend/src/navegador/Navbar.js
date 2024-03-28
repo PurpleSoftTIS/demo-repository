@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import './Navbar.css';
 import { NavLink } from 'react-router-dom';
 import logo from '../assets/LogoDefinitivo.jpeg';
+import userLogo from '../assets/IcoAdmi.png';
+
 import { FaBars } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -9,7 +11,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
-  
+  const [showSesion, setShwoSesion] = useState(false);
   useEffect(() => {
 
     const handleClickOutside = (event) => {
@@ -37,6 +39,10 @@ const Navbar = () => {
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
+  const toggleSesion = ()=>{
+    setShwoSesion(!showSesion);
+
+  };
   
   return (
     <div className='barraNavAdmi'>
@@ -47,29 +53,22 @@ const Navbar = () => {
              <img className="" src={logo} alt="logo" width='60px' height='60px' />
             </NavLink>
             <div className='nombre_empresa'>
-              <p id='nomb'>SIRA-FCYT</p>
+              SIRA-FCYT
             </div>
           </div>
           <button className="navbar-toggler" type="button" onClick={() => setIsOpen(!isOpen)}>
             <FaBars style={{ color: 'white' }} /> 
+          <button className="navbar-toggler" type="button" onClick={() => setIsOpen(!isOpen)}>
+            <FaBars style={{ color: 'white' }} /> 
           </button>
-          {isOpen && (
-            <div className='InicioSesion'>
-              <button className="usuario">
-                <img className="" src={logo} alt="logo" width='60px' height='60px' />
-              </button>
-              <button>
-                <p id="admi">Administrador</p>
-              </button>
-            </div>
-            
-          )}
+
           <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarNav">
             <ul className="navbar-nav mx-auto">
               <li className="nav-item">
                 <NavLink className="nav-link" to='/Inicio/HomeUno' exact>Inicio</NavLink> 
               </li>
               <li className="nav-item">
+                <NavLink className="nav-link" to='/Solicitar'>Solicitudes</NavLink>
                 <NavLink className="nav-link" to='/Solicitar'>Solicitudes</NavLink>
               </li>
               <div className="dropdown-container" ref={dropdownRef}>
@@ -80,20 +79,38 @@ const Navbar = () => {
                           <NavLink className="opciones" to='/Registro/Docentes' activeClassName="active">Docente</NavLink>
                           <NavLink className="opciones" to='/Registro/Materias' activeClassName="active">Materia</NavLink>
                       </div>
+              <div className="dropdown-container" ref={dropdownRef}>
+                  <button className="nav-link dropdown-toggle" onClick={toggleDropdown} style={{ cursor: 'pointer' }}>Registrar</button>
+                  {showDropdown && (
+                      <div className="menu">
+                          <NavLink className="opciones" to='/Registro/Ambientes' activeClassName="active">Ambiente</NavLink>
+                          <NavLink className="opciones" to='/Registro/Docentes' activeClassName="active">Docente</NavLink>
+                          <NavLink className="opciones" to='/Registro/Materias' activeClassName="active">Materia</NavLink>
+                      </div>
                   )}
+              </div>
               </div>
             </ul>
           </div>
-          {!isOpen && (
-            <button className="usuario">
-              <img className="" src={logo} alt="logo" width='60px' height='70px' />
-              <p id="admi">Administrador</p>
-            </button>
-          )}
+          
+            <div className='InicioSesion'>
+              <button className="usuario" onClick={toggleSesion} >
+                <img className="" src={userLogo} alt="logo" width='50px' height='50px' />
+              </button>
+              <button className='Rol'onClick={toggleSesion}>Administrador
+                {showSesion && (
+                      <div className="sesion">
+                          <NavLink className="opciones" to='/' activeClassName="active">Cerrar sesion</NavLink>                          
+                      </div>
+                  )}
+              </button>
+            </div>          
         </div>
       </nav>
     </div>
   )
+  )
 }
 
+export default Navbar;
 export default Navbar;

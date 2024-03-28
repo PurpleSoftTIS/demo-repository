@@ -71,9 +71,6 @@ class DatabaseSeeder extends Seeder
         ];
         
         Usuario::insert($usuario);
-        Docente::insert($docente);
-    
-    }
-
-    
+        Docente::insert($docente);    
+    }    
 }

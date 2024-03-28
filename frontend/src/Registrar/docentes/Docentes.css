@@ -26,6 +26,9 @@ body {
 .line {
   position: relative;
 }
+.checkout1{
+  background-color: #010A26;
+}
 .line {
   width: 101px;
   border-top: 1px solid #d1d5db;
@@ -112,7 +115,7 @@ body {
   border: 1px solid #2a2040;
   box-sizing: border-box;
 }
-.input2 {
+.input2 , .input1{
   flex: 1;
   border-radius: 6px;
   display: flex;
@@ -144,7 +147,7 @@ body {
   border-radius: 6px;
 }
 .input15_2 {
-  margin: 0;
+  position: relative;
   height: 17px;
   width: 23px;
   border-radius: 2px;
@@ -176,7 +179,6 @@ body {
   padding: 16px;
 }
 .input15 {
-  margin: 0;
   width: 16px;
   position: relative;
   border-radius: 2px;
@@ -184,6 +186,7 @@ body {
     0 5px 30px -5px rgba(160, 160, 160, 0.1);
   border: 1px solid #d1d5db;
   box-sizing: border-box;
+  left: 50%;
   height: 16px;
 }
 .input15:focus {
@@ -276,7 +279,7 @@ body {
   justify-content: center;
 }
 .button:hover {
-  background-color: #66578b;
+  background-color: #050259;
 }
 .checkout1,
 .contact-6 {
@@ -308,7 +311,7 @@ body {
   text-align: left;
   font-size: 14px;
   color: #4b5563;
-  font-family: Inter;
+  font-family: inherit;
 }
 @media screen and (max-width: 960px) {
   .input2 {
@@ -359,4 +362,13 @@ body {
     padding-right: 40px;
     box-sizing: border-box;
   }
+}
+.error {
+  color: red;
+  font-family: inherit;
+  font-size: 16px;
+  border-radius: 12px 12px 12px 12px;
+  background-color: #f9fafb;
+  text-align: justify;
+
 }
