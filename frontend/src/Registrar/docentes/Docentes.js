@@ -8,6 +8,7 @@ const Docentes = () => {
   const [apellidoMaterno, setApellidoMaterno] = useState("");
   const [correo, setCorreo] = useState("");
   const [codigoDocente, setCodigoDocente] = useState("");
+
   const [errorNombres, setErrorNombres] = useState("");
   const [errorApellidoPaterno, setErrorApellidoPaterno] = useState("");
   const [errorApellidoMaterno, setErrorApellidoMaterno] = useState("");
@@ -46,6 +47,7 @@ const Docentes = () => {
       }else{
         setErrorNombres("");
       }
+      setErrorNombres("");
     }
     if (!nombrePattern.test(apellidoPaterno)) {
       setErrorApellidoPaterno("❌Por favor, ingresa solo caracteres alfabéticos y espacios en el apellido paterno");
@@ -57,6 +59,7 @@ const Docentes = () => {
       }else{
         setErrorNombres("");
       }
+      setErrorNombres("");
     }
     if (!nombrePattern.test(apellidoMaterno)) {
       setErrorApellidoMaterno("❌ Por favor, ingresa solo caracteres alfabéticos y espacios en el apellido materno");
@@ -67,7 +70,9 @@ const Docentes = () => {
         return;
       }else{
         setErrorNombres("");
-      }    }
+      }    
+      setErrorNombres("");
+    }
 
       if (!codigoDocentePattern.test(codigoDocente)) {
         setErrorCodigo("❌ El código docente solo puede contener números.");
@@ -144,7 +149,7 @@ const Docentes = () => {
     };
   }, []);
 
-
+  
   return (
     <div className="contact-6">
       <div className="line" />

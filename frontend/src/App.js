@@ -27,7 +27,6 @@ function App() {
               <Route path='/Registro/Materias' element={<RegistrarMateria />} />
               <Route path='/Registro/Docentes' element={<Docentes />} /> 
               <Route path='/Registro/DiaHora' element={<RegistrarDiaHora />} /> 
-
             </Routes>
           </div>
         }/>        
