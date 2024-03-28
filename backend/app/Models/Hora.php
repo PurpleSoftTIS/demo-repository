@@ -8,9 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Hora extends Model
 {
     use HasFactory;
+    
+    protected $primaryKey = 'ID_HORA';
     protected $table = 'hora';
-    protected $fillable =[
-        "hora_inicio",
-        "hora_fin"        
-    ];
+ 
 }

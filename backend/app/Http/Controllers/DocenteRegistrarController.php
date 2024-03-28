@@ -8,7 +8,7 @@ use App\Models\Docente;
 
 class DocenteRegistrarController extends Controller
 {
-    public function registrarDocente(Request $request)
+    public function registrar(Request $request)
     {
         try {
             // Crear un nuevo usuario
@@ -21,7 +21,7 @@ class DocenteRegistrarController extends Controller
 
             // Crear un nuevo docente
             $docente = new Docente();
-            $docente->id_usuario = $usuario->id; // Asignar el ID del usuario creado
+            $docente->id_usuario = $usuario->id_usuario; // Asignar el ID del usuario creado
             $docente->tipo_docente = $request->input('tipo');
             $docente->codigo_docente = $request->input('codigoDocente');
             $docente->estado_docente = 'activo'; // Puedes definir el estado aquí

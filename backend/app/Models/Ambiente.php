@@ -8,14 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Ambiente extends Model
 {
     use HasFactory;
+    public $timestamps = false;
+    protected $primaryKey = 'ID_AMBIENTE';
     protected $table = 'ambiente';
-    protected $fillable =[
-        "id_ubicacion",
-        "id_dia",
-        "nombre_ambiente",
-        "capacidad",        
-        "tipo_ambiente",
-        "numero_piso",
-        "estado_ambiente"
-    ];
+ 
 }

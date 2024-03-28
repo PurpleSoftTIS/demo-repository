@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\DocenteRegistrarController;
+
 use App\Http\Controllers\AmbienteController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Http\Request;
@@ -21,11 +22,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
 //Obtener Datos
 
 Route::get('/docentes', [DocenteController::class, 'index']);
 Route::get('/usuarios', [UsuarioController::class, 'index']);
 //Registrar Datos
 
-Route::post('/docentesRegistrar', [DocenteRegistrarController::class, 'resgistrarDocente']);
+Route::post('/docentesRegistrar', [DocenteRegistrarController::class, 'registrar']);
 Route::post('/registrarambiente', [AmbienteController::class, 'guardarAmbiente']);
+

@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Dia extends Model
 {
     use HasFactory;
+    
+    protected $primaryKey = 'ID_DIA';
     protected $table = 'dia';
-    protected $fillable = [
-        "nombre_dia"
-    ];
+ 
 }
