@@ -29,9 +29,8 @@ const HomeUno = () => {
               Ciencias y Tecnologia</p>
           </div>
         
-          <div>
-          
-                <Link to="/solicitudes" style={{backgroundColor: '#0d0d46', color: 'white'}} className="btn">Solicitudes</Link>
+          <div>          
+                <Link to="/Solicitar" style={{backgroundColor: '#0d0d46', color: 'white'}} className="btn">Solicitudes</Link>
           </div>
  
         </div>
