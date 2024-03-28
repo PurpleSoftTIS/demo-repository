@@ -6,6 +6,7 @@
      color: white;
      font-size: 20px;
      font-family: inherit;
+}
 .navbar-nav .nav-link,
 .navbar-nav .dropdown-toggle {
      color: white;
@@ -55,12 +56,7 @@
 .logo-link {
     text-decoration: none;
 }
-.burger-menu {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 0;
-    right: 0;
+
 .burger-menu {
     display: flex;
     flex-direction: column;
@@ -71,7 +67,6 @@
     padding: 20px;
     padding: 20px;
 }
-.burger-menu .nav-link {
 .burger-menu .nav-link {
     color: white;
     font-size: 20px;
