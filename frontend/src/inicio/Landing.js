@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import "./Landing.css";
 import { Link } from 'react-router-dom';
 import logo from "../assets/logoSIS.png"
+import logop from "../assets/logosol-1@2x.png"
 
 const Landing = () => {
   const onPricingClick = useCallback(() => {
@@ -67,7 +68,7 @@ const Landing = () => {
           <div className="design">
             <img className="vector-icon" alt="" src="/vector.svg" />
           </div>
-          <img className="frame-icon" alt="" src="/frame.svg" />
+          <img className="logo-sol-1-icon" alt="" src={logop} />
         </div>
       </div>
       <footer className="image" />
