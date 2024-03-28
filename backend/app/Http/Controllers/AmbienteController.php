@@ -79,4 +79,11 @@ class AmbienteController extends Controller
         return response()->json(['error' => 'Error al guardar la ubicación y el ambiente'], 500);
     }
 }
+public function obtenerambientes (){
+
+
+
+    
+}
+
 }
