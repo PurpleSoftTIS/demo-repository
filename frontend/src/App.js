@@ -7,24 +7,32 @@ import Ambientes from './Registrar/ambientes/Ambientes';
 import Docentes from './Registrar/docentes/Docentes';
 import Navbar from './navegador/Navbar';
 import RegistrarMateria from './Registrar/materias/RegistrarMateria';
+import Landing from './inicio/Landing';
+import LoginForm from './Login/LoginForm';
 import RegistrarDiaHora from './Registrar/dia_hora/RegistrarDiaHora';
 function App() {
   return (
     <Router>
-    <div>
-      <Navbar />
       <Routes>
-        <Route path='/' element={<HomeUno />} />
-        <Route path='/Solicitar' element={<Solicitar />} />
-        <Route path='/Registro/Ambientes' element={<Ambientes />} />
-        <Route path='/Registro/Materias' element={<RegistrarMateria />} />
-        <Route path='/Registro/Docentes' element={<Docentes />} />
-        <Route path='/Registro/DiaHora' element={<RegistrarDiaHora />} />
+        <Route path='/' element={<Landing />} />
+        <Route path='/Login' element={<LoginForm />} />
+        
+        <Route path='*' element={
+            <div>
+            <Navbar />
+            <Routes>
+              <Route path='/Inicio/HomeUno' element={<HomeUno/>}/>  
+              <Route path='/Solicitar' element={<Solicitar />} />
+              <Route path='/Registro/Ambientes' element={<Ambientes />} />
+              <Route path='/Registro/Materias' element={<RegistrarMateria />} />
+              <Route path='/Registro/Docentes' element={<Docentes />} /> 
+              <Route path='/Registro/DiaHora' element={<RegistrarDiaHora />} /> 
 
+            </Routes>
+          </div>
+        }/>        
       </Routes>
-    </div>
-  </Router>
-  
+    </Router>
   );
 }
 

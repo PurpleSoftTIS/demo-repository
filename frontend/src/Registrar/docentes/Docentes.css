@@ -73,7 +73,7 @@ body {
 }
 .input1:hover,
 .input3:hover {
-  border: 1px solid #2a2040;
+  border: 1px solid #010a26;
   box-sizing: border-box;
 }
 .input {
@@ -109,7 +109,7 @@ body {
   color: #1f2937;
 }
 .input3:focus {
-  border: 1px solid #2a2040;
+  border: 1px solid #010a26;
   box-sizing: border-box;
 }
 .input2 {
@@ -187,11 +187,11 @@ body {
   height: 16px;
 }
 .rectangle-input:focus {
-  background-color: #2a2040;
+  background-color: #010a26;
 }
 .rectangle-input:checked {
-  background-color: #2a2040;
-  border: 1px solid #2a2040;
+  background-color: #010a26;
+  border: 1px solid #010a26;
   box-sizing: border-box;
 }
 .frame-container,
@@ -228,7 +228,7 @@ body {
   align-items: center;
   padding: 0 8px 25px;
   box-sizing: border-box;
-  color: #2a2040;
+  color: #010a26;
 }
 .billing-info,
 .input-container {
@@ -267,7 +267,7 @@ body {
   cursor: pointer;
   border: 0;
   padding: 16px 20px;
-  background-color: #2a2040;
+  background-color: #050259;
   align-self: stretch;
   border-radius: 6px;
   display: flex;
@@ -276,7 +276,7 @@ body {
   justify-content: center;
 }
 .button:hover {
-  background-color: #66578b;
+  background-color: #010a26;
 }
 .checkout1,
 .contact-6 {
@@ -359,4 +359,13 @@ body {
     padding-right: 40px;
     box-sizing: border-box;
   }
+}
+.error {
+  color: red;
+  font-family: inherit;
+  font-size: 16px;
+  border-radius: 12px 12px 12px 12px;
+  background-color: #f9fafb;
+  text-align: justify;
+
 }

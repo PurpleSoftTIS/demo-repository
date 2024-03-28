@@ -19,6 +19,8 @@ class CreateAmbienteTable extends Migration
             $table->string('NOMBRE_AMBIENTE', 10);
             $table->integer('CAPACIDAD');
             $table->string('ESTADO_AMBIENTE', 15)->nullable();
+            $table->string('TIPO_AMBIENTE',30);
+            $table->string('NUMERO_PISO',10);
             $table->timestamps(); // Añadimos created_at y updated_at
 
         });
