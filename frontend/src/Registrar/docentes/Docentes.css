@@ -157,23 +157,17 @@ body {
 .cotton-blend {
   flex: 1;
   position: relative;
-  line-height: 14px;
+  line-height: 16px;
+  color: #1f2937;
 }
-.frame-group,
-.frame-wrapper {
+.frame-group {
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
 .frame-group {
   align-self: stretch;
-  flex-direction: row;
-  gap: 16px;
-}
-.frame-wrapper {
-  flex: 1;
-  flex-direction: column;
-  padding: 16px;
+  gap: 0px;
 }
 .rectangle-input {
   margin: 0;
@@ -310,6 +304,35 @@ body {
   color: #4b5563;
   font-family: Inter;
 }
+.input15.radio-personalizado {
+  display: none;
+}
+.input15.radio-personalizado + label {
+  position: relative;
+  padding-left: 25px;
+}
+.input15.radio-personalizado + label:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #aaa;
+  border-radius: 50%;
+  background-color: #fff;
+  cursor: pointer;
+}
+.input15.radio-personalizado:checked + label:before {
+  background-color: #050259; 
+}
+.disabled-input input {
+  background-color: #f0f0f0; 
+  color: #888; 
+  border: 1px solid #ccc; 
+  pointer-events: none;
+  user-select: none;
+}
 @media screen and (max-width: 960px) {
   .input2 {
     flex: unset;
@@ -358,6 +381,9 @@ body {
     padding-left: 40px;
     padding-right: 40px;
     box-sizing: border-box;
+  }
+  .cotton-blend {
+    margin-left: 10px;
   }
 }
 .error {
