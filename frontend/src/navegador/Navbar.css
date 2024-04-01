@@ -36,7 +36,7 @@
 
 }
 .usuario{
-    background-color: #0d0d46;
+    background-color: #00000000;
     color: white;
     font-size: 25px;
     border: none;
@@ -90,16 +90,20 @@
     border-radius: 10%;
     z-index: 9999; 
 }
-.sesion{
+.sesion {
     position: absolute;
-    top: calc(100% + 0px);
-    height: 50px;
+    top: calc(100% + 0px); 
+    height: 50px; 
+    width: 140px; 
     text-align: center;
     background: rgb(11, 11, 119);
     border-radius: 10%;
     z-index: 9999;
     margin-top: 10px;
     margin-left: -60px;
+    line-height: 25px; 
+    text-align: left;
+    padding-left: 7px;
 }
 .opciones{
     display: block; 
@@ -115,7 +119,6 @@
 }
 
 .barraNavAdmi{
-    height: 70px;
     background:
       conic-gradient(from 150deg at 50% 33%,#0000,#f2f0f2 .5deg 60deg,#0000 60.5deg) 
         calc(32px/2) calc(32px/1.4),
@@ -130,15 +133,18 @@
 }
 .Rol{
     text-decoration: none;
-    background-color: #0d0d46;
+    background-color: #00000000;
     color: white;
     font-size: 20px;
-    
     height: 50px;
     border: none;
-    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 5px;
 }
-.Rol:hover{
+.InicioSesion.active, .InicioSesion:hover {
+    text-decoration: none !important;
     font-size: 20px ;
-    font-weight: bold;
+    background-color: #010a26;
+    border-radius: 10px;
 }
+

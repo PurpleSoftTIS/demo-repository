@@ -1,10 +1,8 @@
-// Navbar.js
 import React, { useState, useEffect, useRef } from 'react';
 import './Navbar.css';
 import { NavLink } from 'react-router-dom';
 import logo from '../assets/LogoDefinitivo.jpeg';
 import userLogo from '../assets/IcoAdmi.png';
-
 import { FaBars } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -13,23 +11,41 @@ const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
   const [showSesion, setShwoSesion] = useState(false);
+  const sesionRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(true);
+  
+  const checkVisibility = () => {
+    if (window.innerWidth > 990) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  };
+
   useEffect(() => {
 
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setShowDropdown(false); 
       }
+      if (sesionRef.current && !sesionRef.current.contains(event.target)) {
+        setShwoSesion(false);
+      }
     };
 
     document.body.addEventListener('click', handleClickOutside);
 
     const handleResize = () => {
-      if (window.innerWidth > 991) {
+      if (window.innerWidth > 990) {
         setIsOpen(false);
+        setIsVisible(true);
+      }else{
+        setIsVisible(false);
       }
     };
 
     window.addEventListener('resize', handleResize);
+    checkVisibility();
 
     return () => {
       document.body.removeEventListener('click', handleClickOutside);
@@ -57,14 +73,27 @@ const Navbar = () => {
               SIRA-FCYT
             </div>
           </div>
-
+          {!isVisible &&(
+            <div className={`InicioSesion ${showSesion ? 'active' : ''}`} ref={sesionRef}>
+              <button className="usuario" onClick={toggleSesion} >
+                <img className="" src={userLogo} alt="logo" width='50px' height='50px' />
+              </button>
+              <button className='Rol'onClick={toggleSesion}>
+                {showSesion && (
+                      <div className="sesion">
+                          <NavLink className="opciones" to='/' activeclassname="active">Cerrar sesion</NavLink>                          
+                      </div>
+                  )}
+              </button>
+            </div> 
+          )}
           <button className="navbar-toggler" type="button" onClick={() => setIsOpen(!isOpen)}>
             <FaBars style={{ color: 'white' }} /> 
           </button>
           <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarNav">
             <ul className="navbar-nav mx-auto">
               <li className="nav-item">
-                <NavLink className="nav-link" to='/inicio/HomeUno' exact>Inicio</NavLink> 
+                <NavLink className="nav-link" to='/inicio/HomeUno' exact={true.toString()}>Inicio</NavLink> 
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to='/Solicitar'>Solicitudes</NavLink>
@@ -73,26 +102,28 @@ const Navbar = () => {
                   <button className="nav-link dropdown-toggle" onClick={toggleDropdown} style={{ cursor: 'pointer' }}>Registrar</button>
                   {showDropdown && (
                       <div className="menu">
-                          <NavLink className="opciones" to='/Registro/Ambientes' activeClassName="active">Ambiente</NavLink>
-                          <NavLink className="opciones" to='/Registro/Docentes' activeClassName="active">Docente</NavLink>
-                          <NavLink className="opciones" to='/Registro/Materias' activeClassName="active">Materia</NavLink>
+                          <NavLink className="opciones" to='/Ambientes' activeclassname="active">Ambiente</NavLink>
+                          <NavLink className="opciones" to='/Registro/Docentes' activeclassname="active">Docente</NavLink>
+                          <NavLink className="opciones" to='/Registro/Materias' activeclassname="active">Materia</NavLink>
                       </div>              
                   )}              
               </div>
             </ul>
           </div>          
-            <div className='InicioSesion'>
+          {isVisible &&(
+            <div className={`InicioSesion ${showSesion ? 'active' : ''}`} ref={sesionRef}>
               <button className="usuario" onClick={toggleSesion} >
                 <img className="" src={userLogo} alt="logo" width='50px' height='50px' />
               </button>
               <button className='Rol'onClick={toggleSesion}>Administrador
                 {showSesion && (
                       <div className="sesion">
-                          <NavLink className="opciones" to='/' activeClassName="active">Cerrar sesion</NavLink>                          
+                          <NavLink className="opciones" to='/' activeclassname="active">Cerrar sesion</NavLink>                          
                       </div>
                   )}
               </button>
-            </div>          
+            </div> 
+          )}           
         </div>
       </nav>
     </div>

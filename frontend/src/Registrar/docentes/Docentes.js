@@ -1,5 +1,4 @@
-import React, { useEffect,useState } from "react";
-
+import React, { useEffect, useState } from "react";
 import "./Docentes.css";
 
 const Docentes = () => {
@@ -8,32 +7,33 @@ const Docentes = () => {
   const [apellidoMaterno, setApellidoMaterno] = useState("");
   const [correo, setCorreo] = useState("");
   const [codigoDocente, setCodigoDocente] = useState("");
+  const [tipo, setTipo] = useState("De Base"); // Estado para controlar el tipo seleccionado
+  const [codigoDocenteDisabled, setCodigoDocenteDisabled] = useState(false);
 
   const [errorNombres, setErrorNombres] = useState("");
   const [errorApellidoPaterno, setErrorApellidoPaterno] = useState("");
   const [errorApellidoMaterno, setErrorApellidoMaterno] = useState("");
   const [errorInconpleto, setErrorIncompleto] = useState("");
-  const [errorCodigo,setErrorCodigo] = useState("");
- 
-  const handleRegistroDocente = (e) => {
+  const [errorCodigo, setErrorCodigo] = useState("");
 
+  const handleRegistroDocente = (e) => {
     e.preventDefault();
     // Obtener los valores de los campos del formulario
     const nombres = document.querySelector(".input11").value.trim();
     const apellidoPaterno = document.querySelector(".input12").value.trim();
     const apellidoMaterno = document.querySelector(".input13").value.trim();
     const correo = document.querySelector(".input14").value.trim();
-    const tipo = document.querySelector(".input15").value.trim();
     const codigoDocente = document.querySelector(".input16").value.trim();
 
-    if (!nombres || !apellidoPaterno || !apellidoMaterno || !correo || !tipo || !codigoDocente) {
+    if (!nombres || !apellidoPaterno || !apellidoMaterno || !correo || !tipo || (tipo === "De Base" && !codigoDocente)) {
       setErrorIncompleto("❌ Por favor, completa todos los campos del formulario");
       return;
-    }else{
+    } else {
       setErrorIncompleto("");
-      setErrorNombres(""); 
+      setErrorNombres("");
       setErrorCodigo("");
-    }    
+    }
+
     const nombrePattern = /^[a-zA-Z\s]*$/;
     const codigoDocentePattern = /^\d+$/;
 
@@ -41,10 +41,10 @@ const Docentes = () => {
       setErrorNombres("❌ Por favor, ingresa solo caracteres alfabéticos y espacios en el nombre");
       return;
     } else {
-      if(nombres.length > 30){
+      if (nombres.length > 30) {
         setErrorNombres("❌ Su nombre no debe exceder los 30 caracteres");
         return;
-      }else{
+      } else {
         setErrorNombres("");
       }
       setErrorNombres("");
@@ -53,10 +53,10 @@ const Docentes = () => {
       setErrorApellidoPaterno("❌Por favor, ingresa solo caracteres alfabéticos y espacios en el apellido paterno");
       return;
     } else {
-      if(nombres.length > 30){
+      if (nombres.length > 30) {
         setErrorNombres("❌ Su apellido apterno no debe exceder los 30 caracteres");
         return;
-      }else{
+      } else {
         setErrorNombres("");
       }
       setErrorNombres("");
@@ -65,21 +65,21 @@ const Docentes = () => {
       setErrorApellidoMaterno("❌ Por favor, ingresa solo caracteres alfabéticos y espacios en el apellido materno");
       return;
     } else {
-      if(nombres.length > 30){
+      if (nombres.length > 30) {
         setErrorNombres("❌ Su apellido materno no debe exceder los 30 caracteres");
         return;
-      }else{
+      } else {
         setErrorNombres("");
-      }    
+      }
       setErrorNombres("");
     }
 
-      if (!codigoDocentePattern.test(codigoDocente)) {
-        setErrorCodigo("❌ El código docente solo puede contener números.");
-        return;
-      } else {
-        setErrorCodigo("");
-      }
+    if ((tipo === "De Base" &&!codigoDocentePattern.test(codigoDocente))) {
+      setErrorCodigo("❌ El código docente solo puede contener números.");
+      return;
+    } else {
+      setErrorCodigo("");
+    }
     const datosDocente = {
       nombres,
       apellidoPaterno,
@@ -115,9 +115,9 @@ const Docentes = () => {
       .catch(error => {
         console.error("Error al registrar el ambiente:", error);
         // Aquí puedes mostrar un mensaje de error al usuario
-      });    
+      });
 
-  }; 
+  };
 
   useEffect(() => {
     const scrollAnimElements = document.querySelectorAll(
@@ -148,34 +148,40 @@ const Docentes = () => {
       }
     };
   }, []);
-
   
+  const handleTipoChange = (e) => {
+    setTipo(e.target.value);
+    if (e.target.value === "Invitado") {
+      setCodigoDocente("");
+      setCodigoDocenteDisabled(true);
+    } else {
+      setCodigoDocenteDisabled(false);
+    }
+  };
+
   return (
     <div className="contact-6">
       <div className="line" />
-      <from className="billing-info" data-animate-on-scroll>
+      <form className="billing-info" data-animate-on-scroll>
         <div className="checkout-wrapper">
           <div className="checkout">Registro de Docentes</div>
         </div>
         <div className="input-parent">
           <div className="input">
             <div className="label-here">Nombres</div>
-            <input className="input11" placeholder="Nombres" type="text" value={nombres} onChange={(e) => setNombres(e.target.value)}/>
+            <input className="input11" placeholder="Nombres" type="text" value={nombres} onChange={(e) => setNombres(e.target.value)} />
             {errorNombres && <p className="error">{errorNombres}</p>}
-
           </div>
           <div className="input-group">
             <div className="input2">
               <div className="label-here">Apellido Paterno</div>
-              <input className="input12" placeholder="ApPaterno" type="text" value={apellidoPaterno} onChange={(e) => setApellidoPaterno(e.target.value)}/>
+              <input className="input12" placeholder="ApPaterno" type="text" value={apellidoPaterno} onChange={(e) => setApellidoPaterno(e.target.value)} />
               {errorApellidoPaterno && <p className="error">{errorApellidoPaterno}</p>}
-
             </div>
             <div className="input2">
               <div className="label-here">Apellido Materno</div>
-              <input className="input13" placeholder="ApMaterno" type="text" value={apellidoMaterno} onChange={(e) => setApellidoMaterno(e.target.value)}/>
+              <input className="input13" placeholder="ApMaterno" type="text" value={apellidoMaterno} onChange={(e) => setApellidoMaterno(e.target.value)} />
               {errorApellidoMaterno && <p className="error">{errorApellidoMaterno}</p>}
-
             </div>
           </div>
           <div className="input">
@@ -194,30 +200,28 @@ const Docentes = () => {
           </div>
           <div className="filter-02">
             <div className="frame-parent">
-              <div className="frame-wrapper">
+              <div className="frame-container">
                 <div className="frame-group">
-                  <input className="input15_2" type="checkbox" />
-                  <div className="cotton-blend">De Base</div>
+                  <input type="radio" id="deBase" name="tipo" value="De Base" className="input15 radio-personalizado" checked={tipo === "De Base"} onChange={handleTipoChange} />
+                  <label htmlFor="deBase" className="cotton-blend"><i className="fas fa-check"></i> De Base</label>
                 </div>
               </div>
               <div className="frame-container">
                 <div className="frame-group">
-                  <input className="input15" type="checkbox" />
-                  <div className="cotton-blend">Invitado</div>
+                  <input type="radio" id="invitado" name="tipo" value="Invitado" className="input15 radio-personalizado" checked={tipo === "Invitado"} onChange={handleTipoChange} />
+                  <label htmlFor="invitado" className="cotton-blend"><i className="fas fa-check"></i> Invitado</label>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="input">
+        <div className={`input ${codigoDocenteDisabled ? "disabled-input" : ""}`}>
           <div className="label-here">Codigo Docente</div>
-          <input className="input16" placeholder="19849465" type="text" value={codigoDocente} onChange={(e) => setCodigoDocente(e.target.value)} />
+          <input className="input16" placeholder="19849465" type="text" value={codigoDocente} disabled={tipo === "Invitado"} onChange={(e) => setCodigoDocente(e.target.value)} />
+          {errorCodigo && <p className="error">{errorCodigo}</p>}
         </div>
-        {errorCodigo && <p className="error">{errorCodigo}</p>}
-
         {errorInconpleto && <p className="error">{errorInconpleto}</p>}
-
-      </from>
+      </form>
       <div className="checkout1" data-animate-on-scroll>
         <button className="button" onClick={handleRegistroDocente}>
           <div className="button-cta">Registrar Docente</div>
