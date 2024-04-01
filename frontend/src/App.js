@@ -15,6 +15,7 @@ import ListaSolicitudes from './ListaSolicitudes/ListaSolicitudes';
 import { Reservar } from './Usuario/Resevar/Reservar';
 import { Solicitar } from './Usuario/Solicitar/Solicitar';
 import { Ayuda } from './Usuario/Ayuda/Ayuda';
+import ListaAulas from './Listados/ListadoAmbientes/ListaAulas';
 
 function AdminRoutes() {
   return (
@@ -27,6 +28,7 @@ function AdminRoutes() {
       <Route path='/Registro/Materias' element={<RegistrarMateria />} />
       <Route path='/Registro/Docentes' element={<Docentes />} /> 
       <Route path='/Registro/DiaHora' element={<RegistrarDiaHora />} /> 
+      <Route path='/Listas/ListaAmbientes' element={<ListaAulas/>} />
     </Routes>
   </div>
   );
@@ -46,7 +48,6 @@ function UserRoutes() {
   );
 }
 
-import ListaAulas from './Listados/LAmbientes/ListaAulas';
 
 function App() {
   return (
@@ -55,22 +56,7 @@ function App() {
         <Route path='/' element={<Landing />} />
         <Route path='/Login' element={<LoginForm />} />
         <Route path='/Admin/*' element={<AdminRoutes />} /> 
-        <Route path='/Usuario/*' element={<UserRoutes />} />  
-        
-        <Route path='*' element={
-            <div>
-            <Navbar />
-            <Routes>
-              <Route path='/Inicio/HomeUno' element={<HomeUno/>}/>  
-              <Route path='/Solicitar' element={<Solicitar />} />
-              <Route path='/Ambientes' element={<ListaAulas />} />
-              <Route path='/Registro/Ambientes' element={<Ambientes />} />
-              <Route path='/Registro/Materias' element={<RegistrarMateria />} />
-              <Route path='/Registro/Docentes' element={<Docentes />} /> 
-              <Route path='/Registro/DiaHora' element={<RegistrarDiaHora />} /> 
-            </Routes>
-          </div>
-        }/>        
+        <Route path='/Usuario/*' element={<UserRoutes />} />                 
       </Routes>
     </Router>
   );

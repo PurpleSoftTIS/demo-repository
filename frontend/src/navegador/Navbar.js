@@ -102,7 +102,7 @@ const Navbar = () => {
                   <button className="nav-link dropdown-toggle" onClick={toggleDropdown} style={{ cursor: 'pointer' }}>Registrar</button>
                   {showDropdown && (
                       <div className="menu">
-                          <NavLink className="opciones" to='/Admin/Registro/Ambientes' activeClassName="active">Ambiente</NavLink>
+                          <NavLink className="opciones" to='/Admin/Listas/ListaAmbientes' activeClassName="active">Ambiente</NavLink>
                           <NavLink className="opciones" to='/Admin/Registro/Docentes' activeClassName="active">Docente</NavLink>
                           <NavLink className="opciones" to='/Admin/Registro/Materias' activeClassName="active">Materia</NavLink>
                       </div>              

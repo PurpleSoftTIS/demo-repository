@@ -39,7 +39,7 @@ const ListaAulas = () => {
         <div>
           <input type="text" placeholder="Buscar" />
           <button className="butn butn-filtro">Filtros</button>
-          <NavLink to="/Registro/Ambientes" className="butn butn-nuevo">
+          <NavLink to="/Admin/Registro/Ambientes" className="butn butn-nuevo">
             Nuevo Ambiente<FaPlus className="icon" />
           </NavLink>
         </div>
