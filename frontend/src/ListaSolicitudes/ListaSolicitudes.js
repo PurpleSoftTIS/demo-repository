@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Solicitar = () => {
+const ListaSolicitudes = () => {
   return (
     <h1>Lista de solicitudes</h1>
   )
 }
 
-export default Solicitar
+export default ListaSolicitudes
