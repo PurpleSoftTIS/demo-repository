@@ -8,6 +8,7 @@ use App\Models\Ubicacion;
 use App\Models\Dia;
 use App\Models\Hora;
 use  App\Models\Horario;
+use App\Models\Diashabiles;
 
 class AmbienteController extends Controller
 {
@@ -25,10 +26,9 @@ class AmbienteController extends Controller
         $edificio = $datosAmbiente['edificio'];
         $piso = $datosAmbiente['piso'];
         $tipo = $datosAmbiente['Tipo'];
-
-        
-        // Guardar ubicación
-        $ubicacion = new Ubicacion();
+  
+  
+          $ubicacion = new Ubicacion();
         
         $ubicacion->EDIFICIO = $edificio;
         $ubicacion->save();
@@ -44,18 +44,36 @@ class AmbienteController extends Controller
         $ambiente->ESTADO_AMBIENTE = "activo";
         $ambiente->TIPO_AMBIENTE =$tipo;
         $ambiente->save();
-        
+        $idambiente=$ambiente->ID_AMBIENTE;
         info('Se ha guardado correctamente el ambiente.');
         $diasHoras =$request -> input ('diasHoras');
         info('Horarios seleccionados:', $diasHoras);
         foreach ($diasHoras as $day=> $horas) {
             $dia= new Dia();
-          
-            $dia->NOMBRE = $day ;
+            $dia->nombre = $day ;
             $dia -> save();
-            $iddia=$dia->ID_DIA;
-           
-           }
+            $iddia=$dia->id_dia;
+            $diashabiles=new Diashabiles();
+            $diashabiles ->id_dia=$iddia;
+            $diashabiles ->ID_AMBIENTE =$idambiente ;
+            $diashabiles -> save(); 
+            foreach($horas as $horario) {
+                $hora =new Hora();
+                $hor = explode('-', $horario);
+                $horaInicio = trim($hor[0]);
+                $horaFin = trim($hor[1]);
+                $hora ->hora_inicio=$horaInicio;
+                $hora ->hora_fin =$horaFin;
+                $hora-> save();
+                $horarios=new Horario;
+                $idhora = $hora->id_hora; 
+                $horarios -> id_hora = $idhora;
+                $horarios -> id_dia =  $iddia;
+                $horarios -> save ();
+
+
+            }
+        }
 
        
 
@@ -68,11 +86,14 @@ class AmbienteController extends Controller
         return response()->json(['error' => 'Error al guardar la ubicación y el ambiente'], 500);
     }
 }
-public function obtenerambientes (){
+public function index()
+{
+    // Ejecutar la consulta utilizando Eloquent
+    $ambientes = Ambiente::all();
 
-
-
-    
+    // Retornar los datos a la vista o hacer cualquier otra manipulación necesaria
+    return response()->json($ambientes, 200);
 }
+
 
 }

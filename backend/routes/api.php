@@ -28,7 +28,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/docentes', [DocenteController::class, 'index']);
 Route::get('/usuarios', [UsuarioController::class, 'index']);
 //Registrar Datos
-
+Route::get('/listaAmbiente', [AmbienteController::class, 'index']);
 Route::post('/docentesRegistrar', [DocenteRegistrarController::class, 'registrar']);
 Route::post('/registrarambiente', [AmbienteController::class, 'guardarAmbiente']);
 

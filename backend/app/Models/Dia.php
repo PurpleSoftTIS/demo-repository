@@ -9,7 +9,8 @@ class Dia extends Model
 {
     use HasFactory;
     
-    protected $primaryKey = 'ID_DIA';
+    protected $primaryKey = 'id_dia';
     protected $table = 'dia';
+    public $timestamps = false;
  
 }
