@@ -6,10 +6,12 @@ import Solicitar from './solicitar/Solicitar';
 import Ambientes from './Registrar/ambientes/Ambientes';
 import Docentes from './Registrar/docentes/Docentes';
 import Navbar from './navegador/Navbar';
-import RegistrarMateria from './Registrar/materias/RegistrarMateria';
+import RegistrarMateria from './Registrar/materias/RMaterias';
 import Landing from './inicio/Landing';
 import LoginForm from './Login/LoginForm';
 import RegistrarDiaHora from './Registrar/dia_hora/RegistrarDiaHora';
+import ListaAulas from './Listados/LAmbientes/ListaAulas';
+
 function App() {
   return (
     <Router>
@@ -23,6 +25,7 @@ function App() {
             <Routes>
               <Route path='/Inicio/HomeUno' element={<HomeUno/>}/>  
               <Route path='/Solicitar' element={<Solicitar />} />
+              <Route path='/Ambientes' element={<ListaAulas />} />
               <Route path='/Registro/Ambientes' element={<Ambientes />} />
               <Route path='/Registro/Materias' element={<RegistrarMateria />} />
               <Route path='/Registro/Docentes' element={<Docentes />} /> 
