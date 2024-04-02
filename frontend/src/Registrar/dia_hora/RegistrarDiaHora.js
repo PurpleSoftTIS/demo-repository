@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
+
 import './RegistrarDiaHora.css';
 import { useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+
 
 const RegistrarDiaHora = () => {
-  
+    var exitoso = true;
+
     const [selectedDay, setSelectedDay] = useState(""); // Estado para almacenar el día seleccionado
     const [selectedHours, setSelectedHours] = useState({}); // Estado para almacenar los horarios seleccionados
     const { state: datosAmbiente } = useLocation();
-  
+
     // Función para manejar el cambio de día seleccionado
     const handleDayClick = (day) => {
       setSelectedDay(day);
@@ -126,10 +130,15 @@ const RegistrarDiaHora = () => {
       })
       .then(response => {
         if (response.ok) {
+         // history.push('/Admin/Mensaje/ExitoAmbiente'); // Redirigir al usuario a la página de inicio
+
           console.log("Registro exitoso");
+          exitoso = true;
           // Aquí puedes hacer algo después de un registro exitoso
         } else {
+         // history.push('/Admin/Mensaje/ErrorAmbiente');
           console.error("Error en el registro");
+          exitoso = false;
           // Aquí puedes manejar errores en el registro
         }
       })
@@ -162,8 +171,9 @@ const RegistrarDiaHora = () => {
           </div>
         </div>
         <div className="square3 mx-auto d-flex justify-content-center align-items-center">
-          <button type="button" className="btn btn-primary custom-btn" onClick={handleRegistrarAmbiente}>Registrar Ambiente</button>
-  
+          <button type="button" className="btn btn-primary custom-btn" onClick={handleRegistrarAmbiente}>
+            <NavLink className="btn btn-primary custom-btn" to={exitoso ? "/Admin/Mensaje/ExitoAmbiente" : "/Admin/Mensaje/ErrorAmbiente"}>Registrar Ambiente</NavLink>
+          </button>
         </div>
       </div>
     );
