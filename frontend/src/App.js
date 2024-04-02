@@ -45,7 +45,6 @@ function App() {
     <Router>
       <Routes>
         <Route path='/' element={<Landing />} />
-        {/*<Route path='/' element={<RegistroDocenteExitoso />} />*/}
         <Route path='/Login' element={<LoginForm />} />
         <Route path='/Admin/*' element={<AdminRoutes />} /> 
         <Route path='/Usuario/*' element={<UserRoutes />} />                 
