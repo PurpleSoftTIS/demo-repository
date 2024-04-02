@@ -1,12 +1,33 @@
-import React from 'react';
-import "./LoginForm.css"
+import { useCallback } from "react";
+import "./LoginForm.css";
+import { Link } from 'react-router-dom';
 import { FaAt, FaLock} from 'react-icons/fa';
-import {Link} from 'react-router-dom';
 import logo from "../assets/logoSIS.png";
+import logop from "../assets/logosol-1@2x.png"
 
 const LoginForm = () => {
-    return (
-        <div className="body-cont">
+  const onPricingClick = useCallback(() => {
+    window.location.href = "https://www.umss.edu.bo/";
+  }, []);
+
+  const onSupportClick = useCallback(() => {
+    window.location.href = "http://www.fcyt.umss.edu.bo/";
+  }, []);
+
+  return (
+    <div className="hero-06">
+      <div className="nav-bare">
+        <button className="logon">
+          <img className="image-1-icon" alt="logo" src={logo}/>
+          <div className="ovonrueden">SIRA</div>
+        </button>
+        <div className="menus">
+          <button className="about">Acerca de</button>
+          <button className="pricing" onClick={onPricingClick}>UMSS</button>
+          <button className="pricing" onClick={onSupportClick}>FCYT</button>
+        </div>
+      </div>
+      <div className="content">
             <div>
                 <Link to="/" className="logo"> 
                     <img src={logo} alt="" /> 
@@ -65,8 +86,16 @@ const LoginForm = () => {
                     </div>
                 </div>
             </div>
+        <div className="design-parent">
+          <div className="design">
+            <img className="vector-icon" alt="" src="/vector.svg" />
+          </div>
+          <img className="logo-sol-1-icon" alt="" src={logop} />
         </div>
-    );
-}
+      </div>
+      <footer className="image" />
+    </div>
+  );
+};
 
 export default LoginForm;

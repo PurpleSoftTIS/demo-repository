@@ -8,16 +8,15 @@ import Docentes from './Registrar/docentes/Docentes';
 import Navbar from './navegador/Navbar';
 //import RegistroDocenteExitoso from './Registrar/mensajes/RegistroDocenteExitoso';
 import RegistrarMateria from './Registrar/materias/RegistrarMateria';
-import Landing from './inicio/Landing';
 import LoginForm from './Login/LoginForm';
 import RegistrarDiaHora from './Registrar/dia_hora/RegistrarDiaHora';
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Landing />} />
+        <Route path='/' element={<LoginForm />} />
         {/*<Route path='/' element={<RegistroDocenteExitoso />} />*/}
-        <Route path='/Login' element={<LoginForm />} />
+        
         
         <Route path='*' element={
             <div>
