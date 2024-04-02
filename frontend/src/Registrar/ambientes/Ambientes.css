@@ -194,6 +194,7 @@ body {
   align-items: flex-start;
   justify-content: flex-start;
   gap: 24px;
+  height: auto;
 }
 .frame-div {
   align-self: stretch;
@@ -233,6 +234,10 @@ body {
   text-align: center;
 }
 .button1 {
+  position: relative;
+  width: 240px;
+  top: -50px;
+  left: 400px;
   cursor: pointer;
   border: 0;
   padding: 16px 20px;
@@ -244,7 +249,23 @@ body {
   align-items: center;
   justify-content: center;
 }
-.button1:hover {
+.button2 {
+  position: relative;
+  width: 100px;
+  cursor: pointer;
+  border: 0;
+  padding: 16px 20px;
+  background-color: #050259;
+  align-self: stretch;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border: none;
+}
+.button1,.button2:hover {
   background-color: #010a26;
 }
 .checkout3,
@@ -255,10 +276,10 @@ body {
 }
 .checkout3 {
   width: 706px;
+  display: flex;
+  height: 100px;
   border-radius: 0 0 12px 12px;
   background-color: #f3f4f6;
-  align-items: flex-start;
-  justify-content: flex-start;
   padding: 32px;
   opacity: 0;
 }

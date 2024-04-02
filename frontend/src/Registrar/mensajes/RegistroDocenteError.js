@@ -15,7 +15,7 @@ const RegistroDocenteError = () => {
           </div>
           <p className="parrafito">Hubo un error al intentar guardar el registro</p>
           <div>          
-                <Link to="/Solicitar" style={{backgroundColor: '#0d0d46', color: 'white'}} className="btn">Aceptar</Link>
+          <Link to="/Admin/Listas/ListaDocentes" style={{backgroundColor: '#0d0d46', color: 'white'}} className="btn">Aceptar</Link>
           </div> 
         </div>
       </div>
