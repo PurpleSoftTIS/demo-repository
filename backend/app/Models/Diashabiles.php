@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Hora extends Model
+class Diashabiles extends Model
 {
     use HasFactory;
     
-    protected $primaryKey = 'id_hora';
-    protected $table = 'hora';
+    public $incrementing = false;
+
+    protected $table = 'diashabiles';
  
 }
