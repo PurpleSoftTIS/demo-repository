@@ -30,7 +30,7 @@ const HomeUno = () => {
           </div>
         
           <div>          
-                <Link to="/Solicitar" style={{backgroundColor: '#0d0d46', color: 'white'}} className="btn">Solicitudes</Link>
+                <Link to="/Admin/ListaSolicitudes" style={{backgroundColor: '#0d0d46', color: 'white'}} className="btn">Solicitudes</Link>
           </div>
  
         </div>

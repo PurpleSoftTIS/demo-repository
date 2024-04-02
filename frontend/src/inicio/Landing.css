@@ -260,14 +260,17 @@ body {
   box-sizing: border-box;
   position: undefined;
   align-self: start;
+  user-select: none;
 }
-.frame-icon {
-  width: 585px;
+.logo-sol-1-icon {
+  width: 577px;
   position: relative;
-  height: 652px;
-  overflow: hidden;
-  flex-shrink: 0;
-  margin-left: -580px;
+  height: 519px;
+  object-fit: cover;
+  margin-left: -620px;
+  margin-top: -115px;
+  padding-right: 55px;
+  user-select: none;
 }
 .content,
 .design-parent {
@@ -279,10 +282,11 @@ body {
 .design-parent {
   width: 653px;
   height: 618px;
+  user-select: none;
 }
 .content {
   align-self: stretch;
-  background-color: #010a26;
+  background: linear-gradient(to bottom right, #010a26 60%, #bf0404 );
   padding: 48px 0 80px 80px;
   gap: 34px;
   font-size: 60px;

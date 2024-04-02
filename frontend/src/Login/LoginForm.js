@@ -1,10 +1,16 @@
-import React from 'react';
-import "./LoginForm.css"
-import { FaAt, FaLock} from 'react-icons/fa';
-import {Link} from 'react-router-dom';
+import React, { useState } from 'react';
+import "./LoginForm.css";
+import { FaAt, FaLock } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import logo from "../assets/logoSIS.png";
 
 const LoginForm = () => {
+    const [password, setPassword] = useState('');
+
+    const handlePasswordChange = (event) => {
+        setPassword(event.target.value);
+    };
+
     return (
         <div className="body-cont">
             <div>
@@ -35,10 +41,10 @@ const LoginForm = () => {
                                                             <FaAt className="input-icon" />
                                                         </div>
                                                         <div className="form-group mt-2">
-                                                            <input type="password" name="logpass" className="form-style" placeholder="Tu Contraseña" id="logpass" autoComplete="off" />
+                                                            <input type="password" name="logpass" className="form-style" placeholder="Tu Contraseña" id="logpass" autoComplete="off" value={password} onChange={handlePasswordChange} />
                                                             <FaLock className="input-icon" />
                                                         </div>
-                                                        <Link to="../inicio/HomeUno">
+                                                        <Link to={password === 'admin' ? "/Admin/Inicio/HomeUno" : "/Usuario/Inicio/HomeDos"}>
                                                             <div className="botones mt-4" >Ingresar</div>
                                                         </Link>
                                                         <p className="mb-0 mt-4 text-center"><a href="#0" className="link">¿Olvidaste tu Contraseña?</a></p>
