@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./Docentes.css";
+import { NavLink } from 'react-router-dom';
+
 
 const Docentes = () => {
+  var exitoso = true;
   const [nombres, setNombres] = useState("");
   const [apellidoPaterno, setApellidoPaterno] = useState("");
   const [apellidoMaterno, setApellidoMaterno] = useState("");
@@ -110,10 +113,13 @@ const Docentes = () => {
         setApellidoMaterno("");
         setCorreo("");
         setCodigoDocente("");
+
+          exitoso= true;
         // Aquí puedes mostrar un mensaje de éxito o redirigir a otra página
       })
       .catch(error => {
         console.error("Error al registrar el ambiente:", error);
+        exitoso = false;
         // Aquí puedes mostrar un mensaje de error al usuario
       });
 
@@ -161,6 +167,7 @@ const Docentes = () => {
 
   return (
     <div className="contact-6">
+     
       <div className="line" />
       <form className="billing-info" data-animate-on-scroll>
         <div className="checkout-wrapper">
@@ -224,7 +231,7 @@ const Docentes = () => {
       </form>
       <div className="checkout1" data-animate-on-scroll>
         <button className="button" onClick={handleRegistroDocente}>
-          <div className="button-cta">Registrar Docente</div>
+        <NavLink className="button-cta" to={exitoso ? "/Admin/Mensaje/ExitoDocente" : "/Admin/Mensaje/ErrorDocente"}>Registrar Docente</NavLink>
         </button>
       </div>
     </div>

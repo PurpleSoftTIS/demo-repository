@@ -15,7 +15,7 @@ const RegistroDocenteExitoso = () => {
           </div>
           <p className="parrafito">Su registro se ha guardado exitosamente</p>
           <div>          
-                <Link to="/Solicitar" style={{backgroundColor: '#0d0d46', color: 'white'}} className="btn">Aceptar</Link>
+                <Link to="/Admin/Listas/ListaDocentes" style={{backgroundColor: '#0d0d46', color: 'white'}} className="btn">Aceptar</Link>
           </div>
         </div>
       </div>

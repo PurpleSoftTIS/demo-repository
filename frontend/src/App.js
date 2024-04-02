@@ -1,21 +1,7 @@
-import React from 'react';
-import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomeUno from './inicio/HomeUno';
-import Ambientes from './Registrar/ambientes/Ambientes';
-import Docentes from './Registrar/docentes/Docentes';
-import Navbar from './navegador/Navbar';
-import RegistrarMateria from './Registrar/materias/RMaterias';
-import Landing from './inicio/Landing';
-import LoginForm from './Login/LoginForm';
-import RegistrarDiaHora from './Registrar/dia_hora/RegistrarDiaHora';
-import NarbarUsuario from './navegador/NarbarUsuario';
-import HomeDos from './inicio/HomeDos';
-import ListaSolicitudes from './ListaSolicitudes/ListaSolicitudes';
-import { Reservar } from './Usuario/Resevar/Reservar';
-import { Solicitar } from './Usuario/Solicitar/Solicitar';
-import { Ayuda } from './Usuario/Ayuda/Ayuda';
-import ListaAulas from './Listados/ListadoAmbientes/ListaAulas';
+import { React, Router, Routes, Route, HomeUno, Ambientes, Docentes, Navbar, RegistrarMateria, Landing,
+        LoginForm, RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Reservar, Solicitar, Ayuda,
+        ListaAulas, RegistroAmbienteExitoso, RegistroAmbienteError, RegistroDocenteExitoso,
+        RegistroDocenteError,ListaDocentes } from './importaciones';
 
 function AdminRoutes() {
   return (
@@ -29,6 +15,11 @@ function AdminRoutes() {
       <Route path='/Registro/Docentes' element={<Docentes />} /> 
       <Route path='/Registro/DiaHora' element={<RegistrarDiaHora />} /> 
       <Route path='/Listas/ListaAmbientes' element={<ListaAulas/>} />
+      <Route path='/Listas/ListaDocentes' element={<ListaDocentes/>} />
+      <Route path='/Mensaje/ExitoAmbiente' element={<RegistroAmbienteExitoso/>}/>
+      <Route path='/Mensaje/ErrorAmbiente' element={<RegistroAmbienteError/>}/>
+      <Route path='/Mensaje/ExitoDocente' element={<RegistroDocenteExitoso/>}/>
+      <Route path='/Mensaje/ErrorDocente' element={<RegistroDocenteError/>}/>      
     </Routes>
   </div>
   );

@@ -59,7 +59,7 @@ const Ambientes = () => {
       }
       setErrorCapacidadEst("");
     }
-    if (!tipoNumero.test(edificio)) {
+    if (!tipoCadena.test(edificio)) {
       setErrorEdificio("❌ Por favor, ingresa solo caracteres alfabéticos y espacios en el nombre del edificio");
       return;
     } else {
