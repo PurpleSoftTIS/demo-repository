@@ -54,6 +54,14 @@
     background-color: #0d0d46;
     color: white; /* Cambiar el color del texto a blanco */
   }
+  .rectangulo-azul{
+    width: 500px;
+    height: auto;
+    
+  }
+  .col2{
+    align-items: center;
+  }
     
   
   

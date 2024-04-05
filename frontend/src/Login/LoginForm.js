@@ -113,6 +113,7 @@ const LoginForm = () => {
                 <Col md={6} className="mb-3">
                     <div className="d-flex justify-content-center align-items-center imagen" style={{ height: '100%' }}>
                         <img src={logop} alt="imagen comp" className="img-fluid" />
+                         
                     </div>
                 </Col>
             </Row>
