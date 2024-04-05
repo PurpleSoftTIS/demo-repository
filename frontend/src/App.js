@@ -1,4 +1,4 @@
-import { React, Router, Routes, Route, HomeUno, Ambientes, Docentes, Navbar, RegistrarMateria, Landing,
+import { React, Router, Routes, Route, HomeUno, Ambientes, Docentes, Navbar, RegistrarMateria,
         LoginForm, RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Reservar, Solicitar, Ayuda,
         ListaAulas, RegistroAmbienteExitoso, RegistroAmbienteError, RegistroDocenteExitoso,
         RegistroDocenteError,ListaDocentes } from './importaciones';

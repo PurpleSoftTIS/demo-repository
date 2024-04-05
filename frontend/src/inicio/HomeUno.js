@@ -24,7 +24,7 @@ const HomeUno = () => {
             <img src={logo_fcyt} alt="Imagen 3" className="img-fluid  imagen-arriba" />
           </div>
           <div> 
-            <p className="text-center titulo-personalizado">Bienvenidos al Sistema de Gestion de Reservacion de Ambientes FCyT UMSS</p>
+            <p className="text-center titulo-personalizado">Bienvenido al Sistema de Gestion de Reservacion de Ambientes FCyT UMSS</p>
             <p className="text-center texto-personalizado">Sistema de ayuda al administrador en la gestion de ambientes de la Facultad de 
               Ciencias y Tecnologia</p>
           </div>

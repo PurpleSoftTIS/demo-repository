@@ -61,9 +61,10 @@ const LoginForm = () => {
                     </Collapse>
             </nav>
         </div>
-        <div className="content">
+        <h2 className="Titulo-inicio">Sistema de Reservacion de Ambientes FCyT</h2>
+        <div className="content">  
             <Row className="justify-content-center">
-                <Col md={6} > 
+                <Col md={6} className="mb-3" > 
                     <Container>
                         <Row className="justify-content-center">
                             <Col xs={12} sm={10} md={8} lg={6}> {/* Define el ancho del formulario en diferentes tamaños de pantalla */}
@@ -72,7 +73,8 @@ const LoginForm = () => {
                                         <h6 className="mb-0 pb-3 text-center">Inicia sesión</h6>
                                         <form onSubmit={handleSubmit}>
                                             <div className="form-group">
-                                                <input
+                                                <span className="input-icon"><FaAt /></span>
+                                                <input 
                                                     type="email"
                                                     name="logemail"
                                                     className="form-control"
@@ -80,9 +82,9 @@ const LoginForm = () => {
                                                     value={email}
                                                     onChange={(e) => setEmail(e.target.value)}
                                                 />
-                                                <FaAt className="input-icon" />
                                             </div>
-                                            <div className="form-group">
+                                             <div className="form-group">
+                                                <span className="input-icon"><FaLock /></span>
                                                 <input
                                                     type="password"
                                                     name="logpass"
@@ -91,11 +93,11 @@ const LoginForm = () => {
                                                     value={password}
                                                     onChange={(e) => setPassword(e.target.value)}
                                                 />
-                                                <FaLock className="input-icon" />
-                                               
                                                 
                                             </div>
-                                            <button className="btn btn-primary btn-block">Ingresar</button>
+                                            <div className="mb-0 pb-3 text-center">
+                                                <Link to="/Admin/Inicio/HomeUno" className="btn-block">Ingresar</Link>
+                                            </div>
                                             <p className="mt-3 text-center">
                                                     <Link to="/forgot-password" className="link">¿Olvidaste tu Contraseña?</Link>
                                                 </p>
@@ -108,8 +110,10 @@ const LoginForm = () => {
                         </Row>
                     </Container>
                 </Col>
-                <Col md={6}> {/* La segunda columna ocupará la mitad del ancho en dispositivos medianos y superiores */}
-                    <div>Contenido de la segunda columna</div>
+                <Col md={6} className="mb-3">
+                    <div className="d-flex justify-content-center align-items-center imagen" style={{ height: '100%' }}>
+                        <img src={logop} alt="imagen comp" className="img-fluid" />
+                    </div>
                 </Col>
             </Row>
         </div>

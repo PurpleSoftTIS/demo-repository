@@ -7,9 +7,9 @@ import { NavLink } from 'react-router-dom';
 
 const RegistrarDiaHora = () => {
     var exitoso = true;
-
-    const [selectedDay, setSelectedDay] = useState(""); // Estado para almacenar el día seleccionado
-    const [selectedHours, setSelectedHours] = useState({}); // Estado para almacenar los horarios seleccionados
+    const [selectedDay, setSelectedDay] = useState("");// Estado para almacenar el día seleccionado
+    const [selectedHours, setSelectedHours] = useState({});
+  
     const { state: datosAmbiente } = useLocation();
 
     // Función para manejar el cambio de día seleccionado
@@ -33,7 +33,28 @@ const RegistrarDiaHora = () => {
         }
       }));
     };
-  
+    
+    const handleSelectAll = () => {
+      setSelectedHours(prevState => ({
+          ...prevState,
+          [selectedDay]: {
+              ...prevState[selectedDay],
+              '6:15-8:15': true,
+              '8:15-9:45': true,
+              '9:45-11:15': true,
+              '11:15-12:45': true,
+              '12:45-14:15': true,
+              '14:15-15:45': true,
+              '15:45-17:15': true,
+              '17:45-18:45': true,
+              '18:45-20:15': true,
+              '20:15-21:45': true
+          }
+      }));
+  };
+    
+    
+    
     // Función para mostrar los horarios según el día seleccionado
     const showHours = () => {
       if (selectedDay && selectedHours[selectedDay]) {
@@ -45,7 +66,7 @@ const RegistrarDiaHora = () => {
     <div className="row">
       <div className="col">
         <ul className="list-unstyled">
-        <li className="form-check">
+          <li className="form-check">
                         <input className="form-check-input" type="checkbox" id="6:15-8:15" checked={selectedHours[selectedDay]['6:15-8:15']} onChange={handleHourChange} />
                         <label className="form-check-label" htmlFor="6:15-8:15">6:45-8:15</label>
                       </li>
@@ -70,7 +91,7 @@ const RegistrarDiaHora = () => {
       </div>
       <div className="col">
         <ul className="list-unstyled">
-        <li className="form-check">
+                      <li className="form-check">
                         <input className="form-check-input" type="checkbox" id="14:15-15:45" checked={selectedHours[selectedDay]['14:15-15:45']} onChange={handleHourChange} />
                         <label className="form-check-label" htmlFor="14:15-15:45">14:15-15:45</label>
                       </li>
@@ -90,9 +111,12 @@ const RegistrarDiaHora = () => {
                         <input className="form-check-input" type="checkbox" id="20:15-21:45" checked={selectedHours[selectedDay]['20:15-21:45']} onChange={handleHourChange} />
                         <label className="form-check-label" htmlFor="20:15-21:45">20:15-21:45</label>
                       </li>
+                      
          
         </ul>
+        
       </div>
+      <button className="boton-seleccion" onClick={handleSelectAll}>Seleccionar todos</button>
     </div>
     </div>
     </div>
@@ -158,7 +182,7 @@ const RegistrarDiaHora = () => {
               <div className="col-md-6 text-center ">
                 <h4>Selecciona un día</h4>
                 <div className="days-container">
-                  <button className={`day-btn ${selectedDay === "Lunes" && "selected"}`} onClick={() => handleDayClick("Lunes")}>Lunés</button>
+                  <button className={`day-btn ${selectedDay === "Lunes" && "selected"}`} onClick={() => handleDayClick("Lunes")}>Lunes</button>
                   <button className={`day-btn ${selectedDay === "Martes" && "selected"}`} onClick={() => handleDayClick("Martes")}>Martes</button>
                   <button className={`day-btn ${selectedDay === "Miércoles" && "selected"}`} onClick={() => handleDayClick("Miércoles")}>Miércoles</button>
                   <button className={`day-btn ${selectedDay === "Jueves" && "selected"}`} onClick={() => handleDayClick("Jueves")}>Jueves</button>
@@ -179,4 +203,4 @@ const RegistrarDiaHora = () => {
     );
 }
 
-export default RegistrarDiaHora
+export default RegistrarDiaHora;
