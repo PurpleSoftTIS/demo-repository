@@ -1040,3 +1040,40 @@ Did you mean one of these?
 [2024-03-28 08:02:22] local.INFO: Horarios seleccionados: {"Lunes":[],"Martes":["8:15-9:45","9:45-11:15","18:45-20:15"],"Miércoles":["6:15-8:15","8:15-9:45","17:45-18:45"],"Jueves":["15:45-17:15"],"Viernes":[]} 
 [2024-04-02 02:01:30] local.ERROR: Error al intentar registrar un docente: SQLSTATE[22001]: String data, right truncated: 7 ERROR:  el valor es demasiado largo para el tipo character varying(10) (SQL: insert into "docente" ("id_usuario", "tipo_docente", "codigo_docente", "estado_docente", "updated_at", "created_at") values (3, De Base, U2FsdGVkX18Qk3l+nankmnvXb/4f8dodWptWKUQrQWE=, activo, 2024-04-02 02:01:30, 2024-04-02 02:01:30) returning "id_docente")  
 [2024-04-02 02:18:01] local.ERROR: Error al intentar registrar un docente: SQLSTATE[22001]: String data, right truncated: 7 ERROR:  el valor es demasiado largo para el tipo character varying(10) (SQL: insert into "docente" ("id_usuario", "tipo_docente", "codigo_docente", "estado_docente", "updated_at", "created_at") values (4, De Base, U2FsdGVkX18NQ6Dp5FDa0ME/31v81vfV1CgyBG+XZeQ=, activo, 2024-04-02 02:18:01, 2024-04-02 02:18:01) returning "id_docente")  
+[2024-04-03 01:11:16] local.ERROR: Error al intentar registrar un docente: SQLSTATE[22001]: String data, right truncated: 7 ERROR:  el valor es demasiado largo para el tipo character varying(10) (SQL: insert into "docente" ("id_usuario", "tipo_docente", "codigo_docente", "estado_docente", "updated_at", "created_at") values (5, De Base, eyJpdiI6Ilk0RWU1ZEVBemFQTDBzc3BaTFJEYXc9PSIsInZhbHVlIjoiM0xjcTBmQWZoMXBUOUdyNTQwVzh4Zz09IiwibWFjIjoiN2RkN2Y1MDAxNGE4NWNkZGYzMDhiOWMxOGNmYjUxNzZhNGYxOGU4MDdmYzI3YjQ4M2MzZjFlZGE0MGEyY2ZiZSIsInRhZyI6IiJ9, activo, 2024-04-03 01:11:15, 2024-04-03 01:11:15) returning "id_docente")  
+[2024-04-03 01:34:33] local.ERROR: Command "migrate:wipe" is not defined.
+
+Did you mean one of these?
+    db:wipe
+    migrate
+    migrate:fresh
+    migrate:install
+    migrate:refresh
+    migrate:reset
+    migrate:rollback
+    migrate:status {"exception":"[object] (Symfony\\Component\\Console\\Exception\\CommandNotFoundException(code: 0): Command \"migrate:wipe\" is not defined.
+
+Did you mean one of these?
+    db:wipe
+    migrate
+    migrate:fresh
+    migrate:install
+    migrate:refresh
+    migrate:reset
+    migrate:rollback
+    migrate:status at C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\console\\Application.php:720)
+[stacktrace]
+#0 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\console\\Application.php(259): Symfony\\Component\\Console\\Application->find('migrate:wipe')
+#1 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\console\\Application.php(171): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#2 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(94): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#3 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(129): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#4 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#5 {main}
+"} 
+[2024-04-03 01:50:45] local.ERROR: Error al intentar registrar un docente: SQLSTATE[22001]: String data, right truncated: 7 ERROR:  el valor es demasiado largo para el tipo character varying(10) (SQL: insert into "docente" ("id_usuario", "tipo_docente", "codigo_docente", "estado_docente", "updated_at", "created_at") values (1, De Base, eyJpdiI6IkRFakFaYm5ZVGR0QUxTbmZEeU1JL0E9PSIsInZhbHVlIjoiTVZNTmQ4QlVkbzhoSmZ2d1dLd01tUT09IiwibWFjIjoiNDM2MGI1NGRmNWNmMmNlYTFmZDlkZGFlM2Y2ZDg1NjFhMzNmODdjZWQ1MWYzZTBiN2IwMGRjMDg2ZGE4NjU4MiIsInRhZyI6IiJ9, activo, 2024-04-03 01:50:45, 2024-04-03 01:50:45) returning "id_docente")  
+[2024-04-04 00:12:38] local.ERROR: Error al intentar registrar un docente: SQLSTATE[22001]: String data, right truncated: 7 ERROR:  el valor es demasiado largo para el tipo character varying(10) (SQL: insert into "docente" ("id_usuario", "tipo_docente", "codigo_docente", "estado_docente", "updated_at", "created_at") values (3, De Base, b1873fa634203d749f4ec8fbb1cf34be9a4d96034ea4986cba0fc64cf94ea8f1, activo, 2024-04-04 00:12:38, 2024-04-04 00:12:38) returning "id_docente")  
+[2024-04-04 00:19:59] local.ERROR: Error al intentar registrar un docente: SQLSTATE[22001]: String data, right truncated: 7 ERROR:  el valor es demasiado largo para el tipo character varying(10) (SQL: insert into "docente" ("id_usuario", "tipo_docente", "codigo_docente", "estado_docente", "updated_at", "created_at") values (4, De Base, 7737a62877019763129d46d858aeea82e31f236504b4de8737a0b2d17f45aa1f, activo, 2024-04-04 00:19:59, 2024-04-04 00:19:59) returning "id_docente")  
+[2024-04-04 00:43:25] local.ERROR: Error al intentar eliminar el docente y usuario: SQLSTATE[22P02]: Invalid text representation: 7 ERROR:  la sintaxis de entrada no es válida para tipo bigint: «undefined» (SQL: select * from "docente" where "docente"."id_docente" = undefined limit 1)  
+[2024-04-04 01:02:24] local.ERROR: Error al intentar eliminar el docente y usuario: SQLSTATE[22P02]: Invalid text representation: 7 ERROR:  la sintaxis de entrada no es válida para tipo bigint: «undefined» (SQL: select * from "docente" where "docente"."id_docente" = undefined limit 1)  
+[2024-04-04 01:03:18] local.ERROR: Error al intentar eliminar el docente y usuario: SQLSTATE[22P02]: Invalid text representation: 7 ERROR:  la sintaxis de entrada no es válida para tipo bigint: «undefined» (SQL: select * from "docente" where "docente"."id_docente" = undefined limit 1)  
+[2024-04-04 01:03:19] local.ERROR: Error al intentar eliminar el docente y usuario: SQLSTATE[22P02]: Invalid text representation: 7 ERROR:  la sintaxis de entrada no es válida para tipo bigint: «undefined» (SQL: select * from "docente" where "docente"."id_docente" = undefined limit 1)  
