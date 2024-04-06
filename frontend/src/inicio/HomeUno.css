@@ -8,9 +8,7 @@
     font-size: 16px;
     font-weight: bold;
   }
-  
-
-  
+    
   .img-fluid {
     width: 100%;
     height: auto;
@@ -48,6 +46,7 @@
   .imagen-arriba  {
     width: 150px; 
     height: auto;
+    margin-bottom: 50px;
     
   }
   .btn-solicitudes {

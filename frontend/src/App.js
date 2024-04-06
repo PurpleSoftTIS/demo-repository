@@ -6,7 +6,7 @@ import { React, Router, Routes, Route, HomeUno, Ambientes, Docentes, Navbar, Reg
 function AdminRoutes() {
   return (
     <div>
-    <Navbar /> 
+    <Navbar/> 
     <Routes>
       <Route path='/Inicio/HomeUno' element={<HomeUno/>}/>  
       <Route path='/ListaSolicitudes' element={<ListaSolicitudes />} />
