@@ -1,4 +1,4 @@
-import { React, Router, Routes, Route, HomeUno, Ambientes, Docentes, Navbar, RegistrarMateria, Landing,
+import { React, Router, Routes, Route, HomeUno, Ambientes, Docentes, Navbar, RegistrarMateria,
         LoginForm, RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Reservar, Solicitar, Ayuda,
         ListaAulas, RegistroAmbienteExitoso, RegistroAmbienteError, RegistroDocenteExitoso,
         RegistroDocenteError,ListaDocentes } from './importaciones';
@@ -44,7 +44,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Landing />} />
+        <Route path='/' element={<LoginForm />} />
+        {/*<Route path='/' element={<RegistroDocenteExitoso />} />*/}
         <Route path='/Login' element={<LoginForm />} />
         <Route path='/Admin/*' element={<AdminRoutes />} /> 
         <Route path='/Usuario/*' element={<UserRoutes />} />                 

@@ -100,7 +100,7 @@
         
         .square4 {
             width: 400px; /* Ancho del cuadrado */
-             height: 300px; /* Altura del cuadrado */
+             height: 320px; /* Altura del cuadrado */
              background-color: #F2F0F2; /* Color de fondo (blanco) */
              border: 1px solid #ced4da; /* Borde del cuadrado */
              box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.9); /* Sombra del cuadrado */
@@ -159,6 +159,9 @@
         padding: 8px 15px; /* Ajusta el relleno del botón */
         margin-top: 10px; /* Ajusta el margen superior */
     }
+    .custom-btn:hover{
+        background-color: #010A26;
+    }
 
     h4 {
         margin-left: 0; 
@@ -183,4 +186,14 @@
     }
 
 
+}
+.boton-seleccion{
+    background-color: #010A26;
+    color: #F2F0F2;
+    border-radius: 5px;
+    height: 30px;
+    
+    
+    
+    
 }
