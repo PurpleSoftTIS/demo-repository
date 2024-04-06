@@ -139,7 +139,7 @@ const Navbar = () => {
         <div className='footer'>
           <div className='description'>
             <p className='text'>
-            © 2024 PupleSoft Todos los Derechos reservados
+              2024 PupleSoft Todos los Derechos reservados
             </p>            
           </div>
           <div className='HomeReload'>

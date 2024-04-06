@@ -11,7 +11,8 @@ import ico7 from '../assets/iconHome.png';
 import ico8 from '../assets/iconReload.png';
 import userLogo from '../assets/IcoUser.png';
 import { FaBars } from 'react-icons/fa';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './Navbar.css';
+
 
 const NarbarUsuario = () => {
   const [isOpen, setIsOpen] = useState(false);

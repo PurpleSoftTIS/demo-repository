@@ -160,7 +160,9 @@
     padding: 20px;
     background-color: #050259;
     height: 70px;
-    margin-top: 50px;    
+    margin-top: 50px;  
+    margin-bottom: 20px;
+  
 }
 
 .footer{    
@@ -176,8 +178,9 @@
     flex-wrap: wrap; 
     justify-content: flex-end;
     margin-right: 25%;
-
+    margin-bottom: 20px;
 }
+
 .iconosTec{
   position: relative; 
   display: flex;
