@@ -1,7 +1,7 @@
 import { React, Router, Routes, Route, HomeUno, Ambientes, Docentes, Navbar, RegistrarMateria,
         LoginForm, RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Reservar, Solicitar, Ayuda,
         ListaAulas, RegistroAmbienteExitoso, RegistroAmbienteError, RegistroDocenteExitoso,
-        RegistroDocenteError,ListaDocentes } from './importaciones';
+        RegistroDocenteError,ListaDocentes ,Footer} from './importaciones';
 
 function AdminRoutes() {
   return (
@@ -21,6 +21,7 @@ function AdminRoutes() {
       <Route path='/Mensaje/ExitoDocente' element={<RegistroDocenteExitoso/>}/>
       <Route path='/Mensaje/ErrorDocente' element={<RegistroDocenteError/>}/>      
     </Routes>
+    <Footer/>
   </div>
   );
 }
@@ -35,6 +36,8 @@ function UserRoutes() {
       <Route path='/Usu/Reservas' element={<Reservar />} />
       <Route path='/Usu/Ayuda' element={<Ayuda />} /> 
     </Routes>
+    <Footer/>
+
   </div>        
   );
 }

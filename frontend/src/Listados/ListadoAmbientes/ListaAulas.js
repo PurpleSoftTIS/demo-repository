@@ -32,7 +32,7 @@ const ListaAulas = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container" style={{ height: '76.1vh' }}>
       <div style={{ height: '4vh' }}></div>  
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ margin: 0 }}>Ambientes Registrados:</h2>

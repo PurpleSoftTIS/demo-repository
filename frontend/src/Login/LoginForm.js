@@ -1,21 +1,24 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBars,FaAt, FaLock } from "react-icons/fa"; 
 import { Collapse, Row,Col,Container } from "react-bootstrap";
 import logo from "../assets/logoSIS.png";
 import logop from "../assets/logosol-1@2x.png";
 import "./LoginForm.css";
+import Ico1 from "../assets/IconosLan/IcoCssL.png";
+import Ico2 from "../assets/IconosLan/IcoHtmlL.png";
+import Ico3 from "../assets/IconosLan/IcoJavascriptL.png";
+import Ico4 from "../assets/IconosLan/IcoLaravelL.png";
+import Ico5 from "../assets/IconosLan/IcoPostL.png";
+import Ico6 from "../assets/IconosLan/IcoReactL.png";
+import Ico7 from "../assets/IconosLan/IcoFacultad.png";
+import Ico8 from "../assets/IconosLan/IcoFacultadEscudo.png";
+
+
 
 const LoginForm = () => {
   const [menuClicked, setMenuClicked] = useState(false);
-
-  const onPricingClick = useCallback(() => {
-    window.location.href = "https://www.umss.edu.bo/";
-  }, []);
-
-  const onSupportClick = useCallback(() => {
-    window.location.href = "http://www.fcyt.umss.edu.bo/";
-  }, []);
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Email:', email);
@@ -48,13 +51,13 @@ const LoginForm = () => {
                         <div className="navbar-collapse" id="navbarNav">
                             <ul className="navbar-nav ml-auto menus">
                                 <li className="nav-item">
-                                    <button className="nav-link about">Acerca de</button>
+                                    <button className="nav-link pricing">Acerca de</button>
                                 </li>
                                 <li className="nav-item">
-                                    <button className="nav-link pricing" onClick={onPricingClick}>UMSS</button>
+                                    <a class="nav-link pricing" href="https://www.umss.edu.bo/" target="_blank" rel="noreferrer">UMSS</a> 
                                 </li>
                                 <li className="nav-item">
-                                    <button className="nav-link pricing" onClick={onSupportClick}>FCYT</button>
+                                    <a class="nav-link pricing" href="http://www.fcyt.umss.edu.bo/" target="_blank" rel="noreferrer">FCYT</a> 
                                 </li>
                             </ul>
                         </div>
@@ -62,6 +65,7 @@ const LoginForm = () => {
             </nav>
         </div>
         <h2 className="Titulo-inicio">Sistema de Reservacion de Ambientes FCyT</h2>
+        <h4 class="Mensaje">Plataforma de gestión de reservas para ambientes de la FCYT, diseñada para docentes y autoridades de la Universidad Mayor de San Simón</h4>
         <div className="content">  
             <Row className="justify-content-center">
                 <Col md={6} className="mb-3" > 
@@ -113,11 +117,45 @@ const LoginForm = () => {
                 <Col md={6} className="mb-3">
                     <div className="d-flex justify-content-center align-items-center imagen" style={{ height: '100%' }}>
                         <img src={logop} alt="imagen comp" className="img-fluid" />
+                        <img class="vector-icon" alt="" src="/vector.svg"></img>
                          
                     </div>
                 </Col>
             </Row>
         </div>
+        <footer className="mainfooter2"> 
+                <div className="footer2"> 
+                    <div className="description2"> 
+                        <ul className="text">
+                            <p>
+                                "SIRA FCYT "<br></br>
+                                "Diseño y Desarrollo de PurpleSoft -TIS "<br></br>
+                                "TIS - Taller de Ingenieria de Software " <br></br>
+                                "UMSS - Universidad Mayor de San Simón "<br></br>
+                                "Copyright © 2024 PurpleSoft Todos los Derechos Reservados"
+                            </p> 
+                        </ul>
+                        <div className="logos2">
+                            <a href="http://www.fcyt.umss.edu.bo/" target="_blank" rel="noreferrer">
+                                <img className="iconos2" src={Ico7} alt="logo" width="35px" height="35px" /> 
+
+                            </a>
+                            <a href="https://www.umss.edu.bo/" target="_blank" rel="noreferrer">
+                                <img className="iconos2" src={Ico8} alt="logo" width="35px" height="35px" /> 
+                            </a> 
+                        </div>
+                    </div>
+                    <div className="iconosTec2"> 
+                        <img className="iconos2" src={Ico1} alt="logo" width="40px" height="40px" /> 
+                        <img className="iconos2" src={Ico2} alt="logo" width="40px" height="40px" /> 
+                        <img className="iconos2" src={Ico3} alt="logo" width="40px" height="40px" /> 
+                        <img className="iconos2" src={Ico4} alt="logo" width="40px" height="40px" /> 
+                        <img className="iconos2" src={Ico5} alt="logo" width="40px" height="40px" /> 
+                        <img className="iconos2" src={Ico6} alt="logo" width="40px" height="40px" /> 
+                    </div>
+                </div>
+            </footer>
+
     </div>
   );
 };

@@ -21,9 +21,10 @@ import RegistroAmbienteError from './Registrar/mensajes/RegistroAmbienteError';
 import RegistroDocenteExitoso from './Registrar/mensajes/RegistroDocenteExitoso';
 import RegistroDocenteError from './Registrar/mensajes/RegistroDocenteError';
 import ListaDocentes from './Listados/ListadoDocentes/ListaDocentes';
+import { Footer } from './navegador/Footer';
 export {
   React,Router,Routes,Route,HomeUno,Ambientes,Docentes,Navbar,RegistrarMateria,
   LoginForm,RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Reservar, Solicitar,
   Ayuda, ListaAulas, ListaDocentes,RegistroAmbienteExitoso, RegistroAmbienteError, RegistroDocenteExitoso,
-  RegistroDocenteError,
+  RegistroDocenteError,Footer
 };
