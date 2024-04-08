@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Docentes.css";
 import { NavLink } from 'react-router-dom';
-import CryptoJS from 'crypto-js'; // Importa la librería de encriptación
 
 
 const Docentes = () => {
@@ -84,7 +83,6 @@ const Docentes = () => {
     } else {
       setErrorCodigo("");
     }
-    const encryptedCodigoDocente = CryptoJS.AES.encrypt(codigoDocente, 'secret key').toString();
 
     const datosDocente = {
       nombres,
@@ -92,7 +90,7 @@ const Docentes = () => {
       apellidoMaterno,
       correo,
       tipo,
-      codigoDocente: encryptedCodigoDocente, // Enviar el código encriptado
+      codigoDocente, // Enviar el código encriptado
     };
 
     console.log("Datos a enviar:", datosDocente);
