@@ -31,4 +31,6 @@ Route::get('/usuarios', [UsuarioController::class, 'index']);
 Route::get('/listaAmbiente', [AmbienteController::class, 'index']);
 Route::post('/docentesRegistrar', [DocenteRegistrarController::class, 'registrar']);
 Route::post('/registrarambiente', [AmbienteController::class, 'guardarAmbiente']);
-
+Route::put('/ambiente/{ID_AMBIENTE}', [AmbienteController::class, 'actualizarAmbiente']);
+Route::put ('/actualizar/{ID_AMBIENTE}',[AmbienteController::class,'actualizarAmb']);
+Route::delete('/borrar/{ID_AMBIENTE}', [AmbienteController::class, 'borrarAmbiente']);

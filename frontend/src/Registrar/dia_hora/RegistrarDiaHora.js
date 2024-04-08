@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import './RegistrarDiaHora.css';
 import { useLocation } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
