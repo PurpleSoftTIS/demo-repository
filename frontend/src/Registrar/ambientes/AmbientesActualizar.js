@@ -123,7 +123,7 @@ const Ambientes = () => {
     setPiso("");
     setTiPo("");
 
-    navigate("/Registrar/dia_hora/RegistrarDiaHoraActualizar", { state: datosAmbiente });
+    navigate("/Admin/Registro/Diahorasactualizar", { state: datosAmbiente });
   };
 
 

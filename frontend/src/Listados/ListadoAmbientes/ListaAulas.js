@@ -52,7 +52,7 @@ import { useNavigate } from "react-router-dom";
 
       })
       .then(data => {
-        navigate('/Admin/Registro/Ambientes', { state: { datosAmbientes: data } });
+        navigate('/Admin/Registro/AmbientesActualizar', { state: { datosAmbientes: data } });
 
           console.log('Datos del ambiente actualizado:', data);
     

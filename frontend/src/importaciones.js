@@ -4,6 +4,8 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomeUno from './inicio/HomeUno';
 import Ambientes from './Registrar/ambientes/Ambientes';
+import AmbientesActualizar from './Registrar/ambientes/AmbientesActualizar';
+
 import Docentes from './Registrar/docentes/Docentes';
 import Navbar from './navegador/Navbar';
 import RegistrarMateria from './Registrar/materias/RMaterias';
@@ -22,10 +24,11 @@ import RegistroAmbienteError from './Registrar/mensajes/RegistroAmbienteError';
 import RegistroDocenteExitoso from './Registrar/mensajes/RegistroDocenteExitoso';
 import RegistroDocenteError from './Registrar/mensajes/RegistroDocenteError';
 import { ListaDocentes } from './Listados/ListadoDocentes/ListaDocentes';
-import RegistrarDiaHoraActualizar from './Registrar/dia_hora/RegistrarDiaHoraActualizar';
+import RegistrarDiaHoras from './Registrar/dia_hora/RegistrarDiaHoraActualizar';
+
 export {
   React,Router,Routes,Route,HomeUno,Ambientes,Docentes,Navbar,RegistrarMateria,Landing,
   LoginForm,RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Reservar, Solicitar,
   Ayuda, ListaAulas, RegistroAmbienteExitoso, RegistroAmbienteError, RegistroDocenteExitoso,
-  RegistroDocenteError,ListaDocentes,RegistrarDiaHoraActualizar
+  RegistroDocenteError,ListaDocentes,RegistrarDiaHoras,AmbientesActualizar
 };

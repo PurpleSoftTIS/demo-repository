@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './RegistrarDiaHora.css';
 import { useLocation } from 'react-router-dom';
 
-const RegistrarDiaHora = () => {
+const RegistrarDiaHoras = () => {
     const [selectedDay, setSelectedDay] = useState(""); // Estado para almacenar el día seleccionado
     const [selectedHours, setSelectedHours] = useState({}); // Estado para almacenar los horarios seleccionados
     const { state: datosAmbiente } = useLocation();
@@ -55,13 +55,11 @@ const RegistrarDiaHora = () => {
         }));
     };
   
-    // Función para mostrar los horarios según el día seleccionado
     const showHours = () => {
       console.log("selectedDay:", selectedDay);
       console.log("selectedHours[selectedDay]:", selectedHours[selectedDay]);
       
       if (selectedDay) {
-        // Lista de todas las horas posibles en el día
         const allPossibleHours = [
           "06:15-08:15",
           "08:15-09:45",
@@ -207,4 +205,4 @@ const RegistrarDiaHora = () => {
     );
 }
 
-export default RegistrarDiaHora
+export default RegistrarDiaHoras
