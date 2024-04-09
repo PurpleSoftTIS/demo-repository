@@ -118,7 +118,9 @@ const LoginForm = () => {
                 </Col>
             </Row>
         </div>
+    
     </div>
+    
   );
 };
 
