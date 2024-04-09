@@ -25,9 +25,57 @@ const navigate = useNavigate();
   const [emailValido, setEmailValido] = useState(false);
   const correoElectronico = email;
 
+  const [errorCorreo, setErrorCorreo] = useState("");
+  const [errorPassword, setErrorPassword] = useState("");
+  const [errorInconpleto, setErrorIncompleto] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!email || !password ) {
+        setErrorIncompleto("❌ Por favor, complete todos los campos");
+        return;
+      }else{
+        setErrorCorreo("");
+        setErrorPassword(""); 
+        setErrorIncompleto("");
+      } 
+      const caracteresEspeciales = /[!#$%^&*()_+\-{};':"|,.<>?]+/;
+
    
+    if (email.length > 30) {
+        setErrorCorreo("❌ Su correo no debe exceder los 30 caracteres");
+        return;
+    }else{
+        setErrorCorreo("");
+    }    
+    if (!caracteresEspeciales.test(email)) {
+        setErrorCorreo("❌ Su correo debe contener caracteres especiales, excepto @");
+        return;
+    }else{
+        setErrorCorreo("");
+    }    
+    if (!email.includes('@')) {
+        setErrorCorreo("❌ Su correo debe contener @");
+        return;
+    }else{
+        setErrorCorreo("");
+    }
+    if (!caracteresEspeciales.test(password)) {
+        setErrorPassword("❌ Su contraseña no debe contener caracteres especiales");
+        return;
+      } else {        
+        setErrorPassword("");
+      }
+
+    if(password.length > 20){
+        setErrorPassword("❌ Su contraseña no debe eccerder los 20 caracteres ");
+      return;
+    }else{
+        setErrorPassword("");
+    }
+
+
+
     fetch("http://127.0.0.1:8000/api/verificar", {
     method: "POST",
     headers: {
@@ -126,6 +174,8 @@ const navigate = useNavigate();
                                                     value={email}
                                                     onChange={(e) => setEmail(e.target.value)}
                                                 />
+                                                {errorCorreo && <p className="error">{errorCorreo}</p>}
+
                                             </div>
                                              <div className="form-group">
                                                 <span className="input-icon"><FaLock /></span>
@@ -137,6 +187,9 @@ const navigate = useNavigate();
                                                     value={password}
                                                     onChange={(e) => setPassword(e.target.value)}
                                                 />
+                                                {errorPassword && <p className="error">{errorPassword}</p>}
+                                                {errorInconpleto && <p className="error">{errorInconpleto}</p>}
+
                                                 
                                             </div>
                                             <div className="mb-0 pb-3 text-center">
