@@ -13,20 +13,60 @@ import Ico5 from "../assets/IconosLan/IcoPostL.png";
 import Ico6 from "../assets/IconosLan/IcoReactL.png";
 import Ico7 from "../assets/IconosLan/IcoFacultad.png";
 import Ico8 from "../assets/IconosLan/IcoFacultadEscudo.png";
-
-
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
+const navigate = useNavigate();
+
   const [menuClicked, setMenuClicked] = useState(false);
-  
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailValido, setEmailValido] = useState(false);
+  const correoElectronico = email;
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Email:', email);
-    console.log('Password:', password);
+   
+    fetch("http://127.0.0.1:8000/api/verificar", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ correo_electronico: email }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Error al verificar el correo electrónico");
+      }
+      return response.json();
+    })
+    .then((data) => {
+        if (data.exists) {
+            console.log("El correo electrónico existe");
+            setEmailValido(true);
+            
+        } else {
+            if (email === "purpleSoft@gmail.com") {
+                navigate("/Admin/Inicio/HomeUno");
+            } else {
+                navigate(emailValido ? "/Usuario/Inicio/HomeDos" : "/");
+            }
+            console.log("El correo electrónico no existe");
+            setEmailValido(false);
+            
+        }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+ 
+  navigate("/Usuario/Inicio/HomeDos", { state: correoElectronico });
+
+
   };
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('')
+
   return (
     <div className="hero-6">
         <div>
@@ -54,10 +94,10 @@ const LoginForm = () => {
                                     <button className="nav-link pricing">Acerca de</button>
                                 </li>
                                 <li className="nav-item">
-                                    <a class="nav-link pricing" href="https://www.umss.edu.bo/" target="_blank" rel="noreferrer">UMSS</a> 
+                                    <a className="nav-link pricing" href="https://www.umss.edu.bo/" target="_blank" rel="noreferrer">UMSS</a> 
                                 </li>
                                 <li className="nav-item">
-                                    <a class="nav-link pricing" href="http://www.fcyt.umss.edu.bo/" target="_blank" rel="noreferrer">FCYT</a> 
+                                    <a className="nav-link pricing" href="http://www.fcyt.umss.edu.bo/" target="_blank" rel="noreferrer">FCYT</a> 
                                 </li>
                             </ul>
                         </div>
@@ -100,7 +140,8 @@ const LoginForm = () => {
                                                 
                                             </div>
                                             <div className="mb-0 pb-3 text-center">
-                                                <Link to="/Admin/Inicio/HomeUno" className="btn-block">Ingresar</Link>
+                                            <button className="btn-block" onClick={handleSubmit}> Ingresar </button>
+                                         
                                             </div>
                                             <p className="mt-3 text-center">
                                                     <Link to="/forgot-password" className="link">¿Olvidaste tu Contraseña?</Link>
@@ -117,7 +158,7 @@ const LoginForm = () => {
                 <Col md={6} className="mb-3">
                     <div className="d-flex justify-content-center align-items-center imagen" style={{ height: '100%' }}>
                         <img src={logop} alt="imagen comp" className="img-fluid" />
-                        <img class="vector-icon" alt="" src="/vector.svg"></img>
+                        <img className="vector-icon" alt="" src="/vector.svg"></img>
                          
                     </div>
                 </Col>

@@ -81,7 +81,7 @@ const Navbar = () => {
               <button className='Rol'onClick={toggleSesion}>
                 {showSesion && (
                       <div className="sesion">
-                          <NavLink className="opciones" to='/' activeclassname="active">Cerrar sesion</NavLink>                          
+                          <NavLink className="opciones" to='/' activeclassName="active">Cerrar sesion</NavLink>                          
                       </div>
                   )}
               </button>

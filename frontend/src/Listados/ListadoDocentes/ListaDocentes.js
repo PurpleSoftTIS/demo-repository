@@ -21,9 +21,7 @@ const ListaDocentes = () => {
     })
       .then(response => {
         if (response.ok) {
-          // Eliminar el docente del estado local
           setDocentes(docentes.filter(docente => docente.id !== id_docente));
-          // Ahora eliminamos el usuario
           return fetch(`http://127.0.0.1:8000/api/usuarios/${id_usuario}`, {
             method: 'DELETE',
           });
@@ -48,7 +46,7 @@ const ListaDocentes = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container" style={{ height: '76.1vh' }}>
       <div style={{ height: '4vh' }}></div>  
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ margin: 0 }}>Docentes Registrados:</h2>

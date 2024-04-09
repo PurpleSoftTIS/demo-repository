@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import logo from '../assets/LogoDefinitivo.jpeg';
-
 import userLogo from '../assets/IcoUser.png';
 import { FaBars } from 'react-icons/fa';
 import './Navbar.css';
@@ -9,21 +8,45 @@ import './Navbar.css';
 
 const NarbarUsuario = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [showSesion, setShwoSesion] = useState(false);
+  const [showSesion, setShowSesion] = useState(false);
+  const [nombreUsuario, setNombreUsuario] = useState('');
+  const { state: correoElectronico } = useLocation();
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 991) {
         setIsOpen(false);
       }
+      if (correoElectronico) {
+        fetch('http://127.0.0.1:8000/api/nombre', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ correo_electronico: correoElectronico }),
+        })
+          .then(response => response.json())
+          .then(data => {
+            setNombreUsuario(data.nombre);
+          })
+          .catch(error => {
+            console.error('Error al obtener el nombre del usuario:', error);
+          });
+      }    
+
+
+
     };
     window.addEventListener('resize', handleResize);
-
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);  
-  const toggleSesion = ()=>{
-    setShwoSesion(!showSesion);
+
+   
+  }, [correoElectronico]);  
+
+  const toggleSesion = () => {
+    setShowSesion(!showSesion);
   };
 
   return (
@@ -58,24 +81,23 @@ const NarbarUsuario = () => {
               </li>              
             </ul>
           </div>          
-            <div className='InicioSesion'>
-              <button className="usuario" onClick={toggleSesion} >
-                <img className="" src={userLogo} alt="logo" width='50px' height='50px' />
-              </button>
-              <button className='Rol'onClick={toggleSesion}>Usuario
-                {showSesion && (
-                      <div className="sesion">
-                          <NavLink className="opciones" to='/' activeClassName="active">Cerrar sesion</NavLink>                          
-                      </div>
-                  )}
-              </button>
-            </div>          
+          <div className='InicioSesion'>
+            <button className="usuario" onClick={toggleSesion} >
+              <img className="" src={userLogo} alt="logo" width='50px' height='50px' />
+            </button>
+            <button className='Rol'onClick={toggleSesion}>
+            {nombreUsuario}
+              {showSesion && (
+                <div className="sesion">
+                  <NavLink className="opciones" to='/' activeClassName="active">Cerrar sesion</NavLink>                          
+                </div>
+              )}
+            </button>
+          </div>          
         </div>
       </nav>     
-
     </div>
-  
   )
 }
 
-export default NarbarUsuario
+export default NarbarUsuario;
