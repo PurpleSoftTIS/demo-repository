@@ -104,7 +104,7 @@ const navigate = useNavigate();
                     </Collapse>
             </nav>
         </div>
-        <h2 className="Titulo-inicio">Sistema de Reservacion de Ambientes FCyT</h2>
+        <h2 className="Titulo-inicio">Sistema de Reservación de Ambientes FCyT</h2>
         <h4 className="Mensaje">Plataforma de gestión de reservas para ambientes de la FCYT, diseñada para docentes y autoridades de la Universidad Mayor de San Simón</h4>
         <div className="content">  
             <Row className="justify-content-center">
@@ -122,7 +122,7 @@ const navigate = useNavigate();
                                                     type="email"
                                                     name="logemail"
                                                     className="form-control"
-                                                    placeholder="Tu Correo"
+                                                    placeholder="Ingrese su correo"
                                                     value={email}
                                                     onChange={(e) => setEmail(e.target.value)}
                                                 />
@@ -133,7 +133,7 @@ const navigate = useNavigate();
                                                     type="password"
                                                     name="logpass"
                                                     className="form-control"
-                                                    placeholder="Tu Contraseña"
+                                                    placeholder="Ingrese su contaraseña"
                                                     value={password}
                                                     onChange={(e) => setPassword(e.target.value)}
                                                 />
@@ -158,7 +158,6 @@ const navigate = useNavigate();
                 <Col md={6} className="mb-3">
                     <div className="d-flex justify-content-center align-items-center imagen" style={{ height: '100%' }}>
                         <img src={logop} alt="imagen comp" className="img-fluid" />
-                        <img className="vector-icon" alt="" src="/vector.svg"></img>
                          
                     </div>
                 </Col>

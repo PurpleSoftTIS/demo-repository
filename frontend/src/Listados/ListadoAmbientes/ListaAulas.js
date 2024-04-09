@@ -3,6 +3,8 @@ import './ListaAulas.css';
 import { FaPlus, FaFileCsv, FaTrash } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom'; 
 import { useNavigate } from "react-router-dom";
+import Ico1 from "../../assets/IcoGood.png";
+import Ico2 from "../../assets/IcoState.png";
 
   function ListaAulas() {
     const [aulas,setAulas] = useState([]);
@@ -119,6 +121,7 @@ import { useNavigate } from "react-router-dom";
             <th>Edificio</th>
             <th>Nro Piso</th>
             <th>Capacidad</th>
+            <th>Estado</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -130,6 +133,13 @@ import { useNavigate } from "react-router-dom";
               <td>{aula.EDIFICIO}</td>
               <td>{aula.NUMERO_PISO}</td>
               <td>{aula.CAPACIDAD}</td>
+              <td>
+                {aula.ESTADO_AMBIENTE === "activo" ? (
+                  <img className="iconos2" src={Ico1} alt="Activo" width="60px" height="60px" />
+                ) : (
+                  <img className="iconos2" src={Ico2} alt="Inactivo" width="60px" height="60px" />
+                )}
+              </td>
               <td>
               <button className="btn btn-editar mr-2" onClick={() => handleEditar(aula.ID_AMBIENTE)}>Editar</button>
 

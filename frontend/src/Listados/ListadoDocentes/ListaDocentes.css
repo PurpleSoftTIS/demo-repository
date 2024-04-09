@@ -91,6 +91,8 @@
   }
   .fila-lista:hover {
     background-color: #f8f9fa; 
+    height: 70px;
+
   }
   .btn {
     margin-left: 5px;
@@ -122,3 +124,8 @@
     background-color: rgba(220, 53, 69, 0.1); 
     transform: translateY(-2px);
   }
+.iconos2{
+  position: relative;
+  top: -28px;
+  justify-content: center;
+}
