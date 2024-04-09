@@ -7,7 +7,6 @@ import Ambientes from './Registrar/ambientes/Ambientes';
 import Docentes from './Registrar/docentes/Docentes';
 import Navbar from './navegador/Navbar';
 import RegistrarMateria from './Registrar/materias/RMaterias';
-import Landing from './inicio/Landing';
 import LoginForm from './Login/LoginForm';
 import RegistrarDiaHora from './Registrar/dia_hora/RegistrarDiaHora';
 import NarbarUsuario from './navegador/NarbarUsuario';
@@ -21,11 +20,11 @@ import RegistroAmbienteExitoso from './Registrar/mensajes/RegistroAmbienteExitos
 import RegistroAmbienteError from './Registrar/mensajes/RegistroAmbienteError';
 import RegistroDocenteExitoso from './Registrar/mensajes/RegistroDocenteExitoso';
 import RegistroDocenteError from './Registrar/mensajes/RegistroDocenteError';
-import { ListaDocentes } from './Listados/ListadoDocentes/ListaDocentes';
-
+import ListaDocentes from './Listados/ListadoDocentes/ListaDocentes';
+import { Footer } from './navegador/Footer';
 export {
-  React,Router,Routes,Route,HomeUno,Ambientes,Docentes,Navbar,RegistrarMateria,Landing,
+  React,Router,Routes,Route,HomeUno,Ambientes,Docentes,Navbar,RegistrarMateria,
   LoginForm,RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Reservar, Solicitar,
-  Ayuda, ListaAulas, RegistroAmbienteExitoso, RegistroAmbienteError, RegistroDocenteExitoso,
-  RegistroDocenteError,ListaDocentes
+  Ayuda, ListaAulas, ListaDocentes,RegistroAmbienteExitoso, RegistroAmbienteError, RegistroDocenteExitoso,
+  RegistroDocenteError,Footer
 };

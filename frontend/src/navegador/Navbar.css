@@ -147,4 +147,64 @@
     background-color: #010a26;
     border-radius: 10px;
 }
+.iconos{
+    margin-right: 20px;
+}
+.text{
+    color: white;
+    font-size: 18px;
+    font-family: inherit;
+    margin: 0;
+}
+.mainfooter{
+    padding: 20px;
+    background-color: #050259;
+    height: 70px;
+    margin-top: 50px;  
+    margin-bottom: 20px;
+  
+}
 
+.footer{    
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-between;
+    z-index: 9999; 
+    margin-right: 20px;
+
+}
+.HomeReload{
+    position: relative;
+    flex-wrap: wrap; 
+    justify-content: flex-end;
+    margin-right: 25%;
+    margin-bottom: 20px;
+}
+
+.iconosTec{
+  position: relative; 
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: flex-end;
+}
+.description{
+    flex: 1; 
+}
+
+@media screen and (max-width: 768px) {
+    .footer {
+      flex-direction: column; 
+      align-items: center;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .iconosTec {
+      justify-content: space-around; 
+    }
+    .HomeReload{
+        justify-content: space-around; 
+
+    }
+  }
+  

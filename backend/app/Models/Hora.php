@@ -9,7 +9,7 @@ class Hora extends Model
 {
     use HasFactory;
     
-    protected $primaryKey = 'ID_HORA';
+    protected $primaryKey = 'id_hora';
     protected $table = 'hora';
  
 }

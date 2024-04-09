@@ -81,7 +81,7 @@ const Navbar = () => {
               <button className='Rol'onClick={toggleSesion}>
                 {showSesion && (
                       <div className="sesion">
-                          <NavLink className="opciones" to='/' activeclassname="active">Cerrar sesion</NavLink>                          
+                          <NavLink className="opciones" to='/' activeclassName="active">Cerrar sesion</NavLink>                          
                       </div>
                   )}
               </button>
@@ -103,7 +103,7 @@ const Navbar = () => {
                   {showDropdown && (
                       <div className="menu">
                           <NavLink className="opciones" to='/Admin/Listas/ListaAmbientes' activeClassName="active">Ambiente</NavLink>
-                          <NavLink className="opciones" to='/Admin/Registro/Docentes' activeClassName="active">Docente</NavLink>
+                          <NavLink className="opciones" to='/Admin/Listas/ListaDocentes' activeClassName="active">Docente</NavLink>
                           <NavLink className="opciones" to='/Admin/Registro/Materias' activeClassName="active">Materia</NavLink>
                       </div>              
                   )}              
@@ -126,6 +126,9 @@ const Navbar = () => {
           )}           
         </div>
       </nav>
+
+    
+
     </div>
   
   )

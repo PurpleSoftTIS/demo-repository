@@ -8,9 +8,7 @@
     font-size: 16px;
     font-weight: bold;
   }
-  
-
-  
+    
   .img-fluid {
     width: 100%;
     height: auto;
@@ -48,11 +46,20 @@
   .imagen-arriba  {
     width: 150px; 
     height: auto;
+    margin-bottom: 50px;
     
   }
   .btn-solicitudes {
     background-color: #0d0d46;
     color: white; /* Cambiar el color del texto a blanco */
+  }
+  .rectangulo-azul{
+    width: 500px;
+    height: auto;
+    
+  }
+  .col2{
+    align-items: center;
   }
     
   
