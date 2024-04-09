@@ -1,36 +1,93 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './ListaAulas.css';
 import { FaPlus, FaFileCsv, FaTrash } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom'; 
+import { useNavigate } from "react-router-dom";
 
-const ListaAulas = () => {
-  const [aulas, setAulas] = useState([
-    {
-      id: 1,
-      nro_aula: '1',
-      nombre: 'Aula 690B',
-      edificio: 'Edificio Principal',
-      nro_piso: 1,
-      capacidad: 30
-    },
-    {
-      id: 2,
-      nro_aula: '2',
-      nombre: 'Aula 692F',
-      edificio: 'Edificio Principal',
-      nro_piso: 2,
-      capacidad: 25
-    },
-  ]);
+  function ListaAulas() {
+    const [aulas,setAulas] = useState([]);
+    const navigate = useNavigate();
 
-  const eliminarAula = (id) => {
-    setAulas(aulas.filter(aula => aula.id !== id));
+    
+    
+    const borrarTodo = () => {
+      setAulas([]);
+    };
+    const borrarambiente = (ID_AMBIENTE)=>{
+          fetch(`http://127.0.0.1:8000/api/borrar/${ID_AMBIENTE}`,{
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json'
+          },
+         })
+         .then(response => {
+          if (response.ok) {
+              alert('El ambiente se ha actualizado correctamente.');
+          } else {
+              throw new Error('No se pudo actualizar el ambiente.');
+          }
+      })
+
+
+
+    };
+     
+    const handleEditar = (ID_AMBIENTE) => {
+      
+      fetch(`http://127.0.0.1:8000/api/ambiente/${ID_AMBIENTE}`, {
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+      
+      
+        })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Error al actualizar el ambiente');
+          }
+          console.log('Ambiente actualizado:',response);
+
+          return response.json();
+
+      })
+      .then(data => {
+        navigate('/Admin/Registro/AmbientesActualizar', { state: { datosAmbientes: data } });
+
+          console.log('Datos del ambiente actualizado:', data);
+    
+      
+      })
+      .catch(error => {
+          console.error(error);
+      });
   };
+
+    
   
-  const borrarTodo = () => {
-    setAulas([]);
-  };
+    useEffect(() => {
+        fetch("http://127.0.0.1:8000/api/listaAmbiente")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al obtener los ambientes');
+                }
+                
 
+
+                return response.json();
+               
+
+
+            })
+            .then(data => {
+                setAulas(data);
+                console.log(data);
+
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, []);
   return (
     <div className="container" style={{ height: '76.1vh' }}>
       <div style={{ height: '4vh' }}></div>  
@@ -67,15 +124,16 @@ const ListaAulas = () => {
         </thead>
         <tbody>
           {aulas.map((aula) => (
-            <tr key={aula.id} className="fila-lista">
-              <td>{aula.nro_aula}</td>
-              <td>{aula.nombre}</td>
-              <td>{aula.edificio}</td>
-              <td>{aula.nro_piso}</td>
-              <td>{aula.capacidad}</td>
+            <tr key={aula.ID_AMBIENTE} className="fila-lista">
+              <td>{aula.ID_AMBIENTE}</td>
+              <td>{aula.NOMBRE_AMBIENTE}</td>
+              <td>{aula.EDIFICIO}</td>
+              <td>{aula.NUMERO_PISO}</td>
+              <td>{aula.CAPACIDAD}</td>
               <td>
-              <button className="btn btn-editar mr-2">Editar</button>
-              <button className="btn btn-eliminar" onClick={() => eliminarAula(aula.id)}>Eliminar</button>
+              <button className="btn btn-editar mr-2" onClick={() => handleEditar(aula.ID_AMBIENTE)}>Editar</button>
+
+              <button className="btn btn-eliminar" onClick={() => borrarambiente(aula.ID_AMBIENTE)}>Eliminar</button>
               </td>
             </tr>
           ))}
