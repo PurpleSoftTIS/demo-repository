@@ -4,16 +4,21 @@ namespace App\Http\Controllers;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller; // Asegúrate de importar Controller aquí
-
+use DB;
 class UsuarioController extends Controller
 {
     public function index()
-    {
+{
+    try {
+        $usuariosConDocentes = Usuario::with('docente')->get(); // Esto asume que hay una relación definida en el modelo Usuario
 
-        $usuariosConDocentes = Usuario::get();        
-            return response()->json($usuariosConDocentes, 200);      
-        
+        return response()->json($usuariosConDocentes, 200);
+    } catch (\Exception $e) {
+        \Log::error('Error al intentar obtener usuarios con sus docentes: ' . $e->getMessage());
+        return response()->json(['error' => 'Error al obtener usuarios con sus docentes'], 500);
     }
+}
+
     public function obtenerNombreUsuario(Request $request)
     {
         $correo = $request->input('correo_electronico');
