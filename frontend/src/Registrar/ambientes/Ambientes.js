@@ -151,7 +151,7 @@ const Ambientes = () => {
 
   return (
     <div className="contact-4" style={{ height: '76.1vh' }}>
-      <from className="billing-info1" data-animate-on-scroll>
+      <form className="billing-info1" data-animate-on-scroll>
         <div className="checkout-container">
           <h3 className="checkout2">Registro de Ambientes</h3>
         </div>
@@ -199,7 +199,7 @@ const Ambientes = () => {
 
           </div>
         </div>
-      </from>
+      </form>
       <div className="line1" />
       <div className="checkout3" data-animate-on-scroll>
       <button className='button2'>

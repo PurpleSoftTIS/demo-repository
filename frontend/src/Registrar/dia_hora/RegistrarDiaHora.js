@@ -58,7 +58,7 @@ const RegistrarDiaHora = () => {
     const showHours = () => {
       if (selectedDay && selectedHours[selectedDay]) {
         return (
-          <div className="col-md-6">
+          <div className="col-md-6" style={{ height: '76.1vh' }}>
             <div className="row">
             <div className="square4 mx-auto my-5">
             <h4>Selecciona Las Horas</h4>
@@ -171,7 +171,7 @@ const RegistrarDiaHora = () => {
       });
     };
     return (
-      <div className="container text-center mt-5">
+      <div className="container text-center mt-5" style={{ height: '70.7vh' }}>
          <div className="container text-center mt-5">
           <div className="square mx-auto my-5 text-center ">
          
@@ -194,9 +194,7 @@ const RegistrarDiaHora = () => {
           </div>
         </div>
         <div className="square3 mx-auto d-flex justify-content-center align-items-center">
-          <button type="button" className="btn btn-primary custom-btn" onClick={handleRegistrarAmbiente}>
-            <NavLink className="btn btn-primary custom-btn" to={exitoso ? "/Admin/Mensaje/ExitoAmbiente" : "/Admin/Mensaje/ErrorAmbiente"}>Registrar Ambiente</NavLink>
-          </button>
+            <NavLink className="btn btn-primary custom-btn" to={exitoso ? "/Admin/Mensaje/ExitoAmbiente" : "/Admin/Mensaje/ErrorAmbiente" } onClick={handleRegistrarAmbiente}>Registrar Ambiente</NavLink>
         </div>
       </div>
     );
