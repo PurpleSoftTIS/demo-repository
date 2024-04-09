@@ -1077,3 +1077,52 @@ Did you mean one of these?
 [2024-04-04 01:02:24] local.ERROR: Error al intentar eliminar el docente y usuario: SQLSTATE[22P02]: Invalid text representation: 7 ERROR:  la sintaxis de entrada no es válida para tipo bigint: «undefined» (SQL: select * from "docente" where "docente"."id_docente" = undefined limit 1)  
 [2024-04-04 01:03:18] local.ERROR: Error al intentar eliminar el docente y usuario: SQLSTATE[22P02]: Invalid text representation: 7 ERROR:  la sintaxis de entrada no es válida para tipo bigint: «undefined» (SQL: select * from "docente" where "docente"."id_docente" = undefined limit 1)  
 [2024-04-04 01:03:19] local.ERROR: Error al intentar eliminar el docente y usuario: SQLSTATE[22P02]: Invalid text representation: 7 ERROR:  la sintaxis de entrada no es válida para tipo bigint: «undefined» (SQL: select * from "docente" where "docente"."id_docente" = undefined limit 1)  
+[2024-04-09 02:26:18] local.INFO: Días hábiles obtenidos para el ambiente 1:  
+[2024-04-09 02:26:18] local.INFO: Días hábiles obtenidos para Lunes:  
+[2024-04-09 02:26:18] local.INFO: Días hábiles obtenidos para el ambiente []:  
+[2024-04-09 02:26:18] local.INFO: Días hábiles obtenidos para Martes:  
+[2024-04-09 02:26:18] local.INFO: Días hábiles obtenidos para el ambiente []:  
+[2024-04-09 02:26:18] local.INFO: Días hábiles obtenidos para Miércoles:  
+[2024-04-09 02:26:18] local.INFO: Días hábiles obtenidos para el ambiente []:  
+[2024-04-09 02:26:18] local.INFO: Días hábiles obtenidos para Jueves:  
+[2024-04-09 02:26:18] local.INFO: Días hábiles obtenidos para el ambiente []:  
+[2024-04-09 02:26:18] local.INFO: Días hábiles obtenidos para Viernes:  
+[2024-04-09 02:26:18] local.INFO: Días hábiles obtenidos para el ambiente []:  
+[2024-04-09 02:26:19] local.INFO: Días hábiles obtenidos para el ambiente 1:  
+[2024-04-09 02:26:19] local.INFO: Días hábiles obtenidos para Lunes:  
+[2024-04-09 02:26:19] local.INFO: Días hábiles obtenidos para el ambiente []:  
+[2024-04-09 02:26:19] local.INFO: Días hábiles obtenidos para Martes:  
+[2024-04-09 02:26:19] local.INFO: Días hábiles obtenidos para el ambiente []:  
+[2024-04-09 02:26:19] local.INFO: Días hábiles obtenidos para Miércoles:  
+[2024-04-09 02:26:19] local.INFO: Días hábiles obtenidos para el ambiente []:  
+[2024-04-09 02:26:19] local.INFO: Días hábiles obtenidos para Jueves:  
+[2024-04-09 02:26:19] local.INFO: Días hábiles obtenidos para el ambiente []:  
+[2024-04-09 02:26:19] local.INFO: Días hábiles obtenidos para Viernes:  
+[2024-04-09 02:26:19] local.INFO: Días hábiles obtenidos para el ambiente []:  
+[2024-04-09 02:27:06] local.INFO: Días hábiles obtenidos para el ambiente 1:  
+[2024-04-09 02:27:06] local.INFO: Días hábiles obtenidos para Lunes:  
+[2024-04-09 02:27:06] local.INFO: Días hábiles obtenidos para el ambiente []:  
+[2024-04-09 02:27:06] local.INFO: Días hábiles obtenidos para Martes:  
+[2024-04-09 02:27:06] local.INFO: Días hábiles obtenidos para el ambiente []:  
+[2024-04-09 02:27:06] local.INFO: Días hábiles obtenidos para Miércoles:  
+[2024-04-09 02:27:06] local.INFO: Días hábiles obtenidos para el ambiente []:  
+[2024-04-09 02:27:06] local.INFO: Días hábiles obtenidos para Jueves:  
+[2024-04-09 02:27:06] local.INFO: Días hábiles obtenidos para el ambiente []:  
+[2024-04-09 02:27:06] local.INFO: Días hábiles obtenidos para Viernes:  
+[2024-04-09 02:27:06] local.INFO: Días hábiles obtenidos para el ambiente []:  
+[2024-04-09 02:27:22] local.INFO: Datos recibidos: {"id":1,"nombreAula":"l690","capacidadEstudiantes":100,"edificio":"memi","piso":"2","Tipo":"normal","diasHoras":{"Lunes":[],"Martes":[],"Miércoles":[],"Jueves":[],"Viernes":["11:15-12:45","09:45-11:15"]}} 
+[2024-04-09 02:27:39] local.INFO: Días hábiles obtenidos para el ambiente 1:  
+[2024-04-09 02:27:39] local.INFO: Días hábiles obtenidos para Lunes:  
+[2024-04-09 02:27:39] local.INFO: Días hábiles obtenidos para el ambiente []:  
+[2024-04-09 02:27:39] local.INFO: Días hábiles obtenidos para Martes:  
+[2024-04-09 02:27:39] local.INFO: Días hábiles obtenidos para el ambiente []:  
+[2024-04-09 02:27:39] local.INFO: Días hábiles obtenidos para Miércoles:  
+[2024-04-09 02:27:39] local.INFO: Días hábiles obtenidos para el ambiente []:  
+[2024-04-09 02:27:39] local.INFO: Días hábiles obtenidos para Jueves:  
+[2024-04-09 02:27:39] local.INFO: Días hábiles obtenidos para el ambiente []:  
+[2024-04-09 02:27:39] local.INFO: Días hábiles obtenidos para Viernes:  
+[2024-04-09 02:27:39] local.INFO: Días hábiles obtenidos para el ambiente [{"id_dia":15,"id_hora":1,"created_at":null,"updated_at":null},{"id_dia":15,"id_hora":2,"created_at":null,"updated_at":null}]:  
+[2024-04-09 02:27:39] local.INFO: Días hábiles obtenidos para el ambiente 11:15:00:  
+[2024-04-09 02:27:39] local.INFO: Días hábiles obtenidos para el ambiente 12:45:00:  
+[2024-04-09 02:27:39] local.INFO: Días hábiles obtenidos para el ambiente 09:45:00:  
+[2024-04-09 02:27:39] local.INFO: Días hábiles obtenidos para el ambiente 11:15:00:  

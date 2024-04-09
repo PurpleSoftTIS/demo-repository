@@ -2,7 +2,7 @@ import { React, Router, Routes, Route, HomeUno, Ambientes, Docentes, Navbar, Reg
         LoginForm, RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Reservar, Solicitar, Ayuda,
         ListaAulas, RegistroAmbienteExitoso, RegistroAmbienteError, RegistroDocenteExitoso,
         RegistroDocenteError,ListaDocentes,RegistrarDiaHoras,
-        AmbientesActualizar, RegistroDocenteError,Footer} from './importaciones';
+        AmbientesActualizar,Footer} from './importaciones';
 
 function AdminRoutes() {
   return (

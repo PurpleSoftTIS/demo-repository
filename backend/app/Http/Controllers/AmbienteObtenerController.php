@@ -16,7 +16,7 @@ class AmbienteObtenerController extends Controller
          usuario.apellido_materno) AS nombre_completo"))
         ->get();
 
-return response()->json($docenteConHorario, 200);
+        return response()->json($docenteConHorario, 200);
         
     }
 }
