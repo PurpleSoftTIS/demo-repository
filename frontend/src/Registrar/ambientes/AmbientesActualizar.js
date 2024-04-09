@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 import { useNavigate } from "react-router-dom";
 
@@ -7,6 +7,9 @@ import "./Ambientes.css";
 
 const Ambientes = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log("Datos de ubicación:", location.state);
+
   const [nombreAula, setNombreAula] = useState("");
   const [capacidadEstudiantes, setCapacidadEstudiantes] = useState("");
   const [edificio, setEdificio] = useState("");
@@ -59,7 +62,6 @@ const Ambientes = () => {
       }
       setErrorCapacidadEst("");
     }
-
     if (!tipoCadena.test(edificio)) {
       setErrorEdificio("❌ Por favor, ingresa solo caracteres alfabéticos y espacios en el nombre del edificio");
       return;
@@ -77,7 +79,7 @@ const Ambientes = () => {
       setErrorPiso("❌ El piso no debe contener caracteres especiales");
       return;
     } else {
-      if(piso.length > 2){
+      if(tipoGlobal.length > 2){
         setErrorPiso("❌ El piso no debe eexceder los 2 caracteres");
         return;
         }else{
@@ -90,7 +92,7 @@ const Ambientes = () => {
       setErrorTipoAmbiente("❌ El tipo de ambiente no debe contener caracteres numeros");
       return;
     } else {
-      if(Tipo.length > 70){
+      if(tipoGlobal.length > 70){
         setErrorTipoAmbiente("❌ El tipo de ambiente no debe excesder los 70 caracteres ");
         return;
         }else{
@@ -105,9 +107,14 @@ const Ambientes = () => {
       capacidadEstudiantes,
       edificio,
       piso,
-      Tipo
-    };
+      Tipo,
 
+    };
+    if (location.state && location.state.datosAmbientes && location.state.datosAmbientes.diasHoras) {
+      datosAmbiente.diasHoras = location.state.datosAmbientes.diasHoras;
+      datosAmbiente.id_ambiente= location.state.datosAmbientes.datosAmbiente.id_ambiente;
+      
+    }
     console.log("Datos a enviar:", datosAmbiente);
 
     setNombreAula("");
@@ -115,11 +122,23 @@ const Ambientes = () => {
     setEdificio("");
     setPiso("");
     setTiPo("");
-    navigate("/Admin/Registro/DiaHora", { state: datosAmbiente });
+
+    navigate("/Admin/Registro/Diahorasactualizar", { state: datosAmbiente });
   };
 
 
   useEffect(() => {
+    if (location.state && location.state.datosAmbientes && location.state.datosAmbientes.datosAmbiente) {
+      const { nombreAula, capacidadEstudiantes, edificio, piso, Tipo } = location.state.datosAmbientes.datosAmbiente;
+      setNombreAula(nombreAula || "");
+      setCapacidadEstudiantes(capacidadEstudiantes || "");
+      setEdificio(edificio || "");
+      setPiso(piso || "");
+      setTiPo(Tipo || "");
+      console.log("Datos del ambiente:", location.state);
+    }
+    console.log("Datos DEL SAMANTHA:", location.state);
+
     const scrollAnimElements = document.querySelectorAll(
       "[data-animate-on-scroll]"
     );
@@ -147,24 +166,24 @@ const Ambientes = () => {
         observer.unobserve(scrollAnimElements[i]);
       }
     };
-  }, []);
+  }, [location.state]);
 
   return (
-    <div className="contact-4" style={{ height: '76.1vh' }}>
-      <form className="billing-info1" data-animate-on-scroll>
+    <div className="contact-4">
+      <from className="billing-info1" data-animate-on-scroll>
         <div className="checkout-container">
           <h3 className="checkout2">Registro de Ambientes</h3>
         </div>
         <div className="frame-div">
           <div className="input111">
             <div className="label-here6">Numero de Aula</div>
-            <input className="input12" placeholder="690E" type="text" onChange={(e) => setNombreAula(e.target.value)}/>
+            <input className="input12" placeholder="690E" type="text" value={nombreAula} onChange={(e) => setNombreAula(e.target.value)}/>
             {errorNombreAula && <p className="error">{errorNombreAula}</p>}
 
           </div>
           <div className="input111">
             <div className="label-here6">Capacidad de Estudiantes</div>
-            <input className="input13" placeholder="90" type="text" onChange={(e) => setCapacidadEstudiantes(e.target.value)}/>
+            <input className="input13" placeholder="90" type="text" value={capacidadEstudiantes} onChange={(e) => setCapacidadEstudiantes(e.target.value)}/>
             {errorCapacidadEst && <p className="error">{errorCapacidadEst}</p>}
 
           </div>
@@ -172,7 +191,7 @@ const Ambientes = () => {
           <div className="input-parent1">
             <div className="input15">
               <div className="label-here8">Edificio</div>
-              <input className="input16" placeholder="Nombre del edificio" type="text"  onChange={(e) => setEdificio(e.target.value)}/>
+              <input className="input16" placeholder="Nombre del edificio" type="text" value={edificio} onChange={(e) => setEdificio(e.target.value)}/>
               {errorEdificio && <p className="error">{errorEdificio}</p>}
 
             </div>
@@ -199,7 +218,7 @@ const Ambientes = () => {
 
           </div>
         </div>
-      </form>
+      </from>
       <div className="line1" />
       <div className="checkout3" data-animate-on-scroll>
       <button className='button2'>

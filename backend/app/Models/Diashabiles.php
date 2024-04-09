@@ -12,5 +12,7 @@ class Diashabiles extends Model
     public $incrementing = false;
 
     protected $table = 'diashabiles';
+    protected $primaryKey = 'id_dia';
+
  
 }

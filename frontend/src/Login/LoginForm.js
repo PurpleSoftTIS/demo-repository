@@ -105,7 +105,7 @@ const navigate = useNavigate();
             </nav>
         </div>
         <h2 className="Titulo-inicio">Sistema de Reservacion de Ambientes FCyT</h2>
-        <h4 class="Mensaje">Plataforma de gestión de reservas para ambientes de la FCYT, diseñada para docentes y autoridades de la Universidad Mayor de San Simón</h4>
+        <h4 className="Mensaje">Plataforma de gestión de reservas para ambientes de la FCYT, diseñada para docentes y autoridades de la Universidad Mayor de San Simón</h4>
         <div className="content">  
             <Row className="justify-content-center">
                 <Col md={6} className="mb-3" > 

@@ -8,6 +8,7 @@ const ListaDocentes = () => {
 
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/docentes')
+      
       .then(response => response.json())
       .then(data => {
         setDocentes(data);

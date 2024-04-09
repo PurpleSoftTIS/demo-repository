@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./Docentes.css";
 import { NavLink } from 'react-router-dom';
 
-
 const Docentes = () => {
   var exitoso = true;
   const [nombres, setNombres] = useState("");
