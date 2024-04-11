@@ -44,8 +44,9 @@ Ejecuion del Backend
 php artisan serve
 
 IMPORTANTE 
-- Asegurece de estar en la ram correcta 
+- Asegurece de estar en la rama correcta 
 - Antes de subir cambios, siempre ejecute git pull origin nombre_de_rama, este en caso de estar trabanjando con otra perosna en una misma rama
 - No olvide no puede subir cambios a la main si antes entrar en concenso con el resto de colaboradores 
+- Actulizar constatemente su proceso con git status, add . y commit 
  
 php -S 127.0.0.1:8000 -t public
