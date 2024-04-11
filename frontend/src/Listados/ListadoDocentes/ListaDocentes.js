@@ -100,9 +100,9 @@ const ListaDocentes = () => {
               <td>{docente.tipo_docente}</td>
               <td>
                 {docente.estado_docente === "activo" ? (
-                  <img className="iconos2" src={Ico1} alt="Activo" width="60px" height="60px" />
+                  <img className="iconos2" src={Ico1} alt="Activo" width="50px" height="50px" />
                 ) : (
-                  <img className="iconos2" src={Ico2} alt="Inactivo" width="60px" height="60px" />
+                  <img className="iconos2" src={Ico2} alt="Inactivo" width="50px" height="50px" />
                 )}
               </td>
               <td>
@@ -112,7 +112,7 @@ const ListaDocentes = () => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table>      
     </div>
   );
 };

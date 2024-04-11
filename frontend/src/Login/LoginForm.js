@@ -60,15 +60,21 @@ const navigate = useNavigate();
     }else{
         setErrorCorreo("");
     }
-    if (!caracteresEspeciales.test(password)) {
+    if(!caracteresEspeciales.test(password)){
         setErrorPassword("❌ Su contraseña no debe contener caracteres especiales");
-        return;
-      } else {        
+      return;
+    }else{
         setErrorPassword("");
-      }
+    }
 
     if(password.length > 20){
         setErrorPassword("❌ Su contraseña no debe eccerder los 20 caracteres ");
+      return;
+    }else{
+        setErrorPassword("");
+    }
+    if(password.length < 8){
+        setErrorPassword("❌ Su contraseña debe tener minimo 8 caracteres ");
       return;
     }else{
         setErrorPassword("");
