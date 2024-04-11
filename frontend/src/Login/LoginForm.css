@@ -420,6 +420,14 @@ justify-content: flex-end;
   }
 
 }
-
+.olvidar{
+  background-color: #071d5f;
+  color:#f2f2f2;
+  border: none;
+  text-decoration: underline;
+}
+.olvidar:hover{
+  transform: scale(1.1);
+}
 
 

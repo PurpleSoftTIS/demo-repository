@@ -1,19 +1,19 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'; // Importa el icono faCheckCircle
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'; // Importa el icono faTimesCircle
 import { Link } from 'react-router-dom';
-import "./RegistroAmbiente.css";
+import "./Mensaje.css";
 
-const RegistroAmbienteExitoso = () => {
+const RegistroAmbienteError = () => {
   return (
     <div className="d-flex justify-content-center align-items-center vh-100">
       <div className="card text-center">
         <div className="card-body">
           <div className="d-flex flex-column align-items-center"> 
-            <FontAwesomeIcon icon={faCheckCircle} className="icono-check" />
-            <h5 className="card-title">Registro de Ambiente Exitoso</h5> 
+            <FontAwesomeIcon icon={faTimesCircle} className="icono-x" />
+            <h5 className="card-title">Registro Fallido</h5> 
           </div>
-          <p className="parrafito">Su registro se ha guardado exitosamente</p>
+          <p className="parrafito">Hubo un error al intentar guardar el registro</p>
           <div>          
                 <Link to="/Admin/Listas/ListaAmbientes" style={{backgroundColor: '#0d0d46', color: 'white'}} className="btn">Aceptar</Link>
           </div>
@@ -23,4 +23,4 @@ const RegistroAmbienteExitoso = () => {
   );
 };
 
-export default RegistroAmbienteExitoso;
+export default RegistroAmbienteError;

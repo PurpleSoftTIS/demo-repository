@@ -231,7 +231,7 @@ const Docentes = () => {
       </form>
       <div className="checkout1" data-animate-on-scroll>
         <button className="button" onClick={handleRegistroDocente}>
-        <NavLink className="button-cta" to={exitoso ? "/Admin/Mensaje/ExitoDocente" : "/Admin/Mensaje/ErrorDocente"}>Registrar Docente</NavLink>
+        <NavLink className="button-cta" to={exitoso ? "/Admin/Mensaje/RegistroExitoso" : "/Admin/Mensaje/RegistroError"}>Registrar Docente</NavLink>
         </button>
       </div>
     </div>
