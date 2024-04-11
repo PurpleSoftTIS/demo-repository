@@ -23,7 +23,7 @@ import RegistroAmbienteError from './Registrar/mensajes/RegistroAmbienteError';
 import RegistroDocenteExitoso from './Registrar/mensajes/RegistroDocenteExitoso';
 import RegistroDocenteError from './Registrar/mensajes/RegistroDocenteError';
 import RegistrarDiaHoras from './Registrar/dia_hora/RegistrarDiaHoraActualizar';
-
+import ListaMaterias from './Listados/ListadoMaterias/ListaMaterias';
 import ListaDocentes from './Listados/ListadoDocentes/ListaDocentes';
 import { Footer } from './navegador/Footer';
 export {
@@ -31,5 +31,5 @@ export {
   LoginForm,RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Reservar, Solicitar,
   Ayuda, ListaAulas, RegistroDocenteExitoso,
   RegistroDocenteError,ListaDocentes,RegistrarDiaHoras,AmbientesActualizar
-  ,RegistroAmbienteExitoso, RegistroAmbienteError,Footer
+  ,RegistroAmbienteExitoso, RegistroAmbienteError,Footer,ListaMaterias
 };

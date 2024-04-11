@@ -104,7 +104,7 @@ const Navbar = () => {
                       <div className="menu">
                           <NavLink className="opciones" to='/Admin/Listas/ListaAmbientes' activeclassname="active">Ambiente</NavLink>
                           <NavLink className="opciones" to='/Admin/Listas/ListaDocentes' activeclassname="active">Docente</NavLink>
-                          <NavLink className="opciones" to='/Admin/Registro/Materias' activeclassname="active">Materia</NavLink>
+                          <NavLink className="opciones" to='/Admin/Listas/ListaMaterias' activeclassname="active">Materia</NavLink>
                       </div>              
                   )}              
               </div>

@@ -127,7 +127,7 @@
   .billing-info2.animate {
     animation: 1s ease 0s 1 normal forwards scale-up;
   }
-  .button-cta2 {
+  .button-cta22 {
     position: relative;
     font-size: 16px;
     letter-spacing: -0.02em;
@@ -137,7 +137,7 @@
     color: #fff;
     text-align: center;
   }
-  .button2 {
+  .button22 {
     cursor: pointer;
     border: 0;
     padding: 16px 20px;
@@ -149,7 +149,7 @@
     align-items: center;
     justify-content: center;
   }
-  .button2:hover {
+  .button22:hover {
     background-color: #010a26;
   }
   .checkout5,
@@ -184,6 +184,57 @@
     color: #4b5563;
     font-family: Inter;
   }
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Estilos específicos para el modal de agregar carrera */
+  .add-carrera-modal .modal-content {
+    background-color: #ffffff; /* Fondo blanco */
+    padding: 20px;
+    border-radius: 10px; /* Bordes más redondeados */
+    max-width: 500px; /* Limita el ancho del modal */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  }
+  
+  /* Estilos para el botón de cerrar */
+  .add-carrera-modal .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    color: #333; /* Color de texto más oscuro */
+  }
+  
+  /* Estilos para el botón "Agregar" */
+  .add-carrera-modal button {
+    background-color:#050259 ;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 10px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-left: 150px;
+    margin-right: 150px;
+  }
+  .error-message {
+    color: red;
+    font-size: 12px;
+  }
+  
+  .input20.error-border,
+  .input24.error-border {
+    border-color: red;
+  }
   @media screen and (max-width: 450px) {
     .input24 {
       align-self: stretch;
@@ -212,4 +263,5 @@
       box-sizing: border-box;
     }
   }
+  
   

@@ -17,4 +17,9 @@ class Docente extends Model
         "estado_docente",
         "tipo_docente"
     ];
+    
+    public function materias()
+    {
+        return $this->belongsToMany(Materia::class, 'materia_docente', 'id_docente', 'id_materia');
+    }
 }
