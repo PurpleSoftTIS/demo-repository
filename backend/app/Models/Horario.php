@@ -10,6 +10,7 @@ class Horario extends Model
     use HasFactory;
     
   protected $table = 'horario';
+ 
   public $timestamps = false;
   public $incrementing = false;
 

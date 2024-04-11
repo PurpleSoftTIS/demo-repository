@@ -32,7 +32,7 @@ const RegistrarMateria = () => {
     };
   }, []);
   return (
-    <div className="contact-14">
+    <div className="contact-14" style={{ height: '76.1vh' }}>
       <div className="line2" />
       <div className="billing-info2" data-animate-on-scroll>
         <div className="checkout-frame">

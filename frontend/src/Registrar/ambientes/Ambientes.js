@@ -59,6 +59,7 @@ const Ambientes = () => {
       }
       setErrorCapacidadEst("");
     }
+
     if (!tipoCadena.test(edificio)) {
       setErrorEdificio("❌ Por favor, ingresa solo caracteres alfabéticos y espacios en el nombre del edificio");
       return;
@@ -76,7 +77,7 @@ const Ambientes = () => {
       setErrorPiso("❌ El piso no debe contener caracteres especiales");
       return;
     } else {
-      if(tipoGlobal.length > 2){
+      if(piso.length > 2){
         setErrorPiso("❌ El piso no debe eexceder los 2 caracteres");
         return;
         }else{
@@ -89,7 +90,7 @@ const Ambientes = () => {
       setErrorTipoAmbiente("❌ El tipo de ambiente no debe contener caracteres numeros");
       return;
     } else {
-      if(tipoGlobal.length > 70){
+      if(Tipo.length > 70){
         setErrorTipoAmbiente("❌ El tipo de ambiente no debe excesder los 70 caracteres ");
         return;
         }else{
@@ -149,8 +150,8 @@ const Ambientes = () => {
   }, []);
 
   return (
-    <div className="contact-4">
-      <from className="billing-info1" data-animate-on-scroll>
+    <div className="contact-4" style={{ height: '76.1vh' }}>
+      <form className="billing-info1" data-animate-on-scroll>
         <div className="checkout-container">
           <h3 className="checkout2">Registro de Ambientes</h3>
         </div>
@@ -198,7 +199,7 @@ const Ambientes = () => {
 
           </div>
         </div>
-      </from>
+      </form>
       <div className="line1" />
       <div className="checkout3" data-animate-on-scroll>
       <button className='button2'>

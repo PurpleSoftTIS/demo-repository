@@ -93,7 +93,7 @@ const Navbar = () => {
           <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarNav">
             <ul className="navbar-nav mx-auto">
               <li className="nav-item">
-                <NavLink className="nav-link" to='/Admin/inicio/HomeUno' exact>Inicio</NavLink> 
+                <NavLink className="nav-link" to='/Admin/inicio/HomeUno'>Inicio</NavLink> 
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to='/Admin/ListaSolicitudes'>Solicitudes</NavLink>
@@ -102,9 +102,9 @@ const Navbar = () => {
                   <button className="nav-link dropdown-toggle" onClick={toggleDropdown} style={{ cursor: 'pointer' }}>Registrar</button>
                   {showDropdown && (
                       <div className="menu">
-                          <NavLink className="opciones" to='/Admin/Listas/ListaAmbientes' activeClassName="active">Ambiente</NavLink>
-                          <NavLink className="opciones" to='/Admin/Registro/Docentes' activeClassName="active">Docente</NavLink>
-                          <NavLink className="opciones" to='/Admin/Registro/Materias' activeClassName="active">Materia</NavLink>
+                          <NavLink className="opciones" to='/Admin/Listas/ListaAmbientes' activeclassname="active">Ambiente</NavLink>
+                          <NavLink className="opciones" to='/Admin/Listas/ListaDocentes' activeclassname="active">Docente</NavLink>
+                          <NavLink className="opciones" to='/Admin/Registro/Materias' activeclassname="active">Materia</NavLink>
                       </div>              
                   )}              
               </div>
@@ -126,6 +126,9 @@ const Navbar = () => {
           )}           
         </div>
       </nav>
+
+    
+
     </div>
   
   )

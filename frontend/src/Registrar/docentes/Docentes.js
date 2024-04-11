@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./Docentes.css";
 import { NavLink } from 'react-router-dom';
 
-
 const Docentes = () => {
   var exitoso = true;
   const [nombres, setNombres] = useState("");
@@ -83,13 +82,14 @@ const Docentes = () => {
     } else {
       setErrorCodigo("");
     }
+
     const datosDocente = {
       nombres,
       apellidoPaterno,
       apellidoMaterno,
       correo,
       tipo,
-      codigoDocente,
+      codigoDocente, // Enviar el código encriptado
     };
 
     console.log("Datos a enviar:", datosDocente);
@@ -166,7 +166,7 @@ const Docentes = () => {
   };
 
   return (
-    <div className="contact-6">
+    <div className="contact-6" style={{ height: '74.4vh' }}>
      
       <div className="line" />
       <form className="billing-info" data-animate-on-scroll>
@@ -231,7 +231,7 @@ const Docentes = () => {
       </form>
       <div className="checkout1" data-animate-on-scroll>
         <button className="button" onClick={handleRegistroDocente}>
-        <NavLink className="button-cta" to={exitoso ? "/Admin/Mensaje/ExitoDocente" : "/Admin/Mensaje/ErrorDocente"}>Registrar Docente</NavLink>
+        <NavLink className="button-cta" to={exitoso ? "/Admin/Mensaje/RegistroExitoso" : "/Admin/Mensaje/RegistroError"}>Registrar Docente</NavLink>
         </button>
       </div>
     </div>

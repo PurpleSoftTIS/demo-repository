@@ -150,7 +150,7 @@ body {
   font-family: Inter;
 }
 /*Titulo*/
-.Titulo-inicio {
+.Titulo-inicio,.Mensaje {
   text-align: center;
   color: #F2f2f2; /* Color del texto */
   background-color: #010a26; /* Fondo transparente */
@@ -350,279 +350,84 @@ input:-webkit-autofill:active {
   text-align: center;
   
 }
-/*
-.find-the-most {
-  align-self: stretch;
-  position: relative;
-  letter-spacing: -2px;
-  line-height: 60px;
-  font-weight: 800;
-}
-.vestibulum-placerat {
-  align-self: stretch;
-  position: relative;
-  font-size: 16px;
-  letter-spacing: -0.02em;
-  line-height: 150%;
-  color: #9ca3af;
-}
-.heading-text {
-  align-self: stretch;
+
+
+.description2{
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 20px;
 }
-.get-started-for {
-  width: 97px;
-  position: relative;
-  font-size: 16px;
-  line-height: 16px;
-  font-weight: 500;
-  font-family: Inter;
-  color: #010a26;
-  text-align: left;
-  display: inline-block;
-  flex-shrink: 0;
+.logos2{
+  margin-left: 40px;
 }
-.cta-02 {
-  border-radius: 6px;
-  background-color: #f2f2f2;
-  flex-direction: row;
-  padding: 18px 32px;
-  text-decoration: none;
-}
-.cta-02:hover,
-.cta-button:hover,
-.get-started-for:hover
-{
-  background-color: #102770;
-  color: #fff;
-}
-.cta-02,
-.cta-button,
-.heading-cta {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
-.cta-button {
-  cursor: pointer;
-  border: 0;
-  padding: 0;
-  background-color: #ffeba7;
-  flex-direction: row;
-}
-.heading-cta {
-  align-self: stretch;
-  flex-direction: column;
-  gap: 52px;
-}
-.heading {
-  align-self: stretch;
-  position: relative;
-  letter-spacing: 0.03em;
-  line-height: 20px;
-  text-transform: uppercase;
-  font-weight: 600;
-}
+.mainfooter2{
+  padding: 20px;
+  background: linear-gradient(to right, #010a26 20%, #bf0404 );
+  height: 180px;
 
-.heading-logo,
-.logo-cloud,
-.logos {
-  display: flex;
-  justify-content: flex-start;
 }
-
-.heading-logo,
-.logo-cloud {
-  flex-direction: column;
-  align-items: flex-start;
-}
-.logo-cloud {
-  align-self: stretch;
-  gap: 20px;
-  font-size: 14px;
-  color: #fff;
-}
-.heading-logo {
-  flex: 1;
-  height: 627px;
-  gap: 96px;
-}
-
-
-
-.hero-06,
-.image {
-  position: relative;
-}
-.image {
-  align-self: stretch;
-  background-color: #f2f2f2;
-  height:60px;
-}
-.hero-06 {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  text-align: left;
-  font-size: 16px;
-  color: #fff;
-  font-family: Inter;
-}
-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-}*/
-
-/*Login*/
-/*a {
-	cursor: pointer;
-  transition: all 200ms linear;
-}
-a:hover {
-	text-decoration: none;
-}
-
-
-
-p {
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 1.7;
-}
-h4 {
-  font-weight: 600;
-}
-
-.section{
-  position: relative;
-  width: 100%;
-  display: block;
-}
-.full-height{
-  min-height: 85vh;
-}
-[type="checkbox"]:checked,
-[type="checkbox"]:not(:checked){
-  position: absolute;
-  left: -9999px;
-}
-.checkbox:checked + label,
-.checkbox:not(:checked) + label{
-  position: relative;
-  display: block;
-  text-align: center;
-  width: 60px;
-  height: 16px;
-  border-radius: 8px;
-  padding: 0;
-  margin: 10px auto;
-  cursor: pointer;
-  background-color: #f2f2f2;
-}
-.checkbox:checked + label:before,
-.checkbox:not(:checked) + label:before{
-  position: absolute;
-  display: block;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  color: #F2f2f2;
-  background-color: #102770;
-  font-family: 'unicons';
-  content: '';
-  z-index: 20;
-  top: -10px;
-  left: -10px;
-  line-height: 36px;
-  text-align: center;
-  font-size: 24px;
-  transition: all 0.5s ease;
-}
-.checkbox:checked + label:before {
-  transform: translateX(45px) rotate(-270deg);
-}
-.card-3d-wrap {
-  position: relative;
-  width: 500px;
-  max-width: 100%;
-  height: 400px;
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  perspective: 800px;
+.iconos2{
+  margin-right: 20px;
   margin-top: 60px;
+
 }
-.card-3d-wrapper {
-  width: 100%;
-  height: 100%;
-  position:absolute;    
-  top: 0;
-  left: 0;  
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  transition: all 600ms ease-out; 
+.footer2{    
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: space-between;
+  z-index: 9999; 
+  margin-right: 20px;
+
 }
-.card-front, .card-back {
-  width: 100%;
-  height: 100%;
-  background-color: #011640;
-  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg');
-  background-position: bottom center;
-  background-repeat: no-repeat;
-  background-size: 300%;
-  position: absolute;
-  border-radius: 6px;
-  left: 0;
-  top: 0;
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -o-backface-visibility: hidden;
-  backface-visibility: hidden;
+.HomeReload2{
+  position: relative;
+  flex-wrap: wrap; 
+  justify-content: flex-end;
+  margin-right: 25%;
+
 }
-.card-back {
-  transform: rotateY(180deg);
+.iconosTec2{
+position: relative; 
+display: flex;
+flex-wrap: wrap; 
+justify-content: flex-end;
+
 }
-.checkbox:checked ~ .card-3d-wrap .card-3d-wrapper {
-  transform: rotateY(180deg);
+.description2{
+  flex: 1; 
 }
-.center-wrap{
-  position: absolute;
-  width: 100%;
-  padding: 0 0 px;
-  top: 50%;
-  left: 0;
-  transform: translate3d(0, -50%, 35px) perspective(100px);
-  z-index: 20;
-  display: block;
+.text{
+  flex-direction: column;
+}
+.text2{
+  position: relative;
+  height: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .footer2 {
+    flex-direction: column; 
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 480px) {
+
+  .iconosTec2 {
+    justify-content: space-around; 
+  }
+  .HomeReload{
+      justify-content: space-around; 
+
+  }
+
+}
+.olvidar{
+  background-color: #071d5f;
+  color:#f2f2f2;
+  border: none;
+  text-decoration: underline;
+}
+.olvidar:hover{
+  transform: scale(1.1);
 }
 
 
-.logo {
-	position: absolute;
-	top: 30px;
-	right: 30px;
-	display: block;
-	z-index: 100;
-	transition: all 250ms linear;
-}
-.logo img {
-	height: 60px;
-	width: auto;
-	display: block;
-}
-.option {
-  font-size: 15px;
-}
-.option:hover {
-  font-weight: bold;
-}
-*/
