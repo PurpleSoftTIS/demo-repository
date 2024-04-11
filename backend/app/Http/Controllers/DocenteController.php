@@ -15,7 +15,9 @@ class DocenteController extends Controller
         ->join('docente', 'usuario.id_usuario', '=', 'docente.id_usuario')
         ->select(
             'docente.*',
-            'usuario.*'
+            'usuario.*',
+            DB::raw("CONCAT(usuario.nombre, '  ', usuario.apellido_paterno, '  ',
+            usuario.apellido_materno) AS nombre_completo")
         )
         ->get();
 
