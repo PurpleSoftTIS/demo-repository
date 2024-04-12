@@ -156,7 +156,7 @@ const RegistrarMateria = () => {
     };
   }, []);
   return (
-    <div className="contact-14">
+    <div className="contact-14" style={{ height: '75.8vh' }}>
       <div className="line2" />
       <form onSubmit={handleSubmit}>
       <div className="billing-info2" data-animate-on-scroll>

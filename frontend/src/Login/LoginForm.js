@@ -60,7 +60,7 @@ const navigate = useNavigate();
     }else{
         setErrorCorreo("");
     }
-    if(!caracteresEspeciales.test(password)){
+    if(caracteresEspeciales.test(password)){
         setErrorPassword("❌ Su contraseña no debe contener caracteres especiales");
       return;
     }else{
