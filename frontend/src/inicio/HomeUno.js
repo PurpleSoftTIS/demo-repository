@@ -37,7 +37,18 @@ const HomeUno = () => {
           </div>
         </div>
       </div>
+      <footer>
+        <div className="footer-of">
+          <div className="row fila-footer">
+           <div className="col-lg-12 cont-footer">
+              <p>Este es el footer de mi aplicación.</p>
+              <p>© {new Date().getFullYear()} Mi Empresa</p>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
+    
   );
 }
 

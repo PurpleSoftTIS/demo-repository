@@ -1,0 +1,46 @@
+/* Solicitar.css */
+
+.contenedorGeneral {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 74vh;
+  }
+  
+  .contenedorsito {
+    width: 80%;
+    max-width: 600px; /* Ajusta este valor según tus necesidades */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .calendario-container {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .input,
+  .select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  @media (max-width: 768px) {
+    .contenedorsito {
+      width: 90%;
+    }
+  }
+  

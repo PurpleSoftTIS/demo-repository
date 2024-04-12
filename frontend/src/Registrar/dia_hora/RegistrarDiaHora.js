@@ -194,7 +194,7 @@ const RegistrarDiaHora = () => {
           </div>
         </div>
         <div className="square3 mx-auto d-flex justify-content-center align-items-center">
-            <NavLink className="btn btn-primary custom-btn" to={exitoso ? "/Admin/Mensaje/ExitoAmbiente" : "/Admin/Mensaje/ErrorAmbiente" } onClick={handleRegistrarAmbiente}>Registrar Ambiente</NavLink>
+            <NavLink className="btn btn-primary custom-btn" to={exitoso ? "/Admin/Mensaje/MensajeExitoso" : "/Admin/Mensaje/MensajeError" } onClick={handleRegistrarAmbiente}>Registrar Ambiente</NavLink>
         </div>
       </div>
     );

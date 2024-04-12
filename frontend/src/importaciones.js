@@ -18,17 +18,19 @@ import { Reservar } from './Usuario/Resevar/Reservar';
 import { Solicitar } from './Usuario/Solicitar/Solicitar';
 import { Ayuda } from './Usuario/Ayuda/Ayuda';
 import ListaAulas from './Listados/ListadoAmbientes/ListaAulas';
-import RegistroAmbienteExitoso from './Registrar/mensajes/RegistroAmbienteExitoso';
-import RegistroAmbienteError from './Registrar/mensajes/RegistroAmbienteError';
-import RegistroDocenteExitoso from './Registrar/mensajes/RegistroDocenteExitoso';
-import RegistroDocenteError from './Registrar/mensajes/RegistroDocenteError';
+import MensajeExitoso from './Registrar/mensajes/MensajeExitoso';
+import MensajeError from './Registrar/mensajes/MensajeError';
 import RegistrarDiaHoras from './Registrar/dia_hora/RegistrarDiaHoraActualizar';
 import ListaMaterias from './Listados/ListadoMaterias/ListaMaterias';
 import ListaDocentes from './Listados/ListadoDocentes/ListaDocentes';
 import { Footer } from './navegador/Footer';
+
 export {
   React,Router,Routes,Route,HomeUno,Ambientes,Docentes,Navbar,RegistrarMateria,
   LoginForm,RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Reservar, Solicitar,
+  Ayuda, ListaAulas, MensajeExitoso,
+  MensajeError,ListaDocentes,RegistrarDiaHoras,AmbientesActualizar,
+  Footer
   Ayuda, ListaAulas, RegistroDocenteExitoso,
   RegistroDocenteError,ListaDocentes,RegistrarDiaHoras,AmbientesActualizar
   ,RegistroAmbienteExitoso, RegistroAmbienteError,Footer,ListaMaterias

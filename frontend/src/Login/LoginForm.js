@@ -24,6 +24,12 @@ const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [emailValido, setEmailValido] = useState(false);
   const correoElectronico = email;
+  const [login0, setIsVisible] = useState(false);
+  const [logRecuperacion, setInvisible] = useState(true);
+  const toggleVisibility = () => {
+    setIsVisible(!login0); // Cambiar el estado de visibilidad al hacer clic en el botón
+    setInvisible(!logRecuperacion);
+  };
 
   const [errorCorreo, setErrorCorreo] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
@@ -114,10 +120,10 @@ const navigate = useNavigate();
     .catch((error) => {
       console.error(error);
     });
-
+    
  
   navigate("/Usuario/Inicio/HomeDos", { state: correoElectronico });
-
+  
 
   };
 
@@ -169,7 +175,7 @@ const navigate = useNavigate();
                                 <div className="login-box">
                                     <div className="section">
                                         <h6 className="mb-0 pb-3 text-center">Inicia sesión</h6>
-                                        <form onSubmit={handleSubmit}>
+                                        <form className="login0"onSubmit={handleSubmit} style={{ display: logRecuperacion ? 'block' : 'none' }}>
                                             <div className="form-group">
                                                 <span className="input-icon"><FaAt /></span>
                                                 <input 
@@ -202,9 +208,29 @@ const navigate = useNavigate();
                                             <button className="btn-block" onClick={handleSubmit}> Ingresar </button>
                                          
                                             </div>
-                                            <p className="mt-3 text-center">
-                                                    <Link to="/forgot-password" className="link">¿Olvidaste tu Contraseña?</Link>
+                                                <p className="mt-3 text-center">
+                                                    <button  onClick={toggleVisibility} className="olvidar">¿Olvidaste tu Contraseña?</button>
                                                 </p>
+                                           
+                                        </form>
+                                        <form className="logRecuperacion"onSubmit={handleSubmit} style={{ display: login0 ? 'block' : 'none' }} >
+                                                        <div className="form-group">
+                                                            <span className="input-icon"><FaAt /></span>
+                                                            <input 
+                                                                type="email"
+                                                                name="logemail"
+                                                                className="form-control"
+                                                                placeholder="Correo Institucional"
+                                                                id="logemail1" 
+                                                                autoComplete="off"
+                                                   
+                                                />
+                                            </div>
+                                            <div className="mb-0 pb-3 text-center">
+                                                <button className="btn-block" >Enviar Codigo</button>
+                                         
+                                            </div>
+                                            
                                            
                                         </form>
                                         
@@ -256,8 +282,9 @@ const navigate = useNavigate();
             </footer>
 
     </div>
+    
   );
 };
 
 export default LoginForm;
-
+                                
