@@ -19,7 +19,7 @@ class MateriaController extends Controller
             ->join('usuario', 'docente.id_usuario', '=', 'usuario.id_usuario')
             ->select(
                 'materia.*'
-                            )
+            )
             ->get();
 
         return response()->json($materiasConDocentes, 200);

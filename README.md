@@ -50,3 +50,13 @@ IMPORTANTE
 - Actulizar constatemente su proceso con git status, add . y commit 
  
 php -S 127.0.0.1:8000 -t public
+
+
+Como crear un controlador
+php artisan make:controller_nombre
+
+Como crear una migracion
+php artisan make:migration agregar_columna_contraseña_a_tabla
+Como crear un modelo
+
+Como hacer tu ruta

@@ -40,8 +40,9 @@ Route::post('/materiaRegistrar', [MateriaRegistrarController::class, 'registrarM
 Route::post('/registrarambiente', [AmbienteController::class, 'guardarAmbiente']);
 Route::put('/ambiente/{ID_AMBIENTE}', [AmbienteController::class, 'actualizarAmbiente']);
 Route::put ('/actualizar/{ID_AMBIENTE}',[AmbienteController::class,'actualizarAmb']);
-Route::delete('/borrar/{ID_AMBIENTE}', [AmbienteController::class, 'borrarAmbiente']);
 //Elimnar datos
 Route::delete('/docentes/{id}', [DocenteController::class, 'eliminar']);
+Route::delete('/borrar/{ID_AMBIENTE}', [AmbienteController::class, 'borrarAmbiente']);
+
 
 
