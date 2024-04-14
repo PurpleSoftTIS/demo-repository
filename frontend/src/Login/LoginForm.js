@@ -24,10 +24,82 @@ const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [emailValido, setEmailValido] = useState(false);
   const correoElectronico = email;
+  const [login0, setIsVisible] = useState(false);
+  const [logRecuperacion, setInvisible] = useState(true);
+  const [mostrarIniciar , setIniciar] = useState(true);
+  const [mostrarRestablecer, setMostrarRestablecer] = useState(false);
+
+  const toggleVisibility = () => {
+    setIsVisible(!login0); 
+    setInvisible(!logRecuperacion);
+    setIniciar(!mostrarIniciar);
+    setMostrarRestablecer(!mostrarRestablecer);
+  };
+  const toggleVisibility2 = () =>{
+    setIsVisible(!login0); 
+    setInvisible(!logRecuperacion);
+    setIniciar(!mostrarIniciar);
+    setMostrarRestablecer(!mostrarRestablecer);
+  }
+
+  const [errorCorreo, setErrorCorreo] = useState("");
+  const [errorPassword, setErrorPassword] = useState("");
+  const [errorInconpleto, setErrorIncompleto] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!email || !password ) {
+        setErrorIncompleto("❌ Por favor, complete todos los campos");
+        return;
+      }else{
+        setErrorCorreo("");
+        setErrorPassword(""); 
+        setErrorIncompleto("");
+      } 
+      const caracteresEspeciales = /[!#$%^&*()_+\-{};':"|,<>?]+/;
+
    
+    if (email.length > 30) {
+        setErrorCorreo("Su correo no debe exceder los 30 caracteres");
+        return;
+    }else{
+        setErrorCorreo("");
+    }    
+    if (caracteresEspeciales.test(email)) {
+        setErrorCorreo("Su correo debe contener caracteres especiales, excepto @");
+        return;
+    }else{
+        setErrorCorreo("");
+    }    
+    if (!email.includes('@')) {
+        setErrorCorreo("Su correo debe contener @");
+        return;
+    }else{
+        setErrorCorreo("");
+    }
+    if(caracteresEspeciales.test(password)){
+        setErrorPassword("Su contraseña no debe contener caracteres especiales");
+      return;
+    }else{
+        setErrorPassword("");
+    }
+
+    if(password.length > 20){
+        setErrorPassword("Su contraseña no debe eccerder los 20 caracteres ");
+      return;
+    }else{
+        setErrorPassword("");
+    }
+    if(password.length < 8){
+        setErrorPassword("Su contraseña debe tener minimo 8 caracteres ");
+      return;
+    }else{
+        
+        setErrorPassword("");
+    }
+
+
+
     fetch("http://127.0.0.1:8000/api/verificar", {
     method: "POST",
     headers: {
@@ -60,10 +132,10 @@ const navigate = useNavigate();
     .catch((error) => {
       console.error(error);
     });
-
+    
  
   navigate("/Usuario/Inicio/HomeDos", { state: correoElectronico });
-
+  
 
   };
 
@@ -104,7 +176,7 @@ const navigate = useNavigate();
                     </Collapse>
             </nav>
         </div>
-        <h2 className="Titulo-inicio">Sistema de Reservacion de Ambientes FCyT</h2>
+        <h2 className="Titulo-inicio">Sistema de Reservación de Ambientes FCyT</h2>
         <h4 className="Mensaje">Plataforma de gestión de reservas para ambientes de la FCYT, diseñada para docentes y autoridades de la Universidad Mayor de San Simón</h4>
         <div className="content">  
             <Row className="justify-content-center">
@@ -114,18 +186,21 @@ const navigate = useNavigate();
                             <Col xs={12} sm={10} md={8} lg={6}> {/* Define el ancho del formulario en diferentes tamaños de pantalla */}
                                 <div className="login-box">
                                     <div className="section">
-                                        <h6 className="mb-0 pb-3 text-center">Inicia sesión</h6>
-                                        <form onSubmit={handleSubmit}>
+                                    {mostrarIniciar && (
+                                            <h6 className="mb-0 pb-3 text-center" id="Iniciar">Iniciar sesión</h6>)}
+                                        <form className="login0"onSubmit={handleSubmit} style={{ display: logRecuperacion ? 'block' : 'none' }}>
                                             <div className="form-group">
                                                 <span className="input-icon"><FaAt /></span>
                                                 <input 
                                                     type="email"
                                                     name="logemail"
                                                     className="form-control"
-                                                    placeholder="Tu Correo"
+                                                    placeholder="Ingrese su correo"
                                                     value={email}
                                                     onChange={(e) => setEmail(e.target.value)}
                                                 />
+                                                {errorCorreo && <p className="error2">{errorCorreo}</p>}
+
                                             </div>
                                              <div className="form-group">
                                                 <span className="input-icon"><FaLock /></span>
@@ -133,22 +208,47 @@ const navigate = useNavigate();
                                                     type="password"
                                                     name="logpass"
                                                     className="form-control"
-                                                    placeholder="Tu Contraseña"
+                                                    placeholder="Ingrese su contaraseña"
                                                     value={password}
                                                     onChange={(e) => setPassword(e.target.value)}
                                                 />
+                                                {errorPassword && <p className="error2">{errorPassword}</p>}
+                                                {errorInconpleto && <p className="error2">{errorInconpleto}</p>}
+
                                                 
                                             </div>
                                             <div className="mb-0 pb-3 text-center">
                                             <button className="btn-block" onClick={handleSubmit}> Ingresar </button>
                                          
                                             </div>
-                                            <p className="mt-3 text-center">
-                                                    <Link to="/forgot-password" className="link">¿Olvidaste tu Contraseña?</Link>
+                                                <p className="mt-3 text-center">
+                                                    <button  onClick={toggleVisibility} className="olvidar">¿Olvidaste tu Contraseña?</button>
                                                 </p>
                                            
                                         </form>
-                                        
+                                        {mostrarRestablecer && (
+                                            <h6 className="mb-0 pb-3 text-center" id="Reestablecer">Restablecer Contraseña</h6>)}
+                                              <form className="logRecuperacion"onSubmit={handleSubmit} style={{ display: login0 ? 'block' : 'none' }} >
+                                                        <div className="form-group">
+                                                            <span className="input-icon"><FaAt /></span>
+                                                            <input 
+                                                                type="email"
+                                                                name="logemail"
+                                                                className="form-control"
+                                                                placeholder="Correo Institucional"
+                                                                id="logemail1" 
+                                                                autoComplete="off"
+                                                   
+                                                />
+                                            </div>
+                                            <div className="mb-0 pb-3 text-center">
+                                                <button className="btn-block" >Enviar Codigo</button>
+                                         
+                                            </div>
+                                            <p className="mt-3 text-center">
+                                                    <button  onClick={toggleVisibility2} className="olvidar">Iniciar sesión</button>
+                                                </p>                                          
+                                        </form>                                        
                                     </div>
                                 </div>
                             </Col>
@@ -158,7 +258,6 @@ const navigate = useNavigate();
                 <Col md={6} className="mb-3">
                     <div className="d-flex justify-content-center align-items-center imagen" style={{ height: '100%' }}>
                         <img src={logop} alt="imagen comp" className="img-fluid" />
-                        <img className="vector-icon" alt="" src="/vector.svg"></img>
                          
                     </div>
                 </Col>
@@ -198,8 +297,9 @@ const navigate = useNavigate();
             </footer>
 
     </div>
+    
   );
 };
 
 export default LoginForm;
-
+                                

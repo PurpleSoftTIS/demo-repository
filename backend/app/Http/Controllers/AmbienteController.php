@@ -92,12 +92,9 @@ public function index()
 {
     
     $ambientes = DB::table('ambiente')
-    ->select('ambiente.ID_AMBIENTE', 'ambiente.NOMBRE_AMBIENTE', 'ambiente.CAPACIDAD', 'ambiente.NUMERO_PISO', 'ubicacion.EDIFICIO',)
+    ->select('ambiente.*', 'ubicacion.*',)
     ->join('ubicacion', 'ambiente.ID_UBICACION', '=', 'ubicacion.ID_UBICACION')
     ->get();
-
-
-
     return response()->json($ambientes, 200);
 }
 

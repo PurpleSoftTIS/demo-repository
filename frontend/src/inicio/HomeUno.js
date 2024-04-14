@@ -37,7 +37,9 @@ const HomeUno = () => {
           </div>
         </div>
       </div>
+     
     </div>
+    
   );
 }
 

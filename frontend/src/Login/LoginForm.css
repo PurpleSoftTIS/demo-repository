@@ -420,6 +420,22 @@ justify-content: flex-end;
   }
 
 }
+.error2{
+  color: #ffffff;
+  background-color: #071d5f;
+  margin-top: 10px;
+  margin-right: 30px;
+  width: 350px;
+}
 
+.olvidar{
+  background-color: #071d5f;
+  color:#f2f2f2;
+  border: none;
+  text-decoration: underline;
+}
+.olvidar:hover{
+  transform: scale(1.1);
+}
 
 

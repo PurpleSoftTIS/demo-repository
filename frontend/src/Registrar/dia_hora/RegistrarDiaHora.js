@@ -153,21 +153,16 @@ const RegistrarDiaHora = () => {
       })
       .then(response => {
         if (response.ok) {
-         // history.push('/Admin/Mensaje/ExitoAmbiente'); // Redirigir al usuario a la página de inicio
 
           console.log("Registro exitoso");
           exitoso = true;
-          // Aquí puedes hacer algo después de un registro exitoso
         } else {
-         // history.push('/Admin/Mensaje/ErrorAmbiente');
           console.error("Error en el registro");
           exitoso = false;
-          // Aquí puedes manejar errores en el registro
         }
       })
       .catch(error => {
         console.error("Error en la solicitud:", error);
-        // Aquí puedes manejar errores de red u otros errores
       });
     };
     return (
@@ -194,7 +189,7 @@ const RegistrarDiaHora = () => {
           </div>
         </div>
         <div className="square3 mx-auto d-flex justify-content-center align-items-center">
-            <NavLink className="btn btn-primary custom-btn" to={exitoso ? "/Admin/Mensaje/ExitoAmbiente" : "/Admin/Mensaje/ErrorAmbiente" } onClick={handleRegistrarAmbiente}>Registrar Ambiente</NavLink>
+            <NavLink className="btn btn-primary custom-btn" to={exitoso ? "/Admin/Mensaje/RegistroExitoso" : "/Admin/Mensaje/RegistroError" } onClick={handleRegistrarAmbiente}>Registrar Ambiente</NavLink>
         </div>
       </div>
     );

@@ -11,15 +11,21 @@ class DocenteController extends Controller
 {
     public function index()
     {
-        $usuariosConDocentes = DB::table('usuario')
+    $usuariosConDocentes = DB::table('usuario')
         ->join('docente', 'usuario.id_usuario', '=', 'docente.id_usuario')
-        ->select('docente.*','usuario.correo_electronico', DB::raw("CONCAT(usuario.nombre, '  ', usuario.apellido_paterno, '  ',
-         usuario.apellido_materno) AS nombre_completo"))
+        ->select(
+            'docente.*',
+            'usuario.*',           
+        )
         ->get();
 
-        return response()->json($usuariosConDocentes, 200);
-        
-    }
+    return response()->json($usuariosConDocentes, 200);
+}
+ // Método para descifrar la contraseña de Morse
+ public function descifrarContraseña($morse_contraseña) {
+    return $this->convertirDeMorse($morse_contraseña);
+}
+
     public function eliminar($id_docente)
     {
         try {
