@@ -1,12 +1,18 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'; // Importa el icono faCheckCircle
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import "./Mensaje.css";
 
+
 const RegistroAmbienteExitoso = () => {
+  const retroceder = () => {
+    window.history.back();
+    window.history.back(); 
+  };
+
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100">
+    <div className="d-flex justify-content-center align-items-center " style={{ height: '76.1vh' }}>
       <div className="card text-center">
         <div className="card-body">
           <div className="d-flex flex-column align-items-center"> 
@@ -15,7 +21,7 @@ const RegistroAmbienteExitoso = () => {
           </div>
           <p className="parrafito">Su registro se ha guardado exitosamente</p>
           <div>          
-                <Link to="/Admin/Listas/ListaAmbientes" style={{backgroundColor: '#0d0d46', color: 'white'}} className="btn">Aceptar</Link>
+          <button onClick={retroceder} style={{backgroundColor: '#0d0d46', color: 'white'}} className="btn">Aceptar</button>
           </div>
         </div>
       </div>

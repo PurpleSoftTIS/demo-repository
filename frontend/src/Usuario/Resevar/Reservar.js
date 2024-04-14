@@ -1,46 +1,42 @@
 import React from 'react'
 import "./Reservar.css"
+import { FaPlus } from 'react-icons/fa';
+import { NavLink } from 'react-router-dom'; 
+//import Ico1 from "../../assets/IcoGood.png";
+//import Ico2 from "../../assets/IcoState.png";
 export const Reservar = () => {
   return (
-    <div className="contact-form-container">
-      <section className="contact-form-content">
-        <div className="contact-form-details-wrapper">
-          <div className="contact-form-details">
-            <div className="contact-form-heading-details">
-              <div className="contact-form-heading-text">
-                <div className="contact-form-get-in-touch" />
-                <div className="contact-form-lorem-ipsum-dolor-si" />
-              </div>
-              <div className="contact-form-street-11-bloc" />
-            </div>
-            <div className="contact-form-view-job-openings" />
-          </div>
+    <div className="container" style={{ height: '76.1vh' }}>
+      <div style={{ height: '4vh' }}></div>  
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h2 style={{ margin: 0 }}>Mis Reservas:</h2>
+        <div>
+          <input type="text" placeholder="Buscar" />
+          <button className="butn butn-filtro">Filtros</button>
+          <NavLink to="/Admin/Registro/Ambientes" className="butn butn-nuevo">
+            Nuevo Solicitud<FaPlus className="icon" />
+          </NavLink>
         </div>
-        <div className="contact-form-sub-heading-cta">
-          <b className="contact-form-enter-details">Detalles de Solicitud</b>
-          <div className="contact-form-phone-parent">
-            <div className="contact-form-phone">Materia</div>
-            <input className="contact-form-rectangle" type="text" />
-          </div>
-          <div className="contact-form-frame-parent">
-            <div className="contact-form-full-name-parent">
-              <div className="contact-form-full-name">Grupo</div>
-              <div className="contact-form-email">Nro. Estudiantes</div>
-            </div>
-            <div className="contact-form-rectangle-parent">
-              <input className="contact-form-rectangle1" type="text" />
-              <input className="contact-form-rectangle2" type="text" />
-            </div>
-          </div>
-          <div className="contact-form-message-parent">
-            <div className="contact-form-message">Motivo</div>
-            <input className="contact-form-rectangle3" type="text" />
-          </div>
-          <button className="contact-form-cta-button">
-            <div className="contact-form-button">Enviar</div>
-          </button>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'Right', alignItems: 'center', marginTop: '15px' }}>
+        <div>           
         </div>
-      </section>
+      </div>
+      <table className="table table-hover">
+        <thead className="thead">
+          <tr>
+            <th>Nro Reserva</th>
+            <th>Materia</th>
+            <th>Aula</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Capacidad</th>
+            <th>Estado</th>
+
+          </tr>
+        </thead>
+        
+      </table>
     </div>
   );
 };

@@ -27,7 +27,7 @@ const Docentes = () => {
     const correo = document.querySelector(".input14").value.trim();
     const codigoDocente = document.querySelector(".input16").value.trim();
 
-    if (!nombres || !apellidoPaterno || !apellidoMaterno || !correo || !tipo || (tipo === "De Base" && !codigoDocente)) {
+    if (!nombres || !apellidoPaterno || !apellidoMaterno || !correo || !tipo || !codigoDocente) {
       setErrorIncompleto("❌ Por favor, completa todos los campos del formulario");
       return;
     } else {
@@ -166,7 +166,7 @@ const Docentes = () => {
   };
 
   return (
-    <div className="contact-6" style={{ height: '74.4vh' }}>
+    <div className="contact-6" style={{ height: '94.4vh' }}>
      
       <div className="line" />
       <form className="billing-info" data-animate-on-scroll>

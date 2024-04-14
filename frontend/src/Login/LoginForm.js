@@ -26,10 +26,21 @@ const navigate = useNavigate();
   const correoElectronico = email;
   const [login0, setIsVisible] = useState(false);
   const [logRecuperacion, setInvisible] = useState(true);
+  const [mostrarIniciar , setIniciar] = useState(true);
+  const [mostrarRestablecer, setMostrarRestablecer] = useState(false);
+
   const toggleVisibility = () => {
-    setIsVisible(!login0); // Cambiar el estado de visibilidad al hacer clic en el botón
+    setIsVisible(!login0); 
     setInvisible(!logRecuperacion);
+    setIniciar(!mostrarIniciar);
+    setMostrarRestablecer(!mostrarRestablecer);
   };
+  const toggleVisibility2 = () =>{
+    setIsVisible(!login0); 
+    setInvisible(!logRecuperacion);
+    setIniciar(!mostrarIniciar);
+    setMostrarRestablecer(!mostrarRestablecer);
+  }
 
   const [errorCorreo, setErrorCorreo] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
@@ -45,44 +56,45 @@ const navigate = useNavigate();
         setErrorPassword(""); 
         setErrorIncompleto("");
       } 
-      const caracteresEspeciales = /[!#$%^&*()_+\-{};':"|,.<>?]+/;
+      const caracteresEspeciales = /[!#$%^&*()_+\-{};':"|,<>?]+/;
 
    
     if (email.length > 30) {
-        setErrorCorreo("❌ Su correo no debe exceder los 30 caracteres");
+        setErrorCorreo("Su correo no debe exceder los 30 caracteres");
         return;
     }else{
         setErrorCorreo("");
     }    
-    if (!caracteresEspeciales.test(email)) {
-        setErrorCorreo("❌ Su correo debe contener caracteres especiales, excepto @");
+    if (caracteresEspeciales.test(email)) {
+        setErrorCorreo("Su correo debe contener caracteres especiales, excepto @");
         return;
     }else{
         setErrorCorreo("");
     }    
     if (!email.includes('@')) {
-        setErrorCorreo("❌ Su correo debe contener @");
+        setErrorCorreo("Su correo debe contener @");
         return;
     }else{
         setErrorCorreo("");
     }
     if(caracteresEspeciales.test(password)){
-        setErrorPassword("❌ Su contraseña no debe contener caracteres especiales");
+        setErrorPassword("Su contraseña no debe contener caracteres especiales");
       return;
     }else{
         setErrorPassword("");
     }
 
     if(password.length > 20){
-        setErrorPassword("❌ Su contraseña no debe eccerder los 20 caracteres ");
+        setErrorPassword("Su contraseña no debe eccerder los 20 caracteres ");
       return;
     }else{
         setErrorPassword("");
     }
     if(password.length < 8){
-        setErrorPassword("❌ Su contraseña debe tener minimo 8 caracteres ");
+        setErrorPassword("Su contraseña debe tener minimo 8 caracteres ");
       return;
     }else{
+        
         setErrorPassword("");
     }
 
@@ -174,7 +186,8 @@ const navigate = useNavigate();
                             <Col xs={12} sm={10} md={8} lg={6}> {/* Define el ancho del formulario en diferentes tamaños de pantalla */}
                                 <div className="login-box">
                                     <div className="section">
-                                        <h6 className="mb-0 pb-3 text-center">Inicia sesión</h6>
+                                    {mostrarIniciar && (
+                                            <h6 className="mb-0 pb-3 text-center" id="Iniciar">Iniciar sesión</h6>)}
                                         <form className="login0"onSubmit={handleSubmit} style={{ display: logRecuperacion ? 'block' : 'none' }}>
                                             <div className="form-group">
                                                 <span className="input-icon"><FaAt /></span>
@@ -186,7 +199,7 @@ const navigate = useNavigate();
                                                     value={email}
                                                     onChange={(e) => setEmail(e.target.value)}
                                                 />
-                                                {errorCorreo && <p className="error">{errorCorreo}</p>}
+                                                {errorCorreo && <p className="error2">{errorCorreo}</p>}
 
                                             </div>
                                              <div className="form-group">
@@ -199,8 +212,8 @@ const navigate = useNavigate();
                                                     value={password}
                                                     onChange={(e) => setPassword(e.target.value)}
                                                 />
-                                                {errorPassword && <p className="error">{errorPassword}</p>}
-                                                {errorInconpleto && <p className="error">{errorInconpleto}</p>}
+                                                {errorPassword && <p className="error2">{errorPassword}</p>}
+                                                {errorInconpleto && <p className="error2">{errorInconpleto}</p>}
 
                                                 
                                             </div>
@@ -213,7 +226,9 @@ const navigate = useNavigate();
                                                 </p>
                                            
                                         </form>
-                                        <form className="logRecuperacion"onSubmit={handleSubmit} style={{ display: login0 ? 'block' : 'none' }} >
+                                        {mostrarRestablecer && (
+                                            <h6 className="mb-0 pb-3 text-center" id="Reestablecer">Restablecer Contraseña</h6>)}
+                                              <form className="logRecuperacion"onSubmit={handleSubmit} style={{ display: login0 ? 'block' : 'none' }} >
                                                         <div className="form-group">
                                                             <span className="input-icon"><FaAt /></span>
                                                             <input 
@@ -230,10 +245,10 @@ const navigate = useNavigate();
                                                 <button className="btn-block" >Enviar Codigo</button>
                                          
                                             </div>
-                                            
-                                           
-                                        </form>
-                                        
+                                            <p className="mt-3 text-center">
+                                                    <button  onClick={toggleVisibility2} className="olvidar">Iniciar sesión</button>
+                                                </p>                                          
+                                        </form>                                        
                                     </div>
                                 </div>
                             </Col>

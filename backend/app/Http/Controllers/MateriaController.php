@@ -18,15 +18,8 @@ class MateriaController extends Controller
             ->join('docente', 'materia_docente.id_docente', '=', 'docente.id_docente')
             ->join('usuario', 'docente.id_usuario', '=', 'usuario.id_usuario')
             ->select(
-                'materia.id_materia',
-                'materia.codigo_materia',
-                'materia.nombre_materia',
-                'materia.grupo',
-                'materia.carrera',
-                'materia.estado_materia',
-
-                DB::raw("CONCAT(usuario.nombre, ' ', usuario.apellido_paterno) AS nombre_completo_docente")
-            )
+                'materia.*'
+                            )
             ->get();
 
         return response()->json($materiasConDocentes, 200);

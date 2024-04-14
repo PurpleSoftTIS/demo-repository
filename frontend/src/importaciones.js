@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomeUno from './inicio/HomeUno';
 import Ambientes from './Registrar/ambientes/Ambientes';
 import AmbientesActualizar from './Registrar/ambientes/AmbientesActualizar';
-
 import Docentes from './Registrar/docentes/Docentes';
 import Navbar from './navegador/Navbar';
 import RegistrarMateria from './Registrar/materias/RMaterias';
@@ -24,14 +23,10 @@ import RegistrarDiaHoras from './Registrar/dia_hora/RegistrarDiaHoraActualizar';
 import ListaMaterias from './Listados/ListadoMaterias/ListaMaterias';
 import ListaDocentes from './Listados/ListadoDocentes/ListaDocentes';
 import { Footer } from './navegador/Footer';
-
+import Solicitar2 from './Usuario/Solicitar/Solicitar2';
 export {
   React,Router,Routes,Route,HomeUno,Ambientes,Docentes,Navbar,RegistrarMateria,
   LoginForm,RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Reservar, Solicitar,
-  Ayuda, ListaAulas, MensajeExitoso,
-  MensajeError,ListaDocentes,RegistrarDiaHoras,AmbientesActualizar,
-  Footer
-  Ayuda, ListaAulas, RegistroDocenteExitoso,
-  RegistroDocenteError,ListaDocentes,RegistrarDiaHoras,AmbientesActualizar
-  ,RegistroAmbienteExitoso, RegistroAmbienteError,Footer,ListaMaterias
+  Ayuda, ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,AmbientesActualizar,
+  Footer,ListaMaterias,Solicitar2
 };
