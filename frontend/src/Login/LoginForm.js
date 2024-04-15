@@ -17,17 +17,27 @@ import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
 const navigate = useNavigate();
+    const [correoElectronicoRecuperacion, setCorreoElectronicoRecuperacion] = useState("");
+    const [mensajeEnvio, setMensajeEnvio] = useState("");
 
   const [menuClicked, setMenuClicked] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailValido, setEmailValido] = useState(false);
+  const [contraseñaValido, setContraseñaValido] = useState(false);
+
   const correoElectronico = email;
   const [login0, setIsVisible] = useState(false);
   const [logRecuperacion, setInvisible] = useState(true);
   const [mostrarIniciar , setIniciar] = useState(true);
   const [mostrarRestablecer, setMostrarRestablecer] = useState(false);
+
+  const [errorCorreo, setErrorCorreo] = useState("");
+  const [errorPassword, setErrorPassword] = useState("");
+  const [errorInconpleto, setErrorIncompleto] = useState("");
+  const [errorEmailValido, setErrorEmailValido] = useState("");
+  const [errorContraseñaValido, setErrorContraseñaValido] = useState("");
 
   const toggleVisibility = () => {
     setIsVisible(!login0); 
@@ -41,24 +51,20 @@ const navigate = useNavigate();
     setIniciar(!mostrarIniciar);
     setMostrarRestablecer(!mostrarRestablecer);
   }
-
-  const [errorCorreo, setErrorCorreo] = useState("");
-  const [errorPassword, setErrorPassword] = useState("");
-  const [errorInconpleto, setErrorIncompleto] = useState("");
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!email || !password ) {
-        setErrorIncompleto("❌ Por favor, complete todos los campos");
+        setErrorIncompleto("Por favor, complete todos los campos");
         return;
       }else{
         setErrorCorreo("");
         setErrorPassword(""); 
         setErrorIncompleto("");
+        setContraseñaValido("");
+        setErrorEmailValido("");
       } 
       const caracteresEspeciales = /[!#$%^&*()_+\-{};':"|,<>?]+/;
 
-   
     if (email.length > 30) {
         setErrorCorreo("Su correo no debe exceder los 30 caracteres");
         return;
@@ -83,60 +89,108 @@ const navigate = useNavigate();
     }else{
         setErrorPassword("");
     }
-
     if(password.length > 20){
         setErrorPassword("Su contraseña no debe eccerder los 20 caracteres ");
       return;
     }else{
         setErrorPassword("");
     }
-    if(password.length < 8){
-        setErrorPassword("Su contraseña debe tener minimo 8 caracteres ");
-      return;
-    }else{
-        
-        setErrorPassword("");
-    }
-
-
+    
 
     fetch("http://127.0.0.1:8000/api/verificar", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ correo_electronico: email }),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Error al verificar el correo electrónico");
-      }
-      return response.json();
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({correo_electronico:email}),
     })
-    .then((data) => {
-        if (data.exists) {
-            console.log("El correo electrónico existe");
-            setEmailValido(true);
-            
-        } else {
-            if (email === "purpleSoft@gmail.com") {
-                navigate("/Admin/Inicio/HomeUno");
-            } else {
-                navigate(emailValido ? "/Usuario/Inicio/HomeDos" : "/");
-            }
+    .then((responseCorreo) => {
+        if (!responseCorreo.ok) {
+            throw new Error("Error al verificar el correo electrónico");
+        }
+        return responseCorreo.json();
+    })
+    .then((dataCorreo) => {
+        if (!dataCorreo.exists) {
             console.log("El correo electrónico no existe");
-            setEmailValido(false);
-            
+            if (email === "purpleSoft@gmail.com" && password === "purplesoft2024") {
+                navigate("/Admin/Inicio/HomeUno");
+            }else{
+                if(email === "purpleSoft@gmail.com" && password !== "purplesoft2024"){
+                    setErrorContraseñaValido("Contraseña incorrecta")
+                    setEmailValido(false);
+                }else{
+                    setErrorEmailValido("Ingrese una cuenta valida");
+                    setErrorContraseñaValido("");
+                    setEmailValido(false);
+                }                
+            }
         }
     })
     .catch((error) => {
-      console.error(error);
-    });
-    
- 
-  navigate("/Usuario/Inicio/HomeDos", { state: correoElectronico });
-  
+        console.error(error);
+    });    
 
+    setEmailValido(true);
+    setErrorEmailValido("");
+    setErrorContraseñaValido("");
+    //Verificamos si la contraseña es valida
+    fetch("http://127.0.0.1:8000/api/verificarContra", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ correo_electronico: email, contraseña: password }),
+    })
+    .then((responseContraseña) => {
+        if (!responseContraseña.ok) {
+            throw new Error("Error al verificar la contraseña");
+        }
+        return responseContraseña.json();
+    })
+    .then((dataContraseña) => {
+        if (!dataContraseña.correcta) {
+            // La contraseña no es correcta
+            console.log("Contraseña incorrecta");
+            setErrorContraseñaValido("Contraseña incorrecta");
+            setContraseñaValido(false);
+        }else{
+            setContraseñaValido(true);
+            setErrorContraseñaValido("");
+            const credencialesValidas = emailValido && contraseñaValido;
+            const rutaRedireccion = "/Usuario/Inicio/HomeDos";
+            const estadoRedireccion = { state: correoElectronico };            
+            if (credencialesValidas) {
+                navigate(rutaRedireccion, estadoRedireccion);
+            }else{
+                setErrorContraseñaValido("Contraseña incorrecta");
+            }
+        }            
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+      
+    fetch("http://127.0.0.1:8000/api/restablecer", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ correo: correoElectronicoRecuperacion }),
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Error al enviar el correo de restablecimiento");
+            }
+            return response.json();
+        })
+        .then((data) => {
+            setMensajeEnvio("El correo de restablecimiento ha sido enviado correctamente.");
+        })
+        .catch((error) => {
+            console.error(error);
+            setMensajeEnvio("Hubo un error al enviar el correo de restablecimiento. Por favor, inténtalo de nuevo más tarde.");
+        });
   };
 
   return (
@@ -200,6 +254,8 @@ const navigate = useNavigate();
                                                     onChange={(e) => setEmail(e.target.value)}
                                                 />
                                                 {errorCorreo && <p className="error2">{errorCorreo}</p>}
+                                                {errorEmailValido && <p className="error2">{errorEmailValido}</p>}
+
 
                                             </div>
                                              <div className="form-group">
@@ -213,18 +269,16 @@ const navigate = useNavigate();
                                                     onChange={(e) => setPassword(e.target.value)}
                                                 />
                                                 {errorPassword && <p className="error2">{errorPassword}</p>}
-                                                {errorInconpleto && <p className="error2">{errorInconpleto}</p>}
+                                                {errorContraseñaValido && <p className="error2">{errorContraseñaValido}</p>}
 
-                                                
+                                                {errorInconpleto && <p className="error2">{errorInconpleto}</p>}                                                
                                             </div>
                                             <div className="mb-0 pb-3 text-center">
-                                            <button className="btn-block" onClick={handleSubmit}> Ingresar </button>
-                                         
+                                            <button className="btn-block" onClick={handleSubmit}> Ingresar </button>                                         
                                             </div>
                                                 <p className="mt-3 text-center">
                                                     <button  onClick={toggleVisibility} className="olvidar">¿Olvidaste tu Contraseña?</button>
-                                                </p>
-                                           
+                                                </p>                                           
                                         </form>
                                         {mostrarRestablecer && (
                                             <h6 className="mb-0 pb-3 text-center" id="Reestablecer">Restablecer Contraseña</h6>)}
@@ -238,8 +292,9 @@ const navigate = useNavigate();
                                                                 placeholder="Correo Institucional"
                                                                 id="logemail1" 
                                                                 autoComplete="off"
-                                                   
-                                                />
+                                                                onChange={(e) => setCorreoElectronicoRecuperacion(e.target.value)}
+
+                                                            />
                                             </div>
                                             <div className="mb-0 pb-3 text-center">
                                                 <button className="btn-block" >Enviar Codigo</button>
@@ -257,8 +312,7 @@ const navigate = useNavigate();
                 </Col>
                 <Col md={6} className="mb-3">
                     <div className="d-flex justify-content-center align-items-center imagen" style={{ height: '100%' }}>
-                        <img src={logop} alt="imagen comp" className="img-fluid" />
-                         
+                        <img src={logop} alt="imagen comp" className="img-fluid" />                         
                     </div>
                 </Col>
             </Row>

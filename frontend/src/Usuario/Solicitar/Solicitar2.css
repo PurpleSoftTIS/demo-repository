@@ -55,6 +55,7 @@
   align-items: flex-start;
   box-sizing: border-box;
   max-width: 100%;
+  color: white;
 }
 
 .contact-form-details {

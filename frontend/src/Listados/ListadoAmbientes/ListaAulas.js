@@ -6,21 +6,21 @@ import { useNavigate } from "react-router-dom";
 import Ico1 from "../../assets/IcoGood.png";
 import Ico2 from "../../assets/IcoState.png";
 
-  function ListaAulas() {
-    const [aulas,setAulas] = useState([]);
-    const navigate = useNavigate();
+function ListaAulas() {
+  const [Advertencia, setAdvertencia] = useState(false);
 
-    
-    
-    const borrarTodo = () => {
-      setAulas([]);
-    };
+  const [aulas,setAulas] = useState([]);
+  const navigate = useNavigate();
+  const borrarTodo = () => {
+    setAdvertencia(!Advertencia);
+    //setAulas([]);
+  };
     const borrarambiente = (ID_AMBIENTE)=>{
           fetch(`http://127.0.0.1:8000/api/borrar/${ID_AMBIENTE}`,{
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json'
-          },
+            },
          })
          .then(response => {
           if (response.ok) {
@@ -29,9 +29,6 @@ import Ico2 from "../../assets/IcoState.png";
               throw new Error('No se pudo actualizar el ambiente.');
           }
       })
-
-
-
     };
      
     const handleEditar = (ID_AMBIENTE) => {
@@ -40,32 +37,24 @@ import Ico2 from "../../assets/IcoState.png";
           method: 'PUT',
           headers: {
               'Content-Type': 'application/json'
-          },
-      
-      
+          },     
         })
       .then(response => {
           if (!response.ok) {
               throw new Error('Error al actualizar el ambiente');
-          }
+             }
           console.log('Ambiente actualizado:',response);
-
           return response.json();
 
       })
       .then(data => {
         navigate('/Admin/Registro/AmbientesActualizar', { state: { datosAmbientes: data } });
-
-          console.log('Datos del ambiente actualizado:', data);
-    
-      
+          console.log('Datos del ambiente actualizado:', data);     
       })
       .catch(error => {
           console.error(error);
       });
-  };
-
-    
+  };   
   
     useEffect(() => {
         fetch("http://127.0.0.1:8000/api/listaAmbiente")
@@ -73,25 +62,18 @@ import Ico2 from "../../assets/IcoState.png";
                 if (!response.ok) {
                     throw new Error('Error al obtener los ambientes');
                 }
-                
-
-
-                return response.json();
-               
-
-
+                return response.json(); 
             })
             .then(data => {
                 setAulas(data);
                 console.log(data);
-
             })
             .catch(error => {
                 console.error(error);
             });
     }, []);
   return (
-    <div className="container" style={{ height: '76.1vh' }}>
+    <div className="container" style={{ height: '100vh' }}>
       <div style={{ height: '4vh' }}></div>  
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ margin: 0 }}>Ambientes Registrados:</h2>
@@ -149,6 +131,16 @@ import Ico2 from "../../assets/IcoState.png";
           ))}
         </tbody>
       </table>
+      <div className='Advertencia'>
+          <div className='text'>
+          <h3 className='til1'>Advertencia</h3>
+          <p className='til2'>Estas seguro de que deseas eliminar?</p>
+          </div>
+          <div className='botones'>
+            <button className='conf'>Si</button>
+            <button className='ref'>No</button>
+          </div>
+      </div>
     </div>
   );
 };

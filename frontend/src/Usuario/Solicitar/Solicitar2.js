@@ -1,12 +1,16 @@
 import React from 'react'
 import './Solicitar2.css'
+import Ico1 from "../../assets/IcoSolicitud.jpeg";
+
 const Solicitar2 = () => {
+
   
   return (
     <div className="contact-form-container">
       <section className="contact-form-content">
         <div className="contact-form-details-wrapper">
           <div className="contact-form-details">
+          <img className="iconos2" src={Ico1} alt="logo" width="500px" height="500px" /> 
             <div className="contact-form-heading-details">
               <div className="contact-form-heading-text">
                 <div className="contact-form-get-in-touch" />
@@ -21,7 +25,9 @@ const Solicitar2 = () => {
           <b className="contact-form-enter-details">Detalles de Solicitud</b>
           <div className="contact-form-phone-parent">
             <div className="contact-form-phone">Materia</div>
-            <input className="contact-form-rectangle" type="text" />
+            <input 
+              className="contact-form-rectangle" 
+              type="text" />
           </div>
           <div className="contact-form-frame-parent">
             <div className="contact-form-full-name-parent">
@@ -29,13 +35,19 @@ const Solicitar2 = () => {
               <div className="contact-form-email">Nro. Estudiantes</div>
             </div>
             <div className="contact-form-rectangle-parent">
-              <input className="contact-form-rectangle1" type="text" />
-              <input className="contact-form-rectangle2" type="text" />
+              <input 
+                className="contact-form-rectangle1" 
+                type="text" />
+              <input 
+                className="contact-form-rectangle2" 
+                type="text" />
             </div>
           </div>
           <div className="contact-form-message-parent">
             <div className="contact-form-message">Motivo</div>
-            <input className="contact-form-rectangle3" type="text" />
+            <input 
+              className="contact-form-rectangle3" 
+              type="text" />
           </div>
           <button className="contact-form-cta-button">
             <div className="contact-form-button">Enviar</div>

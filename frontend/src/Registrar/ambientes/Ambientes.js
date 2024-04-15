@@ -32,6 +32,7 @@ const Ambientes = () => {
     const tipoCadena = /^[a-zA-Z\s]*$/;
     const tipoNumero = /^\d+$/;
     const tipoGlobal = /^[a-zA-Z0-9]*$/;
+    const caracteresEspeciales = /[!#$%^&*()_+\-{};':"|,<>?]+/;
 
 
     if (!tipoGlobal.test(nombreAula)) {
@@ -85,7 +86,7 @@ const Ambientes = () => {
         setErrorPiso("");
     }
 
-    if (!tipoCadena.test(Tipo)) {
+    if (!caracteresEspeciales.test(Tipo)) {
       setErrorTipoAmbiente("❌ El tipo de ambiente no debe contener caracteres numeros");
       return;
     } else {
