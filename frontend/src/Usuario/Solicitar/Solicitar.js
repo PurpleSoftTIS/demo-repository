@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import "./Solicitar.css";
+import { Link } from "react-router-dom";
 
 
 export const Solicitar = () => {
@@ -64,8 +65,15 @@ export const Solicitar = () => {
             </select>
           </div>
         </div>
+        <button>
+          buscar
+        </button>
 
 
+
+        <Link to="/Usuario/Usu/DetallesSol" className="navbar-brand logon">
+                    Siguiente
+        </Link>
     </div>
   );
 }

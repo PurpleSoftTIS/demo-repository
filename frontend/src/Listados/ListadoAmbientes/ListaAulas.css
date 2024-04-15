@@ -122,3 +122,49 @@
     background-color: rgba(220, 53, 69, 0.1); 
     transform: translateY(-2px);
   }
+  
+.Advertencia{
+  background: #050259;
+  color: rgb(255, 255, 255);
+  position: relative;
+  align-items: center;
+  padding: 15px;
+  width:450px;
+  top: -600px;
+  left: 450px;
+  z-index: 9999;
+  border-radius: 5px 5px 5px 5px ; 
+  display: none; 
+}
+.text{
+  justify-content: center;
+  margin-right: 60px;
+  width: 300px;
+}
+
+.conf,.ref{
+  margin-right: 50px;
+  font-size: 20px;
+  color: white;
+  border-radius: 5px 5px 5px 5px ;
+  width: 50px;
+}
+.conf{
+  background-color: #28a745;
+}
+.ref{
+  background-color: #bd2130;
+}
+.botones{
+  align-items: center;
+  width: 200px;
+  margin-left: 140px;  
+}
+.til1{
+  margin-left: 140px;
+  width: 400px;
+}
+.til2{
+  margin-left: 60px;
+  width: 300px;
+}

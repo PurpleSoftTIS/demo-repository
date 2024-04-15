@@ -4,7 +4,7 @@ use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\DocenteRegistrarController;
 use App\Http\Controllers\MateriaRegistrarController;
 use App\Http\Controllers\MateriaController;
-
+use App\Http\Controllers\RestablecerContrasenia;
 use App\Http\Controllers\AmbienteController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Http\Request;
@@ -24,25 +24,30 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//ConsultarDtos
+//Consultar Datos
 Route::post('/verificar', [DocenteController::class, 'verificarCorreo']);
+Route::post('/verificarContra', [DocenteController::class, 'verificarContrasenia']);
 Route::post('/nombre', [UsuarioController::class, 'obtenerNombreUsuario']);
 
 //Obtener Datos
 Route::get('/docentes', [DocenteController::class, 'index']);
 Route::get('/usuarios', [UsuarioController::class, 'index']);
 Route::get('/materias', [MateriaController::class, 'index']);
+Route::get('/listaAmbiente', [AmbienteController::class, 'index']);
+
 
 //Registrar Datos
-Route::get('/listaAmbiente', [AmbienteController::class, 'index']);
 Route::post('/docentesRegistrar', [DocenteRegistrarController::class, 'registrar']);
 Route::post('/materiaRegistrar', [MateriaRegistrarController::class, 'registrarMateria']);
 Route::post('/registrarambiente', [AmbienteController::class, 'guardarAmbiente']);
-Route::put('/ambiente/{ID_AMBIENTE}', [AmbienteController::class, 'actualizarAmbiente']);
-Route::put ('/actualizar/{ID_AMBIENTE}',[AmbienteController::class,'actualizarAmb']);
+
 //Elimnar datos
-Route::delete('/docentes/{id}', [DocenteController::class, 'eliminar']);
+Route::delete('/docentes/{id_docente}', [DocenteController::class, 'eliminar']);
 Route::delete('/borrar/{ID_AMBIENTE}', [AmbienteController::class, 'borrarAmbiente']);
 
+//Actualizar datos
+Route::put('/ambiente/{ID_AMBIENTE}', [AmbienteController::class, 'actualizarAmbiente']);
+Route::put ('/actualizar/{ID_AMBIENTE}',[AmbienteController::class,'actualizarAmb']);
+Route::put ('/restablecer',[RestablecerContrasenia::class,'enviarCorreo']);
 
 

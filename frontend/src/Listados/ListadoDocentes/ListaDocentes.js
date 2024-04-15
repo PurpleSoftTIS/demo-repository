@@ -112,7 +112,8 @@ const ListaDocentes = () => {
             </tr>
           ))}
         </tbody>
-      </table>      
+      </table> 
+         
     </div>
   );
 };
