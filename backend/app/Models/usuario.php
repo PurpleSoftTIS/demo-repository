@@ -15,7 +15,8 @@ class Usuario extends Model
         "nombre",
         "apellido_paterno",
         "apellido_materno",
-        "correo_electronico"
+        "correo_electronico",
+        "contraseña"
     ];
     
     

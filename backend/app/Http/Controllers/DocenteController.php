@@ -19,15 +19,10 @@ class DocenteController extends Controller
             'usuario.*',           
         )
         ->get();
-
     return response()->json($usuariosConDocentes, 200);
 }
  // Método para descifrar la contraseña de Morse
- public function descifrarContraseña($morse_contraseña) {
-    return $this->convertirDeMorse($morse_contraseña);
-}
-
-    public function eliminar($id_docente)
+     public function eliminar($id_docente)
     {
         try {
             $docente = Docente::findOrFail($id_docente);
@@ -42,38 +37,25 @@ class DocenteController extends Controller
             return response()->json(['error' => 'Error al eliminar el docente y usuario'], 500);
         }
     }
-    public function verificarCorreo(Request $request)
+    public function verificarCredenciales(Request $request)
     {
-        $request->validate([
-            'correo_electronico' => 'required|email',
-        ]);
-        $usuario = Usuario::where('correo_electronico', 
-        $request->correo_electronico)->first();
-        if ($usuario) {
-            return response()->json(['exists' => true]);
-        } else {
-            return response()->json(['exists' => false]);
+    $request->validate([
+        'correo_electronico' => 'required|email',
+        'contraseña' => 'nullable|string', 
+    ]);
+    $usuario = Usuario::where('correo_electronico', $request->correo_electronico)->first();
+    if (!$usuario) {
+        return response()->json(['correcta' => false, 'mensaje' => 'Correo electrónico no registrado'], 404);
+    }
+    if ($request->filled('contraseña')) {
+        $contraseña_encriptada = $this->encriptar($request->contraseña); 
+        if ($usuario->contraseña !== $contraseña_encriptada) {
+            return response()->json(['correcta' => false, 'mensaje' => 'Contraseña incorrecta'], 401);
         }
     }
-    public function verificarContrasenia(Request $request)
-    {
-        $request->validate([
-            'correo_electronico' => 'required|email',
-            'contraseña' => 'required|string',
-        ]);    
-        $usuario = Usuario::where('correo_electronico', $request->correo_electronico)->first();    
-        if ($usuario) {
-            $contraseña_encriptada = $this->encriptar($request->contraseña); // Encriptar la contraseña proporcionada
-            if ($usuario->contraseña === $contraseña_encriptada) {
-                return response()->json(['correcta' => true]);
-            } else {
-                return response()->json(['correcta' => false, 'mensaje' => 'Contraseña incorrecta'], 401);
-            }
-        } else {
-            return response()->json(['correcta' => false, 'mensaje' => 'Correo electrónico no registrado'], 404);
-        }
-    }
-    
+    return response()->json(['exists' => true, 'correcta' => true]);
+}
+
     private function encriptar($texto) {
         $morse = [
             'a'=>'Acs','b'=>'Los','c'=>'52A','d'=>'568',
@@ -91,11 +73,10 @@ class DocenteController extends Controller
             $caracter = $texto[$i];
             // Verificar si el caracter existe en el arreglo $morse
             if (isset($morse[$caracter])) {
-                // Concatenar la conversión de Morse
+                // Concatenar la conversión de Morse y un espacio
                 $morse_texto .= $morse[$caracter] . ' ';
             }
-        }
-        
+        }        
         return trim($morse_texto);
     }
 }

@@ -18,34 +18,29 @@ class AmbienteController extends Controller
     info('Datos recibidos:', $request->all());
 
     try {
-        info('Se está intentando guardar la ubicación.');
-        
-    
+        info('Se está intentando guardar la ubicación.');    
         $datosAmbiente = $request->input('datosAmbiente');
         $nombreAula = $datosAmbiente['nombreAula'];
         $capacidadEstudiantes = $datosAmbiente['capacidadEstudiantes'];
         $edificio = $datosAmbiente['edificio'];
         $piso = $datosAmbiente['piso'];
-        $tipo = $datosAmbiente['Tipo'];
-  
-  
-          $ubicacion = new Ubicacion();
+        $tipo = $datosAmbiente['Tipo'];  
+        $ubicacion = new Ubicacion();
         
-        $ubicacion->EDIFICIO = $edificio;
+        $ubicacion->edificio = $edificio;
         $ubicacion->save();
         
-        $idUbicacion = $ubicacion->ID_UBICACION;
-        
+        $idUbicacion = $ubicacion->id_ubicacion;   
         
         $ambiente = new Ambiente();
-        $ambiente->ID_UBICACION = $idUbicacion;
-        $ambiente->NUMERO_PISO = $piso;
-        $ambiente->NOMBRE_AMBIENTE = $nombreAula;
-        $ambiente->CAPACIDAD = $capacidadEstudiantes;
-        $ambiente->ESTADO_AMBIENTE = "activo";
-        $ambiente->TIPO_AMBIENTE =$tipo;
+        $ambiente->id_ubicacion = $idUbicacion;
+        $ambiente->numero_piso = $piso;
+        $ambiente->nombre_ambiente = $nombreAula;
+        $ambiente->capacidad = $capacidadEstudiantes;
+        $ambiente->estado_ambiente = "activo";
+        $ambiente->tipo_ambiente =$tipo;
         $ambiente->save();
-        $idambiente=$ambiente->ID_AMBIENTE;
+        $idambiente=$ambiente->id_ambiente;
         info('Se ha guardado correctamente el ambiente.');
         $diasHoras =$request -> input ('diasHoras');
         info('Horarios seleccionados:', $diasHoras);
@@ -56,7 +51,7 @@ class AmbienteController extends Controller
             $iddia=$dia->id_dia;
             $diashabiles=new Diashabiles();
             $diashabiles ->id_dia=$iddia;
-            $diashabiles ->ID_AMBIENTE =$idambiente ;
+            $diashabiles ->id_ambiente =$idambiente ;
             $diashabiles -> save(); 
             foreach($horas as $horario) {
                 $hora =new Hora();
@@ -93,22 +88,32 @@ public function index()
     
     $ambientes = DB::table('ambiente')
     ->select('ambiente.*', 'ubicacion.*',)
-    ->join('ubicacion', 'ambiente.ID_UBICACION', '=', 'ubicacion.ID_UBICACION')
+    ->join('ubicacion', 'ambiente.id_ubicacion', '=', 'ubicacion.id_ubicacion')
     ->get();
     return response()->json($ambientes, 200);
 }
+public function ambientesDisponibles($capacidad)
+{
+  $ambientes = DB::table('ambiente')
+        ->select('ambiente.*', 'ubicacion.*',)
+        ->join('ubicacion', 'ambiente.id_ubicacion', '=', 'ubicacion.id_ubicacion')
+        ->where('ambiente.capacidad >=', $capacidad)       
+        ->get();    
+    return response()->json($ambientes, 200);
+}
 
-public function actualizarAmbiente(Request $request, $ID_AMBIENTE)
+
+public function actualizarAmbiente(Request $request, $id_ambiente)
     {   
-        $ambiente = Ambiente::where('ID_AMBIENTE', $ID_AMBIENTE)->first();
+        $ambiente = Ambiente::where('id_ubicacion', $id_ambiente)->first();
 
     if ($ambiente) {
         $diasHoras = [];
-        $edificio = Ubicacion::where('ID_UBICACION', $ambiente->ID_UBICACION)->value('EDIFICIO');
+        $edificio = Ubicacion::where('id_ubicacion', $ambiente->id_ubicacion)->value('edificio');
 
 
-        $diasHabiles = Diashabiles::where('ID_AMBIENTE', $ambiente->ID_AMBIENTE)->get();
-        info('Días hábiles obtenidos para el ambiente ' . $ambiente->ID_AMBIENTE . ':');
+        $diasHabiles = Diashabiles::where('id_ubicacion', $ambiente->id_ambiente)->get();
+        info('Días hábiles obtenidos para el ambiente ' . $ambiente->id_ambiente . ':');
 
         foreach ($diasHabiles as $diaHabil) {
             $nombreDia = Dia::find($diaHabil->id_dia)->nombre;
@@ -138,12 +143,12 @@ public function actualizarAmbiente(Request $request, $ID_AMBIENTE)
         }
 
         $datosAmbiente = [
-            "id_ambiente"=> $ambiente->ID_AMBIENTE,
-            "nombreAula" => $ambiente->NOMBRE_AMBIENTE, 
-            "capacidadEstudiantes" => $ambiente->CAPACIDAD,
+            "id_ambiente"=> $ambiente->id_ambiente,
+            "nombreAula" => $ambiente->nombre_ambiente, 
+            "capacidadEstudiantes" => $ambiente->capacidad,
             "edificio" =>$edificio,
-            "piso" => $ambiente->NUMERO_PISO,
-            "Tipo" => $ambiente->TIPO_AMBIENTE
+            "piso" => $ambiente->numero_piso,
+            "Tipo" => $ambiente->tipo_ambiente
         ];
 
         
@@ -158,16 +163,16 @@ public function actualizarAmbiente(Request $request, $ID_AMBIENTE)
 }
 
 
-public function actualizarAmb (Request $request, $ID_AMBIENTE){
+public function actualizarAmb (Request $request, $id_ambiente){
     info('Datos recibidos:', $request->all());
-   $ambiente =Ambiente::find($ID_AMBIENTE); 
-   $ambiente ->CAPACIDAD= $request ->input ('capacidadEstudiantes');
-   $ambiente ->TIPO_AMBIENTE= $request -> input ('Tipo');
-   $ambiente ->NUMERO_PISO= $request ->input ('piso') ;
-   $idambiente=$ambiente->ID_AMBIENTE;
+   $ambiente =Ambiente::find($id_ambiente); 
+   $ambiente ->capacidad= $request ->input ('capacidadEstudiantes');
+   $ambiente ->tipo_ambiente= $request -> input ('Tipo');
+   $ambiente ->numero_piso= $request ->input ('piso') ;
+   $idambiente=$ambiente->id_ambiente;
    $ambiente -> save();
-   $edificio = Ubicacion::where('ID_UBICACION', $ambiente->ID_UBICACION)->value('EDIFICIO');
-   $diasHabiles = Diashabiles::where('ID_AMBIENTE', $ambiente->ID_AMBIENTE)->get();
+   $edificio = Ubicacion::where('id_ubicacion', $ambiente->id_ubicacion)->value('edificio');
+   $diasHabiles = Diashabiles::where('id_ambiente', $ambiente->id_ambiente)->get();
    foreach ($diasHabiles as $diaHabil) {
        $nombreDia = Dia::find($diaHabil->id_dia)->nombre;
        $horarios = Horario::where('id_dia', $diaHabil->id_dia)->get();
@@ -191,7 +196,7 @@ public function actualizarAmb (Request $request, $ID_AMBIENTE){
     $iddia=$dia->id_dia;
     $diashabiles=new Diashabiles();
     $diashabiles ->id_dia=$iddia;
-    $diashabiles ->ID_AMBIENTE=$idambiente ;
+    $diashabiles ->id_ambiente=$idambiente ;
     $diashabiles -> save(); 
     foreach($horas as $horario) {
         $hora =new Hora();
@@ -214,11 +219,11 @@ public function actualizarAmb (Request $request, $ID_AMBIENTE){
 }
 
 }
-public function borrarAmbiente ($ID_AMBIENTE){
+public function borrarAmbiente ($id_ambiente){
 
 
-    $ambiente =Ambiente::find($ID_AMBIENTE); 
-    $diasHabiles = Diashabiles::where('ID_AMBIENTE', $ID_AMBIENTE)->get();
+    $ambiente =Ambiente::find($id_ambiente); 
+    $diasHabiles = Diashabiles::where('id_ambiente', $id_ambiente)->get();
     foreach ($diasHabiles as $diaHabil) {
         $nombreDia = Dia::find($diaHabil->id_dia)->nombre;
         $horarios = Horario::where('id_dia', $diaHabil->id_dia)->get();
@@ -234,7 +239,7 @@ public function borrarAmbiente ($ID_AMBIENTE){
  
     }
 
-    Ambiente::where('ID_AMBIENTE',$ID_AMBIENTE)->delete();
+    Ambiente::where('id_ambiente',$id_ambiente)->delete();
 
 
 }

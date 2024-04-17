@@ -8,9 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Ubicacion extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'ID_UBICACION';
+    protected $primaryKey = 'id_ubicacion';
     protected $table = 'ubicacion';
     
+    protected $fillable =[
+        "edificio"
+    ];
 
     
 }

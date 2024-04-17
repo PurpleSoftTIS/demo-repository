@@ -11,5 +11,8 @@ class Hora extends Model
     
     protected $primaryKey = 'id_hora';
     protected $table = 'hora';
- 
+    protected $fillable = [
+        "hora_inicio",
+        "hora_fin"       
+      ];
 }

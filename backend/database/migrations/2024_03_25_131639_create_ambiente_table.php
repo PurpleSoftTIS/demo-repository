@@ -11,20 +11,19 @@ class CreateAmbienteTable extends Migration
      *
      * @return void
      */
-      public function up()
-    {
-        Schema::create('ambiente', function (Blueprint $table) {
-            $table->id('ID_AMBIENTE'); // Utilizamos bigIncrements para serial, equivalente a SERIAL en PostgreSQL
-            $table->foreignId("ID_UBICACION")->constrained("ubicacion", "ID_UBICACION");
-            $table->string('NOMBRE_AMBIENTE', 10);
-            $table->integer('CAPACIDAD');
-            $table->string('ESTADO_AMBIENTE', 15)->nullable();
-            $table->string('TIPO_AMBIENTE',30);
-            $table->string('NUMERO_PISO',10);
-            $table->timestamps(); // Añadimos created_at y updated_at
-
-        });
-    }
+    public function up()
+{
+    Schema::create('ambiente', function (Blueprint $table) {
+        $table->id('id_ambiente'); 
+        $table->foreignId("id_ubicacion")->constrained("ubicacion", "id_ubicacion");
+        $table->string('nombre_ambiente', 10)->nullable();
+        $table->integer('capacidad')->nullable();
+        $table->string('estado_ambiente', 15)->nullable();
+        $table->string('tipo_ambiente',30)->nullable();
+        $table->string('numero_piso',10)->nullable();
+        $table->timestamps(); 
+    });
+}
 
     /**
      * Reverse the migrations.
