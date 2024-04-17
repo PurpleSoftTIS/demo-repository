@@ -7,6 +7,9 @@ use App\Http\Controllers\MateriaController;
 use App\Http\Controllers\RestablecerContrasenia;
 use App\Http\Controllers\AmbienteController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\RegistrarSolicitud;
+use App\Http\Controllers\SolicitudController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,8 +28,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 //Consultar Datos
-Route::post('/verificar', [DocenteController::class, 'verificarCorreo']);
-Route::post('/verificarContra', [DocenteController::class, 'verificarContrasenia']);
+Route::post('/verificarCre', [DocenteController::class, 'verificarCredenciales']);
 Route::post('/nombre', [UsuarioController::class, 'obtenerNombreUsuario']);
 
 //Obtener Datos
@@ -34,7 +36,9 @@ Route::get('/docentes', [DocenteController::class, 'index']);
 Route::get('/usuarios', [UsuarioController::class, 'index']);
 Route::get('/materias', [MateriaController::class, 'index']);
 Route::get('/listaAmbiente', [AmbienteController::class, 'index']);
+Route::get('/ambienteDispo/{capacidad}', [AmbienteController::class, 'ambientesDisponibles']);
 
+Route::get('/obtenerHoras', [SolicitudController::class, 'obtenerHora']);
 
 //Registrar Datos
 Route::post('/docentesRegistrar', [DocenteRegistrarController::class, 'registrar']);

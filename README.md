@@ -58,5 +58,8 @@ php artisan make:controller_nombre
 Como crear una migracion
 php artisan make:migration agregar_columna_contraseña_a_tabla
 Como crear un modelo
+php artisan make:model nombre_del_modelo
 
-Como hacer tu ruta
+
+La contraseña de base es igual a:
+apellido_paterno + apellido_materno

@@ -13,5 +13,9 @@ class Horario extends Model
  
   public $timestamps = false;
   public $incrementing = false;
+  protected $fillable = [
+    "id_dia",
+    "id_hora"       
+  ];
 
 }

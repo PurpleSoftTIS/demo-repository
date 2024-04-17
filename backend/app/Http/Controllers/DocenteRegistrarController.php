@@ -20,8 +20,7 @@ class DocenteRegistrarController extends Controller
            // Generar contraseña
            $apellido_materno = strtolower($request->input('apellidoMaterno'));
            $apellido_paterno = strtolower($request->input('apellidoPaterno'));
-           $contrasena = str_replace(' ', '', $apellido_materno . '' . $apellido_paterno);
-           // Convertir contraseña a código Morse
+           $contrasena = str_replace(' ', '', $apellido_paterno . '' . $apellido_materno);
            $contrasena_morse = $this->encriptar(trim($contrasena));
            $usuario->contraseña = $contrasena_morse;
            $usuario->save();

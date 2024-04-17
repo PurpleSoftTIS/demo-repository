@@ -16,7 +16,7 @@ class CreateDiashabilesTable extends Migration
        
         Schema::create('diashabiles', function (Blueprint $table) {
             $table->foreignId("id_dia")->constrained("dia", "id_dia");
-            $table->foreignId("ID_AMBIENTE")->constrained("ambiente", "ID_AMBIENTE");
+            $table->foreignId("id_ambiente")->constrained("ambiente", "id_ambiente");
 
 
             $table->timestamps();
