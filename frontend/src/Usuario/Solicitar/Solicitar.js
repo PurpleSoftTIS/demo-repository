@@ -9,9 +9,10 @@ const Solicitar = () => {
   const navigate = useNavigate();   
 
   const [inputValue, setInputValue] = useState('');
-  const [selectedOption, setSelectedOption] = useState('');
   const [date, setDate] = useState(new Date());
   const [horariosDisponibles, setHorariosDisponibles] = useState([]);
+  const [selectedDay, setSelectedDay] = useState(''); // Definir estado para el día seleccionado
+  const [selectedOption, setSelectedOption] = useState('');
 
   useEffect(() => {
     if (date) {
@@ -32,8 +33,11 @@ const Solicitar = () => {
   }, [date]);
 
   const handleDateChange = (newDate) => {
+    const dayOfWeek = newDate.toLocaleDateString('es-ES', { weekday: 'long' });
     setDate(newDate);
+    setSelectedDay(dayOfWeek);
   };
+  
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -47,7 +51,7 @@ const Solicitar = () => {
     // Construye el objeto de datos que deseas enviar
     const dataToSend = {
       numeroEstudiantes: inputValue,
-      diaSeleccionado: date.toLocaleDateString(),
+      diaSeleccionado: selectedDay,
       horaSeleccionada: selectedOption
     };
 
@@ -65,7 +69,7 @@ const Solicitar = () => {
               value={date}
             />
           </div>
-          <p className='fecha'>Fecha seleccionada: {date.toLocaleDateString()}</p>
+          <p className='fecha'>Fecha seleccionada: {selectedDay}</p> {/* Mostrar el día seleccionado */}
         </div>
 
         <div className='capacidad'>

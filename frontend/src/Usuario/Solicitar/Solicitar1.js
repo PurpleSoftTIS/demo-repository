@@ -4,70 +4,69 @@ import { NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
 const Solicitar1 = () => {
-  
-  //const { state: dataToSend } = useLocation();
-  const capacidad = 100;
-    const [date, setDatos] = useState([]);  
-    useEffect(() => {
+  const { state: dataToSend } = useLocation();
+  const capacidad = dataToSend ? dataToSend.numeroEstudiantes : null; 
+  const dia = dataToSend ? dataToSend.diaSeleccionado : null;
+  //const hora = dataToSend ? dataToSend.horaSeleccionada : null; 
 
-        if (date) {
-          fetch(`http://127.0.0.1:8000/api/ambienteDispo/${capacidad}`,)
-          
-            .then(response => {
-              if (!response.ok) {
-                throw new Error('Error al cargar las horas disponibles');
-              }
-              return response.json();
-            })
-            .then(data => {
-                setDatos(data);
-            })
-            .catch(error => {
-              console.error('Error al cargar las horas disponibles:', error);
-            });
-        }       
-      }, [date]);  
+  const [ambientesDisponibles, setAmbientesDisponibles] = useState([]);  
+
+  useEffect(() => {
+    if (ambientesDisponibles) {
+      fetch(`http://127.0.0.1:8000/api/ambienteDispo/${capacidad}/${dia}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error al cargar las horas disponibles');
+          }
+          return response.json();
+        })
+        .then(data => {
+          setAmbientesDisponibles(data);
+        })
+        .catch(error => {
+          console.error('Error al cargar las horas disponibles:', error);
+        });
+    }       
+  }, [capacidad, dia, ambientesDisponibles]);  
   return (
-<div className="container" style={{ minHeight: '78.7vh' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <h2 style={{ margin: 0 }}>Ambientes Disponibles:</h2>
-            <div>
-              <NavLink to="/Usuario/Usu/Solicitar" className="butn butn-filtro">
-              Atras
+    <div className="container" style={{ minHeight: '78.7vh' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h2 style={{ margin: 0 }}>Ambientes Disponibles:</h2>
+        <div>
+          <NavLink to="/Usuario/Usu/Solicitar" className="butn butn-filtro">
+            Atras
           </NavLink>
-            </div>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'Right', alignItems: 'center', marginTop: '15px' }}>
-            <div>
-            </div>
-          </div>
-          <table className="table table-hover">
-            <thead className="thead">
-              <tr>
-                <th>Aula</th>
-                <th>Edificio</th>
-                <th>Capacidad</th>
-                <th>Nro. Piso</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-         
-          <tbody>
-            {date.map((dato) => (
-              <tr key={dato.id_ambiente} className="fila-lista">
-                  <td>{dato.nombre_ambiente}</td>
-                  <td>{dato.edificio}</td>
-                  <td>{dato.capacidad}</td>
-                  <td>{dato.numero_piso}</td>             
-                <td>
-                  <button className="btn btn-editar mr-2">Reservar</button>               
-                </td>
-              </tr>
-              ))
-            }
-          </tbody>
-        </table>
-    </div>  )
+        </div>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'Right', alignItems: 'center', marginTop: '15px' }}>
+        <div></div>
+      </div>
+      <table className="table table-hover">
+        <thead className="thead">
+          <tr>
+            <th>Aula</th>
+            <th>Edificio</th>
+            <th>Capacidad</th>
+            <th>Nro. Piso</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ambientesDisponibles.map((ambiente) => (
+            <tr key={ambiente.id_ambiente} className="fila-lista">
+              <td>{ambiente.nombre_ambiente}</td>
+              <td>{ambiente.edificio}</td>
+              <td>{ambiente.capacidad}</td>
+              <td>{ambiente.numero_piso}</td>
+              <td>
+                <button className="btn btn-editar mr-2">Reservar</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 }
 
 export default Solicitar1;

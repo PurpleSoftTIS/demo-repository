@@ -7,45 +7,30 @@ import Ico1 from '../../assets/IcoGood.png';
 import Ico2 from '../../assets/IcoState.png';
 
 function ListaAulas() {
-  const [Advertencia, setAdvertencia] = useState(false);
-  const [Advertencia2, setAdvertencia2] = useState(false);
   const [aulas, setAulas] = useState([]);
   const [showOverlay, setShowOverlay] = useState(false);
   const [importar, setImportar] = useState(false);
+  const [showDeleteAll, setShowDeleteAll] = useState(false);
 
   const navigate = useNavigate();
   const importaciones = () => {
     setImportar(true);     
   };
   const borrarTodo = () => {
-    setAdvertencia(true); 
-    setShowOverlay(true); 
-  }
-  const cancelarBorrar = () => {
-    setAdvertencia(false); 
-    setShowOverlay(false); 
-  };
-  const confirmacionEliminacionTodo = () => {
-    setAulas([]);
-    setAdvertencia(false); 
-    setShowOverlay(false); 
-  };
-  const borrar = () => {
-    setAdvertencia2(true); 
-    setShowOverlay(true); 
-  }
-  const cancelar = () => {
-    setAdvertencia2(false); 
-    setShowOverlay(false); 
-  };
-  const confirmacionEliminacion = () => {
-    setAdvertencia2(false); 
-    setShowOverlay(false); 
-    window.location.reload();
+    setShowDeleteAll(true);
   };
 
+  const confirmarBorrarTodo = () => {
+    setShowDeleteAll(false);
+    setAulas([]);
+  };
+
+  const cancelarBorrarTodo = () => {
+    setShowDeleteAll(false);
+  };
+  
+
   const borrarAmbiente = (id_ambiente) => {
-    setAdvertencia2(true); 
     setShowOverlay(true);
     fetch(`http://127.0.0.1:8000/api/borrar/${id_ambiente}`, {
       method: 'DELETE',
@@ -139,7 +124,7 @@ function ListaAulas() {
             )}
         
           <button className="butn butn-borrar" onClick={borrarTodo}>
-            Borrar Todo<FaTrash className="icon" />
+            Borrar Todo<FaTrash className="icon"/>
           </button>
         </div>
       </div>
@@ -175,7 +160,7 @@ function ListaAulas() {
                   Editar
                 </button>
 
-                <button className="btn btn-eliminar" onClick={() => { borrarAmbiente(aula.id_ambiente); borrar(); }}>
+                <button className="btn btn-eliminar" onClick={() => { borrarAmbiente(aula.id_ambiente); }}>
                   Eliminar
                 </button>
               </td>
@@ -183,32 +168,23 @@ function ListaAulas() {
           ))}
         </tbody>
       </table>
-      {Advertencia && (
-        <div className="Advertencia">
-          <div className="text">
-            <h3 className="til1">Advertencia</h3>
-            <p className="til2">Estas seguro de eliminar todos los registros?</p>
-          </div>
-          <div className="botones">
-            <button className="conf" onClick={confirmacionEliminacionTodo}>Si</button>
-            <button className="ref" onClick={cancelarBorrar}>No</button>
-          </div>
-        </div>
-      )}
-       {Advertencia2 && (
-        <div className="Advertencia2">
-          <div className="text">
-            <h3 className="til1">Advertencia</h3>
-            <p className="til2">Estas seguro de eliminar el registro?</p>
-          </div>
-          <div className="botones">
-            <button className="conf" onClick={confirmacionEliminacion}>Si</button>
-            <button className="ref" onClick={cancelar}>No</button>
+      {showDeleteAll && (
+        <div className="overlay">
+          <div className="Advertencia">
+            <div className="text">
+              <h3 className="til1">Advertencia</h3>
+              <p className="til2">¿Estás seguro de eliminar todos los registros?</p>
+            </div>
+            <div className="botones">
+              <button className="conf" onClick={confirmarBorrarTodo}>Sí</button>
+              <button className="ref" onClick={cancelarBorrarTodo}>No</button>
+            </div>
           </div>
         </div>
       )}
     </div>
   );
+   
 }
 
 export default ListaAulas;

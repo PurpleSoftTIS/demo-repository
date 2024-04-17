@@ -127,7 +127,7 @@ const RegistrarMateria = () => {
     }
 
     // Validar nombre de la materia
-    if (formData.nombre_materia && !/^[a-zA-Z0-9\s]+$/.test(formData.nombre_materia)) {
+    if (formData.nombre_materia && !/^[a-zA-Z0-9áéíóúÁÉÍÓÚ\s]+$/.test(formData.nombre_materia)) {
       errors.nombre_materia = 'Solo se aceptan caracteres alfanuméricos';
     } else if (formData.nombre_materia.length > 50) {
       errors.nombre_materia = 'Máximo 50 caracteres para el nombre';

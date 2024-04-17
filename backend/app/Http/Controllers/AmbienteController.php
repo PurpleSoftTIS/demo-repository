@@ -16,7 +16,6 @@ class AmbienteController extends Controller
     public function guardarAmbiente(Request $request)
 {
     info('Datos recibidos:', $request->all());
-
     try {
         info('Se está intentando guardar la ubicación.');    
         $datosAmbiente = $request->input('datosAmbiente');
@@ -25,13 +24,10 @@ class AmbienteController extends Controller
         $edificio = $datosAmbiente['edificio'];
         $piso = $datosAmbiente['piso'];
         $tipo = $datosAmbiente['Tipo'];  
-        $ubicacion = new Ubicacion();
-        
+        $ubicacion = new Ubicacion();        
         $ubicacion->edificio = $edificio;
-        $ubicacion->save();
-        
-        $idUbicacion = $ubicacion->id_ubicacion;   
-        
+        $ubicacion->save();        
+        $idUbicacion = $ubicacion->id_ubicacion;           
         $ambiente = new Ambiente();
         $ambiente->id_ubicacion = $idUbicacion;
         $ambiente->numero_piso = $piso;
@@ -66,45 +62,47 @@ class AmbienteController extends Controller
                 $horarios -> id_hora = $idhora;
                 $horarios -> id_dia =  $iddia;
                 $horarios -> save ();
-
-
             }
         }
-
-       
-
-     return response()->json(['message' => 'Ubicación y ambiente guardados correctamente']);
+    return response()->json(['message' => 'Ubicación y ambiente guardados correctamente']);
     } catch (\Exception $e) {
         // Loguear el error
-        \Log::error('Error al intentar guardar la ubicación y el ambiente: ' . $e->getMessage());
-        
+        \Log::error('Error al intentar guardar la ubicación y el ambiente: ' . $e->getMessage());        
         // Devolver una respuesta de error al cliente
         return response()->json(['error' => 'Error al guardar la ubicación y el ambiente'], 500);
     }
 }
 
 public function index()
-{
-    
+{   
     $ambientes = DB::table('ambiente')
     ->select('ambiente.*', 'ubicacion.*',)
     ->join('ubicacion', 'ambiente.id_ubicacion', '=', 'ubicacion.id_ubicacion')
     ->get();
     return response()->json($ambientes, 200);
 }
-public function ambientesDisponibles($capacidad)
+public function ambientesDisponibles($capacidad, $nombreDia)
 {
-  $ambientes = DB::table('ambiente')
-        ->select('ambiente.*', 'ubicacion.*',)
+    if (!is_numeric($capacidad)) {
+        return response()->json(['error' => 'La capacidad no es un número válido'], 400);
+    }    
+    
+    $ambientes = DB::table('ambiente')
+        ->select('ambiente.*', 'ubicacion.*')
         ->join('ubicacion', 'ambiente.id_ubicacion', '=', 'ubicacion.id_ubicacion')
-        ->where('ambiente.capacidad >=', $capacidad)       
-        ->get();    
+        ->join('diashabiles', 'ambiente.id_ambiente', '=', 'diashabiles.id_ambiente')
+        ->join('dia', 'diashabiles.id_dia', '=', 'dia.id_dia')
+        ->where('ambiente.capacidad', '>=', $capacidad)
+        ->where('dia.nombre','=', $nombreDia)
+        ->get();
+
+    // Devolver los ambientes encontrados como respuesta JSON
     return response()->json($ambientes, 200);
 }
 
 
 public function actualizarAmbiente(Request $request, $id_ambiente)
-    {   
+{   
         $ambiente = Ambiente::where('id_ubicacion', $id_ambiente)->first();
 
     if ($ambiente) {
@@ -220,8 +218,6 @@ public function actualizarAmb (Request $request, $id_ambiente){
 
 }
 public function borrarAmbiente ($id_ambiente){
-
-
     $ambiente =Ambiente::find($id_ambiente); 
     $diasHabiles = Diashabiles::where('id_ambiente', $id_ambiente)->get();
     foreach ($diasHabiles as $diaHabil) {
@@ -235,10 +231,7 @@ public function borrarAmbiente ($id_ambiente){
        $id_dia=$diaHabil->id_dia;
        $diaHabil->where('id_dia',$id_dia)->delete();
        Dia::where('id_dia', $id_dia)->delete();
-       
- 
     }
-
     Ambiente::where('id_ambiente',$id_ambiente)->delete();
 
 
