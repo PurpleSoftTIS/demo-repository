@@ -11,14 +11,14 @@
     font-size: 18px;
     font-family: inherit;
     margin: 0;
+    width: 450px;
 }
 .mainfooter{
     padding: 20px;
     background-color: #050259;
     height: 70px;
     margin-top: 50px;  
-    margin-bottom: 20px;
-  
+    margin-bottom: 20px;  
 }
 
 .footer{    

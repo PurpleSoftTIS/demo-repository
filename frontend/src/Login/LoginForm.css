@@ -350,7 +350,9 @@ input:-webkit-autofill:active {
   text-align: center;
   
 }
-
+.textoDos{
+  color: white;
+}
 
 .description2{
   display: flex;
@@ -375,6 +377,8 @@ input:-webkit-autofill:active {
   justify-content: space-between;
   z-index: 9999; 
   margin-right: 20px;
+  height: 150px;
+
 
 }
 .HomeReload2{
@@ -389,6 +393,7 @@ position: relative;
 display: flex;
 flex-wrap: wrap; 
 justify-content: flex-end;
+height: 100px;
 
 }
 .description2{

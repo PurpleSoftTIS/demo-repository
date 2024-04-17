@@ -16,9 +16,7 @@ import Ico8 from "../assets/IconosLan/IcoFacultadEscudo.png";
 import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
-const navigate = useNavigate();
-    const [correoElectronicoRecuperacion, setCorreoElectronicoRecuperacion] = useState("");
-    const [mensajeEnvio, setMensajeEnvio] = useState("");
+const navigate = useNavigate();   
 
   const [menuClicked, setMenuClicked] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -40,6 +38,7 @@ const navigate = useNavigate();
   const [errorContraseñaValido, setErrorContraseñaValido] = useState("");
 
   const toggleVisibility = () => {
+
     setIsVisible(!login0); 
     setInvisible(!logRecuperacion);
     setIniciar(!mostrarIniciar);
@@ -95,106 +94,63 @@ const navigate = useNavigate();
     }else{
         setErrorPassword("");
     }
-    
 
-    fetch("http://127.0.0.1:8000/api/verificar", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({correo_electronico:email}),
-    })
-    .then((responseCorreo) => {
-        if (!responseCorreo.ok) {
-            throw new Error("Error al verificar el correo electrónico");
-        }
-        return responseCorreo.json();
-    })
-    .then((dataCorreo) => {
-        if (!dataCorreo.exists) {
-            console.log("El correo electrónico no existe");
-            if (email === "purpleSoft@gmail.com" && password === "purplesoft2024") {
-                navigate("/Admin/Inicio/HomeUno");
-            }else{
-                if(email === "purpleSoft@gmail.com" && password !== "purplesoft2024"){
-                    setErrorContraseñaValido("Contraseña incorrecta")
-                    setEmailValido(false);
-                }else{
-                    setErrorEmailValido("Ingrese una cuenta valida");
-                    setErrorContraseñaValido("");
-                    setEmailValido(false);
-                }                
-            }
-        }
-    })
-    .catch((error) => {
-        console.error(error);
-    });    
 
-    setEmailValido(true);
-    setErrorEmailValido("");
-    setErrorContraseñaValido("");
-    //Verificamos si la contraseña es valida
-    fetch("http://127.0.0.1:8000/api/verificarContra", {
+    if (email === "purpleSoft@gmail.com" && password === "purplesoft2024") {
+        navigate("/Admin/Inicio/HomeUno");
+    }else{
+        if(email === "purpleSoft@gmail.com" && password !== "purplesoft2024"){
+            setErrorContraseñaValido("Contraseña incorrecta")
+        }else{
+            fetch("http://127.0.0.1:8000/api/verificarCre", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({ correo_electronico: email, contraseña: password }),
-    })
-    .then((responseContraseña) => {
-        if (!responseContraseña.ok) {
-            throw new Error("Error al verificar la contraseña");
-        }
-        return responseContraseña.json();
-    })
-    .then((dataContraseña) => {
-        if (!dataContraseña.correcta) {
-            // La contraseña no es correcta
-            console.log("Contraseña incorrecta");
-            setErrorContraseñaValido("Contraseña incorrecta");
-            setContraseñaValido(false);
-        }else{
-            setContraseñaValido(true);
-            setErrorContraseñaValido("");
-            const credencialesValidas = emailValido && contraseñaValido;
-            const rutaRedireccion = "/Usuario/Inicio/HomeDos";
-            const estadoRedireccion = { state: correoElectronico };            
-            if (credencialesValidas) {
-                navigate(rutaRedireccion, estadoRedireccion);
-            }else{
-                setErrorContraseñaValido("Contraseña incorrecta");
-            }
-        }            
-    })
-    .catch((error) => {
-        console.error(error);
-    });
-      
-    fetch("http://127.0.0.1:8000/api/restablecer", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ correo: correoElectronicoRecuperacion }),
-        })
+        })       
         .then((response) => {
             if (!response.ok) {
-                throw new Error("Error al enviar el correo de restablecimiento");
+                throw new Error("Error al verificar las credenciales");
             }
             return response.json();
         })
         .then((data) => {
-            setMensajeEnvio("El correo de restablecimiento ha sido enviado correctamente.");
+            if (!data.exists) {
+                console.log("El correo electrónico no existe");
+                setEmailValido(false);                                   
+            } else{
+            if (!data.correcta) {
+                // La contraseña no es correcta
+                setErrorEmailValido("");
+                setEmailValido(true);
+                setErrorContraseñaValido("Contraseña incorrecta");
+                setContraseñaValido(false);
+            } else {
+                // Ambos correo electrónico y contraseña son válidos
+                setEmailValido(true);
+                setContraseñaValido(true);
+                setErrorEmailValido("");
+                setErrorContraseñaValido("");
+                const credencialesValidas = emailValido && contraseñaValido;
+                const rutaRedireccion = credencialesValidas ? "/Usuario/Inicio/HomeDos" : "/";
+                const estadoRedireccion = { state: correoElectronico };
+                navigate(rutaRedireccion, estadoRedireccion);
+            }
+        }
         })
-        .catch((error) => {
-            console.error(error);
-            setMensajeEnvio("Hubo un error al enviar el correo de restablecimiento. Por favor, inténtalo de nuevo más tarde.");
-        });
-  };
+           
+        }                
+    }     
+  
+        
+        
+     
+    
+};
 
   return (
-    <div className="hero-6">
+    <div className="hero-6" style={{ height: '100vh' }}>
         <div>
             <nav className="navbar navbar-expand-lg nav-bare">
                 <Link to="/" className="navbar-brand logon">
@@ -292,7 +248,6 @@ const navigate = useNavigate();
                                                                 placeholder="Correo Institucional"
                                                                 id="logemail1" 
                                                                 autoComplete="off"
-                                                                onChange={(e) => setCorreoElectronicoRecuperacion(e.target.value)}
 
                                                             />
                                             </div>
@@ -320,15 +275,14 @@ const navigate = useNavigate();
         <footer className="mainfooter2"> 
                 <div className="footer2"> 
                     <div className="description2"> 
-                        <ul className="text">
-                            <p>
+                            <p className="textoDos">
                                 "SIRA FCYT "<br></br>
                                 "Diseño y Desarrollo de PurpleSoft -TIS "<br></br>
                                 "TIS - Taller de Ingenieria de Software " <br></br>
                                 "UMSS - Universidad Mayor de San Simón "<br></br>
                                 "Copyright © 2024 PurpleSoft Todos los Derechos Reservados"
                             </p> 
-                        </ul>
+                       
                         <div className="logos2">
                             <a href="http://www.fcyt.umss.edu.bo/" target="_blank" rel="noreferrer">
                                 <img className="iconos2" src={Ico7} alt="logo" width="35px" height="35px" /> 

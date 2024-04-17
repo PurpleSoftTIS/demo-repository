@@ -352,3 +352,10 @@
     line-height: 22px;
   }
 }
+
+.contenedor{
+  width: 580px;
+  height: 550px;
+  background-color: #011640;
+  padding: 20px;
+}
