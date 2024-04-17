@@ -10,6 +10,7 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\RegistrarSolicitud;
 use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\CarreraController;
+use App\Http\Controllers\DeleteAmbienteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,7 +37,7 @@ Route::get('/docentes', [DocenteController::class, 'index']);
 Route::get('/usuarios', [UsuarioController::class, 'index']);
 Route::get('/materias', [MateriaController::class, 'index']);
 Route::get('/listaAmbiente', [AmbienteController::class, 'index']);
-Route::get('/ambienteDispo/{capacidad}/{dia}', [AmbienteController::class, 'ambientesDisponibles']);
+Route::get('/ambienteDispo/{capacidad}', [AmbienteController::class, 'ambientesDisponibles']);
 Route::get('/carreras', [CarreraController::class, 'index']);
 Route::get('/materias/{id}', [MateriaController::class, 'show']);
 Route::get('/obtenerHoras', [SolicitudController::class, 'obtenerHora']);
@@ -46,14 +47,21 @@ Route::post('/docentesRegistrar', [DocenteRegistrarController::class, 'registrar
 Route::post('/materiaRegistrar', [MateriaRegistrarController::class, 'registrarMateria']);
 Route::post('/registrarambiente', [AmbienteController::class, 'guardarAmbiente']);
 Route::post('/carreraRegistrar', [CarreraController::class, 'registrarCarrera']);
+Route::post('/CargaAmbientes', [AmbienteController::class, 'CargaMasiva']);
+Route::post('/CargaDiasHoras', [AmbienteController::class, 'CargaMasivaDias']);
+Route::post('/RegistrarSol', [RegistrarSolicitud::class, 'registrar']);
+
 //Elimnar datos
 Route::delete('/docentes/{id_docente}', [DocenteController::class, 'eliminar']);
-Route::delete('/borrar/{ID_AMBIENTE}', [AmbienteController::class, 'borrarAmbiente']);
+Route::delete('/borrar/{id_ambiente}', [AmbienteController::class, 'borrarAmbiente']);
 Route::delete('/materias/{id}', [MateriaController::class, 'destroy']);
 Route::delete('/materias', [MateriaController::class, 'eliminarTodo']);
+Route::delete('/borrarTodo',  [DeleteAmbienteController::class,'Borrartodo']);
 //Actualizar datos
-Route::put('/ambiente/{ID_AMBIENTE}', [AmbienteController::class, 'actualizarAmbiente']);
-Route::put ('/actualizar/{ID_AMBIENTE}',[AmbienteController::class,'actualizarAmb']);
+Route::put('/ambiente/{id_ambiente}', [AmbienteController::class, 'actualizarAmbiente']);
+Route::put ('/actualizar/{id_ambiente}',[AmbienteController::class,'actualizarAmb']);
 Route::put ('/restablecer',[RestablecerContrasenia::class,'enviarCorreo']);
 Route::put('/materias/{id}', [MateriaRegistrarController::class, 'update']);
+
+
 

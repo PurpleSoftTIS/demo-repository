@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import './Solicitar1.css'
+import './Solicitar1.css';
 import { NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Solicitar1 = () => {
+  const navigate = useNavigate();   
+
   const { state: dataToSend } = useLocation();
   const capacidad = dataToSend ? dataToSend.numeroEstudiantes : null; 
   const dia = dataToSend ? dataToSend.diaSeleccionado : null;
-  //const hora = dataToSend ? dataToSend.horaSeleccionada : null; 
+  const hora = dataToSend ? dataToSend.horaSeleccionada : null; 
 
   const [ambientesDisponibles, setAmbientesDisponibles] = useState([]);  
 
   useEffect(() => {
     if (ambientesDisponibles) {
-      fetch(`http://127.0.0.1:8000/api/ambienteDispo/${capacidad}/${dia}`)
+      fetch(`http://127.0.0.1:8000/api/ambienteDispo/${capacidad}`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Error al cargar las horas disponibles');
@@ -27,7 +30,20 @@ const Solicitar1 = () => {
           console.error('Error al cargar las horas disponibles:', error);
         });
     }       
-  }, [capacidad, dia, ambientesDisponibles]);  
+  }, [capacidad, ambientesDisponibles]);  
+
+  const reservarAmbiente = (ambiente) => {
+    const datos = {
+      capacidad,
+      dia,
+      hora,
+      nombre_ambiente: ambiente.nombre_ambiente,
+      edificio: ambiente.edificio,
+      numero_piso: ambiente.numero_piso
+    };
+    navigate('/Usuario/Usu/DetallesSol', { state: datos });
+  };
+
   return (
     <div className="container" style={{ minHeight: '78.7vh' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -59,7 +75,7 @@ const Solicitar1 = () => {
               <td>{ambiente.capacidad}</td>
               <td>{ambiente.numero_piso}</td>
               <td>
-                <button className="btn btn-editar mr-2">Reservar</button>
+                <button className="btn btn-editar mr-2" onClick={() => reservarAmbiente(ambiente)}>Reservar</button>
               </td>
             </tr>
           ))}
