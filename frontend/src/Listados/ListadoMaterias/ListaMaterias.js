@@ -17,13 +17,37 @@ const ListaMaterias = () => {
       .catch(error => console.error('Error al obtener las Materias:', error));
   }, []);
 
-  const eliminarMateria = (id) => {
-    setMaterias(materias.filter(materia => materia.id_materia !== id));
+  const eliminarMateria = async (id) => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/api/materias/${id}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        setMaterias(materias.filter(materia => materia.id_materia !== id));
+        console.log('Materia eliminada correctamente');
+      } else {
+        console.error('Error al eliminar materia');
+      }
+    } catch (error) {
+      console.error('Error al eliminar materia:', error);
+    }
   };
   
-  const borrarTodo = () => {
-    setMaterias([]);
-  };
+  const borrarTodo = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/materias', {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        setMaterias([]);
+        console.log('Todas las materias eliminadas correctamente');
+      } else {
+        console.error('Error al eliminar todas las materias: ', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error al eliminar todas las materias: ', error);
+    }
+  };  
 
   return (
     <div className="container" style={{ minHeight: '78.7vh' }}>
@@ -63,12 +87,12 @@ const ListaMaterias = () => {
         </thead>
         <tbody>
           {materias.map((materia) => (
-            <tr key={materia.id} className="fila-lista">
+              <tr key={materia.id_materia} className="fila-lista">
               <td>{materia.id_materia}</td>
               <td>{materia.codigo_materia}</td>
               <td>{materia.nombre_materia}</td>
               <td>{materia.grupo}</td>
-              <td>{materia.carrera}</td>
+              <td>{materia.nombre_carrera}</td>
               <td>{materia.nombre_completo_docente}</td>
               <td>
                 {materia.estado_materia === "activo" ? (
@@ -78,7 +102,7 @@ const ListaMaterias = () => {
                 )}
               </td>
               <td>
-              <button className="btn btn-editar mr-2">Editar</button>
+              <NavLink className="btn btn-editar mr-2" to={`/Admin/Editar/Materia/${materia.id_materia}`}>Editar</NavLink>
               <button className="btn btn-eliminar" onClick={() => eliminarMateria(materia.id_materia)}>Eliminar</button>
               </td>
             </tr>

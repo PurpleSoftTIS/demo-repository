@@ -13,6 +13,7 @@ function AdminRoutes() {
       <Route path='/ListaSolicitudes' element={<ListaSolicitudes />} />
       <Route path='/Registro/Ambientes' element={<Ambientes />} />
       <Route path='/Registro/Materias' element={<RegistrarMateria />} />
+      <Route path='/Editar/Materia/:id' element={<RegistrarMateria />} />
       <Route path='/Registro/Docentes' element={<Docentes />} /> 
       <Route path='/Registro/DiaHora' element={<RegistrarDiaHora />} /> 
       <Route path='/Registro/AmbientesActualizar' element={<AmbientesActualizar />} /> 

@@ -16,11 +16,21 @@ class Materia extends Model
         "codigo_materia",
         "estado_materia",
         "grupo",
-        "carrera"
+        "id_carrera"
     ];
 
     public function docentes()
     {
         return $this->belongsToMany(Docente::class, 'materia_docente', 'id_materia', 'id_docente');
+    }
+    
+    public function materiaDocentes()
+    {
+        return $this->hasMany(MateriaDocente::class, 'id_materia');
+    }
+
+    public function carrera()
+    {
+        return $this->belongsTo(Carrera::class, 'id_carrera');
     }
 }
