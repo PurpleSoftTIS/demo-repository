@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import './Solicitar1.css'
-const Solicitar1 = () => {
+import { NavLink } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
+const Solicitar1 = () => {
+  
+  //const { state: dataToSend } = useLocation();
+  const capacidad = 100;
     const [date, setDatos] = useState([]);  
     useEffect(() => {
 
         if (date) {
-          fetch(`http://127.0.0.1:8000/api/ambienteDispo/{$capacidad}`)
+          fetch(`http://127.0.0.1:8000/api/ambienteDispo/${capacidad}`,)
+          
             .then(response => {
               if (!response.ok) {
                 throw new Error('Error al cargar las horas disponibles');
@@ -26,7 +32,9 @@ const Solicitar1 = () => {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <h2 style={{ margin: 0 }}>Ambientes Disponibles:</h2>
             <div>
-              <button className="butn butn-filtro" >Atras</button>
+              <NavLink to="/Usuario/Usu/Solicitar" className="butn butn-filtro">
+              Atras
+          </NavLink>
             </div>
           </div>
           <div style={{ display: 'flex', justifyContent: 'Right', alignItems: 'center', marginTop: '15px' }}>

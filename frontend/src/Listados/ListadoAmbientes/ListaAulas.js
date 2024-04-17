@@ -133,7 +133,7 @@ function ListaAulas() {
               Importar Ambientes<FaFileCsv className="icon" />
             </button>
             <button className="btnIm">
-              Importar Dias hABILES<FaFileCsv className="icon" />
+              Importar Dias Habiles<FaFileCsv className="icon" />
               </button>
               </div>
             )}
