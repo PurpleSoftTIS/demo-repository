@@ -66,13 +66,10 @@ class AmbienteController extends Controller
         }
     return response()->json(['message' => 'Ubicación y ambiente guardados correctamente']);
     } catch (\Exception $e) {
-        // Loguear el error
         \Log::error('Error al intentar guardar la ubicación y el ambiente: ' . $e->getMessage());        
-        // Devolver una respuesta de error al cliente
         return response()->json(['error' => 'Error al guardar la ubicación y el ambiente'], 500);
     }
 }
-
 public function index()
 {   
     $ambientes = DB::table('ambiente')
@@ -85,8 +82,7 @@ public function ambientesDisponibles($capacidad)
 {
     if (!is_numeric($capacidad)) {
         return response()->json(['error' => 'La capacidad no es un número válido'], 400);
-    }  
-      
+    }      
     
     $ambientes = DB::table('ambiente')
         ->select('ambiente.*', 'ubicacion.*')
@@ -98,14 +94,13 @@ public function ambientesDisponibles($capacidad)
     return response()->json($ambientes, 200);
 }
 
-public function actualizarAmbiente(Request $request, $id_ambiente)
-    {   
+    public function actualizarAmbiente(Request $request, $id_ambiente)
+{   
         $ambiente = Ambiente::where('id_ambiente', $id_ambiente)->first();
 
     if ($ambiente) {
         $diasHoras = [];
         $edificio = Ubicacion::where('id_ubicacion', $ambiente->id_ubicacion)->value('edificio');
-
 
         $diasHabiles = Diashabiles::where('id_ambiente', $ambiente->id_ambiente)->get();
         info('Días hábiles obtenidos para el ambiente ' . $ambiente->id_ambiente . ':');
@@ -121,7 +116,6 @@ public function actualizarAmbiente(Request $request, $id_ambiente)
 
             foreach ($horarios as $horario) {
                 
-
                 // Obtener las horas de inicio y fin para este horario
                 $horaInicio = Hora::find($horario->id_hora)->hora_inicio;
                 info('Días hábiles obtenidos para el ambiente ' .$horaInicio . ':');
@@ -145,8 +139,7 @@ public function actualizarAmbiente(Request $request, $id_ambiente)
             "piso" => $ambiente->numero_piso,
             "Tipo" => $ambiente->tipo_ambiente
         ];
-
-        
+    
         return response()->json([
             "datosAmbiente" => $datosAmbiente,
             "diasHoras" => $diasHoras
@@ -206,11 +199,7 @@ public function actualizarAmb (Request $request, $id_ambiente){
         $horarios -> id_hora = $idhora;
         $horarios -> id_dia =  $iddia;
         $horarios -> save ();
-
-
-    }
-
-   
+    }  
 }
 
 }

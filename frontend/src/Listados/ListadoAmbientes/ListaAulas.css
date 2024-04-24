@@ -202,3 +202,8 @@ background-color: #1f8036;
 border-color: #1f8036;
 transform: translateY(-2px);
 }
+.Advertencia{
+  position: relative;
+  top: 40%;
+  left: 40%;
+}

@@ -63,3 +63,8 @@ php artisan make:model nombre_del_modelo
 
 La contraseña de base es igual a:
 apellido_paterno + apellido_materno
+
+Reiniciar las credenciales de Laravel 
+php artisan config:clear
+>> php artisan cache:clear   
+>> php artisan optimize

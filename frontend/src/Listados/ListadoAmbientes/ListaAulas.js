@@ -13,6 +13,8 @@ function ListaAulas() {
   const [aulas, setAulas] = useState([]);
   const [showOverlay, setShowOverlay] = useState(false);
   const [importar, setImportar] = useState(false);
+  const [ambienteToDelete, setAmibienteToDelete] = useState("");
+
 
   const navigate = useNavigate();
   const importaciones = () => {
@@ -24,11 +26,11 @@ function ListaAulas() {
     setShowOverlay(false); 
   };
   const confirmacionEliminacionTodo = () => {
-    setAulas([]);
-    setAdvertencia(false); 
-    setShowOverlay(false); 
+    setAdvertencia(true); 
+    setShowOverlay(true); 
   };
-  const borrar = () => {
+  const borrar = (id_ambiente) => {
+    setAmibienteToDelete(id_ambiente)
     setAdvertencia2(true); 
     setShowOverlay(true); 
   }
@@ -36,11 +38,7 @@ function ListaAulas() {
     setAdvertencia2(false); 
     setShowOverlay(false); 
   };
-  const confirmacionEliminacion = () => {
-    setAdvertencia2(false); 
-    setShowOverlay(false); 
-    window.location.reload();
-  };
+  
  
   const borrarTodos = () => {
     fetch(`http://127.0.0.1:8000/api/borrarTodo`, {
@@ -52,17 +50,14 @@ function ListaAulas() {
     .then (response => {
      if(response.ok){
 
-      alert('se borro todo los datos ');
-     }
-    else {
-
-    alert('hubo error al borrar');
-
+      window.location.reload();
     }
-
+    
      });
   };
-  const borrarAmbiente = (id_ambiente) => {
+  const borrarAmbiente = () => {
+    const {id_ambiente} = ambienteToDelete;
+
     setAdvertencia2(true); 
     setShowOverlay(true);
     fetch(`http://127.0.0.1:8000/api/borrar/${id_ambiente}`, {
@@ -73,6 +68,8 @@ function ListaAulas() {
     })
       .then((response) => {
         if (response.ok) {
+          window.location.reload();
+
         } else {
           throw new Error('No se pudo actualizar el ambiente.');
         }
@@ -191,6 +188,12 @@ function ListaAulas() {
       });
   }, []);
 
+  const obtenerId = (aula) => {
+    const idAmniente= aula.id_ambiente;
+    return idAmniente;
+
+  };
+  
   return (
     <div className="container" style={{ height: 'max height' }}>
       {showOverlay && <div className="overlay"></div>}
@@ -238,7 +241,7 @@ function ListaAulas() {
               </div>
             )}
         
-          <button className="butn butn-borrar" onClick={borrarTodos}>
+          <button className="butn butn-borrar" onClick={confirmacionEliminacionTodo}>
             Borrar Todo<FaTrash className="icon" />
           </button>
         </div>
@@ -275,7 +278,7 @@ function ListaAulas() {
                   Editar
                 </button>
 
-                <button className="btn btn-eliminar" onClick={() => { borrarAmbiente(aula.id_ambiente); borrar(); }}>
+                <button className="btn btn-eliminar" onClick={() => {borrar(aula.id_ambiente); }}>
                   Eliminar
                 </button>
               </td>
@@ -284,28 +287,32 @@ function ListaAulas() {
         </tbody>
       </table>
       {Advertencia && (
+        <div className="overlay">
         <div className="Advertencia">
           <div className="text">
             <h3 className="til1">Advertencia</h3>
-            <p className="til2">Estas seguro de eliminar todos los registros?</p>
+            <p className="til2">¿Estás seguro de eliminar todos los registros?</p>
           </div>
           <div className="botones">
-            <button className="conf" onClick={confirmacionEliminacionTodo}>Si</button>
+            <button className="conf" onClick={borrarTodos}>Sí</button>
             <button className="ref" onClick={cancelarBorrar}>No</button>
           </div>
         </div>
+      </div>
       )}
        {Advertencia2 && (
-        <div className="Advertencia2">
-          <div className="text">
-            <h3 className="til1">Advertencia</h3>
-            <p className="til2">Estas seguro de eliminar el registro?</p>
-          </div>
-          <div className="botones">
-            <button className="conf" onClick={confirmacionEliminacion}>Si</button>
-            <button className="ref" onClick={cancelar}>No</button>
-          </div>
-        </div>
+         <div className="overlay">
+         <div className="Advertencia">
+           <div className="text">
+             <h3 className="til1">Advertencia</h3>
+             <p className="til2">¿Estás seguro de eliminar este docente?</p>
+           </div>
+           <div className="botones">
+             <button className="conf" onClick={borrarAmbiente(obtenerId)}>Sí</button>
+             <button className="ref" onClick={cancelar}>No</button>
+           </div>
+         </div>
+       </div>
       )}
     </div>
   );

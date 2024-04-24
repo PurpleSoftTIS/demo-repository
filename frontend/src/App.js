@@ -1,7 +1,8 @@
 import { React, Router, Routes, Route, HomeUno, Ambientes, Docentes, Navbar, RegistrarMateria,
         LoginForm, RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Reservar, Solicitar, Ayuda,
         ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,
-        AmbientesActualizar,Footer,ListaMaterias,Solicitar2,Solicitar1} from './importaciones';
+        AmbientesActualizar,Footer,ListaMaterias,Solicitar2,Solicitar1,MensajeExitosoU,
+        MensajeErrorU,MensajeActExito,MensajeActError,DocentesActualizar,MensajeDatExito,MensajeDatError} from './importaciones';
        
 
 function AdminRoutes() {
@@ -15,6 +16,7 @@ function AdminRoutes() {
       <Route path='/Registro/Materias' element={<RegistrarMateria />} />
       <Route path='/Editar/Materia/:id' element={<RegistrarMateria />} />
       <Route path='/Registro/Docentes' element={<Docentes />} /> 
+      <Route path='/Registro/DocentesActualizar' element={<DocentesActualizar />} />
       <Route path='/Registro/DiaHora' element={<RegistrarDiaHora />} /> 
       <Route path='/Registro/AmbientesActualizar' element={<AmbientesActualizar />} /> 
       <Route path='/Registro/Diahorasactualizar' element={<RegistrarDiaHoras />} /> 
@@ -22,7 +24,12 @@ function AdminRoutes() {
       <Route path='/Listas/ListaDocentes' element={<ListaDocentes/>} />
       <Route path='/Mensaje/RegistroExitoso' element={<MensajeExitoso/>}/>
       <Route path='/Mensaje/RegistroError' element={<MensajeError/>}/>            
-      <Route path='/Listas/ListaMaterias' element={<ListaMaterias/>} />           
+      <Route path='/Listas/ListaMaterias' element={<ListaMaterias/>} />
+      <Route path='/Mensaje/ActualizacionExitosa' element={<MensajeActExito/>}/>
+      <Route path='/Mensaje/ErrorActualizacion' element={<MensajeActError/>}/>
+      <Route path='/Mensaje/CargaMasiva' element={<MensajeDatExito/>}/> 
+      <Route path='/Mensaje/ErrorCargaMasiva' element={<MensajeDatError/>}/>             
+
     </Routes>
     <Footer/>
   </div>
@@ -40,6 +47,8 @@ function UserRoutes() {
       <Route path='/Usu/Reservas' element={<Reservar />} />
       <Route path='/Usu/Ayuda' element={<Ayuda />} /> 
       <Route path='Usu/DetallesSol' element={<Solicitar2/>}/>
+      <Route path='/Mensaje/Exitoso' element={<MensajeExitosoU/>}/>
+      <Route path='/Mensaje/Error' element={<MensajeErrorU/>}/>
     </Routes>
     <Footer/>
 

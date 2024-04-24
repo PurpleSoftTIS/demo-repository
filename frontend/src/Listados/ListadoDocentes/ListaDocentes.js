@@ -4,9 +4,14 @@ import { FaPlus, FaFileCsv, FaTrash } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 import Ico1 from "../../assets/IcoGood.png";
 import Ico2 from "../../assets/IcoState.png";
+import { useNavigate } from "react-router-dom";
 
 const ListaDocentes = () => {
+  const navigate = useNavigate(); 
   const [docentes, setDocentes] = useState([]);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [showDeleteDocente, setShowDeleteDocente] = useState(false);
+  const [docenteToDelete, setDocenteToDelete] = useState([]);
 
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/docentes', {
@@ -23,12 +28,36 @@ const ListaDocentes = () => {
   }, []);
 
   const eliminarDocenteYUsuario = (id_docente, id_usuario) => {
+    setDocenteToDelete({ id_docente, id_usuario });
+    setShowDeleteDocente(true);
+  };
+
+  const eliminarTodosDocentes = () => {
+    fetch('http://127.0.0.1:8000/api/borrarTodoDocente', {
+      method: 'DELETE',
+    })
+    .then(response => {
+      if (response.ok) {       
+        window.location.reload();
+      } else{
+        throw new Error('Error al eliminar todos los docentes y usuarios');
+      }
+    })      
+    .catch(error => console.error('Error al eliminar el docente y el usuario:', error))
+    .finally(() => {
+      setShowDeleteConfirmation(false);
+    });
+  };
+  
+  const confirmarEliminarDocente = () => {
+    const { id_docente, id_usuario } = docenteToDelete;
     fetch(`http://127.0.0.1:8000/api/docentes/${id_docente}`, {
       method: 'DELETE',
     })
       .then(response => {
         if (response.ok) {
           setDocentes(docentes.filter(docente => docente.id !== id_docente));
+          
           return fetch(`http://127.0.0.1:8000/api/usuarios/${id_usuario}`, {
             method: 'DELETE',
           });
@@ -38,33 +67,56 @@ const ListaDocentes = () => {
       })
       .then(response => {
         if (response.ok) {
-          // Recargar la página después de eliminar el docente y el usuario
           window.location.reload();
         } else {
           throw new Error('Error al eliminar el usuario');
         }
       })
       .catch(error => console.error('Error al eliminar el docente y el usuario:', error));
+    setShowDeleteDocente(false);
+    setDocenteToDelete(null);
+  };
+
+  const cancelarEliminarDocente = () => {
+    setShowDeleteDocente(false);
+    setDocenteToDelete(null);
   };
   
   const borrarTodo = () => {
-    setDocentes([]);
-  };
+    setShowDeleteConfirmation(true);
+  }; 
 
+  const cancelarBorrarTodo = () => {
+    setShowDeleteConfirmation(false);
+  };  
+ 
+  const editarDocente = (docente) => {
+    const datos = {
+      id_docente:docente.id_docente,
+      nombre:docente.nombre,
+      apellido_paterno:docente.apellido_paterno,
+      apellido_materno:docente.apellido_materno,
+      codigo_docente:docente.codigo_docente,
+      correo_electronico:docente.correo_electronico,
+      tipo_docente:docente.tipo_docente
+    };
+    navigate('/Admin/Registro/DocentesActualizar', { state: datos });
+  };
   return (
+    
     <div className="container" style={{ height: '100vh' }}>
       <div style={{ height: '4vh' }}></div>  
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ margin: 0 }}>Docentes Registrados:</h2>
         <div>
-          <input type="text" placeholder="Buscar" />
+          <input type="text" placeholder="Buscar" className="input-text" />
           <button className="butn butn-filtro">Filtros</button>
           <NavLink to="/Admin/Registro/Docentes" className="butn butn-nuevo">
             Nuevo Docente<FaPlus className="icon" />
           </NavLink>
         </div>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'Right', alignItems: 'center', marginTop: '15px' }}>
+      <div style={{ display: 'flex', justifyContent: 'right', alignItems: 'center', marginTop: '15px' }}>
         <div>
           <button className="butn butn-csv">
             Importar<FaFileCsv className="icon"/>
@@ -90,7 +142,7 @@ const ListaDocentes = () => {
         </thead>
         <tbody>
           {docentes.map(docente => (
-            <tr key={docente.id_docente} className="fila-lista">
+            <tr key={docente.id} className="fila-lista">
               <td>{docente.id_docente}</td>
               <td>{docente.nombre}</td>
               <td>{docente.apellido_paterno}</td>
@@ -106,16 +158,44 @@ const ListaDocentes = () => {
                 )}
               </td>
               <td>
-                <button className="btn btn-editar mr-2">Editar</button>
+              <button className="btn btn-editar mr-2" onClick={() => editarDocente(docente)}>Editar</button>
                 <button className="btn btn-eliminar" onClick={() => eliminarDocenteYUsuario(docente.id_docente, docente.id_usuario)}>Eliminar</button>
               </td>
             </tr>
           ))}
         </tbody>
-      </table> 
-         
+      </table>
+      {showDeleteConfirmation && (
+        <div className="overlay">
+          <div className="Advertencia">
+            <div className="text">
+              <h3 className="til1">Advertencia</h3>
+              <p className="til2">¿Estás seguro de eliminar todos los registros?</p>
+            </div>
+            <div className="botones">
+              <button className="conf" onClick={eliminarTodosDocentes}>Sí</button>
+              <button className="ref" onClick={cancelarBorrarTodo}>No</button>
+            </div>
+          </div>
+        </div>
+      )}
+      {showDeleteDocente && (
+        <div className="overlay">
+          <div className="Advertencia">
+            <div className="text">
+              <h3 className="til1">Advertencia</h3>
+              <p className="til2">¿Estás seguro de eliminar este docente?</p>
+            </div>
+            <div className="botones">
+              <button className="conf" onClick={confirmarEliminarDocente}>Sí</button>
+              <button className="ref" onClick={cancelarEliminarDocente}>No</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
+
 };
 
 export default ListaDocentes;
