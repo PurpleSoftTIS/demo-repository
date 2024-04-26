@@ -19,7 +19,7 @@ class CreateAmbienteTable extends Migration
         $table->string('nombre_ambiente', 10)->nullable();
         $table->integer('capacidad')->nullable();
         $table->string('estado_ambiente', 15)->nullable();
-        $table->string('tipo_ambiente',30)->nullable();
+        $table->string('tipo_ambiente',70)->nullable();
         $table->string('numero_piso',10)->nullable();
         $table->timestamps(); 
     });

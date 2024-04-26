@@ -12,7 +12,7 @@ import { NavLink } from 'react-router-dom';
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ margin: 0 }}>Mis Reservas:</h2>
         <div>
-          <NavLink to="/Admin/Registro/Ambientes" className="butn butn-nuevo">
+          <NavLink to="/Usuario/Usu/Solicitar" className="butn butn-nuevo">
             Nuevo Solicitud<FaPlus className="icon" />
           </NavLink>
         </div>

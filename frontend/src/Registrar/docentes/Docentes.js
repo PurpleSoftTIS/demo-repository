@@ -9,7 +9,7 @@ const Docentes = () => {
   const [apellidoMaterno, setApellidoMaterno] = useState("");
   const [correo, setCorreo] = useState("");
   const [codigoDocente, setCodigoDocente] = useState("");
-  const [tipo, setTipo] = useState("De Base"); // Estado para controlar el tipo seleccionado
+  const [tipo, setTipo] = useState("De Base"); 
   const [codigoDocenteDisabled, setCodigoDocenteDisabled] = useState(false);
 
   const [errorNombres, setErrorNombres] = useState("");
@@ -17,6 +17,7 @@ const Docentes = () => {
   const [errorApellidoMaterno, setErrorApellidoMaterno] = useState("");
   const [errorInconpleto, setErrorIncompleto] = useState("");
   const [errorCodigo, setErrorCodigo] = useState("");
+  const [errorCorreo, setErrorCorreo] = useState("");
 
   const handleRegistroDocente = (e) => {
     e.preventDefault();
@@ -34,24 +35,28 @@ const Docentes = () => {
       setErrorIncompleto("");
       setErrorNombres("");
       setErrorCodigo("");
+      setErrorCorreo("");
     }
 
-    const nombrePattern = /^[a-zA-Z\s]*$/;
-    const codigoDocentePattern = /^\d+$/;
+    const tipoNumero = /^\d+$/;
+    const caracteresEspeciales = /[!#$%^&*()_+\-{};':"|,<>?]+/;
+   
 
-    if (!nombrePattern.test(nombres)) {
-      setErrorNombres("❌ Por favor, ingresa solo caracteres alfabéticos y espacios en el nombre");
+    if (tipoNumero.test(nombres) && (caracteresEspeciales.test(nombres))) {
+      setErrorNombres("Por favor, ingresa solo caracteres alfabéticos y espacios en el nombre");
+      return;
+    } 
+    
+    
+    if (nombres.length > 30) {
+      setErrorNombres("❌ Su nombre no debe exceder los 30 caracteres");
       return;
     } else {
-      if (nombres.length > 30) {
-        setErrorNombres("❌ Su nombre no debe exceder los 30 caracteres");
-        return;
-      } else {
         setErrorNombres("");
       }
       setErrorNombres("");
-    }
-    if (!nombrePattern.test(apellidoPaterno)) {
+    
+    if (tipoNumero.test(apellidoPaterno)) {
       setErrorApellidoPaterno("❌Por favor, ingresa solo caracteres alfabéticos y espacios en el apellido paterno");
       return;
     } else {
@@ -63,7 +68,7 @@ const Docentes = () => {
       }
       setErrorNombres("");
     }
-    if (!nombrePattern.test(apellidoMaterno)) {
+    if (tipoNumero.test(apellidoMaterno)) {
       setErrorApellidoMaterno("❌ Por favor, ingresa solo caracteres alfabéticos y espacios en el apellido materno");
       return;
     } else {
@@ -76,11 +81,30 @@ const Docentes = () => {
       setErrorNombres("");
     }
 
-    if ((tipo === "De Base" &&!codigoDocentePattern.test(codigoDocente))) {
+    if ((tipo === "De Base" && !tipoNumero.test(codigoDocente))) {
       setErrorCodigo("❌ El código docente solo puede contener números.");
       return;
     } else {
       setErrorCodigo("");
+    }
+
+    if (correo.length > 30) {
+        setErrorCorreo("Su correo no debe exceder los 30 caracteres");
+        return;
+    }else{
+        setErrorCorreo("");
+    }    
+    if (caracteresEspeciales.test(correo)) {
+        setErrorCorreo("Su correo debe contener caracteres especiales, excepto @");
+        return;
+    }else{
+        setErrorCorreo("");
+    }    
+    if (!correo.includes('@')) {
+        setErrorCorreo("Su correo debe contener @");
+        return;
+    }else{
+        setErrorCorreo("");
     }
 
     const datosDocente = {
@@ -199,6 +223,8 @@ const Docentes = () => {
               type="text"
               value={correo} onChange={(e) => setCorreo(e.target.value)}
             />
+            {errorCorreo && <p className="error">{errorCorreo}</p>}
+
           </div>
         </div>
         <div className="input-container">

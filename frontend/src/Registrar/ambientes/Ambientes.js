@@ -20,7 +20,7 @@ const Ambientes = () => {
   const [errorInconpleto, setErrorIncompleto] = useState("");
   const handleRegistroAmbiente = () => {
     if (!nombreAula || !capacidadEstudiantes || !edificio || !piso || !Tipo) {
-      setErrorIncompleto("❌ Por favor, complete todos los campos del formulario");
+      setErrorIncompleto("Por favor, complete todos los campos del formulario");
       return;
     }else{
       setErrorNombreAula("");
@@ -29,18 +29,17 @@ const Ambientes = () => {
       setErrorPiso("");
       setErrorTipoAmbiente("")
     } 
-    const tipoCadena = /^[a-zA-Z\s]*$/;
     const tipoNumero = /^\d+$/;
     const tipoGlobal = /^[a-zA-Z0-9]*$/;
     const caracteresEspeciales = /[!#$%^&*()_+\-{};':"|,<>?]+/;
 
 
     if (!tipoGlobal.test(nombreAula)) {
-      setErrorNombreAula("❌ Por favor, ingresa solo caracteres alfanumericos en el nombre de ambiente");
+      setErrorNombreAula("Por favor, ingresa solo caracteres alfanumericos en el nombre de ambiente");
       return;
     } else {
       if(nombreAula.length > 10){
-        setErrorNombreAula("❌ El nombre del ambiente no debe exceder los 10 caracteres");
+        setErrorNombreAula("El nombre del ambiente no debe exceder los 10 caracteres");
         return;
       }else{
         setErrorNombreAula("");
@@ -48,11 +47,11 @@ const Ambientes = () => {
       setErrorNombreAula("");
     }
     if (!tipoNumero.test(capacidadEstudiantes)) {
-      setErrorCapacidadEst("❌Por favor, ingresa solo caracteres numericos en la capacidad del ambiente");
+      setErrorCapacidadEst("Por favor, ingresa solo caracteres numericos en la capacidad del ambiente");
       return;
     } else {
       if(capacidadEstudiantes > 300){
-        setErrorCapacidadEst("❌ La capcidad del ambiente no debe exceder las 300 unidades");
+        setErrorCapacidadEst("La capcidad del ambiente no debe exceder las 300 unidades");
         return;
       }else{
         setErrorCapacidadEst("");
@@ -60,12 +59,12 @@ const Ambientes = () => {
       setErrorCapacidadEst("");
     }
 
-    if (!tipoCadena.test(edificio)) {
-      setErrorEdificio("❌ Por favor, ingresa solo caracteres alfabéticos y espacios en el nombre del edificio");
+    if (caracteresEspeciales.test(edificio)) {
+      setErrorEdificio("Por favor, ingresa solo caracteres alfabéticos y espacios en el nombre del edificio");
       return;
     } else {
       if(edificio.length > 40){
-        setErrorEdificio("❌ El nombre del edificio no debe exceder los 40 caracteres");
+        setErrorEdificio("El nombre del edificio no debe exceder los 40 caracteres");
         return;
       }else{
         setErrorEdificio("");
@@ -73,12 +72,12 @@ const Ambientes = () => {
       setErrorEdificio("");
     }
 
-    if (!tipoGlobal.test(piso)) {
-      setErrorPiso("❌ El piso no debe contener caracteres especiales");
+    if (caracteresEspeciales.test(piso)) {
+      setErrorPiso("El piso no debe contener caracteres especiales");
       return;
     } else {
       if(piso.length > 2){
-        setErrorPiso("❌ El piso no debe eexceder los 2 caracteres");
+        setErrorPiso("El piso no debe eexceder los 2 caracteres");
         return;
         }else{
           setErrorPiso("");
@@ -86,12 +85,12 @@ const Ambientes = () => {
         setErrorPiso("");
     }
 
-    if (!caracteresEspeciales.test(Tipo)) {
-      setErrorTipoAmbiente("❌ El tipo de ambiente no debe contener caracteres numeros");
+    if (caracteresEspeciales.test(Tipo)) {
+      setErrorTipoAmbiente("El tipo de ambiente no debe contener caracteres numeros");
       return;
     } else {
       if(Tipo.length > 70){
-        setErrorTipoAmbiente("❌ El tipo de ambiente no debe excesder los 70 caracteres ");
+        setErrorTipoAmbiente("El tipo de ambiente no debe excesder los 70 caracteres ");
         return;
         }else{
           setErrorTipoAmbiente("");

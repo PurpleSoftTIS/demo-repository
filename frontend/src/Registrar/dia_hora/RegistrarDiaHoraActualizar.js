@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './RegistrarDiaHora.css';
 import { useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+
 
 const RegistrarDiaHoras = () => {
+  var exitoso = true;
+
     const [selectedDay, setSelectedDay] = useState(""); // Estado para almacenar el día seleccionado
     const [selectedHours, setSelectedHours] = useState({}); // Estado para almacenar los horarios seleccionados
     const { state: datosAmbiente } = useLocation();
@@ -149,7 +153,7 @@ const RegistrarDiaHoras = () => {
       return JSON.stringify(json, null, 2);
     };
   
-    const handleRegistrarAmbiente = () => {
+    const handleActualizarAmbiente = () => {
       const json = createJSON();
       console.log("Datos a enviar:", json); 
       const idAmbiente = datosAmbiente.id_ambiente; 
@@ -163,9 +167,12 @@ const RegistrarDiaHoras = () => {
       })
       .then(response => {
         if (response.ok) {
-          console.log("Registro exitoso");
+          console.log("Actualizacion exitoso");
+          exitoso = true;
         } else {
-          console.error("Error en el registro");
+          console.error("Error en la actualizacion");
+          exitoso = true;
+
           // Aquí puedes manejar errores en el registro
         }
       })
@@ -198,8 +205,8 @@ const RegistrarDiaHoras = () => {
           </div>
         </div>
         <div className="square3 mx-auto d-flex justify-content-center align-items-center">
-          <button type="button" className="btn btn-primary custom-btn" onClick={handleRegistrarAmbiente}>Registrar Ambiente</button>
-  
+          <NavLink className="btn btn-primary custom-btn" to={exitoso ? "/Admin/Mensaje/ActualizacionExitosa" : "/Admin/Mensaje/ErrorActualizacion" } onClick={handleActualizarAmbiente}>Actualizar Ambiente</NavLink>
+
         </div>
       </div>
     );

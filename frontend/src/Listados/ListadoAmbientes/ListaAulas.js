@@ -5,48 +5,55 @@ import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Ico1 from '../../assets/IcoGood.png';
 import Ico2 from '../../assets/IcoState.png';
+import { read, utils } from 'xlsx';
 
 function ListaAulas() {
   const [Advertencia, setAdvertencia] = useState(false);
   const [Advertencia2, setAdvertencia2] = useState(false);
   const [aulas, setAulas] = useState([]);
-  const [showOverlay, setShowOverlay] = useState(false);
   const [importar, setImportar] = useState(false);
+  const [ambienteToDelete, setAmibienteToDelete] = useState("");
+
 
   const navigate = useNavigate();
   const importaciones = () => {
     setImportar(true);     
   };
-  const borrarTodo = () => {
-    setAdvertencia(true); 
-    setShowOverlay(true); 
-  }
+  
   const cancelarBorrar = () => {
     setAdvertencia(false); 
-    setShowOverlay(false); 
   };
   const confirmacionEliminacionTodo = () => {
-    setAulas([]);
-    setAdvertencia(false); 
-    setShowOverlay(false); 
+    setAdvertencia(true); 
   };
-  const borrar = () => {
+  const borrar = (id_ambiente) => {
+    setAmibienteToDelete(id_ambiente)
     setAdvertencia2(true); 
-    setShowOverlay(true); 
   }
   const cancelar = () => {
     setAdvertencia2(false); 
-    setShowOverlay(false); 
   };
-  const confirmacionEliminacion = () => {
-    setAdvertencia2(false); 
-    setShowOverlay(false); 
-    window.location.reload();
-  };
+  
+ 
+  const borrarTodos = () => {
+    fetch(`http://127.0.0.1:8000/api/borrarTodo`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+    .then (response => {
+     if(response.ok){
 
-  const borrarAmbiente = (id_ambiente) => {
+      window.location.reload();
+    }
+    
+     });
+  };
+  const borrarAmbiente = () => {
+    const {id_ambiente} = ambienteToDelete;
+
     setAdvertencia2(true); 
-    setShowOverlay(true);
     fetch(`http://127.0.0.1:8000/api/borrar/${id_ambiente}`, {
       method: 'DELETE',
       headers: {
@@ -55,6 +62,8 @@ function ListaAulas() {
     })
       .then((response) => {
         if (response.ok) {
+          window.location.reload();
+
         } else {
           throw new Error('No se pudo actualizar el ambiente.');
         }
@@ -63,7 +72,74 @@ function ListaAulas() {
         console.error(error);
       });
   };
-
+  const handleArchivoSeleccionado = async (event) => {
+    const files = event.target.files;
+    if (files.length) {
+      const file = files[0];
+      const reader = new FileReader();
+  
+      reader.onload = async (event) => {
+        const wb = read(event.target.result, { type: 'binary' });
+        const wsname = wb.SheetNames[0];
+        const ws = wb.Sheets[wsname];
+        const data = utils.sheet_to_json(ws, { header: 1 });
+  
+        try {
+          const response = await fetch('http://127.0.0.1:8000/api/CargaAmbientes', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          });
+  
+          if (response.ok) {
+            console.log('Datos enviados al servidor exitosamente.');
+          } else {
+            throw new Error('Error al enviar datos al servidor.');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+  
+      reader.readAsBinaryString(file);
+    }
+  };
+  const handleArchivoDiasHorasSeleccionado = async (event) => {
+    const files = event.target.files;
+    if (files.length) {
+      const file = files[0];
+      const reader = new FileReader();
+  
+      reader.onload = async (event) => {
+        const wb = read(event.target.result, { type: 'binary' });
+        const wsname = wb.SheetNames[0];
+        const ws = wb.Sheets[wsname];
+        const data = utils.sheet_to_json(ws, { header: 1 });
+  
+        try {
+          const response = await fetch('http://127.0.0.1:8000/api/CargaDiasHoras', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          });
+  
+          if (response.ok) {
+            console.log('Datos enviados al servidor exitosamente.');
+          } else {
+            throw new Error('Error al enviar datos al servidor.');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+  
+      reader.readAsBinaryString(file);
+    }
+  };
   const handleEditar = (id_ambiente) => {
     fetch(`http://127.0.0.1:8000/api/ambiente/${id_ambiente}`, {
       method: 'PUT',
@@ -106,10 +182,14 @@ function ListaAulas() {
       });
   }, []);
 
-  return (
-    <div className="container" style={{ height: '100vh' }}>
-      {showOverlay && <div className="overlay"></div>}
+  const obtenerId = (aula) => {
+    const idAmniente= aula.id_ambiente;
+    return idAmniente;
 
+  };
+  
+  return (
+    <div className="container" style={{ height: 'max height' }}>
       <div style={{ height: '4vh' }}></div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ margin: 0 }}>Ambientes Registrados:</h2>
@@ -129,16 +209,31 @@ function ListaAulas() {
           
           {importar && (
             <div className='importaciones'>
-            <button className="btnIm">
-              Importar Ambientes<FaFileCsv className="icon" />
-            </button>
-            <button className="btnIm">
-              Importar Dias hABILES<FaFileCsv className="icon" />
-              </button>
+             <label htmlFor="inputGroupFile" className="butn butn-csv">
+                Importar Ambientes<FaFileCsv className="icon" />
+              </label>
+              <input
+                id="inputGroupFile"
+                type="file"
+                accept=".csv"
+                style={{ display: 'none' }}
+                onChange={handleArchivoSeleccionado} // Asociado a la importación de ambientes
+              />
+                <label htmlFor="inputGroupFile2" className="butn butn-csv">
+                  Importar Dias y Horas<FaFileCsv className="icon" />
+                </label>
+                <input
+                  id="inputGroupFile2"
+                  type="file"
+                  accept=".csv"
+                  style={{ display: 'none' }}
+                  onChange={handleArchivoDiasHorasSeleccionado} // Asociado a la importación de días y horas
+                />
+
               </div>
             )}
         
-          <button className="butn butn-borrar" onClick={borrarTodo}>
+          <button className="butn butn-borrar" onClick={confirmacionEliminacionTodo}>
             Borrar Todo<FaTrash className="icon" />
           </button>
         </div>
@@ -149,6 +244,7 @@ function ListaAulas() {
             <th>Nro Aula</th>
             <th>Aula</th>
             <th>Edificio</th>
+            <th>Tipo Ambiente</th>
             <th>Nro Piso</th>
             <th>Capacidad</th>
             <th>Estado</th>
@@ -161,6 +257,7 @@ function ListaAulas() {
               <td>{aula.id_ambiente}</td>
               <td>{aula.nombre_ambiente}</td>
               <td>{aula.edificio}</td>
+              <td>{aula.tipo_ambiente}</td>
               <td>{aula.numero_piso}</td>
               <td>{aula.capacidad}</td>
               <td>
@@ -175,7 +272,7 @@ function ListaAulas() {
                   Editar
                 </button>
 
-                <button className="btn btn-eliminar" onClick={() => { borrarAmbiente(aula.id_ambiente); borrar(); }}>
+                <button className="btn btn-eliminar" onClick={() => {borrar(aula.id_ambiente); }}>
                   Eliminar
                 </button>
               </td>
@@ -184,28 +281,32 @@ function ListaAulas() {
         </tbody>
       </table>
       {Advertencia && (
+        <div className="overlay">
         <div className="Advertencia">
           <div className="text">
             <h3 className="til1">Advertencia</h3>
-            <p className="til2">Estas seguro de eliminar todos los registros?</p>
+            <p className="til2">¿Estás seguro de eliminar todos los registros?</p>
           </div>
           <div className="botones">
-            <button className="conf" onClick={confirmacionEliminacionTodo}>Si</button>
+            <button className="conf" onClick={borrarTodos}>Sí</button>
             <button className="ref" onClick={cancelarBorrar}>No</button>
           </div>
         </div>
+      </div>
       )}
        {Advertencia2 && (
-        <div className="Advertencia2">
-          <div className="text">
-            <h3 className="til1">Advertencia</h3>
-            <p className="til2">Estas seguro de eliminar el registro?</p>
-          </div>
-          <div className="botones">
-            <button className="conf" onClick={confirmacionEliminacion}>Si</button>
-            <button className="ref" onClick={cancelar}>No</button>
-          </div>
-        </div>
+         <div className="overlay">
+         <div className="Advertencia">
+           <div className="text">
+             <h3 className="til1">Advertencia</h3>
+             <p className="til2">¿Estás seguro de eliminar este docente?</p>
+           </div>
+           <div className="botones">
+             <button className="conf" onClick={borrarAmbiente(obtenerId)}>Sí</button>
+             <button className="ref" onClick={cancelar}>No</button>
+           </div>
+         </div>
+       </div>
       )}
     </div>
   );

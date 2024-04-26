@@ -61,6 +61,7 @@ const navigate = useNavigate();
         setErrorIncompleto("");
         setContraseñaValido("");
         setErrorEmailValido("");
+        setErrorContraseñaValido("");
       } 
       const caracteresEspeciales = /[!#$%^&*()_+\-{};':"|,<>?]+/;
 
@@ -103,50 +104,75 @@ const navigate = useNavigate();
             setErrorContraseñaValido("Contraseña incorrecta")
         }else{
             fetch("http://127.0.0.1:8000/api/verificarCre", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ correo_electronico: email, contraseña: password }),
-        })       
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("Error al verificar las credenciales");
-            }
-            return response.json();
-        })
-        .then((data) => {
-            if (!data.exists) {
-                console.log("El correo electrónico no existe");
-                setEmailValido(false);                                   
-            } else{
-            if (!data.correcta) {
-                // La contraseña no es correcta
-                setErrorEmailValido("");
-                setEmailValido(true);
-                setErrorContraseñaValido("Contraseña incorrecta");
-                setContraseñaValido(false);
-            } else {
-                // Ambos correo electrónico y contraseña son válidos
-                setEmailValido(true);
-                setContraseñaValido(true);
-                setErrorEmailValido("");
-                setErrorContraseñaValido("");
-                const credencialesValidas = emailValido && contraseñaValido;
-                const rutaRedireccion = credencialesValidas ? "/Usuario/Inicio/HomeDos" : "/";
-                const estadoRedireccion = { state: correoElectronico };
-                navigate(rutaRedireccion, estadoRedireccion);
-            }
-        }
-        })
-           
-        }                
-    }     
-  
-        
-        
-     
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ correo_electronico: email, contraseña: password }),
+            })       
+            .then((response) => {
+                
+                if (!response.ok) {
+                    setErrorEmailValido("Ingrese una cuenta valida");
+
+                    throw new Error("La solicitud al servidor falló");
+                }
+
+                return response.json(); // Convertir la respuesta a JSON
+            })
+            .then((data) => {
+                if (data && typeof data === 'object') {
+                    if (!data.exists) {
+                        console.log("El correo electrónico no existe");
+                        setEmailValido(false);
+                    } else if (!data.correcta) {
+                        setErrorEmailValido("");
+                        setEmailValido(true);
+                        setErrorContraseñaValido("Contraseña incorrecta");
+                        setContraseñaValido(false);
+                    } else {
+                        setEmailValido(true);
+                        setContraseñaValido(true);
+                        setErrorEmailValido("");
+                        setErrorContraseñaValido("");
+                        const credencialesValidas = emailValido && contraseñaValido;
+                        const rutaRedireccion = credencialesValidas ? "/Usuario/Inicio/HomeDos" : "/";
+                        const estadoRedireccion = { state: correoElectronico };
+                        navigate(rutaRedireccion, estadoRedireccion);
+                    }
+                } else {
+                    console.error("La respuesta del servidor es inválida");
+                }
+            })
+            .catch((error) => {
+                console.error("Error en la solicitud:", error);
+            });
+                    
+                    }                
+                }  
+                
+                
     
+};
+const handleSubmitRestablecer = (e) => {
+    e.preventDefault();
+    fetch('http://127.0.0.1:8000/api/enviar', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({email}),
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Correo electrónico enviado correctamente');
+        } else {
+            console.error('Error al enviar correo electrónico');
+        }
+    })
+    .catch(error => {
+        console.error('Error de red:', error);
+    });
 };
 
   return (
@@ -248,11 +274,12 @@ const navigate = useNavigate();
                                                                 placeholder="Correo Institucional"
                                                                 id="logemail1" 
                                                                 autoComplete="off"
+                                                                value={email}
 
                                                             />
                                             </div>
                                             <div className="mb-0 pb-3 text-center">
-                                                <button className="btn-block" >Enviar Codigo</button>
+                                                <button className="btn-block"  onClick={handleSubmitRestablecer}>Enviar Codigo</button>
                                          
                                             </div>
                                             <p className="mt-3 text-center">
