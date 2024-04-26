@@ -16,7 +16,6 @@ class AmbienteController extends Controller
     public function guardarAmbiente(Request $request)
 {
     info('Datos recibidos:', $request->all());
-
     try {
         info('Se está intentando guardar la ubicación.');    
         $datosAmbiente = $request->input('datosAmbiente');
@@ -25,13 +24,10 @@ class AmbienteController extends Controller
         $edificio = $datosAmbiente['edificio'];
         $piso = $datosAmbiente['piso'];
         $tipo = $datosAmbiente['Tipo'];  
-        $ubicacion = new Ubicacion();
-        
+        $ubicacion = new Ubicacion();        
         $ubicacion->edificio = $edificio;
-        $ubicacion->save();
-        
-        $idUbicacion = $ubicacion->id_ubicacion;   
-        
+        $ubicacion->save();        
+        $idUbicacion = $ubicacion->id_ubicacion;           
         $ambiente = new Ambiente();
         $ambiente->id_ubicacion = $idUbicacion;
         $ambiente->numero_piso = $piso;
@@ -66,26 +62,16 @@ class AmbienteController extends Controller
                 $horarios -> id_hora = $idhora;
                 $horarios -> id_dia =  $iddia;
                 $horarios -> save ();
-
-
             }
         }
-
-       
-
-     return response()->json(['message' => 'Ubicación y ambiente guardados correctamente']);
+    return response()->json(['message' => 'Ubicación y ambiente guardados correctamente']);
     } catch (\Exception $e) {
-        // Loguear el error
-        \Log::error('Error al intentar guardar la ubicación y el ambiente: ' . $e->getMessage());
-        
-        // Devolver una respuesta de error al cliente
+        \Log::error('Error al intentar guardar la ubicación y el ambiente: ' . $e->getMessage());        
         return response()->json(['error' => 'Error al guardar la ubicación y el ambiente'], 500);
     }
 }
-
 public function index()
-{
-    
+{   
     $ambientes = DB::table('ambiente')
     ->select('ambiente.*', 'ubicacion.*',)
     ->join('ubicacion', 'ambiente.id_ubicacion', '=', 'ubicacion.id_ubicacion')
@@ -94,25 +80,29 @@ public function index()
 }
 public function ambientesDisponibles($capacidad)
 {
-  $ambientes = DB::table('ambiente')
-        ->select('ambiente.*', 'ubicacion.*',)
+    if (!is_numeric($capacidad)) {
+        return response()->json(['error' => 'La capacidad no es un número válido'], 400);
+    }      
+    
+    $ambientes = DB::table('ambiente')
+        ->select('ambiente.*', 'ubicacion.*')
         ->join('ubicacion', 'ambiente.id_ubicacion', '=', 'ubicacion.id_ubicacion')
-        ->where('ambiente.capacidad >=', $capacidad)       
-        ->get();    
+        ->where('ambiente.capacidad', '>=', $capacidad)
+        ->get();
+
+    // Devolver los ambientes encontrados como respuesta JSON
     return response()->json($ambientes, 200);
 }
 
-
-public function actualizarAmbiente(Request $request, $id_ambiente)
-    {   
-        $ambiente = Ambiente::where('id_ubicacion', $id_ambiente)->first();
+    public function actualizarAmbiente(Request $request, $id_ambiente)
+{   
+        $ambiente = Ambiente::where('id_ambiente', $id_ambiente)->first();
 
     if ($ambiente) {
         $diasHoras = [];
         $edificio = Ubicacion::where('id_ubicacion', $ambiente->id_ubicacion)->value('edificio');
 
-
-        $diasHabiles = Diashabiles::where('id_ubicacion', $ambiente->id_ambiente)->get();
+        $diasHabiles = Diashabiles::where('id_ambiente', $ambiente->id_ambiente)->get();
         info('Días hábiles obtenidos para el ambiente ' . $ambiente->id_ambiente . ':');
 
         foreach ($diasHabiles as $diaHabil) {
@@ -126,7 +116,6 @@ public function actualizarAmbiente(Request $request, $id_ambiente)
 
             foreach ($horarios as $horario) {
                 
-
                 // Obtener las horas de inicio y fin para este horario
                 $horaInicio = Hora::find($horario->id_hora)->hora_inicio;
                 info('Días hábiles obtenidos para el ambiente ' .$horaInicio . ':');
@@ -150,8 +139,7 @@ public function actualizarAmbiente(Request $request, $id_ambiente)
             "piso" => $ambiente->numero_piso,
             "Tipo" => $ambiente->tipo_ambiente
         ];
-
-        
+    
         return response()->json([
             "datosAmbiente" => $datosAmbiente,
             "diasHoras" => $diasHoras
@@ -211,11 +199,7 @@ public function actualizarAmb (Request $request, $id_ambiente){
         $horarios -> id_hora = $idhora;
         $horarios -> id_dia =  $iddia;
         $horarios -> save ();
-
-
-    }
-
-   
+    }  
 }
 
 }
@@ -223,7 +207,7 @@ public function borrarAmbiente ($id_ambiente){
 
 
     $ambiente =Ambiente::find($id_ambiente); 
-    $diasHabiles = Diashabiles::where('id_ambiente', $id_ambiente)->get();
+    $diasHabiles = Diashabiles::where('id:ambiente', $id_ambiente)->get();
     foreach ($diasHabiles as $diaHabil) {
         $nombreDia = Dia::find($diaHabil->id_dia)->nombre;
         $horarios = Horario::where('id_dia', $diaHabil->id_dia)->get();
@@ -243,4 +227,76 @@ public function borrarAmbiente ($id_ambiente){
 
 
 }
+public function CargaMasiva(Request $request){
+ 
+    $datos = $request->all();
+    
+    array_shift($datos);
+
+    foreach ($datos as $dato) {
+        $ubicacion = new Ubicacion();
+        $ubicacion->edificio = $dato[6]; 
+        $ubicacion->save();
+        $idubicacion=$ubicacion->id_ubicacion;
+        $ambiente = new Ambiente();
+         
+        $ambiente->id_ambiente =  $dato[0];
+      
+        $ambiente->id_ubicacion = $idubicacion;
+        $ambiente->tipo_ambiente = $dato[1];
+        $ambiente->nombre_ambiente = $dato[2];
+        $ambiente->capacidad = $dato[3];
+        $ambiente->estado_ambiente = $dato[4];
+        $ambiente->numero_piso = $dato[5];
+        $ambiente->save();
+    }
+}
+public function CargaMasivaDias(Request $request)
+{
+    $datos = $request->all();
+    array_shift($datos);
+
+    foreach ($datos as $dato) {
+        $nombreAmbiente = $dato[0];
+
+        // Buscar el ambiente por su nombre
+        $ambiente = Ambiente::where('nombre_ambiente', $nombreAmbiente)->first();
+
+        // Verificar si el ambiente existe
+        if ($ambiente) {
+            // Obtener el ID del ambiente
+            $idambiente = $ambiente->id_ambiente;
+
+            // Crear un nuevo día
+            $dia = new Dia();
+            $dia->nombre = $dato[1];
+            $dia->save();
+            $iddia = $dia->id_dia;
+
+            // Asociar el día al ambiente como día hábil
+            $diashabiles = new Diashabiles();
+            $diashabiles->id_dia = $iddia;
+            $diashabiles->id_ambiente = $idambiente;
+            $diashabiles->save();
+
+            // Crear un nuevo horario
+            $hora = new Hora();
+            $hora->hora_inicio = $dato[2];
+            $hora->hora_fin = $dato[3];
+            $hora->save();
+            $idhora = $hora->id_hora;
+
+            // Asociar el horario al día
+            $horarios = new Horario;
+            $horarios->id_hora = $idhora;
+            $horarios->id_dia = $iddia;
+            $horarios->save();
+        } else {
+            // Ambiente no encontrado, registrar un error
+            \Log::error('El ambiente con nombre ' . $nombreAmbiente . ' no fue encontrado.');
+        }
+    }
+}
+
+
 }

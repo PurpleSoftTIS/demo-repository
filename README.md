@@ -48,18 +48,27 @@ IMPORTANTE
 - Antes de subir cambios, siempre ejecute git pull origin nombre_de_rama, este en caso de estar trabanjando con otra perosna en una misma rama
 - No olvide no puede subir cambios a la main si antes entrar en concenso con el resto de colaboradores 
 - Actulizar constatemente su proceso con git status, add . y commit 
- 
+
+Servidor de prueba para ejecutar el bakcned:
 php -S 127.0.0.1:8000 -t public
 
 
-Como crear un controlador
+Como crear un controlador:
 php artisan make:controller_nombre
 
-Como crear una migracion
+Como crear una migracion:
 php artisan make:migration agregar_columna_contraseña_a_tabla
-Como crear un modelo
+
+Como crear un modelo:
 php artisan make:model nombre_del_modelo
 
+Como crear una migracion:
+php artisan make:migration create_nombre_de_la_tabla_table
 
 La contraseña de base es igual a:
 apellido_paterno + apellido_materno
+
+Reiniciar las credenciales de Laravel 
+php artisan config:clear
+>> php artisan cache:clear   
+>> php artisan optimize

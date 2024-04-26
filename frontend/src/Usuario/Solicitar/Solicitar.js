@@ -9,9 +9,15 @@ const Solicitar = () => {
   const navigate = useNavigate();   
 
   const [inputValue, setInputValue] = useState('');
-  const [selectedOption, setSelectedOption] = useState('');
   const [date, setDate] = useState(new Date());
   const [horariosDisponibles, setHorariosDisponibles] = useState([]);
+  const [selectedDay, setSelectedDay] = useState(''); 
+  const [selectedOption, setSelectedOption] = useState('');
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [showErrorDate, setShowErrorDate] = useState(false);
+  const [showErrorHour, setShowErrorHour] = useState(false);
+  const [errorInconpleto, setErrorIncompleto] = useState("");
+
 
   useEffect(() => {
     if (date) {
@@ -32,8 +38,11 @@ const Solicitar = () => {
   }, [date]);
 
   const handleDateChange = (newDate) => {
+    const dayOfWeek = newDate.toLocaleDateString('es-ES', { weekday: 'long' });
     setDate(newDate);
+    setSelectedDay(dayOfWeek);
   };
+  
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -44,14 +53,31 @@ const Solicitar = () => {
   };
 
   const handleNextStep = () => {
-    // Construye el objeto de datos que deseas enviar
+    const tipoNumero = /^\d+$/;
+
     const dataToSend = {
       numeroEstudiantes: inputValue,
-      diaSeleccionado: date.toLocaleDateString(),
+      diaSeleccionado: selectedDay,
       horaSeleccionada: selectedOption
     };
+    if (!inputValue) {
+      setErrorIncompleto(" Por favor, complete todos los campos del formulario");
+      return;
+    }else{
+      setShowErrorMessage("");
+      if(!tipoNumero.test(inputValue)){
+        setShowErrorMessage("Ingrese solo numeros")
+  
+      }else{
+        setShowErrorMessage("")
+  
+        navigate('/Usuario/Usu/Solicitar1', { state: dataToSend });
+  
+      }
+     
+    } 
+    
 
-    navigate('/Usuario/Usu/Solicitar1', { state: dataToSend });
   };
 
   return (
@@ -60,12 +86,16 @@ const Solicitar = () => {
         <div>
           <h4>Selecciona una fecha:</h4>
           <div className='calendario-container'>
-            <Calendar
-              onChange={handleDateChange}
-              value={date}
-            />
+           
+             <Calendar
+            onChange={handleDateChange}
+            value={date}
+            minDate={new Date()} 
+            maxDate={new Date(2026, 11, 31)} 
+          />
           </div>
-          <p className='fecha'>Fecha seleccionada: {date.toLocaleDateString()}</p>
+
+          <p className='fecha'>Fecha seleccionada: {date.toLocaleDateString()}</p> {/* Mostrar el día seleccionado */}
         </div>
 
         <div className='capacidad'>
@@ -76,19 +106,25 @@ const Solicitar = () => {
             name="campo"
             value={inputValue}
             onChange={handleInputChange}
+            placeholder='Ingrese la capacidad es estudiantes'
             className="input"
           />
+         {showErrorMessage && <p className="error">{showErrorMessage}</p>}
+
         </div>
 
         <div className='horarios'>
           <label htmlFor="menu" className="label">Selecciona una opción:</label>
-          <select id="menu" value={selectedOption} onChange={handleSelectChange} className="select">
+          <select id="menu" value={selectedOption} onChange={handleSelectChange} className="select" >
             {horariosDisponibles.map((hora, index) => (
-              <option key={index} value={hora.id_hora}>
+              <option key={index} value={hora.id_hora} >
                 {hora.hora_inicio} - {hora.hora_fin}
               </option>
             ))}
           </select>
+          {showErrorMessage && selectedOption === '' && <p className="solo-numero">Este campo es obligatorio</p>}
+          {errorInconpleto && <p className="error">{errorInconpleto}</p>}
+
           <button className="boton-siguiente" onClick={handleNextStep}>Siguiente paso</button>
         </div>
       </div>

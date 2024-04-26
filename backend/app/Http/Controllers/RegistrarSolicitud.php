@@ -16,45 +16,32 @@ class RegistrarSolicitud extends Controller
     public function registrar(Request $request)
     {
         try {
-            //Solicitar id solicitud 
-            $ambiente = $request->input("id_docente");
-            //Crear un nuevo solucitud                     
-           
+            // Crear una nueva instancia de Solicitud y asignar los valores
             $solicitud = new Solicitud();
-            $solicitud->id_hora = $request->input('hora');
-            $solicitud->numero_estudiantes = $request->input('capacidad');
-            $solicitud->motivo = $request->input('razon');
-            $estado_solitud = "activo";
-            $solicitud->estado_solicitud =  $estado_solitud;          
-           
-            $solicitud->save();
-            $solicitud = new Solicitud();
+            $solicitud->id_docente = $request->input('id_docente');
             $solicitud->id_hora = $request->input('id_hora');
-            $solicitud->numero_estudiantes = $request->input('motivo');
-            $solicitud->motivo = $request->input('estado_solicitud');
-            $solicitud->estado_solicitud = $request->input('estado_solicitud');          
-           
-            $solicitud->save();
-            /*
-            $table->id("id_solicitud");
-            $table->foreignId("id_docente")->constrained("docente", "id_docente");
-            $table->foreignId("id_hora")->constrained("hora", "id_hora");
-            $table->integer("numero_estudiantes");
-            $table->dateTime("fecha_solicitud");
-            $table->string("motivo");
-            $table->string("estado_solicitud", 8);
-            $table->timestamps();*/
+            $solicitud->numero_estudiantes = $request->input('capacidad');
+            $solicitud->motivo = $request->input('motivo');
+            $solicitud->estado_solicitud = "activo"; // Se establece el estado predeterminado
 
-            //Crear un nuevo solicitudes
+            // Guardar la solicitud en la base de datos
+            $solicitud->save();
+
+            // Crear una nueva instancia de Solicitudes y asignar los valores
             $solicitudes = new Solicitudes();
-            $solicitudes->id_solicitudes = $solicitud->id_solicitudes; 
-            $solicitudes->id_ambiente = $ambiente->id_ambiente;             
+            $solicitudes->id_solicitud = $solicitud->id; // Se obtiene el ID de la solicitud recién creada
+            $solicitudes->id_ambiente = $request->input('id_ambiente'); // Se asume que se pasa el ID del ambiente desde la solicitud
+
+            // Guardar la relación entre la solicitud y el ambiente en la tabla de Solicitudes
             $solicitudes->save();
 
-            return response()->json(['message' => 'Solicitud registrado correctamente'], 201);
-            } catch (\Exception $e) {
-            \Log::error('Error al intentar registrar un docente: ' . $e->getMessage());
-            return response()->json(['error' => 'Error al registrar un docente'], 500);
+            // Retornar una respuesta JSON con un mensaje de éxito y el código de estado 201 (creado)
+            return response()->json(['message' => 'Solicitud registrada correctamente'], 201);
+        } catch (\Exception $e) {
+            // Manejar cualquier excepción que ocurra durante el proceso
+            \Log::error('Error al intentar registrar una solicitud: ' . $e->getMessage());
+            // Retornar una respuesta JSON con un mensaje de error y el código de estado 500 (error interno del servidor)
+            return response()->json(['error' => 'Error al registrar la solicitud'], 500);
         }
     }
 }

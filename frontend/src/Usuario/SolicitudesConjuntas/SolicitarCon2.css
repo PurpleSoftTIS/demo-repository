@@ -1,0 +1,115 @@
+/* Solicitar.css */
+.contenedorGeneral {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 74vh;
+    margin-top: 20px;
+  }
+  
+  .contenedorsito {
+    width: 80%;
+    max-width: 600px; /* Ajusta este valor según tus necesidades */
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .calendario-container {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .input,
+  .select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  @media (max-width: 768px) {
+    .contenedorsito {
+      width: 90%;
+      
+    }
+  }
+  
+  .container{
+    padding: 20px;
+   
+  }
+  
+  .boton-siguiente{
+    background-color: #011640;
+    color:#f2f2f2;
+    border-radius: 5px;
+    margin-left: 200px;
+  }
+  .boton-siguiente:hover{
+     font-size: large;
+  
+  }
+  
+  .Aulas_Disponibles h2 {
+    margin: 0;
+  }
+  
+  .Aulas_Disponibles table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+  }
+  
+  .Aulas_Disponibles th, .Aulas_Disponibles td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  .Aulas_Disponibles th {
+    background-color: #f2f2f2;
+  }
+  
+  .Aulas_Disponibles button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .Aulas_Disponibles button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Estilos responsivos */
+  @media screen and (max-width: 768px) {
+    .container {
+      padding: 10px;
+    }
+    .boton-siguiente{
+      margin-left: 80px;
+    }
+    
+    .container table {
+      font-size: 14px;
+    }
+    
+    .container button {
+      font-size: 14px;
+    }
+  }
+  

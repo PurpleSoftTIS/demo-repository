@@ -9,11 +9,12 @@ import './Navbar.css';
 const NarbarUsuario = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showSesion, setShowSesion] = useState(false);
-  const [nombreUsuario, setNombreUsuario] = useState('');
+  const [nombreUsuario, setNombreUsuario] = useState("Usuario");
   const { state: correoElectronico } = useLocation();
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
 
+  
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 991) {
@@ -35,16 +36,11 @@ const NarbarUsuario = () => {
             console.error('Error al obtener el nombre del usuario:', error);
           });
       }    
-
-
-
     };
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
-    };
-
-   
+    };   
   }, [correoElectronico]);  
 
   const toggleSesion = () => {

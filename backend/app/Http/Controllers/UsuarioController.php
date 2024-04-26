@@ -3,26 +3,24 @@
 namespace App\Http\Controllers;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller; // Asegúrate de importar Controller aquí
-use DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Restablecer;
 class UsuarioController extends Controller
 {
     public function index()
 {
     try {
-        $usuariosConDocentes = Usuario::with('docente')->get(); // Esto asume que hay una relación definida en el modelo Usuario
-
+        $usuariosConDocentes = Usuario::with('docente')->get(); 
         return response()->json($usuariosConDocentes, 200);
     } catch (\Exception $e) {
         \Log::error('Error al intentar obtener usuarios con sus docentes: ' . $e->getMessage());
         return response()->json(['error' => 'Error al obtener usuarios con sus docentes'], 500);
     }
 }
-
     public function obtenerNombreUsuario(Request $request)
     {
         $correo = $request->input('correo_electronico');
-
         try {
             $usuario = Usuario::where('correo_electronico', $correo)->first();
             if ($usuario) {
@@ -35,6 +33,14 @@ class UsuarioController extends Controller
             return response()->json(['error' => 'Error al obtener el nombre del usuario'], 500);
         }
     }
-
-    
+    public function restablecerContrasenia(Request $request)
+    {
+        try {
+            Mail::to("gabo2cabero@gmail.com")->send(new Restablecer());
+            return "Correo enviado exitosamente";
+        } catch (\Exception $e) {
+            \Log::error('Error al enviar el correo electrónico de restablecimiento: ' . $e->getMessage());
+            return "Error al enviar el correo electrónico de restablecimiento";
+        }
+    }    
 }

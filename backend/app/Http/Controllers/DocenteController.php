@@ -11,50 +11,69 @@ use DB;
 class DocenteController extends Controller
 {
     public function index()
-    {
+{
     $usuariosConDocentes = DB::table('usuario')
         ->join('docente', 'usuario.id_usuario', '=', 'docente.id_usuario')
         ->select(
             'docente.*',
-            'usuario.*',           
+            'usuario.*',   
+            DB::raw("CONCAT(usuario.nombre, '  ', usuario.apellido_paterno, '  ',
+            usuario.apellido_materno) AS nombre_completo")        
         )
+       
         ->get();
     return response()->json($usuariosConDocentes, 200);
 }
- // Método para descifrar la contraseña de Morse
      public function eliminar($id_docente)
-    {
-        try {
-            $docente = Docente::findOrFail($id_docente);
-            $id_usuario = $docente->id_usuario;
-            $docente->delete();
-            $usuario = Usuario::findOrFail($id_usuario);
-            $usuario->delete();
-
-            return response()->json(['message' => 'Docente y usuario eliminados correctamente'], 200);
+{
+    try {
+        $docente = Docente::findOrFail($id_docente);
+        $id_usuario = $docente->id_usuario;
+        $docente->delete();
+        $usuario = Usuario::findOrFail($id_usuario);
+        $usuario->delete();
+        return response()->json(['message' => 'Docente y usuario eliminados correctamente'], 200);
         } catch (\Exception $e) {
             \Log::error('Error al intentar eliminar el docente y usuario: ' . $e->getMessage());
             return response()->json(['error' => 'Error al eliminar el docente y usuario'], 500);
         }
     }
-    public function verificarCredenciales(Request $request)
+    public function eliminarAll()
     {
+        try {
+            Docente::truncate();
+            Usuario::truncate();     
+            DB::statement("ALTER TABLE usuario AUTO_INCREMENT = 1");
+            DB::statement("ALTER TABLE docente AUTO_INCREMENT = 1");
+    
+            return response()->json(['message' => 'Todos los docentes y usuarios eliminados correctamente'], 200);
+        } catch (\Exception $e) {
+            \Log::error('Error al intentar eliminar todos los docentes y usuarios: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al eliminar todos los docentes y usuarios'], 500);
+        }
+    }
+    
+    public function verificarCredenciales(Request $request)
+{
     $request->validate([
         'correo_electronico' => 'required|email',
         'contraseña' => 'nullable|string', 
-    ]);
-    $usuario = Usuario::where('correo_electronico', $request->correo_electronico)->first();
+    ]);    
+    $usuario = Usuario::where('correo_electronico', $request->correo_electronico)->first();   
     if (!$usuario) {
         return response()->json(['correcta' => false, 'mensaje' => 'Correo electrónico no registrado'], 404);
-    }
+    }    
     if ($request->filled('contraseña')) {
         $contraseña_encriptada = $this->encriptar($request->contraseña); 
         if ($usuario->contraseña !== $contraseña_encriptada) {
             return response()->json(['correcta' => false, 'mensaje' => 'Contraseña incorrecta'], 401);
         }
-    }
+    } else {
+        return response()->json(['correcta' => false, 'mensaje' => 'Contraseña no proporcionada'], 400);
+    }    
     return response()->json(['exists' => true, 'correcta' => true]);
 }
+
 
     private function encriptar($texto) {
         $morse = [
@@ -71,12 +90,38 @@ class DocenteController extends Controller
         $morse_texto = '';     
         for ($i = 0; $i < strlen($texto); $i++) {
             $caracter = $texto[$i];
-            // Verificar si el caracter existe en el arreglo $morse
             if (isset($morse[$caracter])) {
-                // Concatenar la conversión de Morse y un espacio
                 $morse_texto .= $morse[$caracter] . ' ';
             }
         }        
         return trim($morse_texto);
     }
+
+    public function editarDocentes(Request $request, $id_docente){
+        
+            $docente = Docente::find($id_docente);
+    
+            $id_usuario = $docente->id_usuario;
+    
+            $usuario = Usuario::find($id_usuario);
+            $usuario->nombre = $request->input('nombres');
+            $usuario->apellido_paterno = $request->input('apellidoPaterno');
+            $usuario->apellido_materno = $request->input('apellidoMaterno');
+            $usuario->correo_electronico = $request->input('correo');
+            $usuario->save();
+            
+            $docente->tipo_docente = $request->input('tipo');
+            $docente->codigo_docente = $request->input('codigoDocente');
+            $docente->save();
+            
+            return response()->json(['message' => 'Usuario y docente actualizados correctamente'], 200);
+            
+        
+    }
+    
+      
+    
+    
+
+
 }

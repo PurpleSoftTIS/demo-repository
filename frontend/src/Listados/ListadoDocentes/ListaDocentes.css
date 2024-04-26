@@ -129,3 +129,8 @@
   top: -28px;
   justify-content: center;
 }
+.Advertencia{
+  position: relative;
+  top: 40%;
+  left: 40%;
+}
