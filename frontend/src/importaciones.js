@@ -32,10 +32,15 @@ import MensajeActError from './Registrar/mensajes/MensajeActError';
 import DocentesActualizar from './Registrar/docentes/DocentesActualizar';
 import MensajeDatExito from './Registrar/mensajes/MensajeDatExito';
 import MensajeDatError from './Registrar/mensajes/MensajeDatError';
+import SolicitarCon1 from './Usuario/SolicitudesConjuntas/SolicitarCon1';
+import SolicitarCon2 from './Usuario/SolicitudesConjuntas/SolicitarCon2';
+import SolicitarCon3 from './Usuario/SolicitudesConjuntas/SolicitarCon3';
+import SolicitarCon4 from './Usuario/SolicitudesConjuntas/SolicitarCon4';
+
 export {
   React,Router,Routes,Route,HomeUno,Ambientes,Docentes,Navbar,RegistrarMateria,
   LoginForm,RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Reservar, Solicitar,
   Ayuda, ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,AmbientesActualizar,
   Footer,ListaMaterias,Solicitar2,Solicitar1,MensajeExitosoU,MensajeErrorU,MensajeActExito,MensajeActError
-  ,DocentesActualizar,MensajeDatExito,MensajeDatError
+  ,DocentesActualizar,MensajeDatExito,MensajeDatError,SolicitarCon1,SolicitarCon2,SolicitarCon3,SolicitarCon4
 };

@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\CargaDocente;
 use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\DocenteRegistrarController;
 use App\Http\Controllers\MateriaRegistrarController;
@@ -39,6 +40,8 @@ Route::post('/CargaAmbientes', [AmbienteController::class, 'CargaMasiva']);
 Route::post('/CargaDiasHoras', [AmbienteController::class, 'CargaMasivaDias']);
 Route::post('/RegistrarSol', [RegistrarSolicitud::class, 'registrar']);
 Route::post('enviar',[UsuarioController::class, 'restablecerContrasenia']);
+Route::post('/CargaDocente', [CargaDocente::class, 'CargaDocentes']);
+
 
 //Elimnar datos
 Route::delete('/docentes/{id_docente}', [DocenteController::class, 'eliminar']);

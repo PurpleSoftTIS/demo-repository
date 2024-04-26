@@ -63,7 +63,7 @@ input[type="text"] {
   transform: translateY(-2px);
 }
 .table {
-  width: 100%;
+  width: 110%;
   border-collapse: none;
   margin-top: 40px;
   user-select: text;

@@ -11,7 +11,6 @@ function ListaAulas() {
   const [Advertencia, setAdvertencia] = useState(false);
   const [Advertencia2, setAdvertencia2] = useState(false);
   const [aulas, setAulas] = useState([]);
-  const [showOverlay, setShowOverlay] = useState(false);
   const [importar, setImportar] = useState(false);
   const [ambienteToDelete, setAmibienteToDelete] = useState("");
 
@@ -23,20 +22,16 @@ function ListaAulas() {
   
   const cancelarBorrar = () => {
     setAdvertencia(false); 
-    setShowOverlay(false); 
   };
   const confirmacionEliminacionTodo = () => {
     setAdvertencia(true); 
-    setShowOverlay(true); 
   };
   const borrar = (id_ambiente) => {
     setAmibienteToDelete(id_ambiente)
     setAdvertencia2(true); 
-    setShowOverlay(true); 
   }
   const cancelar = () => {
     setAdvertencia2(false); 
-    setShowOverlay(false); 
   };
   
  
@@ -59,7 +54,6 @@ function ListaAulas() {
     const {id_ambiente} = ambienteToDelete;
 
     setAdvertencia2(true); 
-    setShowOverlay(true);
     fetch(`http://127.0.0.1:8000/api/borrar/${id_ambiente}`, {
       method: 'DELETE',
       headers: {
@@ -196,8 +190,6 @@ function ListaAulas() {
   
   return (
     <div className="container" style={{ height: 'max height' }}>
-      {showOverlay && <div className="overlay"></div>}
-
       <div style={{ height: '4vh' }}></div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ margin: 0 }}>Ambientes Registrados:</h2>
@@ -252,6 +244,7 @@ function ListaAulas() {
             <th>Nro Aula</th>
             <th>Aula</th>
             <th>Edificio</th>
+            <th>Tipo Ambiente</th>
             <th>Nro Piso</th>
             <th>Capacidad</th>
             <th>Estado</th>
@@ -264,6 +257,7 @@ function ListaAulas() {
               <td>{aula.id_ambiente}</td>
               <td>{aula.nombre_ambiente}</td>
               <td>{aula.edificio}</td>
+              <td>{aula.tipo_ambiente}</td>
               <td>{aula.numero_piso}</td>
               <td>{aula.capacidad}</td>
               <td>

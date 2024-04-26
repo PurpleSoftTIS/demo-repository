@@ -49,12 +49,10 @@ const SolicitarCon4 = () => {
     })
     .then(data => {
       console.log("Registro exitoso:", data);
-      // Aquí puedes mostrar un mensaje de éxito o redirigir a otra página
       navigate('/Usuario/Usu/Reservas');
     })
     .catch(error => {
       console.error("Error al registrar la solicitud:", error);
-      // Aquí puedes mostrar un mensaje de error al usuario
     });
   };
   return (
@@ -65,29 +63,29 @@ const SolicitarCon4 = () => {
         <div className="contact-form-sub-heading-cta">
           <b className="contact-form-enter-details">Detalles de Solicitud</b>
           <div className="contact-form-phone-parent">
-            <div className="contact-form-phone">Materia</div>
+            <div className="contact-form-phone">Grupo</div>
             <input 
               className="contact-form-rectangle" 
               type="text"
               value={materia}
               onChange={(e) => setMateria(e.target.value)}
-              placeholder="Ingrese la materia solicitada"
+              placeholder="Ingrese el primer grupo"
             />
-          </div>
-          <div className="contact-form-frame-parent">
-            <div className="contact-form-full-name-parent">
-              <div className="contact-form-full-name">Grupo</div>
-            </div>
-            <div className="contact-form-rectangle-parent">
-              <input 
-                className="contact-form-rectangle1" 
-                type="text"
-                value={grupo}
-                onChange={(e) => setGrupo(e.target.value)}
-                placeholder="Ingrese el grupo"
-              />
-            </div>
-          </div>
+            <input 
+              className="contact-form-rectangle" 
+              type="text"
+              value={materia}
+              onChange={(e) => setMateria(e.target.value)}
+              placeholder="Ingrese el segundo grupo"
+            />
+            <input 
+              className="contact-form-rectangle" 
+              type="text"
+              value={materia}
+              onChange={(e) => setMateria(e.target.value)}
+              placeholder="Ingrese el tercer grupo"
+            />
+          </div>          
           <div className="contact-form-message-parent">
             <div className="contact-form-message">Motivo</div>
             <input 

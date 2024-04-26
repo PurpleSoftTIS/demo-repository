@@ -22,6 +22,11 @@ class DeleteAmbienteController extends Controller
             Dia::truncate();
             Ambiente::truncate();
             Ubicacion::truncate();
+            DB::statement('ALTER SEQUENCE hora_id_hora_seq RESTART WITH 1');
+            DB::statement('ALTER SEQUENCE dia_id_dia_seq RESTART WITH 1');
+            DB::statement('ALTER SEQUENCE ambiente_id_ambiente_seq RESTART WITH 1');
+            DB::statement('ALTER SEQUENCE ubicacion_id_ubicacion_seq RESTART WITH 1');
+
             
             return response()->json(['message' => 'Todos los datos han sido eliminados correctamente'], 200);
         } catch (\Exception $e) {
@@ -29,7 +34,6 @@ class DeleteAmbienteController extends Controller
         }
     }
     public function borrarAmbiente ($id_ambiente){
-
 
         $ambiente =Ambiente::find($id_ambiente); 
         $diasHabiles = Diashabiles::where('id_ambiente', $id_ambiente)->get();

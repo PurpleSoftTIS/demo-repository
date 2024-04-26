@@ -2,7 +2,8 @@ import { React, Router, Routes, Route, HomeUno, Ambientes, Docentes, Navbar, Reg
         LoginForm, RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Reservar, Solicitar, Ayuda,
         ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,
         AmbientesActualizar,Footer,ListaMaterias,Solicitar2,Solicitar1,MensajeExitosoU,
-        MensajeErrorU,MensajeActExito,MensajeActError,DocentesActualizar,MensajeDatExito,MensajeDatError} from './importaciones';
+        MensajeErrorU,MensajeActExito,MensajeActError,DocentesActualizar,MensajeDatExito,MensajeDatError
+      ,SolicitarCon1,SolicitarCon2,SolicitarCon3,SolicitarCon4} from './importaciones';
        
 
 function AdminRoutes() {
@@ -49,6 +50,10 @@ function UserRoutes() {
       <Route path='Usu/DetallesSol' element={<Solicitar2/>}/>
       <Route path='/Mensaje/Exitoso' element={<MensajeExitosoU/>}/>
       <Route path='/Mensaje/Error' element={<MensajeErrorU/>}/>
+      <Route path='/Usu/SolicitarCon1' element={<SolicitarCon1/>} />
+      <Route path='/Usu/SolicitarCon2' element={<SolicitarCon2/>} />
+      <Route path='/Usu/SolicitarCon3' element={<SolicitarCon3/>} />
+      <Route path='/Usu/SolicitarCon4' element={<SolicitarCon4/>} />
     </Routes>
     <Footer/>
 
