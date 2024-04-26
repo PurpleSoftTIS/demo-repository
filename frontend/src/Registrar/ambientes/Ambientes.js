@@ -29,7 +29,6 @@ const Ambientes = () => {
       setErrorPiso("");
       setErrorTipoAmbiente("")
     } 
-    const tipoCadena = /^[a-zA-Z\s]*$/;
     const tipoNumero = /^\d+$/;
     const tipoGlobal = /^[a-zA-Z0-9]*$/;
     const caracteresEspeciales = /[!#$%^&*()_+\-{};':"|,<>?]+/;
@@ -60,7 +59,7 @@ const Ambientes = () => {
       setErrorCapacidadEst("");
     }
 
-    if (!tipoCadena.test(edificio)) {
+    if (caracteresEspeciales.test(edificio)) {
       setErrorEdificio("❌ Por favor, ingresa solo caracteres alfabéticos y espacios en el nombre del edificio");
       return;
     } else {
@@ -86,7 +85,7 @@ const Ambientes = () => {
         setErrorPiso("");
     }
 
-    if (!caracteresEspeciales.test(Tipo)) {
+    if (caracteresEspeciales.test(Tipo)) {
       setErrorTipoAmbiente("❌ El tipo de ambiente no debe contener caracteres numeros");
       return;
     } else {

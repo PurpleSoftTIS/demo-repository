@@ -25,6 +25,8 @@ import ListaDocentes from './Listados/ListadoDocentes/ListaDocentes';
 import { Footer } from './navegador/Footer';
 import Solicitar2 from './Usuario/Solicitar/Solicitar2';
 import Solicitar1 from './Usuario/Solicitar/Solicitar1';
+
+
 export {
   React,Router,Routes,Route,HomeUno,Ambientes,Docentes,Navbar,RegistrarMateria,
   LoginForm,RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Reservar, Solicitar,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import logo from '../assets/LogoDefinitivo.jpeg';
 import userLogo from '../assets/IcoUser.png';
@@ -11,6 +11,8 @@ const NarbarUsuario = () => {
   const [showSesion, setShowSesion] = useState(false);
   const [nombreUsuario, setNombreUsuario] = useState('');
   const { state: correoElectronico } = useLocation();
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -49,6 +51,10 @@ const NarbarUsuario = () => {
     setShowSesion(!showSesion);
   };
 
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+
   return (
     <div className='barraNavAdmi'>
       <nav className="navbar navbar-expand-lg">
@@ -70,9 +76,28 @@ const NarbarUsuario = () => {
               <li className="nav-item">
                 <NavLink className="nav-link" to='/Usuario/inicio/HomeDos' exact>Inicio</NavLink> 
               </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to='/Usuario/Usu/Solicitar'>Solicitar</NavLink>
-              </li>
+
+            
+
+              <div className="dropdown-container" ref={dropdownRef}>
+                  <button className="nav-link dropdown-toggle" onClick={toggleDropdown} style={{ cursor: 'pointer' }}>Solicitar</button>
+                  {showDropdown && (
+                      <div className="menu">
+                          <NavLink className="opciones" to='/Usuario/Usu/Solicitar' activeclassname="active">Individual</NavLink>
+                          <NavLink className="opciones" to='' activeclassname="active">Conjunta</NavLink>
+        
+                      </div>              
+                  )}              
+              </div>
+
+
+
+
+
+
+
+
+
               <li className="nav-item">
                 <NavLink className="nav-link" to='/Usuario/Usu/Reservas'>Reservas</NavLink>
               </li>

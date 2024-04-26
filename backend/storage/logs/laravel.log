@@ -1988,3 +1988,8 @@ LINE 1: ...cion\".* from \"ambiente\" inner join \"ubicacion\" on \"ambiente\"..
 #36 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\public\\index.php(52): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
 #37 {main}
 "} 
+[2024-04-22 17:25:35] local.INFO: Datos recibidos: {"datosAmbiente":{"nombreAula":"690A","capacidadEstudiantes":"90","edificio":"Edificio Academico","piso":"PB","Tipo":"Aula comun"},"diasHoras":{"Lunes":["8:15-9:45","18:45-20:15"]}} 
+[2024-04-22 17:25:35] local.INFO: Se está intentando guardar la ubicación.  
+[2024-04-22 17:25:35] local.INFO: Se ha guardado correctamente el ambiente.  
+[2024-04-22 17:25:35] local.INFO: Horarios seleccionados: {"Lunes":["8:15-9:45","18:45-20:15"]} 
+[2024-04-22 19:07:13] local.ERROR: Error al intentar registrar un docente: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'pomaalisson92@gmail.com' for key 'usuario_correo_electronico_unique' (SQL: insert into `usuario` (`nombre`, `apellido_paterno`, `apellido_materno`, `correo_electronico`, `contraseña`, `updated_at`, `created_at`) values (Alisson Daniela, Poma, Limache, pomaalisson92@gmail.com, ^?5 1·# ↓*- Acs 23k @2 ↓*- Acs 52A *89 ..Qa, 2024-04-22 19:07:13, 2024-04-22 19:07:13))  
