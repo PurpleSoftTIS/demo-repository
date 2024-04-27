@@ -78,20 +78,37 @@ public function index()
     ->get();
     return response()->json($ambientes, 200);
 }
-public function ambientesDisponibles($capacidad)
-{
-    if (!is_numeric($capacidad)) {
-        return response()->json(['error' => 'La capacidad no es un número válido'], 400);
-    }      
+public function ambientesDisponibles($capacidad,$dia,$horaInicio,$horaFin)
+{   
     
     $ambientes = DB::table('ambiente')
-        ->select('ambiente.*', 'ubicacion.*')
-        ->join('ubicacion', 'ambiente.id_ubicacion', '=', 'ubicacion.id_ubicacion')
-        ->where('ambiente.capacidad', '>=', $capacidad)
-        ->get();
+    ->join('ubicacion', 'ambiente.id_ubicacion', '=', 'ubicacion.id_ubicacion')
+    ->where('ambiente.capacidad', '>=', $capacidad)
+    ->whereExists(function ($query) use ($dia, $horaInicio, $horaFin) {
+        $query->select(DB::raw(1))
+            ->from('diashabiles')
+            ->join('dia', 'diashabiles.id_dia', '=', 'dia.id_dia')
+            ->join('horario', 'diashabiles.id_dia', '=', 'horario.id_dia')
+            ->join('hora', 'horario.id_hora', '=', 'hora.id_hora')
+            ->whereColumn('ambiente.id_ambiente', 'diashabiles.id_ambiente')
+            ->where('dia.nombre', $dia) // Comparación del nombre del día
+            ->where(function ($query) use ($horaInicio, $horaFin) {
+                $query->where(function ($query) use ($horaInicio, $horaFin) {
+                    $query->where('hora.hora_inicio', '>=', $horaInicio)
+                        ->where('hora.hora_inicio', '<=', $horaFin);
+                })
+                ->orWhere(function ($query) use ($horaInicio, $horaFin) {
+                    $query->where('hora.hora_fin', '>=', $horaInicio)
+                        ->where('hora.hora_fin', '<=', $horaFin);
+                });
+            });
+    })
 
-    // Devolver los ambientes encontrados como respuesta JSON
+    ->get();
+
     return response()->json($ambientes, 200);
+
+
 }
 
     public function actualizarAmbiente(Request $request, $id_ambiente)
@@ -235,20 +252,18 @@ public function CargaMasiva(Request $request){
 
     foreach ($datos as $dato) {
         $ubicacion = new Ubicacion();
-        $ubicacion->edificio = $dato[6]; 
-        $ubicacion->save();
-        $idubicacion=$ubicacion->id_ubicacion;
-        $ambiente = new Ambiente();
-         
-        $ambiente->id_ambiente =  $dato[0];
-      
-        $ambiente->id_ubicacion = $idubicacion;
-        $ambiente->tipo_ambiente = $dato[1];
-        $ambiente->nombre_ambiente = $dato[2];
-        $ambiente->capacidad = $dato[3];
-        $ambiente->estado_ambiente = $dato[4];
-        $ambiente->numero_piso = $dato[5];
-        $ambiente->save();
+        $ubicacion -> edificio = $dato[6]; 
+        $ubicacion -> save();
+        $idubicacion = $ubicacion -> id_ubicacion;
+        $ambiente = new Ambiente();         
+        $ambiente -> id_ambiente =  $dato[0];      
+        $ambiente -> id_ubicacion = $idubicacion;
+        $ambiente -> tipo_ambiente = $dato[1];
+        $ambiente -> nombre_ambiente = $dato[2];
+        $ambiente -> capacidad = $dato[3];
+        $ambiente -> estado_ambiente = $dato[4];
+        $ambiente -> numero_piso = $dato[5];
+        $ambiente -> save();
     }
 }
 public function CargaMasivaDias(Request $request)

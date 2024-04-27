@@ -9,54 +9,40 @@ use Illuminate\Http\Request;
 
 class CargaDocente extends Controller
 {
-    public function CargaMasiva(Request $request){
-        // Verifica si se ha enviado un archivo CSV
-    if ($request->hasFile('archivo_csv')) {
-        // Obtiene el archivo CSV
-        $archivo = $request->file('archivo_csv');
-
-        // Lee el contenido del archivo CSV
-        $datos_csv = file_get_contents($archivo->getRealPath());
-
-        // Parsea los datos CSV
-        $filas = explode("\n", $datos_csv);
-        // Itera sobre cada fila del archivo CSV
-        foreach ($filas as $fila) {
-            // Divide la fila en columnas
-            $columnas = explode(',', $fila);
-            // Crea un nuevo usuario con los datos de la fila
-            $usuario = new Usuario();
-            $usuario->nombre = $columnas[0];
-            $usuario->apellido_paterno = $columnas[1];
-            $usuario->apellido_materno = $columnas[2];
-            $usuario->correo_electronico = $columnas[3];
-
-            $apellido_materno = strtolower($request->input('apellidoMaterno'));
-            $apellido_paterno = strtolower($request->input('apellidoPaterno'));
-            $contrasena = str_replace(' ', '', $apellido_paterno . '' . $apellido_materno);
-            $contrasena_morse = $this->encriptar(trim($contrasena));
-            $usuario->contraseña = $contrasena_morse;
-            $usuario->save();
-
-            // Crea un nuevo docente con los datos de la fila
-            $docente = new Docente();
-            $docente->codigo_docente = $columnas[4];
-            $docente->estado_docente = $columnas[5];
-            $docente->tipo_docente = $columnas[6];
-            $docente->id_usuario = $usuario->id; // Asigna el ID del usuario recién creado
-
-            // Guarda el docente en la base de datos
-            $docente->save();
+    public function cargaMasivaDocentes(Request $request) {
+        try {
+            $datos = $request->all();
+            array_shift($datos);    
+            foreach ($datos as $dato) {    
+                $usuario = new Usuario();
+                $usuario->id_usuario = $dato[0];
+                $usuario->nombre = $dato[1];
+                $usuario->apellido_paterno = $dato[2];
+                $usuario->apellido_materno = $dato[3];
+                $usuario->correo_electronico = $dato[4];    
+                // Generar contraseña segura
+                $apellido_materno = strtolower($dato[2]);
+                $apellido_paterno = strtolower($dato[3]);
+                $contrasena = str_replace(' ', '', $apellido_paterno . '' . $apellido_materno);
+                $contrasena_morse = $this->encriptar(trim($contrasena));
+                $usuario->contraseña = $contrasena_morse;
+                $usuario->save();    
+                // Crear un nuevo docente
+                $docente = new Docente();
+                $docente->id_docente = $dato[8];
+                $docente->id_usuario = $dato[9];
+                $docente->codigo_docente = $dato[5];
+                $docente->estado_docente = $dato[6];
+                $docente->tipo_docente = $dato[7];
+                $docente->save();
+            }            
+            return response()->json(['message' => 'Carga masiva de docentes exitosa'], 200);
+        } catch (\Exception $e) {
+            // Manejar errores
+            return response()->json(['error' => 'Error en la carga masiva de docentes: ' . $e->getMessage()], 500);
         }
-
-        // Devuelve una respuesta exitosa
-        return response()->json(['message' => 'Carga masiva de docentes exitosa'], 200);
-    } else {
-        // Devuelve un mensaje de error si no se ha enviado un archivo CSV
-        return response()->json(['error' => 'No se ha proporcionado un archivo CSV'], 400);
     }
-        
-    }
+    
     private function encriptar($texto) {
         $morse = [
             'a'=>'Acs','b'=>'Los','c'=>'52A','d'=>'568',

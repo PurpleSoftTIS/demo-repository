@@ -6,18 +6,14 @@ import { useNavigate } from "react-router-dom";
 import "./Solicitar.css";
 
 const Solicitar = () => {
-  const navigate = useNavigate();   
-
+  const navigate = useNavigate();
   const [inputValue, setInputValue] = useState('');
   const [date, setDate] = useState(new Date());
   const [horariosDisponibles, setHorariosDisponibles] = useState([]);
   const [selectedDay, setSelectedDay] = useState(''); 
-  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedOption, setSelectedOption] = useState([]);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const [showErrorDate, setShowErrorDate] = useState(false);
-  const [showErrorHour, setShowErrorHour] = useState(false);
   const [errorInconpleto, setErrorIncompleto] = useState("");
-
 
   useEffect(() => {
     if (date) {
@@ -54,12 +50,12 @@ const Solicitar = () => {
 
   const handleNextStep = () => {
     const tipoNumero = /^\d+$/;
-
     const dataToSend = {
       numeroEstudiantes: inputValue,
       diaSeleccionado: selectedDay,
       horaSeleccionada: selectedOption
     };
+    console.log(selectedOption);
     if (!inputValue) {
       setErrorIncompleto(" Por favor, complete todos los campos del formulario");
       return;
@@ -70,13 +66,10 @@ const Solicitar = () => {
   
       }else{
         setShowErrorMessage("")
-  
         navigate('/Usuario/Usu/Solicitar1', { state: dataToSend });
   
-      }
-     
-    } 
-    
+      }     
+    }     
 
   };
 
