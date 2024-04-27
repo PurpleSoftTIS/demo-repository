@@ -22,7 +22,8 @@ class RegistrarSolicitud extends Controller
             $solicitud->id_hora = $request->input('id_hora');
             $solicitud->numero_estudiantes = $request->input('capacidad');
             $solicitud->motivo = $request->input('motivo');
-            $solicitud->estado_solicitud = "activo"; // Se establece el estado predeterminado
+            $solicitud->tipo = $request->input('motivo');
+            $solicitud->estado_solicitud = "activo"; 
 
             // Guardar la solicitud en la base de datos
             $solicitud->save();

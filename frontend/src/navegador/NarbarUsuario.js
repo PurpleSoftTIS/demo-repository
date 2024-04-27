@@ -9,10 +9,8 @@ import './Navbar.css';
 const NarbarUsuario = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showSesion, setShowSesion] = useState(false);
-  const [nombreUsuario, setNombreUsuario] = useState("Usuario");
   const { state: correoElectronico } = useLocation();
 
-  
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 991) {
@@ -40,6 +38,7 @@ const NarbarUsuario = () => {
       window.removeEventListener('resize', handleResize);
     };   
   }, [correoElectronico]);  
+  const [nombreUsuario, setNombreUsuario] = useState("Usuario");
 
   const toggleSesion = () => {
     setShowSesion(!showSesion);
@@ -57,7 +56,6 @@ const NarbarUsuario = () => {
               SIRA-FCYT
             </div>
           </div>
-
           <button className="navbar-toggler" type="button" onClick={() => setIsOpen(!isOpen)}>
             <FaBars style={{ color: 'white' }} /> 
           </button>

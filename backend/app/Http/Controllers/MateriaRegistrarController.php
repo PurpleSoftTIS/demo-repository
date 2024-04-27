@@ -63,4 +63,5 @@ class MateriaRegistrarController extends Controller
             return response()->json(['error' => 'Error al actualizar una materia'], 500);
         }
     }
+    
 }

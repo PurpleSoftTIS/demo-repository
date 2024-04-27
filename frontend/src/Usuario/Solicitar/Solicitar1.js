@@ -11,12 +11,15 @@ const Solicitar1 = () => {
   const capacidad = dataToSend ? dataToSend.numeroEstudiantes : null; 
   const dia = dataToSend ? dataToSend.diaSeleccionado : null;
   const hora = dataToSend ? dataToSend.horaSeleccionada : null; 
+  const hora_inicio = dataToSend ? dataToSend.horaSeleccionada.hora_inicio : null; 
+  const hora_fin = dataToSend ? dataToSend.horaSeleccionada.hora_fin : null; 
+
 
   const [ambientesDisponibles, setAmbientesDisponibles] = useState([]);  
 
   useEffect(() => {
     if (ambientesDisponibles) {
-      fetch(`http://127.0.0.1:8000/api/ambienteDispo/${capacidad}`)
+      fetch(`http://127.0.0.1:8000/api/ambienteDispo/${capacidad},${dia},${hora_inicio},${hora_fin}`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Error al cargar las horas disponibles');
@@ -30,7 +33,7 @@ const Solicitar1 = () => {
           console.error('Error al cargar las horas disponibles:', error);
         });
     }       
-  }, [capacidad, ambientesDisponibles]);  
+  }, [capacidad,dia,hora_inicio,hora_fin, ambientesDisponibles]);  
 
   const reservarAmbiente = (ambiente) => {
     const datos = {
