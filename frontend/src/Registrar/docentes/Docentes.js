@@ -198,7 +198,7 @@ const Docentes = () => {
           <div className="checkout">Registro de Docentes</div>
         </div>
         <div className="input-parent">
-          <div className="input">
+          <div className="inputi">
             <div className="label-here">Nombres</div>
             <input className="input11" placeholder="Nombres" type="text" value={nombres} onChange={(e) => setNombres(e.target.value)} />
             {errorNombres && <p className="error">{errorNombres}</p>}
@@ -215,7 +215,7 @@ const Docentes = () => {
               {errorApellidoMaterno && <p className="error">{errorApellidoMaterno}</p>}
             </div>
           </div>
-          <div className="input">
+          <div className="inputi">
             <div className="label-here">Correo</div>
             <input
               className="input14"
@@ -248,7 +248,7 @@ const Docentes = () => {
             </div>
           </div>
         </div>
-        <div className={`input ${codigoDocenteDisabled ? "disabled-input" : ""}`}>
+        <div className={`inputi ${codigoDocenteDisabled ? "disabled-input" : ""}`}>
           <div className="label-here">Codigo Docente</div>
           <input className="input16" placeholder="19849465" type="text" value={codigoDocente} disabled={tipo === "Invitado"} onChange={(e) => setCodigoDocente(e.target.value)} />
           {errorCodigo && <p className="error">{errorCodigo}</p>}

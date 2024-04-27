@@ -140,7 +140,7 @@ const ListaDocentes = () => {
   };
   return (
     
-    <div className="container" style={{ height: '100vh' }}>
+    <div className="container" style={{ minHeight: '78.7vh' }}>
       <div style={{ height: '4vh' }}></div>  
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ margin: 0 }}>Docentes Registrados:</h2>

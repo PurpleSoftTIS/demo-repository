@@ -7,6 +7,9 @@ import Ico2 from "../../assets/IcoState.png";
 
 const ListaMaterias = () => {
   const [materias, setMaterias] = useState([]);
+  const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const sortedMaterias = materias.sort((a, b) => a.id_materia - b.id_materia);
 
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/materias')
@@ -49,6 +52,38 @@ const ListaMaterias = () => {
     }
   };  
 
+  const handleFileChange = (event) => { // Nuevo controlador de eventos para la entrada de archivo
+    setFile(event.target.files[0]);
+  };
+
+  async function handleImportClick() {
+    try {
+        const formData = new FormData();
+        formData.append('csv_file', file);
+        setLoading(true);
+
+        const response = await fetch('http://127.0.0.1:8000/api/importMaterias', {
+            method: 'POST',
+            body: formData
+        });
+    
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        setLoading(false);
+        fetch('http://127.0.0.1:8000/api/materias')
+          .then(response => response.json())
+          .then(data => {
+            setMaterias(data);
+          })
+          .catch(error => console.error('Error al obtener las Materias:', error));
+        console.log('Importación exitosa');
+    } catch (error) {
+        console.error('Error al importar:', error);
+        setLoading(false);
+    }
+  }
+  
   return (
     <div className="container" style={{ minHeight: '78.7vh' }}>
       <div style={{ height: '4vh' }}></div>  
@@ -64,11 +99,13 @@ const ListaMaterias = () => {
       </div>
       <div style={{ display: 'flex', justifyContent: 'Right', alignItems: 'center', marginTop: '15px' }}>
         <div>
-          <button className="butn butn-csv">
-              Importar<FaFileCsv className="icon"/>
-            </button>
-            <button className="butn butn-borrar" onClick={borrarTodo}>
-              Borrar Todo<FaTrash className="icon"/>
+          {loading && <div className="spinner-border text-primary" role="status"></div>}
+          <input type="file" onChange={handleFileChange} />
+          <button className="butn butn-csv" onClick={handleImportClick}>
+            Importar<FaFileCsv className="icon"/>
+          </button>
+          <button className="butn butn-borrar" onClick={borrarTodo}>
+            Borrar Todo<FaTrash className="icon"/>
           </button>
         </div>
       </div>
@@ -86,7 +123,7 @@ const ListaMaterias = () => {
           </tr>
         </thead>
         <tbody>
-          {materias.map((materia) => (
+          {sortedMaterias.map((materia) => (
               <tr key={materia.id_materia} className="fila-lista">
               <td>{materia.id_materia}</td>
               <td>{materia.codigo_materia}</td>
