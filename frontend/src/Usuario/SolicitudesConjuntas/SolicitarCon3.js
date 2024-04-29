@@ -1,25 +1,33 @@
-import React from 'react'
-import { useLocation } from 'react-router-dom';
+import React, {} from 'react';
+import './SolicitarCon3';
+
 
 const SolicitarCon3 = () => {
-    /*FORMA DE RESIVIR DATOS*/
+  
 
-  const { state: datos } = useLocation();
-  const capacidad = datos ? datos.capacidad : null; 
-  const dia = datos ? datos.dia : null;
-  const hora = datos ? datos.hora : null; 
-  console.log(datos)
   return (
-    <div>SolicitarCon3</div>
-  )
-}
+    <div className="container" style={{ height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div style={{ height: '4vh' }}></div>  
+    <h2 style={{ margin: 0, textAlign: 'center' }}>Ambientes Disponibles:</h2>
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
 
-export default SolicitarCon3
+      </div>
+    
+      <table className="table table-hover">
+        <thead className="thead">
+          <tr>
+            <th>Nro.</th>
+            <th>Edificio</th>
+            <th>Piso</th>
+            <th>Aula</th>
+            <th>acciones</th>
+            
+          </tr>
+        </thead>
+      </table> 
+         
+    </div>
+  );
+};
 
-
-
-
-
-
-
-
+export default SolicitarCon3;

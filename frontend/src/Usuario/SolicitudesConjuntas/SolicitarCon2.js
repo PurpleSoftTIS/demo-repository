@@ -13,8 +13,6 @@ const SolicitarCon2 = () => {
   const [selectedDay, setSelectedDay] = useState(''); 
   const [selectedOption, setSelectedOption] = useState('');
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const [showErrorDate, setShowErrorDate] = useState(false);
-  const [showErrorHour, setShowErrorHour] = useState(false);
   const [errorInconpleto, setErrorIncompleto] = useState("");
 
 
@@ -70,7 +68,7 @@ const SolicitarCon2 = () => {
       }else{
         setShowErrorMessage("")
   
-        navigate('/Usuario/Usu/Solicitar1', { state: dataToSend });
+        navigate('/Usuario/Usu/SolicitarCon3', { state: dataToSend });
   
       }
      

@@ -13,6 +13,7 @@ import RegistrarDiaHora from './Registrar/dia_hora/RegistrarDiaHora';
 import NarbarUsuario from './navegador/NarbarUsuario';
 import HomeDos from './inicio/HomeDos';
 import ListaSolicitudes from './ListaSolicitudes/ListaSolicitudes';
+import ListaSolicitudesUr from './ListaSolicitudes/ListaSolicitudesUr';
 import Reservar  from './Usuario/Resevar/Reservar';
 import Solicitar  from './Usuario/Solicitar/Solicitar';
 import { Ayuda } from './Usuario/Ayuda/Ayuda';
@@ -42,5 +43,6 @@ export {
   LoginForm,RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Reservar, Solicitar,
   Ayuda, ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,AmbientesActualizar,
   Footer,ListaMaterias,Solicitar2,Solicitar1,MensajeExitosoU,MensajeErrorU,MensajeActExito,MensajeActError
-  ,DocentesActualizar,MensajeDatExito,MensajeDatError,SolicitarCon1,SolicitarCon2,SolicitarCon3,SolicitarCon4
+  ,DocentesActualizar,MensajeDatExito,MensajeDatError,SolicitarCon1,SolicitarCon2,SolicitarCon3,SolicitarCon4,
+  ListaSolicitudesUr
 };

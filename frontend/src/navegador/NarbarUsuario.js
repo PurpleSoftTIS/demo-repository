@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import logo from '../assets/LogoDefinitivo.jpeg';
 import userLogo from '../assets/IcoUser.png';
@@ -10,6 +10,8 @@ const NarbarUsuario = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showSesion, setShowSesion] = useState(false);
   const { state: correoElectronico } = useLocation();
+  const [showDropdown2, setShowDropdown2] = useState(false);
+  const dropdownRef2 = useRef(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -43,6 +45,9 @@ const NarbarUsuario = () => {
   const toggleSesion = () => {
     setShowSesion(!showSesion);
   };
+  const toggleDropdown2 = () => {
+    setShowDropdown2(!showDropdown2);
+  };
 
   return (
     <div className='barraNavAdmi'>
@@ -61,12 +66,15 @@ const NarbarUsuario = () => {
           </button>
           <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarNav">
             <ul className="navbar-nav mx-auto">
-              <li className="nav-item">
-                <NavLink className="nav-link" to='/Usuario/inicio/HomeDos' exact>Inicio</NavLink> 
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to='/Usuario/Usu/Solicitar'>Solicitar</NavLink>
-              </li>
+              <div className="dropdown-container" ref={dropdownRef2}>
+                  <button className="nav-link dropdown-toggle" onClick={toggleDropdown2} style={{ cursor: 'pointer' }}>Solicitar</button>
+                  {showDropdown2 && (
+                      <div className="menu">
+                          <NavLink className="opciones" to='/Usuario/Usu/Solicitar' activeclassname="active">Indivudual</NavLink>
+                          <NavLink className="opciones" to='/Usuario/Usu/SolicitarCon1' activeclassname="active">Conjunta</NavLink>
+                      </div>              
+                  )}              
+              </div>             
               <li className="nav-item">
                 <NavLink className="nav-link" to='/Usuario/Usu/Reservas'>Reservas</NavLink>
               </li>
