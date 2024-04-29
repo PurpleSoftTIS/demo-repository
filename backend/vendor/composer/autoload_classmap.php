@@ -10,6 +10,7 @@ return array(
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\AmbienteController' => $baseDir . '/app/Http/Controllers/AmbienteController.php',
     'App\\Http\\Controllers\\AmbienteObtenerController' => $baseDir . '/app/Http/Controllers/AmbienteObtenerController.php',
+    'App\\Http\\Controllers\\CargaDocente' => $baseDir . '/app/Http/Controllers/CargaDocente.php',
     'App\\Http\\Controllers\\CarreraController' => $baseDir . '/app/Http/Controllers/CarreraController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\DeleteAmbienteController' => $baseDir . '/app/Http/Controllers/DeleteAmbienteController.php',

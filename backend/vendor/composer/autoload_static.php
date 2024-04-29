@@ -541,6 +541,7 @@ class ComposerStaticInit8dd0aa733d0787553111fda72a71696d
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\AmbienteController' => __DIR__ . '/../..' . '/app/Http/Controllers/AmbienteController.php',
         'App\\Http\\Controllers\\AmbienteObtenerController' => __DIR__ . '/../..' . '/app/Http/Controllers/AmbienteObtenerController.php',
+        'App\\Http\\Controllers\\CargaDocente' => __DIR__ . '/../..' . '/app/Http/Controllers/CargaDocente.php',
         'App\\Http\\Controllers\\CarreraController' => __DIR__ . '/../..' . '/app/Http/Controllers/CarreraController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\DeleteAmbienteController' => __DIR__ . '/../..' . '/app/Http/Controllers/DeleteAmbienteController.php',

@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showDropdown1, setShowDropdown1] = useState(false);
   const dropdownRef = useRef(null);
   const [showSesion, setShwoSesion] = useState(false);
   const sesionRef = useRef(null);
@@ -56,9 +57,13 @@ const Navbar = () => {
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
+
+  const toggleDropdown1 = () => {
+    setShowDropdown1(!showDropdown1);
+  };
+
   const toggleSesion = ()=>{
     setShwoSesion(!showSesion);
-
   };
   
   return (
@@ -95,9 +100,19 @@ const Navbar = () => {
               <li className="nav-item">
                 <NavLink className="nav-link" to='/Admin/inicio/HomeUno'>Inicio</NavLink> 
               </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to='/Admin/ListaSolicitudes'>Solicitudes</NavLink>
-              </li>
+
+
+              <div className="dropdown-container" ref={dropdownRef}>
+                  <button className="nav-link dropdown-toggle" onClick={toggleDropdown1} style={{ cursor: 'pointer' }}>Solicitud</button>
+                  {showDropdown1 && (
+                      <div className="menu">
+                          <NavLink className="opciones" to='/Admin/ListaSolicitudes' activeclassname="active">Todas</NavLink>
+                          <NavLink className="opciones" to='' activeclassname="active">Urgente</NavLink>
+                      </div>              
+                  )}              
+              </div>
+
+
               <div className="dropdown-container" ref={dropdownRef}>
                   <button className="nav-link dropdown-toggle" onClick={toggleDropdown} style={{ cursor: 'pointer' }}>Registrar</button>
                   {showDropdown && (
