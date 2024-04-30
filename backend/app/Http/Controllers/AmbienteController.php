@@ -77,39 +77,34 @@ public function index()
     ->join('ubicacion', 'ambiente.id_ubicacion', '=', 'ubicacion.id_ubicacion')
     ->get();
     return response()->json($ambientes, 200);
-}
-public function ambientesDisponibles($capacidad,$dia,$horaInicio,$horaFin)
-{   
+}public function ambientesDis($capacidad, $dia, $hora_inicio, $hora_fin)
+{
     
     $ambientes = DB::table('ambiente')
-    ->join('ubicacion', 'ambiente.id_ubicacion', '=', 'ubicacion.id_ubicacion')
-    ->where('ambiente.capacidad', '>=', $capacidad)
-    ->whereExists(function ($query) use ($dia, $horaInicio, $horaFin) {
-        $query->select(DB::raw(1))
-            ->from('diashabiles')
-            ->join('dia', 'diashabiles.id_dia', '=', 'dia.id_dia')
-            ->join('horario', 'diashabiles.id_dia', '=', 'horario.id_dia')
-            ->join('hora', 'horario.id_hora', '=', 'hora.id_hora')
-            ->whereColumn('ambiente.id_ambiente', 'diashabiles.id_ambiente')
-            ->where('dia.nombre', $dia) // Comparación del nombre del día
-            ->where(function ($query) use ($horaInicio, $horaFin) {
-                $query->where(function ($query) use ($horaInicio, $horaFin) {
-                    $query->where('hora.hora_inicio', '>=', $horaInicio)
-                        ->where('hora.hora_inicio', '<=', $horaFin);
-                })
-                ->orWhere(function ($query) use ($horaInicio, $horaFin) {
-                    $query->where('hora.hora_fin', '>=', $horaInicio)
-                        ->where('hora.hora_fin', '<=', $horaFin);
+        ->join('ubicacion', 'ambiente.id_ubicacion', '=', 'ubicacion.id_ubicacion')
+        ->where('ambiente.capacidad', '>=', $capacidad)
+        ->whereExists(function ($query) use ($dia, $hora_inicio, $hora_fin) {
+            $query->select(DB::raw(1))
+                ->from('diashabiles')
+                ->join('dia', 'diashabiles.id_dia', '=', 'dia.id_dia')
+                ->join('horario', 'diashabiles.id_dia', '=', 'horario.id_dia')
+                ->join('hora', 'horario.id_hora', '=', 'hora.id_hora')
+                ->whereColumn('ambiente.id_ambiente', 'diashabiles.id_ambiente')
+                ->where('dia.nombre', $dia)
+                ->where(function ($query) use ($hora_inicio, $hora_fin) {
+                    $query->where(function ($query) use ($hora_inicio, $hora_fin) {
+                        $query->where('hora.hora_inicio', '=', $hora_inicio)
+                            ->where('hora.hora_fin', '=', $hora_fin);
+                    });
                 });
-            });
-    })
-
-    ->get();
+        })
+        ->get();
 
     return response()->json($ambientes, 200);
-
-
 }
+
+
+
 
     public function actualizarAmbiente(Request $request, $id_ambiente)
 {   

@@ -224,7 +224,7 @@ const handleSubmitRestablecer = (e) => {
                                     <div className="section">
                                     {mostrarIniciar && (
                                             <h6 className="mb-0 pb-3 text-center" id="Iniciar">Iniciar sesión</h6>)}
-                                        <form className="login0"onSubmit={handleSubmit} style={{ display: logRecuperacion ? 'block' : 'none' }}>
+                                        <form className="login0"onSubmit style={{ display: logRecuperacion ? 'block' : 'none' }}>
                                             <div className="form-group">
                                                 <span className="input-icon"><FaAt /></span>
                                                 <input 
@@ -256,7 +256,7 @@ const handleSubmitRestablecer = (e) => {
                                                 {errorInconpleto && <p className="error2">{errorInconpleto}</p>}                                                
                                             </div>
                                             <div className="mb-0 pb-3 text-center">
-                                            <button className="btn-block" onClick={handleSubmit}> Ingresar </button>                                         
+                                            <button className="btn-block" onClick={handleSubmit}> Ingresarrrr </button>                                         
                                             </div>
                                                 <p className="mt-3 text-center">
                                                     <button  onClick={toggleVisibility} className="olvidar">¿Olvidaste tu Contraseña?</button>
@@ -264,7 +264,7 @@ const handleSubmitRestablecer = (e) => {
                                         </form>
                                         {mostrarRestablecer && (
                                             <h6 className="mb-0 pb-3 text-center" id="Reestablecer">Restablecer Contraseña</h6>)}
-                                              <form className="logRecuperacion"onSubmit={handleSubmit} style={{ display: login0 ? 'block' : 'none' }} >
+                                              <form className="logRecuperacion"onSubmit style={{ display: login0 ? 'block' : 'none' }} >
                                                         <div className="form-group">
                                                             <span className="input-icon"><FaAt /></span>
                                                             <input 
@@ -337,4 +337,3 @@ const handleSubmitRestablecer = (e) => {
 };
 
 export default LoginForm;
-                                

@@ -47,7 +47,7 @@ function UserRoutes() {
       <Route path='/Usu/Solicitar1' element={<Solicitar1 />} />
       <Route path='/Usu/Reservas' element={<Reservar />} />
       <Route path='/Usu/Ayuda' element={<Ayuda />} /> 
-      <Route path='Usu/DetallesSol' element={<Solicitar2/>}/>
+      <Route path='Usu/Solicitar2' element={<Solicitar2/>}/>
       <Route path='/Mensaje/Exitoso' element={<MensajeExitosoU/>}/>
       <Route path='/Mensaje/Error' element={<MensajeErrorU/>}/>
       <Route path='/Usu/SolicitarCon1' element={<SolicitarCon1/>} />

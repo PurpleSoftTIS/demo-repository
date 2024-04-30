@@ -6,15 +6,6 @@ import { useNavigate } from 'react-router-dom';
 const Solicitar2 = () => {
   const navigate = useNavigate();   
 
-  const { state: datos } = useLocation();
-  const capacidad = datos ? datos.capacidad : null; 
-  const dia = datos ? datos.dia : null;
-  const hora = datos ? datos.hora : null;
-  const nombreAm = datos ? datos.nombre_ambiente : null;
-  const edificio = datos ? datos.edificio : null;
-  const numeroPiso = datos ? datos.numeroPiso : null;
-  const [errorInconpleto, setErrorIncompleto] = useState("");
-
   const [materia, setMateria] = useState('');
   const [grupo, setGrupo] = useState('');
   const [motivo, setMotivo] = useState('');
@@ -22,24 +13,14 @@ const Solicitar2 = () => {
   const handleRegistroSolicitud = (e) => {
     e.preventDefault();
 
-    const datosSolicitud = {
-      capacidad,
-      dia,
-      hora,
-      nombreAm,
-      edificio,
-      numeroPiso,
-      materia,
-      grupo,
-      motivo
-    };
+  
   
     fetch("http://127.0.0.1:8000/api/RegistrarSol", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(datosSolicitud)
+      body: JSON.stringify()
     })
     .then(response => {
       if (!response.ok) {

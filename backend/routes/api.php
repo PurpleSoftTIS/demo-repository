@@ -13,9 +13,7 @@ use App\Http\Controllers\DeleteAmbienteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
 
 //Consultar Datos
 Route::post('/verificarCre', [DocenteController::class, 'verificarCredenciales']);
@@ -26,7 +24,7 @@ Route::get('/docentes', [DocenteController::class, 'index']);
 Route::get('/usuarios', [UsuarioController::class, 'index']);
 Route::get('/materias', [MateriaController::class, 'index']);
 Route::get('/listaAmbiente', [AmbienteController::class, 'index']);
-Route::get('/ambienteDispo/{capacidad},{dia},{hora_inicio},{hora_fin}', [AmbienteController::class, 'ambientesDisponibles']);
+Route::get('/ambienteDispo/{capacidad}/{dia}/{hora_inicio}/{hora_fin}', [AmbienteController::class, 'ambientesDis']);
 Route::get('/carreras', [CarreraController::class, 'index']);
 Route::get('/materias/{id}', [MateriaController::class, 'show']);
 Route::get('/obtenerHoras', [SolicitudController::class, 'obtenerHora']);
