@@ -189,7 +189,7 @@ function ListaAulas() {
   };
   
   return (
-    <div className="container" style={{ height: 'max height' }}>
+    <div className="container" style={{ minHeight: '78.7vh' }}>
       <div style={{ height: '4vh' }}></div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ margin: 0 }}>Ambientes Registrados:</h2>
