@@ -7,9 +7,10 @@ use App\Http\Controllers\MateriaController;
 use App\Http\Controllers\AmbienteController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\RegistrarSolicitud;
-use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\CarreraController;
 use App\Http\Controllers\DeleteAmbienteController;
+use App\Http\Controllers\SolicitudController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +29,8 @@ Route::get('/ambienteDispo/{capacidad}/{dia}/{hora_inicio}/{hora_fin}', [Ambient
 Route::get('/carreras', [CarreraController::class, 'index']);
 Route::get('/materias/{id}', [MateriaController::class, 'show']);
 Route::get('/obtenerHoras', [SolicitudController::class, 'obtenerHora']);
+Route::get('/obtenerSol', [SolicitudController::class, 'obtenerSolicitud']);
+
 
 //Registrar Datos
 Route::post('/docentesRegistrar', [DocenteRegistrarController::class, 'registrar']);
@@ -54,3 +57,4 @@ Route::put('/ambiente/{id_ambiente}', [AmbienteController::class, 'actualizarAmb
 Route::put ('/actualizar/{id_ambiente}',[AmbienteController::class,'actualizarAmb']);
 Route::put('/materias/{id}', [MateriaRegistrarController::class, 'update']);
 Route::put('/actualizarDocente/{id_docente}', [DocenteController::class, 'editarDocentes']);
+Route::get('/obtenerMaterias/{correo}', [SolicitudController::class, 'obtenerMateriass']);

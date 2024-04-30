@@ -1,4 +1,6 @@
 import React, { useState, useEffect,useRef } from 'react';
+import { useNavigate } from "react-router-dom";
+
 import { NavLink, useLocation } from 'react-router-dom';
 import logo from '../assets/LogoDefinitivo.jpeg';
 import userLogo from '../assets/IcoUser.png';
@@ -12,6 +14,8 @@ const NarbarUsuario = () => {
   const { state: correoElectronico } = useLocation();
   const [showDropdown2, setShowDropdown2] = useState(false);
   const dropdownRef2 = useRef(null);
+  const [correo, setCorreo] = useState("");
+  const navigate = useNavigate(); // Importa useNavigate
 
   useEffect(() => {
     const handleResize = () => {
@@ -48,7 +52,11 @@ const NarbarUsuario = () => {
   const toggleDropdown2 = () => {
     setShowDropdown2(!showDropdown2);
   };
-
+  const handleSolicitar = () => {
+    console.log("correo es", correoElectronico);
+    setCorreo(correoElectronico); 
+    navigate('/Usuario/Usu/Solicitar', { state: { correo: correoElectronico } });
+  };
   return (
     <div className='barraNavAdmi'>
       <nav className="navbar navbar-expand-lg">
@@ -70,8 +78,8 @@ const NarbarUsuario = () => {
                   <button className="nav-link dropdown-toggle" onClick={toggleDropdown2} style={{ cursor: 'pointer' }}>Solicitar</button>
                   {showDropdown2 && (
                       <div className="menu">
-                          <NavLink className="opciones" to='/Usuario/Usu/Solicitar' activeclassname="active">Indivudual</NavLink>
-                          <NavLink className="opciones" to='/Usuario/Usu/SolicitarCon1' activeclassname="active">Conjunta</NavLink>
+                              <button className="opciones" onClick={handleSolicitar}>Individual</button>
+                              <NavLink className="opciones" to='/Usuario/Usu/SolicitarCon1' activeclassname="active">Conjunta</NavLink>
                       </div>              
                   )}              
               </div>             

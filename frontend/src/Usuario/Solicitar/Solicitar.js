@@ -18,6 +18,7 @@ const Solicitar = () => {
   const [selectedOption, setSelectedOption] = useState('');
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [errorInconpleto, setErrorIncompleto] = useState("");
+  const correoElectronico = location.state.correo;
 
 
   useEffect(() => {
@@ -59,6 +60,7 @@ const Solicitar = () => {
     const dataToSend = {
       numeroEstudiantes: inputValue,
       diaSeleccionado: selectedDay,
+      correo:correoElectronico,
     };
   
     if (!inputValue) {

@@ -1,43 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Solicitar2.css';
-import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
 const Solicitar2 = () => {
   const navigate = useNavigate();   
-
-  const [materia, setMateria] = useState('');
+  const location =useLocation();
+  console.log("Datos solicitar 2:", location.state);
+  
   const [grupo, setGrupo] = useState('');
   const [motivo, setMotivo] = useState('');
+  const [materia, setMateria] = useState([]);
 
   const handleRegistroSolicitud = (e) => {
     e.preventDefault();
 
-  
-  
-    fetch("http://127.0.0.1:8000/api/RegistrarSol", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify()
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Error al registrar la solicitud');
-      }
-      return response.json();
-    })
-    .then(data => {
-      console.log("Registro exitoso:", data);
-      // Aquí puedes mostrar un mensaje de éxito o redirigir a otra página
-      navigate('/Usuario/Usu/Reservas');
-    })
-    .catch(error => {
-      console.error("Error al registrar la solicitud:", error);
-      // Aquí puedes mostrar un mensaje de error al usuario
-    });
+   console.log("Solicitud registrada:", { materia, grupo, motivo });
+    navigate('/Usuario/Usu/Reservas');
   };
+  useEffect(() => {
+    const correo = location.state.correo;
+     console.log(correo);
+    if (correo) {
+      // Suponiendo que "docente" sea la variable donde almacenas el correo electrónico del docente
+      fetch(`http://127.0.0.1:8000/api/obtenerMaterias/${correo}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Error al cargar los horarios del docente');
+          }
+          return response.json();
+        })
+        .then(data => {
+          setMateria(data);
+        })
+        .catch(error => {
+          console.error('Error al cargar los horarios del docente:', error);
+        });
+    }
+  }, []);
+
+  
 
   return (
     <div className="contact-form-container">

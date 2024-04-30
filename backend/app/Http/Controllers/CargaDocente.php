@@ -13,9 +13,10 @@ class CargaDocente extends Controller
         try {
             $datos = $request->all();
             array_shift($datos);    
+            $indice = 0;
             foreach ($datos as $dato) {    
                 $usuario = new Usuario();
-                $usuario->id_usuario = $dato[0];
+                $usuario->id_usuario = $indice;
                 $usuario->nombre = $dato[1];
                 $usuario->apellido_paterno = $dato[2];
                 $usuario->apellido_materno = $dato[3];
@@ -29,12 +30,13 @@ class CargaDocente extends Controller
                 $usuario->save();    
                 // Crear un nuevo docente
                 $docente = new Docente();
-                $docente->id_docente = $dato[8];
-                $docente->id_usuario = $dato[9];
+                $docente->id_docente = $indice;
+                $docente->id_usuario = $indice;
                 $docente->codigo_docente = $dato[5];
                 $docente->estado_docente = $dato[6];
                 $docente->tipo_docente = $dato[7];
                 $docente->save();
+                $indice= $indice+1;
             }            
             return response()->json(['message' => 'Carga masiva de docentes exitosa'], 200);
         } catch (\Exception $e) {

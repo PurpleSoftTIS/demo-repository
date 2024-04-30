@@ -7,15 +7,9 @@ const SolicitarCon4 = () => {
   const navigate = useNavigate();   
 
   const { state: datos } = useLocation();
-  const capacidad = datos ? datos.capacidad : null; 
-  const dia = datos ? datos.dia : null;
-  const hora = datos ? datos.hora : null;
-  const nombreAm = datos ? datos.nombre_ambiente : null;
-  const edificio = datos ? datos.edificio : null;
-  const numeroPiso = datos ? datos.numeroPiso : null;
+  
   const [errorInconpleto, setErrorIncompleto] = useState("");
 
-  const [materia, setMateria] = useState('');
   const [grupo, setGrupo] = useState('');
   const [motivo, setMotivo] = useState('');
 
@@ -23,18 +17,12 @@ const SolicitarCon4 = () => {
     e.preventDefault();
 
     const datosSolicitud = {
-      capacidad,
-      dia,
-      hora,
-      nombreAm,
-      edificio,
-      numeroPiso,
-      materia,
+      
       grupo,
       motivo
     };
   
-    fetch("http://127.0.0.1:8000/api/RegistrarSol", {
+    fetch("http://127.0.0.1:8000/api/RegistrarSolCon", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -54,6 +42,7 @@ const SolicitarCon4 = () => {
     .catch(error => {
       console.error("Error al registrar la solicitud:", error);
     });
+    navigate('/Usuario/Usu/SolicitarCon4')
   };
   return (
 <div className="contact-form-container">
@@ -67,22 +56,22 @@ const SolicitarCon4 = () => {
             <input 
               className="contact-form-rectangle" 
               type="text"
-              value={materia}
-              onChange={(e) => setMateria(e.target.value)}
+              value={grupo}
+              onChange={(e) => setGrupo(e.target.value)}
               placeholder="Ingrese el primer grupo"
             />
             <input 
               className="contact-form-rectangle" 
               type="text"
-              value={materia}
-              onChange={(e) => setMateria(e.target.value)}
+              value={grupo}
+              onChange={(e) => setGrupo(e.target.value)}
               placeholder="Ingrese el segundo grupo"
             />
             <input 
               className="contact-form-rectangle" 
               type="text"
-              value={materia}
-              onChange={(e) => setMateria(e.target.value)}
+              value={grupo}
+              onChange={(e) => setGrupo(e.target.value)}
               placeholder="Ingrese el tercer grupo"
             />
           </div>          
@@ -95,6 +84,8 @@ const SolicitarCon4 = () => {
               onChange={(e) => setMotivo(e.target.value)}
               placeholder="Ingrese el motivo"
             />
+            {errorInconpleto && <p className="error">{errorInconpleto}</p>}
+
           </div>
           <button className="contact-form-cta-button" onClick={handleRegistroSolicitud}>
             <div className="contact-form-button">Enviar</div>

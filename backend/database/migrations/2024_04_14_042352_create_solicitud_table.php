@@ -15,7 +15,6 @@ class CreateSolicitudTable extends Migration
     {
         Schema::create('solicitud', function (Blueprint $table) {
             $table->id("id_solicitud");
-            $table->foreignId("id_docente")->constrained("docente", "id_docente");
             $table->foreignId("id_hora")->constrained("hora", "id_hora");
             $table->integer("numero_estudiantes");
             $table->dateTime("fecha_solicitud");

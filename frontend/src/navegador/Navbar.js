@@ -8,8 +8,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showDropdown2, setShowDropdown2] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+
+  const dropdownRef2 = useRef(null);
   const dropdownRef = useRef(null);
+
   const [showSesion, setShwoSesion] = useState(false);
   const sesionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(true);
@@ -56,6 +60,9 @@ const Navbar = () => {
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
+  const toggleDropdown2 = () => {
+    setShowDropdown2(!showDropdown2);
+  };
   const toggleSesion = ()=>{
     setShwoSesion(!showSesion);
 
@@ -94,10 +101,16 @@ const Navbar = () => {
             <ul className="navbar-nav mx-auto">
               <li className="nav-item">
                 <NavLink className="nav-link" to='/Admin/inicio/HomeUno'>Inicio</NavLink> 
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to='/Admin/ListaSolicitudes'>Solicitudes</NavLink>
-              </li>
+              </li>              
+              <div className="dropdown-container" ref={dropdownRef2}>
+                  <button className="nav-link dropdown-toggle" onClick={toggleDropdown2} style={{ cursor: 'pointer' }}>Solicitudes</button>
+                  {showDropdown2 && (
+                      <div className="menu">
+                          <NavLink className="opciones" to='/Admin/ListaSolicitudes' activeclassname="active">Todas</NavLink>
+                          <NavLink className="opciones" to='/Admin/ListaSolicitudesUr' activeclassname="active">Urgentes</NavLink>
+                      </div>              
+                  )}              
+              </div>
               <div className="dropdown-container" ref={dropdownRef}>
                   <button className="nav-link dropdown-toggle" onClick={toggleDropdown} style={{ cursor: 'pointer' }}>Registrar</button>
                   {showDropdown && (
