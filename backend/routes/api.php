@@ -30,6 +30,7 @@ Route::get('/ambienteDispo/{capacidad},{dia},{hora_inicio},{hora_fin}', [Ambient
 Route::get('/carreras', [CarreraController::class, 'index']);
 Route::get('/materias/{id}', [MateriaController::class, 'show']);
 Route::get('/obtenerHoras', [SolicitudController::class, 'obtenerHora']);
+Route::get('/obtenerSol', [SolicitudController::class, 'obtenerSolicitud']);
 
 //Registrar Datos
 Route::post('/docentesRegistrar', [DocenteRegistrarController::class, 'registrar']);

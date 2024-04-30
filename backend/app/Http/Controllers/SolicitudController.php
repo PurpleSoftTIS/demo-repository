@@ -10,25 +10,30 @@ class SolicitudController extends Controller
 {
     public function index()
     {
-    $datosSolicitudes = DB::table('solitudes')
-    ->join('usuario', 'usuario.id_usuario', '=', 'docente.id_usuario')
-    ->join('docente', 'solicitud.id_docente', '=', 'docente.id_docente')
-    ->join('materia', 'materia.id_materia', '=', 'docente.id_materia')
-    ->join('hora', 'hora.id_hora', '=', 'solicitud.id_hora')
-    ->join('ambiente', 'ambiente.id_ambiente', '=', 'solicitudes.id_ambiente')
-    ->join('ubicacion', 'ubicacion.id_ubiacion', '=', 'ambiente.id_ubicacion')
-    ->select(
-        'usuario.*',
-        'docente.*',
-        'materia.*',
-        'hora.*',
-        'ambiente.*',
-        'ubicacion.*'    
+        $datosSolicitudes = DB::table('solicitudes')
 
-    )
-    ->get();
-
-    return response()->json($datosSolicitudes, 200);
+        ->join('ambiente', 'solicitudes.id_ambiente', '=', 'ambiente.id_ambiente')
+        ->join('solicitud', 'solicitudes.id_solicitud', '=', 'solicitud.id_solicitud')
+        ->join('solicitudes_docentes','solicitud.id_solicitud','=','solicitudes_docentes.id_solicitud')
+        ->join('hora', 'solicitud.id_hora', '=', 'hora.id_hora')
+        ->join('ubicacion', 'ambiente.id_ubicacion', '=', 'ambiente.id_ubicacion')
+        ->join('docente', 'solicitudes_docente.id_docente', '=', 'docente.id_docente')
+        ->join('docente', 'usuario.id_usuario', '=', 'docente.id_usuario')
+        ->join('materia_docente','docente.id_docente','=','materia_docente.id_docente')
+        ->join('materia','materia_docente.id_materia','=','materia.id_materia')
+        
+        ->select(
+            'usuario.*',
+            'docente.*',
+            'materia.*',
+            'hora.*',
+            'ambiente.*',
+            'ubicacion.*'    
+    
+        )
+        ->get();
+    
+        return response()->json($datosSolicitudes, 200);
     }
     public function obtenerHora(){
         $datosSolicitados = DB::table('hora')
