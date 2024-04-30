@@ -1,0 +1,64 @@
+.container {
+    user-select: none;
+  }
+  input[type="text"] {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-right: 5px;
+  }
+  .butn {
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 8px 15px;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+  }
+  .butn .icon {
+    margin-left: 5px; 
+  }
+  
+  
+ 
+  .table {
+    width: 100%;
+    border-collapse: none;
+    margin-top: 40px;
+    user-select: text;
+  }
+  .table thead th {
+    border-top: none; 
+    background-color: #F3F4F6;
+    color: #1F2937;
+    padding: 10px;
+    border: none;
+    text-align: center;
+  }
+  .table thead th:first-child {
+    border-top-left-radius: 10px;
+  }
+  .table thead th:last-child {
+    border-top-right-radius: 10px;
+  }
+  .table tbody td {
+    border-top: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+  }
+  .fila-lista:hover {
+    background-color: #f8f9fa; 
+    height: 70px;
+  }
+  
+ 
+.iconos2{
+  position: relative;
+  top: -28px;
+  justify-content: center;
+}

@@ -30,6 +30,7 @@ Route::get('/ambienteDispo/{capacidad},{dia},{hora_inicio},{hora_fin}', [Ambient
 Route::get('/carreras', [CarreraController::class, 'index']);
 Route::get('/materias/{id}', [MateriaController::class, 'show']);
 Route::get('/obtenerHoras', [SolicitudController::class, 'obtenerHora']);
+Route::get('/obtenerSol', [SolicitudController::class, 'obtenerSolicitud']);
 
 //Registrar Datos
 Route::post('/docentesRegistrar', [DocenteRegistrarController::class, 'registrar']);
@@ -41,6 +42,7 @@ Route::post('/CargaDiasHoras', [AmbienteController::class, 'CargaMasivaDias']);
 Route::post('/RegistrarSol', [RegistrarSolicitud::class, 'registrar']);
 Route::post('enviar',[UsuarioController::class, 'restablecerContrasenia']);
 Route::post('/masivoDocentes', [CargaDocente::class, 'CargaMasivaDocentes']);
+Route::post('/importMaterias', [MateriaController::class, 'import']);
 
 //Elimnar datos
 Route::delete('/docentes/{id_docente}', [DocenteController::class, 'eliminar']);

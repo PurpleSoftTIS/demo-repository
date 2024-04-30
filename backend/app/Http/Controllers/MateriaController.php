@@ -8,6 +8,8 @@ use App\Models\MateriaDocente;
 use App\Models\Docente;
 use App\Models\Usuario;
 use App\Models\Carrera;
+use App\Imports\MateriaImport;
+use Maatwebsite\Excel\Facades\Excel;
 use DB;
 
 class MateriaController extends Controller
@@ -76,16 +78,34 @@ class MateriaController extends Controller
     public function eliminarTodo()
     {
         try {
+            // Desactivar restricciones de clave externa
+            DB::statement('SET FOREIGN_KEY_CHECKS=0');
+
+            // Eliminar todas las filas de la tabla materia_docente
+            DB::table('materia_docente')->delete();
+
             // Eliminar todas las filas de la tabla materias
             Materia::truncate();
 
-            // Reiniciar el valor del ID autoincremental a 1
-            DB::statement('ALTER SEQUENCE materia_id_materia_seq RESTART WITH 1');
+            // Volver a activar restricciones de clave externa
+            DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
             return response()->json(['message' => 'Todas las materias eliminadas correctamente'], 200);
         } catch (\Exception $e) {
             \Log::error('Error al eliminar todas las materias: ' . $e->getMessage());
             return response()->json(['error' => 'Error al eliminar todas las materias'], 500);
+        }
+    }
+    
+    public function import(Request $request)
+    {
+        try {
+            Excel::import(new MateriaImport, $request->file('csv_file'));
+            \Log::info('Importación exitosa');
+            return response()->json(['message' => 'Importación exitosa'], 200);
+        } catch (\Exception $e) {
+            \Log::error('Error al importar: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al importar'], 500);
         }
     }
 }
