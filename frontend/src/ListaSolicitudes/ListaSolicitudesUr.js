@@ -1,6 +1,21 @@
 import React, {} from 'react';
 import './ListaSolicitudes.css';
 const ListaSolicitudesUr = () => {
+  const [solicitudes, setSolicitudes] = useState([]);
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/SolicitudUrgencias', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        setSolicitudes(data);
+      })
+      .catch(error => console.error('Error al obtener los datos:', error));
+  }, []);
     return (
         <div className="container" style={{ height: '100vh' }}>
           <div style={{ height: '4vh' }}></div>  
