@@ -1,5 +1,6 @@
 import React, {} from 'react';
 import './ListaSolicitudes.css';
+import { useEffect,useState } from 'react';
 const ListaSolicitudesUr = () => {
   const [solicitudes, setSolicitudes] = useState([]);
 
