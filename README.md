@@ -72,3 +72,7 @@ Reiniciar las credenciales de Laravel
 php artisan config:clear
 >> php artisan cache:clear   
 >> php artisan optimize
+
+Para dejar de depender de los paquetes de composer
+
+composer install --ignore-platform-reqs

@@ -43,7 +43,7 @@ Route::post('/RegistrarSol', [RegistrarSolicitud::class, 'registrar']);
 Route::post('enviar',[UsuarioController::class, 'restablecerContrasenia']);
 Route::post('/masivoDocentes', [CargaDocente::class, 'CargaMasivaDocentes']);
 Route::post('/importMaterias', [MateriaController::class, 'import']);
-
+Route::get('/SolicitudUrgencias', [SolicitudUrgencia::class, 'urgencias']);
 //Elimnar datos
 Route::delete('/docentes/{id_docente}', [DocenteController::class, 'eliminar']);
 Route::delete('/borrar/{id_ambiente}', [AmbienteController::class, 'borrarAmbiente']);
