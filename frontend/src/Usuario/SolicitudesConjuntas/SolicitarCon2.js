@@ -2,9 +2,14 @@ import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { useNavigate } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
+
 import './SolicitarCon2.css'
 const SolicitarCon2 = () => {
-    
+  const { state: datos } = useLocation();
+  const materia = datos ? datos.materia : null; 
+  const grupo = datos ? datos.grupo : null;
+  const docente = datos ? datos.docente : null;
   const navigate = useNavigate();   
 
   const [inputValue, setInputValue] = useState('');

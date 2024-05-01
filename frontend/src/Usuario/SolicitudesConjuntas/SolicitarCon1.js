@@ -2,11 +2,21 @@ import React, { useState } from 'react';
 import './SolicitarCon1.css';
 import { useNavigate } from 'react-router-dom';
 
+
 const SolicitarCon1 = () => {
   const navigate = useNavigate();   
   const [materia, setMateria] = useState('');
-  const handleRegistroSolicitud = () => {    
-    navigate('/Usuario/Usu/SolicitarCon2');    
+  const [grupo, setGrupo] = useState('');
+  const [docente, setDocente] = useState('');
+
+
+  const handleRegistroSolicitud = () => {  
+    const datos = {
+      materia,
+      grupo,
+      docente
+    };  
+    navigate('/Usuario/Usu/SolicitarCon2', { state: datos });    
   };
   return (
     <div className="contact-form-container">
@@ -28,8 +38,8 @@ const SolicitarCon1 = () => {
             <input 
               className="campo" 
               type="text"
-              value={materia}
-              onChange={(e) => setMateria(e.target.value)}
+              value={grupo}
+              onChange={(e) => setGrupo(e.target.value)}
               placeholder="Ingrese el grupo"
             />
           </div>
@@ -38,8 +48,8 @@ const SolicitarCon1 = () => {
             <input 
               className="campo" 
               type="text"
-              value={materia}
-              onChange={(e) => setMateria(e.target.value)}
+              value={docente}
+              onChange={(e) => setDocente(e.target.value)}
               placeholder="Ingrese el docente solicitado"
             />
           </div>
