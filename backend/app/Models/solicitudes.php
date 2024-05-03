@@ -9,6 +9,8 @@ class Solicitudes extends Model
 {   
     use HasFactory;
     protected $table = 'solicitudes';
+    public $incrementing = false;
+
     protected $fillable = [
         "id_solicitud",
         "id_ambiente"       

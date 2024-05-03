@@ -8,8 +8,7 @@ use App\Models\Usuario;
 use App\Models\Docente;
 use App\Models\Solicitud;
 use App\Models\Hora;
-
-
+use App\Models\Solicitudes;
 use DB;
 
 class SolicitudController extends Controller
@@ -51,11 +50,8 @@ class SolicitudController extends Controller
 
     }
     public function registrarSolicitud(Request $datos){
-   
-
-        $datosReserva=$datos->all();
-        info('Datos recibidos:', $datosReserva);
-         $correo = $datosReserva['correo'];
+       $datosReserva=$datos->all();
+        $correo = $datosReserva['correo'];
          $usuario=Usuario::where('correo_electronico',$correo)->first();
          $id_usuario=$usuario->id_usuario;
          $docente=Docente::where('id_usuario',$id_usuario)->first();
@@ -72,15 +68,21 @@ class SolicitudController extends Controller
           $solicitud->id_hora=$id_hora;
           $numero_estudiantes=$datosReserva['numeroEstudiantes'];
           $solicitud->numero_estudiantes=$numero_estudiantes;
-          $fecha='2024-05-02';
+          $fecha=$datosReserva['fecha'];
           $solicitud->fecha_solicitud=$fecha;
           $motivo=$datosReserva['motivo'];
           $solicitud->motivo=$motivo;
           $estado_solicitud='espera';
           $solicitud->estado_solicitud=$estado_solicitud;
           $solicitud->tipo_solicitud = 'individual'; 
-
           $solicitud->save();
+          $solicitudes=new Solicitudes ();
+          $id_ambiente=$datosReserva['aula'];
+          $solicitudes->id_ambiente=$id_ambiente;
+          $id_solicitud= $solicitud->id_solicitud;
+          $solicitudes->id_solicitud=$id_solicitud;
+          $solicitudes->save ();
+
           
    }
        

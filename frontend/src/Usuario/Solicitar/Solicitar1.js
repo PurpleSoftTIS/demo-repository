@@ -16,10 +16,10 @@ const Solicitar1 = () => {
     console.log("solicitar 1",correo);
     useEffect(() => {
         if (capacidad) {
-            fetch(`http://127.0.0.1:8000/api/ambienteDispo/${capacidad}/${diaSeleccionado}/${hora_inicio}/${hora_fin}`)
+            fetch(`http://127.0.0.1:8000/api/ambientesDispo/${capacidad}/${diaSeleccionado}/${hora_inicio}/${hora_fin}`)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Error al cargar las horas disponibles');
+                    throw new Error('Error al cargar ambientes  disponibles');
                 }
                 return response.json();
             })
@@ -27,7 +27,7 @@ const Solicitar1 = () => {
                 setDatos(data);
             })
             .catch(error => {
-                console.error('Error al cargar las horas disponibles:', error);
+                console.error('Error al cargar los ambientes disponibles:', error);
             });
         }       
     }, []);  

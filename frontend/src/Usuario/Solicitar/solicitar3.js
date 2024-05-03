@@ -23,13 +23,16 @@ const Solicitar3 = () => {
  console.log(aula);
   useEffect(() => {
     const Correo = correo;
-
     const codificarPunto = (cadena) => {
-      return cadena.replace(/\./g, '%');
+      if (typeof cadena === 'string') {
+        return cadena.replace(/\./g, '%');
+      } else {
+        
+        return ''; 
+      }
     };
-
+ 
     const correoCodificado = codificarPunto(Correo);
-
     fetch(`http://127.0.0.1:8000/api/obtenerMara/${correoCodificado}`)
       .then(response => {
         if (!response.ok) {
@@ -75,6 +78,8 @@ const Solicitar3 = () => {
       if (response.ok) {
 
         console.log("Registro exitoso");
+            navigate('/Usuario/Usu/Reservas');
+
       } else {
         console.error("Error en el registro");
       }
@@ -84,11 +89,6 @@ const Solicitar3 = () => {
     });
   };
 
-  const handleRegistroSolicitud = (e) => {
-    e.preventDefault();
-    console.log("Solicitud registrada:", { materia, grupo, motivo });
-    navigate('/Usuario/Usu/Reservas');
-  };
 
   const handleMateriaChange = (e) => {
     const materiaSeleccionada = e.target.value;

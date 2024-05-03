@@ -2,11 +2,21 @@ import React, { useState } from 'react';
 import './SolicitarCon1.css';
 import { useNavigate } from 'react-router-dom';
 
+
 const SolicitarCon1 = () => {
   const navigate = useNavigate();   
-  const [materia, setMateria] = useState('');
-  const handleRegistroSolicitud = () => {    
-    navigate('/Usuario/Usu/SolicitarCon2');    
+  const [materia, setMateria] = useState("");
+  const [carrera, setCarrera] = useState("");
+  const [docente, setDocente] = useState("");
+
+
+  const handleRegistroSolicitud = () => {  
+    const datos = {
+      materia,
+      carrera,
+      docente
+    };  
+    navigate('/Usuario/Usu/SolicitarCon2', { state: datos });    
   };
   return (
     <div className="contact-form-container">
@@ -14,17 +24,17 @@ const SolicitarCon1 = () => {
         <div className="titulo">
           <b className="reserva">Reservas</b>
           <div className="contact-form-phone-parent">
-            <div className="subtitulo">Materia</div>
+            <div className="subtitulo">Carrera</div>
             <input 
               className="campo" 
               type="text"
-              value={materia}
-              onChange={(e) => setMateria(e.target.value)}
+              value={carrera}
+              onChange={(e) => setCarrera(e.target.value)}
               placeholder="Ingrese la materia solicitada"
             />
           </div>
           <div className="contact-form-phone-parent">
-            <div className="subtitulo">Grupo</div>
+            <div className="subtitulo">Materia</div>
             <input 
               className="campo" 
               type="text"
@@ -38,8 +48,8 @@ const SolicitarCon1 = () => {
             <input 
               className="campo" 
               type="text"
-              value={materia}
-              onChange={(e) => setMateria(e.target.value)}
+              value={docente}
+              onChange={(e) => setDocente(e.target.value)}
               placeholder="Ingrese el docente solicitado"
             />
           </div>

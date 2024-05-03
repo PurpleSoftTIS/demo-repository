@@ -90,7 +90,8 @@ public function index()
     ->join('ubicacion', 'ambiente.id_ubicacion', '=', 'ubicacion.id_ubicacion')
     ->get();
     return response()->json($ambientes, 200);
-}public function ambientesDis($capacidad, $dia, $hora_inicio, $hora_fin)
+}
+public function ambientesDis($capacidad, $dia, $hora_inicio, $hora_fin)
 {
     
     $ambientes = DB::table('ambiente')
