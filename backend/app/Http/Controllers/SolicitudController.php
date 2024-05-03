@@ -45,4 +45,7 @@ class SolicitudController extends Controller
         return response()->json($datosSolicitados, 200);
 
     }
+
+
+    
 }

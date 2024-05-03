@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class CargaDocente extends Controller
 {
-    public function cargaMasivaDocentes(Request $request) {
+    public function cargaDocentes(Request $request) {
         try {
             $datos = $request->all();
             array_shift($datos);    

@@ -2,12 +2,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Ambiente;
+use App\Models\Ubicacion;
+use App\Models\Docente;
+use App\Models\Materia;
+use  App\Models\Solicitud;
 use DB;
 class SolicitudUrgencia extends Controller{
-    public function urgencias()
-
-    {
+    public function urgencias(){
+    try{
         $datosSolicitudes = DB::table('solicitud')
         ->join('solicitudes','solicitudes.id_solicitud','=', 'solicitud.id_solicitud')
          ->join('hora', 'hora.id_hora', '=', 'solicitud.id_hora')
@@ -25,16 +28,13 @@ class SolicitudUrgencia extends Controller{
              'materia.*'
          )
          ->selectRaw('CONCAT(usuario.nombre, " ", usuario.apellido_paterno, " ", usuario.apellido_materno) as nombre')
-
-         ->whereIn('solicitud.tipo_solicitud', ['examen', 'examen de mesa'])
-
-        ->whereBetween('solicitud.fecha_solicitud', [
-            now()->subDays(1)->toDateString(),
-            now()->toDateString() 
-        ])
+        
         ->get();
-    
-    return response()->json($datosSolicitudes, 200);
-    }
+        return response()->json($datosSolicitudes, 200);
 
+    }catch (\Exception $e) {
+        \Log::error('Error al intentar obtener una solicitud: ' . $e->getMessage());
+        return response()->json(['error' => 'Error al obtener la solicitud'], 500);
+    }
+}
 }

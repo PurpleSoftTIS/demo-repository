@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import './ListaSolicitudes.css';
 
@@ -6,7 +5,7 @@ const ListaSolicitudesUr = () => {
   const [solicitudes, setSolicitudes] = useState([]);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/SolicitudUrgencias', {
+    fetch('http://127.0.0.1:8000/api/solicitudu', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
