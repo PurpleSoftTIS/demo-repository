@@ -27,13 +27,15 @@ Route::get('/docentes', [DocenteController::class, 'index']);
 Route::get('/usuarios', [UsuarioController::class, 'index']);
 Route::get('/materias', [MateriaController::class, 'index']);
 Route::get('/listaAmbiente', [AmbienteController::class, 'index']);
-Route::get('/ambienteDispo/{capacidad},{dia},{hora_inicio},{hora_fin}', [AmbienteController::class, 'ambientesDisponibles']);
-Route::get('/ambienteDispoDos/{capacidad}', [AmbienteController::class, 'ambientesDisponiblesDos']);
+Route::get('/ambientesDispo/{capacidad}/{dia}/{hora_inicio}/{hora_fin}', [AmbienteController::class, 'ambientesDis']);
+Route::get('/ambientesDispoDos/{capacidad}', [AmbienteController::class, 'ambientesDi']);
+
 Route::get('/carreras', [CarreraController::class, 'index']);
 Route::get('/materias/{id}', [MateriaController::class, 'show']);
 Route::get('/obtenerHoras', [SolicitudController::class, 'obtenerHora']);
 Route::get('/obtenerSol', [SolicitudController::class, 'obtenerSolicitud']);
-Route::get('/solicitudu', [SolicitudUrgencia::class, 'urgencias']);
+Route::get('/SolicitudUrgencias', [SolicitudUrgencia::class, 'urgencias']);
+Route::get('/obtenerMara/{Correo}', [AmbienteController::class, 'MateriasObtener']);
 
 //Registrar Datos
 Route::post('/docentesRegistrar', [DocenteRegistrarController::class, 'registrar']);
@@ -46,6 +48,8 @@ Route::post('/RegistrarSol', [RegistrarSolicitud::class, 'registrar']);
 Route::post('enviar',[UsuarioController::class, 'restablecerContrasenia']);
 Route::post('/masivoDocentes', [CargaDocente::class, 'cargaDocentes']);
 Route::post('/importMaterias', [MateriaController::class, 'import']);
+Route::post('/registrarSolicitud',[SolicitudController::class,'registrarSolicitud']);
+
 //Elimnar datos
 Route::delete('/docentes/{id_docente}', [DocenteController::class, 'eliminar']);
 Route::delete('/borrar/{id_ambiente}', [AmbienteController::class, 'borrarAmbiente']);
