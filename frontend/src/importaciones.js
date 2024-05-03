@@ -24,7 +24,7 @@ import RegistrarDiaHoras from './Registrar/dia_hora/RegistrarDiaHoraActualizar';
 import ListaMaterias from './Listados/ListadoMaterias/ListaMaterias';
 import ListaDocentes from './Listados/ListadoDocentes/ListaDocentes';
 import { Footer } from './navegador/Footer';
-import Solicitar2 from './Usuario/Solicitar/Solicitar2';
+import Solicitar3 from './Usuario/Solicitar/solicitar3';
 import Solicitar1 from './Usuario/Solicitar/Solicitar1';
 import MensajeExitosoU from './Usuario/MensajesUsuario/MensajeExitosoU';
 import MensajeErrorU from './Usuario/MensajesUsuario/MensajeErrorU';
@@ -42,7 +42,7 @@ export {
   React,Router,Routes,Route,HomeUno,Ambientes,Docentes,Navbar,RegistrarMateria,
   LoginForm,RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Reservar, Solicitar,
   Ayuda, ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,AmbientesActualizar,
-  Footer,ListaMaterias,Solicitar2,Solicitar1,MensajeExitosoU,MensajeErrorU,MensajeActExito,MensajeActError
+  Footer,ListaMaterias,Solicitar3,Solicitar1,MensajeExitosoU,MensajeErrorU,MensajeActExito,MensajeActError
   ,DocentesActualizar,MensajeDatExito,MensajeDatError,SolicitarCon1,SolicitarCon2,SolicitarCon3,SolicitarCon4,
   ListaSolicitudesUr,VerSolicitud
 };

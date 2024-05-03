@@ -43,7 +43,7 @@ Route::post('/RegistrarSol', [RegistrarSolicitud::class, 'registrar']);
 Route::post('enviar',[UsuarioController::class, 'restablecerContrasenia']);
 Route::post('/masivoDocentes', [CargaDocente::class, 'CargaMasivaDocentes']);
 Route::post('/importMaterias', [MateriaController::class, 'import']);
-
+Route::post('/registrarSolicitud',[SolicitudController::class,'registrarSolicitud']);
 //Elimnar datos
 Route::delete('/docentes/{id_docente}', [DocenteController::class, 'eliminar']);
 Route::delete('/borrar/{id_ambiente}', [AmbienteController::class, 'borrarAmbiente']);
@@ -57,4 +57,5 @@ Route::put('/ambiente/{id_ambiente}', [AmbienteController::class, 'actualizarAmb
 Route::put ('/actualizar/{id_ambiente}',[AmbienteController::class,'actualizarAmb']);
 Route::put('/materias/{id}', [MateriaRegistrarController::class, 'update']);
 Route::put('/actualizarDocente/{id_docente}', [DocenteController::class, 'editarDocentes']);
-Route::get('/obtenerMaterias/{correo}', [SolicitudController::class, 'obtenerMateriass']);
+
+Route::get('/obtenerMara/{Correo}', [AmbienteController::class, 'MateriasObtener']);

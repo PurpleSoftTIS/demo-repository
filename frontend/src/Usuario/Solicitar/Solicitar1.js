@@ -34,8 +34,9 @@ const Solicitar1 = () => {
 
     const handleReservar = (aulaSeleccionada) => {
       console.log("datos send",datosSend);
-      
-        navigate('/Usuario/Usu/Solicitar2', { state: { ...datosSend, aulaSeleccionada , correo } });
+      const datosConAula = { ...datosSend, aulaSeleccionada };
+
+        navigate('/Usuario/Usu/Solicitar3', { state: datosConAula  });
     };
 
     return (

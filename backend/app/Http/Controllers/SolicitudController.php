@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Usuario;
+use App\Models\Docente;
+use App\Models\Solicitud;
+use App\Models\Hora;
+
+
 use DB;
 
 class SolicitudController extends Controller
@@ -44,38 +50,39 @@ class SolicitudController extends Controller
         return response()->json($datosSolicitados, 200);
 
     }
-    public function obtenerMateriass($correo)
-    {
-        // Buscar el usuario por correo electrónico
-        $usuario = Usuario::where('correo_electronico', $correo)->first();
-    
-        // Verificar si se encontró un usuario
-        if ($usuario) {
-            // Obtener el ID del usuario
-            $idUsuario = $usuario->id_usuario;
-    
-            // Buscar el docente asociado al usuario
-            $docente = Docente::where('id_usuario', $idUsuario)->first();
-    
-            // Verificar si se encontró un docente
-            if ($docente) {
-                // Obtener el ID del docente
-                $idDocente = $docente->id_docente;
-    
-                // Obtener las materias asociadas al docente
-                $materiasDelDocente = DB::table('materia')
-                    ->select('materia.id_materia', 'materia.nombre_materia')
-                    ->join('materia_docente', 'materia.id_materia', '=', 'materia_docente.id_materia')
-                    ->where('materia_docente.id_docente', $idDocente)
-                    ->get();
-    
-                // Devolver las materias encontradas en formato JSON
-                return response()->json($materiasDelDocente, 200);
-            }
-        }
-    
-        // Devolver un mensaje de error si no se encontró el usuario o el docente
-        return response()->json(["error" => "No se encontró el usuario con el correo electrónico proporcionado o no se encontró el docente asociado."], 404);
-    }
-    
+    public function registrarSolicitud(Request $datos){
+   
+
+        $datosReserva=$datos->all();
+        info('Datos recibidos:', $datosReserva);
+         $correo = $datosReserva['correo'];
+         $usuario=Usuario::where('correo_electronico',$correo)->first();
+         $id_usuario=$usuario->id_usuario;
+         $docente=Docente::where('id_usuario',$id_usuario)->first();
+         $id_docente=$docente->id_docente;  
+         $id_ambiente=$datosReserva['aula'];
+         $solicitud = new Solicitud(); 
+         $solicitud->id_docente=$id_docente;
+         $horaInicio = $datosReserva['horaInicio'];
+         $horaFin = $datosReserva['horaFin'];
+         $horaCoincidente = Hora::where('hora_inicio', $horaInicio)
+                                  ->where('hora_fin', $horaFin)
+                                  ->first();
+          $id_hora=$horaCoincidente->id_hora;
+          $solicitud->id_hora=$id_hora;
+          $numero_estudiantes=$datosReserva['numeroEstudiantes'];
+          $solicitud->numero_estudiantes=$numero_estudiantes;
+          $fecha='2024-05-02';
+          $solicitud->fecha_solicitud=$fecha;
+          $motivo=$datosReserva['motivo'];
+          $solicitud->motivo=$motivo;
+          $estado_solicitud='espera';
+          $solicitud->estado_solicitud=$estado_solicitud;
+          $solicitud->tipo_solicitud = 'individual'; 
+
+          $solicitud->save();
+          
+   }
+       
+
 }

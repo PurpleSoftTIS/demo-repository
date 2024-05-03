@@ -61,6 +61,8 @@ const Solicitar = () => {
       numeroEstudiantes: inputValue,
       diaSeleccionado: selectedDay,
       correo:correoElectronico,
+      fechaSeleccionada: date.toLocaleDateString(), 
+
     };
   
     if (!inputValue) {

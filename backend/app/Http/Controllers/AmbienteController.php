@@ -9,6 +9,19 @@ use App\Models\Dia;
 use App\Models\Hora;
 use  App\Models\Horario;
 use App\Models\Diashabiles;
+use App\Models\Usuario;
+use App\Models\Docente;
+use App\Models\Materia;
+use App\Models\MateriaDocente;
+use App\Models\Solicitud;
+use Illuminate\Support\Facades\Response;
+
+
+
+
+
+
+
 use DB;
 
 class AmbienteController extends Controller
@@ -308,5 +321,40 @@ public function CargaMasivaDias(Request $request)
     }
 }
 
+public function MateriasObtener($Correo)
+{   
 
+     $correo_docente= str_replace("%", ".", $Correo);
+
+    $usuario = Usuario::where('correo_electronico', $correo_docente)->first();
+
+    if ($usuario) {
+        // Obtener el ID del usuario
+        $idUsuario = $usuario->id_usuario;
+
+        // Buscar el docente asociado al usuario
+        $docente = Docente::where('id_usuario', $idUsuario)->first();
+
+        // Verificar si se encontró un docente
+        if ($docente) {
+            // Obtener el ID del docente
+            $idDocente = $docente->id_docente;
+
+            // Obtener las materias asociadas al docente
+            $materiasDelDocente = DB::table('materia')
+                ->select('materia.id_materia', 'materia.nombre_materia','materia.grupo')
+                ->join('materia_docente', 'materia.id_materia', '=', 'materia_docente.id_materia')
+                ->where('materia_docente.id_docente', $idDocente)
+                ->get();
+
+            return response()->json($materiasDelDocente, 200);
+        } else {
+            // Si no se encontró el docente, retorna un error con un código de estado 404
+            return response()->json(["error" => "No se encontró el docente asociado al usuario con el correo electrónico proporcionado."], 404);
+        }
+    } else {
+        // Si no se encontró el usuario, retorna un error con un código de estado 404
+        return response()->json(["error" => "No se encontró el usuario con el correo electrónico proporcionado."], 404);
+    }
+}
 }
