@@ -342,8 +342,8 @@ class ComposerStaticIniteb2cbd4fcc2233b9bec226b9a90dd11d
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -589,6 +589,7 @@ class ComposerStaticIniteb2cbd4fcc2233b9bec226b9a90dd11d
         'App\\Http\\Controllers\\MateriaRegistrarController' => __DIR__ . '/../..' . '/app/Http/Controllers/MateriaRegistrarController.php',
         'App\\Http\\Controllers\\RegistrarSolicitud' => __DIR__ . '/../..' . '/app/Http/Controllers/RegistrarSolicitud.php',
         'App\\Http\\Controllers\\SolicitudController' => __DIR__ . '/../..' . '/app/Http/Controllers/SolicitudController.php',
+        'App\\Http\\Controllers\\SolicitudUrgencia' => __DIR__ . '/../..' . '/app/Http/Controllers/SolicitudUrgencia.php',
         'App\\Http\\Controllers\\UbicacionController' => __DIR__ . '/../..' . '/app/Http/Controllers/UbicacionController.php',
         'App\\Http\\Controllers\\UsuarioController' => __DIR__ . '/../..' . '/app/Http/Controllers/UsuarioController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',

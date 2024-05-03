@@ -7,6 +7,7 @@ use App\Http\Controllers\MateriaController;
 use App\Http\Controllers\AmbienteController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\RegistrarSolicitud;
+use App\Http\Controllers\SolicitudUrgencia;
 use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\CarreraController;
 use App\Http\Controllers\DeleteAmbienteController;
@@ -27,10 +28,13 @@ Route::get('/usuarios', [UsuarioController::class, 'index']);
 Route::get('/materias', [MateriaController::class, 'index']);
 Route::get('/listaAmbiente', [AmbienteController::class, 'index']);
 Route::get('/ambienteDispo/{capacidad},{dia},{hora_inicio},{hora_fin}', [AmbienteController::class, 'ambientesDisponibles']);
+Route::get('/ambienteDispoDos/{capacidad}', [AmbienteController::class, 'ambientesDisponiblesDos']);
+
 Route::get('/carreras', [CarreraController::class, 'index']);
 Route::get('/materias/{id}', [MateriaController::class, 'show']);
 Route::get('/obtenerHoras', [SolicitudController::class, 'obtenerHora']);
 Route::get('/obtenerSol', [SolicitudController::class, 'obtenerSolicitud']);
+Route::get('/SolicitudUrgencias', [SolicitudUrgencia::class, 'urgencias']);
 
 //Registrar Datos
 Route::post('/docentesRegistrar', [DocenteRegistrarController::class, 'registrar']);
@@ -43,7 +47,6 @@ Route::post('/RegistrarSol', [RegistrarSolicitud::class, 'registrar']);
 Route::post('enviar',[UsuarioController::class, 'restablecerContrasenia']);
 Route::post('/masivoDocentes', [CargaDocente::class, 'CargaMasivaDocentes']);
 Route::post('/importMaterias', [MateriaController::class, 'import']);
-Route::get('/SolicitudUrgencias', [SolicitudUrgencia::class, 'urgencias']);
 //Elimnar datos
 Route::delete('/docentes/{id_docente}', [DocenteController::class, 'eliminar']);
 Route::delete('/borrar/{id_ambiente}', [AmbienteController::class, 'borrarAmbiente']);

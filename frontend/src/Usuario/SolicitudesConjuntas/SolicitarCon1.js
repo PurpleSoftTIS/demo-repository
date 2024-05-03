@@ -5,15 +5,15 @@ import { useNavigate } from 'react-router-dom';
 
 const SolicitarCon1 = () => {
   const navigate = useNavigate();   
-  const [materia, setMateria] = useState('');
-  const [grupo, setGrupo] = useState('');
-  const [docente, setDocente] = useState('');
+  const [materia, setMateria] = useState("");
+  const [carrera, setCarrera] = useState("");
+  const [docente, setDocente] = useState("");
 
 
   const handleRegistroSolicitud = () => {  
     const datos = {
       materia,
-      grupo,
+      carrera,
       docente
     };  
     navigate('/Usuario/Usu/SolicitarCon2', { state: datos });    
@@ -24,22 +24,22 @@ const SolicitarCon1 = () => {
         <div className="titulo">
           <b className="reserva">Reservas</b>
           <div className="contact-form-phone-parent">
+            <div className="subtitulo">Carrera</div>
+            <input 
+              className="campo" 
+              type="text"
+              value={carrera}
+              onChange={(e) => setCarrera(e.target.value)}
+              placeholder="Ingrese la materia solicitada"
+            />
+          </div>
+          <div className="contact-form-phone-parent">
             <div className="subtitulo">Materia</div>
             <input 
               className="campo" 
               type="text"
               value={materia}
               onChange={(e) => setMateria(e.target.value)}
-              placeholder="Ingrese la materia solicitada"
-            />
-          </div>
-          <div className="contact-form-phone-parent">
-            <div className="subtitulo">Grupo</div>
-            <input 
-              className="campo" 
-              type="text"
-              value={grupo}
-              onChange={(e) => setGrupo(e.target.value)}
               placeholder="Ingrese el grupo"
             />
           </div>
