@@ -3,38 +3,43 @@ import './SolicitarCon4.css';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 const SolicitarCon4 = () => {
-    
-  const navigate = useNavigate();   
+  const navigate = useNavigate();
 
-  const { state: datos } = useLocation();
-  const capacidad = datos ? datos.capacidad : null; 
-  const dia = datos ? datos.dia : null;
-  const hora = datos ? datos.hora : null;
-  const nombreAm = datos ? datos.nombre_ambiente : null;
-  const edificio = datos ? datos.edificio : null;
-  const numeroPiso = datos ? datos.numeroPiso : null;
-  const [errorInconpleto, setErrorIncompleto] = useState("");
+  const { state: datos3 } = useLocation();
+  const materia = datos3 ? datos3.materia : null; 
+  const carrera = datos3 ? datos3.grupo : null;
+  const docente = datos3 ? datos3.docente : null; 
+  const numeroEstudiantes = datos3 ? datos3.numeroEstudiantes : null; 
+  const diaSeleccionado = datos3 ? datos3.diaSeleccionado : null; 
+  const horaSeleccionada = datos3 ? datos3.horaSeleccionada : null;
+  const edificio = datos3 ? datos3.edificio : null;  
+  const numero_piso = datos3 ? datos3.numero_piso : null;  
+  const nombre_ambiente = datos3 ? datos3.nombre_ambiente : null;  
 
-  const [materia, setMateria] = useState('');
-  const [grupo, setGrupo] = useState('');
-  const [motivo, setMotivo] = useState('');
+
+  const [grupo, setGrupo] = useState("");
+  const [motivo, setMotivo] = useState("");
+
 
   const handleRegistroSolicitud = (e) => {
     e.preventDefault();
 
-    const datosSolicitud = {
-      capacidad,
-      dia,
-      hora,
-      nombreAm,
-      edificio,
-      numeroPiso,
+    const datosSolicitud = {      
       materia,
+      carrera,
+      docente,
+      numeroEstudiantes,
+      diaSeleccionado,
+      horaSeleccionada,
+      edificio,
+      numero_piso,
+      nombre_ambiente,
       grupo,
       motivo
     };
+    console.log(datosSolicitud);
   
-    fetch("http://127.0.0.1:8000/api/RegistrarSol", {
+    fetch("http://127.0.0.1:8000/api/RegistrarSolCon", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -54,6 +59,7 @@ const SolicitarCon4 = () => {
     .catch(error => {
       console.error("Error al registrar la solicitud:", error);
     });
+    navigate('/Usuario/Usu/SolicitarCon4')
   };
   return (
 <div className="contact-form-container">
@@ -67,24 +73,10 @@ const SolicitarCon4 = () => {
             <input 
               className="contact-form-rectangle" 
               type="text"
-              value={materia}
-              onChange={(e) => setMateria(e.target.value)}
+              value={grupo}
+              onChange={(e) => setGrupo(e.target.value)}
               placeholder="Ingrese el primer grupo"
-            />
-            <input 
-              className="contact-form-rectangle" 
-              type="text"
-              value={materia}
-              onChange={(e) => setMateria(e.target.value)}
-              placeholder="Ingrese el segundo grupo"
-            />
-            <input 
-              className="contact-form-rectangle" 
-              type="text"
-              value={materia}
-              onChange={(e) => setMateria(e.target.value)}
-              placeholder="Ingrese el tercer grupo"
-            />
+            />            
           </div>          
           <div className="contact-form-message-parent">
             <div className="contact-form-message">Motivo</div>
@@ -95,6 +87,7 @@ const SolicitarCon4 = () => {
               onChange={(e) => setMotivo(e.target.value)}
               placeholder="Ingrese el motivo"
             />
+
           </div>
           <button className="contact-form-cta-button" onClick={handleRegistroSolicitud}>
             <div className="contact-form-button">Enviar</div>

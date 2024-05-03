@@ -1,20 +1,31 @@
+<<<<<<< HEAD
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+=======
+import React, { useState, useEffect,useRef } from 'react';
+import { NavLink, useLocation,useNavigate } from 'react-router-dom';
+>>>>>>> rama_antes_de_la_main
 import logo from '../assets/LogoDefinitivo.jpeg';
 import userLogo from '../assets/IcoUser.png';
 import { FaBars } from 'react-icons/fa';
+
 import './Navbar.css';
 
 
 const NarbarUsuario = () => {
+  const navigate = useNavigate();   
+
   const [isOpen, setIsOpen] = useState(false);
   const [showSesion, setShowSesion] = useState(false);
-  const [nombreUsuario, setNombreUsuario] = useState("Usuario");
   const { state: correoElectronico } = useLocation();
+<<<<<<< HEAD
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
+=======
+  const [showDropdown2, setShowDropdown2] = useState(false);
+  const dropdownRef2 = useRef(null);
+>>>>>>> rama_antes_de_la_main
 
-  
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 991) {
@@ -31,6 +42,8 @@ const NarbarUsuario = () => {
           .then(response => response.json())
           .then(data => {
             setNombreUsuario(data.nombre);
+            navigate('/Usuario/Usu/Solicitar', { state: correoElectronico });
+
           })
           .catch(error => {
             console.error('Error al obtener el nombre del usuario:', error);
@@ -42,9 +55,13 @@ const NarbarUsuario = () => {
       window.removeEventListener('resize', handleResize);
     };   
   }, [correoElectronico]);  
+  const [nombreUsuario, setNombreUsuario] = useState("Usuario");
 
   const toggleSesion = () => {
     setShowSesion(!showSesion);
+  };
+  const toggleDropdown2 = () => {
+    setShowDropdown2(!showDropdown2);
   };
 
   const toggleDropdown = () => {
@@ -63,12 +80,12 @@ const NarbarUsuario = () => {
               SIRA-FCYT
             </div>
           </div>
-
           <button className="navbar-toggler" type="button" onClick={() => setIsOpen(!isOpen)}>
             <FaBars style={{ color: 'white' }} /> 
           </button>
           <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarNav">
             <ul className="navbar-nav mx-auto">
+<<<<<<< HEAD
               <li className="nav-item">
                 <NavLink className="nav-link" to='/Usuario/inicio/HomeDos' exact>Inicio</NavLink> 
               </li>
@@ -94,6 +111,20 @@ const NarbarUsuario = () => {
 
 
 
+=======
+            <li className="nav-item">
+                <NavLink className="nav-link" to='/Admin/inicio/HomeDos'>Inicio</NavLink> 
+              </li>
+              <div className="dropdown-container" ref={dropdownRef2}>
+                  <button className="nav-link dropdown-toggle" onClick={toggleDropdown2} style={{ cursor: 'pointer' }}>Solicitar</button>
+                  {showDropdown2 && (
+                      <div className="menu">
+                          <NavLink className="opciones" to='/Usuario/Usu/Solicitar' activeclassname="active">Indivudual</NavLink>
+                          <NavLink className="opciones" to='/Usuario/Usu/SolicitarCon1' activeclassname="active">Conjunta</NavLink>
+                      </div>              
+                  )}              
+              </div>             
+>>>>>>> rama_antes_de_la_main
               <li className="nav-item">
                 <NavLink className="nav-link" to='/Usuario/Usu/Reservas'>Reservas</NavLink>
               </li>

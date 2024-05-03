@@ -15,7 +15,7 @@ class CreateMateriaTable extends Migration
     {
         Schema::create('materia', function (Blueprint $table) {
             $table->id('id_materia');
-            $table->string('nombre_materia',50);
+            $table->string('nombre_materia',60);
             $table->integer('codigo_materia');
             $table->string('estado_materia',10);
             $table->string('grupo',10);

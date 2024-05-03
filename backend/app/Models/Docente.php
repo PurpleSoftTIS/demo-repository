@@ -18,6 +18,11 @@ class Docente extends Model
         "tipo_docente"
     ];
     
+    public function usuario()
+    {
+        return $this->belongsTo(Usuario::class, 'id_usuario');
+    }
+    
     public function materias()
     {
         return $this->belongsToMany(Materia::class, 'materia_docente', 'id_docente', 'id_materia');

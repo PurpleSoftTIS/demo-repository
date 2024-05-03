@@ -7,6 +7,8 @@ use App\Models\Ambiente;
 use App\Models\Ubicacion;
 use App\Models\Dia;
 use App\Models\Hora;
+use App\Models\Usuario;
+use App\Models\Docente;
 use  App\Models\Horario;
 use App\Models\Diashabiles;
 use DB;
@@ -78,19 +80,41 @@ public function index()
     ->get();
     return response()->json($ambientes, 200);
 }
-public function ambientesDisponibles($capacidad)
+public function ambientesDis($capacidad, $dia, $hora_inicio, $hora_fin)
 {
-    if (!is_numeric($capacidad)) {
-        return response()->json(['error' => 'La capacidad no es un número válido'], 400);
-    }      
     
     $ambientes = DB::table('ambiente')
-        ->select('ambiente.*', 'ubicacion.*')
         ->join('ubicacion', 'ambiente.id_ubicacion', '=', 'ubicacion.id_ubicacion')
         ->where('ambiente.capacidad', '>=', $capacidad)
+        ->whereExists(function ($query) use ($dia, $hora_inicio, $hora_fin) {
+            $query->select(DB::raw(1))
+                ->from('diashabiles')
+                ->join('dia', 'diashabiles.id_dia', '=', 'dia.id_dia')
+                ->join('horario', 'diashabiles.id_dia', '=', 'horario.id_dia')
+                ->join('hora', 'horario.id_hora', '=', 'hora.id_hora')
+                ->whereColumn('ambiente.id_ambiente', 'diashabiles.id_ambiente')
+                ->where('dia.nombre', $dia)
+                ->where(function ($query) use ($hora_inicio, $hora_fin) {
+                    $query->where(function ($query) use ($hora_inicio, $hora_fin) {
+                        $query->where('hora.hora_inicio', '=', $hora_inicio)
+                            ->where('hora.hora_fin', '=', $hora_fin);
+                    });
+                });
+        })
         ->get();
 
-    // Devolver los ambientes encontrados como respuesta JSON
+    return response()->json($ambientes, 200);
+}
+
+
+public function ambientesDi($capacidad)
+{
+    $ambientes = DB::table('ambiente')
+        ->join('ubicacion', 'ambiente.id_ubicacion', '=', 'ubicacion.id_ubicacion')
+        ->where('ambiente.capacidad', '>=', $capacidad)
+        ->select('ambiente.*', 'ubicacion.*')
+
+        ->get();
     return response()->json($ambientes, 200);
 }
 
@@ -235,20 +259,18 @@ public function CargaMasiva(Request $request){
 
     foreach ($datos as $dato) {
         $ubicacion = new Ubicacion();
-        $ubicacion->edificio = $dato[6]; 
-        $ubicacion->save();
-        $idubicacion=$ubicacion->id_ubicacion;
-        $ambiente = new Ambiente();
-         
-        $ambiente->id_ambiente =  $dato[0];
-      
-        $ambiente->id_ubicacion = $idubicacion;
-        $ambiente->tipo_ambiente = $dato[1];
-        $ambiente->nombre_ambiente = $dato[2];
-        $ambiente->capacidad = $dato[3];
-        $ambiente->estado_ambiente = $dato[4];
-        $ambiente->numero_piso = $dato[5];
-        $ambiente->save();
+        $ubicacion -> edificio = $dato[6]; 
+        $ubicacion -> save();
+        $idubicacion = $ubicacion -> id_ubicacion;
+        $ambiente = new Ambiente();         
+        $ambiente -> id_ambiente =  $dato[0];      
+        $ambiente -> id_ubicacion = $idubicacion;
+        $ambiente -> tipo_ambiente = $dato[1];
+        $ambiente -> nombre_ambiente = $dato[2];
+        $ambiente -> capacidad = $dato[3];
+        $ambiente -> estado_ambiente = $dato[4];
+        $ambiente -> numero_piso = $dato[5];
+        $ambiente -> save();
     }
 }
 public function CargaMasivaDias(Request $request)
@@ -297,6 +319,38 @@ public function CargaMasivaDias(Request $request)
         }
     }
 }
+public function MateriasObtener($Correo)
+{   
+    $usuario = Usuario::where('correo_electronico', $Correo)->first();
 
+    if ($usuario) {
+        // Obtener el ID del usuario
+        $idUsuario = $usuario->id_usuario;
+
+        // Buscar el docente asociado al usuario
+        $docente = Docente::where('id_usuario', $idUsuario)->first();
+
+        // Verificar si se encontró un docente
+        if ($docente) {
+            // Obtener el ID del docente
+            $idDocente = $docente->id_docente;
+
+            // Obtener las materias asociadas al docente
+            $materiasDelDocente = DB::table('materia')
+                ->select('materia.id_materia', 'materia.nombre_materia','materia.grupo')
+                ->join('materia_docente', 'materia.id_materia', '=', 'materia_docente.id_materia')
+                ->where('materia_docente.id_docente', $idDocente)
+                ->get();
+
+            return response()->json($materiasDelDocente, 200);
+        } else {
+            // Si no se encontró el docente, retorna un error con un código de estado 404
+            return response()->json(["error" => "No se encontró el docente asociado al usuario con el correo electrónico proporcionado."], 404);
+        }
+    } else {
+        // Si no se encontró el usuario, retorna un error con un código de estado 404
+        return response()->json(["error" => "No se encontró el usuario con el correo electrónico proporcionado."], 404);
+    }
+}
 
 }

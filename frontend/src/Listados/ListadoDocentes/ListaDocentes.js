@@ -91,41 +91,41 @@ const ListaDocentes = () => {
   const cancelarBorrarTodo = () => {
     setShowDeleteConfirmation(false);
   }; 
-  const handleArchivoSeleccionado = async (event) => {
+  const cargaMasiva = (event) => {
     const files = event.target.files;
     if (files.length) {
       const file = files[0];
       const reader = new FileReader();
   
-      reader.onload = async (event) => {
+      reader.onload = (event) => {
         const wb = read(event.target.result, { type: 'binary' });
         const wsname = wb.SheetNames[0];
         const ws = wb.Sheets[wsname];
         const data = utils.sheet_to_json(ws, { header: 1 });
   
-        try {
-          const response = await fetch('http://127.0.0.1:8000/api/CargaDocentes', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-          });
-  
+        fetch('http://127.0.0.1:8000/api/masivoDocentes', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+        .then(response => {
           if (response.ok) {
             console.log('Datos enviados al servidor exitosamente.');
           } else {
             throw new Error('Error al enviar datos al servidor.');
           }
-        } catch (error) {
+        })
+        .catch(error => {
           console.error('Error:', error);
-        }
+        });
       };
   
       reader.readAsBinaryString(file);
     }
-  }; 
- 
+  };
+  
   const editarDocente = (docente) => {
     const datos = {
       id_docente:docente.id_docente,
@@ -140,7 +140,7 @@ const ListaDocentes = () => {
   };
   return (
     
-    <div className="container" style={{ height: '100vh' }}>
+    <div className="container" style={{ minHeight: '78.7vh' }}>
       <div style={{ height: '4vh' }}></div>  
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ margin: 0 }}>Docentes Registrados:</h2>
@@ -162,7 +162,7 @@ const ListaDocentes = () => {
                 type="file"
                 accept=".csv"
                 style={{ display: 'none' }}
-                onChange={handleArchivoSeleccionado} // Asociado a la importación de ambientes
+                onChange={cargaMasiva} // Asociado a la importación de ambientes
           />          
           <button className="butn butn-borrar" onClick={borrarTodo}>
             Borrar Todo<FaTrash className="icon"/>

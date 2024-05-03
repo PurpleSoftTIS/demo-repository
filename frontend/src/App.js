@@ -1,10 +1,10 @@
 import './App.css';
 import { React, Router, Routes, Route, HomeUno, Ambientes, Docentes, Navbar, RegistrarMateria,
         LoginForm, RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Reservar, Solicitar, Ayuda,
-        ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,
-        AmbientesActualizar,Footer,ListaMaterias,Solicitar2,Solicitar1,MensajeExitosoU,
+        ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,ListaSolicitudesUr,
+        AmbientesActualizar,Footer,ListaMaterias,Solicitar3,Solicitar1,MensajeExitosoU,
         MensajeErrorU,MensajeActExito,MensajeActError,DocentesActualizar,MensajeDatExito,MensajeDatError
-      ,SolicitarCon1,SolicitarCon2,SolicitarCon3,SolicitarCon4} from './importaciones';
+      ,SolicitarCon1,SolicitarCon2,SolicitarCon3,SolicitarCon4,VerSolicitud} from './importaciones';
        
 
 function AdminRoutes() {
@@ -14,6 +14,8 @@ function AdminRoutes() {
     <Routes>
       <Route path='/Inicio/HomeUno' element={<HomeUno/>}/>  
       <Route path='/ListaSolicitudes' element={<ListaSolicitudes />} />
+      <Route path='/DetallesSolicitud' element={<VerSolicitud />} />
+      <Route path='/ListaSolicitudesUr' element={<ListaSolicitudesUr />} />
       <Route path='/Registro/Ambientes' element={<Ambientes />} />
       <Route path='/Registro/Materias' element={<RegistrarMateria />} />
       <Route path='/Editar/Materia/:id' element={<RegistrarMateria />} />
@@ -48,7 +50,7 @@ function UserRoutes() {
       <Route path='/Usu/Solicitar1' element={<Solicitar1 />} />
       <Route path='/Usu/Reservas' element={<Reservar />} />
       <Route path='/Usu/Ayuda' element={<Ayuda />} /> 
-      <Route path='Usu/DetallesSol' element={<Solicitar2/>}/>
+      <Route path='Usu/DetallesSol' element={<Solicitar3/>}/>
       <Route path='/Mensaje/Exitoso' element={<MensajeExitosoU/>}/>
       <Route path='/Mensaje/Error' element={<MensajeErrorU/>}/>
       <Route path='/Usu/SolicitarCon1' element={<SolicitarCon1/>} />

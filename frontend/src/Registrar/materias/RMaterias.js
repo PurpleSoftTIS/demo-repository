@@ -1,6 +1,6 @@
 import React, { useEffect, useState  } from 'react'
 import "./RMaterias.css";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const RegistrarMateria = () => {
   const [docentes, setDocentes] = useState([]);
@@ -10,6 +10,7 @@ const RegistrarMateria = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [carreras, setCarreras] = useState([]);
   const { id } = useParams();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nombre_materia: '',
     codigo_materia: '',
@@ -82,11 +83,14 @@ const RegistrarMateria = () => {
           grupo: '',
           id_carrera: '',
         });
+        navigate("/Admin/Mensaje/RegistroExitoso");
       } else {
         console.error(`Error al ${id ? 'actualizar' : 'registrar'} materia`);
+        navigate("/Admin/Mensaje/RegistroError");
       }
     } catch (error) {
       console.error(`Error al ${id ? 'actualizar' : 'registrar'} materia:`, error);
+      navigate("/Admin/Mensaje/RegistroError");
     } finally {
       setIsSubmitting(false);
     }
@@ -127,7 +131,7 @@ const RegistrarMateria = () => {
     }
 
     // Validar nombre de la materia
-    if (formData.nombre_materia && !/^[a-zA-Z0-9\s]+$/.test(formData.nombre_materia)) {
+    if (formData.nombre_materia && !/^[a-zA-Z0-9áéíóúÁÉÍÓÚ\s]+$/.test(formData.nombre_materia)) {
       errors.nombre_materia = 'Solo se aceptan caracteres alfanuméricos';
     } else if (formData.nombre_materia.length > 50) {
       errors.nombre_materia = 'Máximo 50 caracteres para el nombre';
@@ -299,9 +303,13 @@ const RegistrarMateria = () => {
       <div className="checkout5" data-animate-on-scroll>
         <button className="button22" disabled={isSubmitting}>
           {isSubmitting ? (
-            <div className="button-cta22">Registrando...</div>
+            <div className="button-cta22">
+              {id ? 'Editando...' : 'Registrando...'}
+              </div>
           ) : (
-            <div className="button-cta22">Registrar Materia</div>
+            <div className="button-cta22">
+              {id ? 'Editar Materia' : 'Registrar Materia'}
+            </div>
           )}
         </button>
       </div>
