@@ -110,6 +110,15 @@ public function ambientesDisponibles($capacidad,$dia,$horaInicio,$horaFin)
 
 
 }
+public function ambientesDisponiblesDos($capacidad)
+{
+    $ambientes = DB::table('ambiente')
+        ->select('ambiente.*', 'ubicacion.*')
+        ->join('ubicacion', 'ambiente.id_ubicacion', '=', 'ubicacion.id_ubicacion')
+        ->where('ambiente.capacidad', '>=', $capacidad)
+        ->get();
+    return response()->json($ambientes, 200);
+}
 
     public function actualizarAmbiente(Request $request, $id_ambiente)
 {   

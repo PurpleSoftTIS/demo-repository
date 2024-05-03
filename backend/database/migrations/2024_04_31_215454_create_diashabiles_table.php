@@ -15,6 +15,7 @@ class CreateDiashabilesTable extends Migration
     {
        
         Schema::create('diashabiles', function (Blueprint $table) {
+            $table->id('id_diashabiles');
             $table->foreignId("id_dia")->constrained("dia", "id_dia");
             $table->foreignId("id_ambiente")->constrained("ambiente", "id_ambiente");
 
