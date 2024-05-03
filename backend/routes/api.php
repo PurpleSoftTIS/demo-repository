@@ -12,6 +12,7 @@ use App\Http\Controllers\CarreraController;
 use App\Http\Controllers\DeleteAmbienteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SolicitudUrgencia;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

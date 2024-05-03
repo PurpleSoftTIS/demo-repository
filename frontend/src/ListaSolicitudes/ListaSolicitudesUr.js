@@ -14,6 +14,7 @@ const ListaSolicitudesUr = () => {
       .then((response) => response.json())
       .then((data) => {
         setSolicitudes(data);
+        console.log(data);
       })
       .catch((error) => console.error('Error al obtener los datos:', error));
   }, []);
