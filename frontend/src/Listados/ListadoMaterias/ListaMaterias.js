@@ -9,6 +9,9 @@ const ListaMaterias = () => {
   const [materias, setMaterias] = useState([]);
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [advertenciaBorrarTodo, setAdvertenciaBorrarTodo] = useState(false);
+  const [advertenciaEliminar, setAdvertenciaEliminar] = useState(false);
+  const [idMateria, setIdMateria] = useState(null);
   const sortedMaterias = materias.sort((a, b) => a.id_materia - b.id_materia);
 
   useEffect(() => {
@@ -33,6 +36,8 @@ const ListaMaterias = () => {
       }
     } catch (error) {
       console.error('Error al eliminar materia:', error);
+    } finally {
+      setIdMateria(null); // Restablecer el estado idMateria a null
     }
   };
   
@@ -52,7 +57,7 @@ const ListaMaterias = () => {
     }
   };  
 
-  const handleFileChange = (event) => { // Nuevo controlador de eventos para la entrada de archivo
+  const handleFileChange = (event) => { 
     setFile(event.target.files[0]);
   };
 
@@ -104,7 +109,7 @@ const ListaMaterias = () => {
           <button className="butn butn-csv" onClick={handleImportClick}>
             Importar<FaFileCsv className="icon"/>
           </button>
-          <button className="butn butn-borrar" onClick={borrarTodo}>
+          <button className="butn butn-borrar" onClick={() => setAdvertenciaBorrarTodo(true)}>
             Borrar Todo<FaTrash className="icon"/>
           </button>
         </div>
@@ -140,12 +145,40 @@ const ListaMaterias = () => {
               </td>
               <td>
               <NavLink className="btn btn-editar mr-2" to={`/Admin/Editar/Materia/${materia.id_materia}`}>Editar</NavLink>
-              <button className="btn btn-eliminar" onClick={() => eliminarMateria(materia.id_materia)}>Eliminar</button>
+              <button className="btn btn-eliminar" onClick={() => { setIdMateria(materia.id_materia); setAdvertenciaEliminar(true); }}>Eliminar</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      {advertenciaBorrarTodo && (
+        <div className="overlay">
+          <div className="Advertencia">
+            <div className="text">
+              <h3 className="til1">Advertencia</h3>
+              <p className="til2">¿Estás seguro de eliminar todas las materias?</p>
+            </div>
+            <div className="botones">
+              <button className="conf" onClick={() => { setAdvertenciaBorrarTodo(false); borrarTodo(); }}>Sí</button>
+              <button className="ref" onClick={() => setAdvertenciaBorrarTodo(false)}>No</button>
+            </div>
+          </div>
+        </div>
+      )}
+      {advertenciaEliminar && (
+        <div className="overlay">
+          <div className="Advertencia">
+            <div className="text">
+              <h3 className="til1">Advertencia</h3>
+              <p className="til2">¿Estás seguro de eliminar esta materia?</p>
+            </div>
+            <div className="botones">
+              <button className="conf" onClick={() => { setAdvertenciaEliminar(false); eliminarMateria(idMateria); }}>Sí</button>
+              <button className="ref" onClick={() => setAdvertenciaEliminar(false)}>No</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

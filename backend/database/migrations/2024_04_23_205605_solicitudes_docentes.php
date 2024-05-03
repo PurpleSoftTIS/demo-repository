@@ -13,7 +13,7 @@ class SolicitudesDocentes extends Migration
      */
     public function up()
     {
-        Schema::create('solicitudesDocentes', function (Blueprint $table) {
+        Schema::create('solicitudes_docentes', function (Blueprint $table) {
             $table->foreignId("id_docente")->constrained("docente", "id_docente");
             $table->foreignId("id_solicitud")->constrained("solicitud", "id_solicitud");
             $table->timestamps();

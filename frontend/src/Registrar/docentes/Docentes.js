@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Docentes.css";
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Docentes = () => {
   var exitoso = true;
@@ -18,8 +18,11 @@ const Docentes = () => {
   const [errorInconpleto, setErrorIncompleto] = useState("");
   const [errorCodigo, setErrorCodigo] = useState("");
   const [errorCorreo, setErrorCorreo] = useState("");
+  const navigate = useNavigate();
 
   const handleRegistroDocente = (e) => {
+    
+    exitoso=false;
     e.preventDefault();
     // Obtener los valores de los campos del formulario
     const nombres = document.querySelector(".input11").value.trim();
@@ -139,11 +142,13 @@ const Docentes = () => {
         setCodigoDocente("");
 
           exitoso= true;
+          navigate("/Admin/Mensaje/RegistroExitoso");
         // Aquí puedes mostrar un mensaje de éxito o redirigir a otra página
       })
       .catch(error => {
         console.error("Error al registrar el ambiente:", error);
         exitoso = false;
+        navigate("/Admin/Mensaje/RegistroError")
         // Aquí puedes mostrar un mensaje de error al usuario
       });
 
@@ -257,7 +262,7 @@ const Docentes = () => {
       </form>
       <div className="checkout1" data-animate-on-scroll>
         <button className="button" onClick={handleRegistroDocente}>
-        <NavLink className="button-cta" to={exitoso ? "/Admin/Mensaje/RegistroExitoso" : "/Admin/Mensaje/RegistroError"}>Registrar Docente</NavLink>
+        <div className="button-cta">Registrar Docente</div>
         </button>
       </div>
     </div>

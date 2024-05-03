@@ -1,12 +1,15 @@
 import React, { useState, useEffect,useRef } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation,useNavigate } from 'react-router-dom';
 import logo from '../assets/LogoDefinitivo.jpeg';
 import userLogo from '../assets/IcoUser.png';
 import { FaBars } from 'react-icons/fa';
+
 import './Navbar.css';
 
 
 const NarbarUsuario = () => {
+  const navigate = useNavigate();   
+
   const [isOpen, setIsOpen] = useState(false);
   const [showSesion, setShowSesion] = useState(false);
   const { state: correoElectronico } = useLocation();
@@ -29,6 +32,8 @@ const NarbarUsuario = () => {
           .then(response => response.json())
           .then(data => {
             setNombreUsuario(data.nombre);
+            navigate('/Usuario/Usu/Solicitar', { state: correoElectronico });
+
           })
           .catch(error => {
             console.error('Error al obtener el nombre del usuario:', error);
@@ -66,6 +71,9 @@ const NarbarUsuario = () => {
           </button>
           <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarNav">
             <ul className="navbar-nav mx-auto">
+            <li className="nav-item">
+                <NavLink className="nav-link" to='/Admin/inicio/HomeDos'>Inicio</NavLink> 
+              </li>
               <div className="dropdown-container" ref={dropdownRef2}>
                   <button className="nav-link dropdown-toggle" onClick={toggleDropdown2} style={{ cursor: 'pointer' }}>Solicitar</button>
                   {showDropdown2 && (
