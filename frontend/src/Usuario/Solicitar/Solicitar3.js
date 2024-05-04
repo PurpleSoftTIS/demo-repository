@@ -20,20 +20,10 @@ const Solicitar3 = () => {
   
 
  console.log(correo);
- console.log(aula);
   useEffect(() => {
-    const Correo = correo;
-    const codificarPunto = (cadena) => {
-      if (typeof cadena === 'string') {
-        return cadena.replace(/\./g, '.');
-      } else {
-        
-        return ''; 
-      }
-    };
+    
  
-    const correoCodificado = codificarPunto(Correo);
-    fetch(`http://127.0.0.1:8000/api/obtenerMara/${correoCodificado}`)
+    fetch(`http://127.0.0.1:8000/api/obtenerMara/${correo}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Error en la solicitud a ' + response.url + ': ' + response.statusText);
