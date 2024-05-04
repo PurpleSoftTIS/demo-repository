@@ -55,7 +55,7 @@ const ListaSolicitudesUr = () => {
           {solicitudes.map((solicitud, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
-              <td>{solicitud.nombre}</td>
+              <td>{solicitud.apellido_paterno}</td>
               <td>{solicitud.nombre_materia}</td>
               <td>{solicitud.capacidad}</td>
               <td>{solicitud.nombre_ambiente}</td>

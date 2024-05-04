@@ -7,6 +7,7 @@ use App\Http\Controllers\MateriaController;
 use App\Http\Controllers\AmbienteController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\RegistrarSolicitud;
+use App\Http\Controllers\SolicitudUrgencia;
 use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\CarreraController;
 use App\Http\Controllers\DeleteAmbienteController;
@@ -30,6 +31,7 @@ Route::get('/carreras', [CarreraController::class, 'index']);
 Route::get('/materias/{id}', [MateriaController::class, 'show']);
 Route::get('/obtenerHoras', [SolicitudController::class, 'obtenerHora']);
 Route::get('/obtenerSol', [SolicitudController::class, 'obtenerSolicitud']);
+Route::get('/SolicitudUrgencias', [SolicitudUrgencia::class, 'urgencias']);
 
 //Registrar Datos
 Route::post('/docentesRegistrar', [DocenteRegistrarController::class, 'registrar']);

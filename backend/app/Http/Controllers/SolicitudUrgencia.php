@@ -24,14 +24,9 @@ class SolicitudUrgencia extends Controller{
              'solicitud.*', 
              'materia.*'
          )
-         ->selectRaw('CONCAT(usuario.nombre, " ", usuario.apellido_paterno, " ", usuario.apellido_materno) as nombre')
 
-         ->whereIn('solicitud.tipo_solicitud', ['examen', 'examen de mesa'])
 
-        ->whereBetween('solicitud.fecha_solicitud', [
-            now()->subDays(1)->toDateString(),
-            now()->toDateString() 
-        ])
+        
         ->get();
     
     return response()->json($datosSolicitudes, 200);
