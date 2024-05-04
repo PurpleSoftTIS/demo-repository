@@ -662,3 +662,69 @@
 [2024-05-03 09:34:20] local.INFO: Importación exitosa  
 [2024-05-03 09:51:56] local.INFO: Datos recibidos del frontend: {"correo":"gabo2cabero@gmail.com","numeroEstudiantes":"50","horaInicio":"09:45:00","horaFin":"11:15:00","fecha":"3\/5\/2024","aula":18,"motivo":"Examen"}  
 [2024-05-03 09:53:26] local.INFO: Datos recibidos del frontend: {"correo":"gabo2cabero@gmail.com","numeroEstudiantes":"50","horaInicio":"14:15:00","horaFin":"15:45:00","fecha":"3\/5\/2024","aula":36,"motivo":"Examen Final"}  
+[2024-05-04 02:32:51] local.INFO: Datos recibidos del frontend: {"correo":"gabo2cabero@gmail.com","numeroEstudiantes":"50","horaInicio":"09:45:00","horaFin":"11:15:00","fecha":"23\/5\/2024","aula":1,"motivo":"Examen Final"}  
+[2024-05-04 02:42:23] local.ERROR: Method Illuminate\Database\Schema\Blueprint::id_ambiente does not exist. {"exception":"[object] (BadMethodCallException(code: 0): Method Illuminate\\Database\\Schema\\Blueprint::id_ambiente does not exist. at C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Macroable\\Traits\\Macroable.php:113)
+[stacktrace]
+#0 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\database\\migrations\\2024_05_04_024129_create_diashabiles_table.php(17): Illuminate\\Database\\Schema\\Blueprint->__call('id_ambiente', Array)
+#1 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Schema\\Builder.php(226): CreateDiashabilesTable->{closure}(Object(Illuminate\\Database\\Schema\\Blueprint))
+#2 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\helpers.php(263): Illuminate\\Database\\Schema\\Builder->Illuminate\\Database\\Schema\\{closure}(Object(Illuminate\\Database\\Schema\\Blueprint))
+#3 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Schema\\Builder.php(223): tap(Object(Illuminate\\Database\\Schema\\Blueprint), Object(Closure))
+#4 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Facades\\Facade.php(261): Illuminate\\Database\\Schema\\Builder->create('diashabiles', Object(Closure))
+#5 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\database\\migrations\\2024_05_04_024129_create_diashabiles_table.php(16): Illuminate\\Support\\Facades\\Facade::__callStatic('create', Array)
+#6 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(472): CreateDiashabilesTable->up()
+#7 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(394): Illuminate\\Database\\Migrations\\Migrator->runMethod(Object(Illuminate\\Database\\MySqlConnection), Object(CreateDiashabilesTable), 'up')
+#8 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(403): Illuminate\\Database\\Migrations\\Migrator->Illuminate\\Database\\Migrations\\{closure}()
+#9 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(202): Illuminate\\Database\\Migrations\\Migrator->runMigration(Object(CreateDiashabilesTable), 'up')
+#10 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(167): Illuminate\\Database\\Migrations\\Migrator->runUp('C:\\\\Users\\\\Gabrie...', 3, false)
+#11 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(112): Illuminate\\Database\\Migrations\\Migrator->runPending(Array, Array)
+#12 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Console\\Migrations\\MigrateCommand.php(84): Illuminate\\Database\\Migrations\\Migrator->run(Array, Array)
+#13 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Migrations\\Migrator.php(606): Illuminate\\Database\\Console\\Migrations\\MigrateCommand->Illuminate\\Database\\Console\\Migrations\\{closure}()
+#14 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Console\\Migrations\\MigrateCommand.php(77): Illuminate\\Database\\Migrations\\Migrator->usingConnection(NULL, Object(Closure))
+#15 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(36): Illuminate\\Database\\Console\\Migrations\\MigrateCommand->handle()
+#16 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Util.php(40): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#17 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(93): Illuminate\\Container\\Util::unwrapIfClosure(Object(Closure))
+#18 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(35): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#19 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(653): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#20 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(136): Illuminate\\Container\\Container->call(Array)
+#21 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\console\\Command\\Command.php(298): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#22 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Command.php(120): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#23 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\console\\Application.php(1040): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#24 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\console\\Application.php(301): Symfony\\Component\\Console\\Application->doRunCommand(Object(Illuminate\\Database\\Console\\Migrations\\MigrateCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#25 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\console\\Application.php(171): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#26 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(94): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#27 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(129): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#28 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#29 {main}
+"} 
+[2024-05-04 02:47:25] local.INFO: Datos recibidos del frontend: {"correo":"gabo2cabero@gmail.com","numeroEstudiantes":"80","horaInicio":"11:15:00","horaFin":"12:45:00","fecha":"24\/5\/2024","aula":17,"motivo":"Examen"}  
+[2024-05-04 02:47:56] local.INFO: Datos recibidos del frontend: {"correo":null,"numeroEstudiantes":"50","horaInicio":"11:15:00","horaFin":"12:45:00","fecha":"24\/5\/2024","aula":1,"motivo":null}  
+[2024-05-04 02:47:56] local.ERROR: Error al registrar la solicitud: Attempt to read property "id_usuario" on null  
+[2024-05-04 02:52:00] local.INFO: Días hábiles obtenidos para el ambiente 1:  
+[2024-05-04 02:52:10] local.INFO: Datos recibidos: {"id":1,"nombreAula":"606","capacidadEstudiantes":50,"edificio":"Departamento de Biologia","piso":"1","Tipo":"Aula auditorio Biologia 1","diasHoras":{"Martes":["08:15-09:45","17:45-18:45"]}} 
+[2024-05-04 02:52:25] local.INFO: Días hábiles obtenidos para el ambiente 1:  
+[2024-05-04 02:52:25] local.INFO: Días hábiles obtenidos para Martes:  
+[2024-05-04 02:52:25] local.INFO: Días hábiles obtenidos para el ambiente [{"id_horario":61,"id_dia":7,"id_hora":11,"created_at":"2024-05-04T02:52:10.000000Z","updated_at":"2024-05-04T02:52:10.000000Z"},{"id_horario":62,"id_dia":7,"id_hora":12,"created_at":"2024-05-04T02:52:10.000000Z","updated_at":"2024-05-04T02:52:10.000000Z"}]:  
+[2024-05-04 02:52:25] local.INFO: Días hábiles obtenidos para el ambiente 08:15:00:  
+[2024-05-04 02:52:25] local.INFO: Días hábiles obtenidos para el ambiente 09:45:00:  
+[2024-05-04 02:52:25] local.INFO: Días hábiles obtenidos para el ambiente 17:45:00:  
+[2024-05-04 02:52:25] local.INFO: Días hábiles obtenidos para el ambiente 18:45:00:  
+[2024-05-04 02:52:43] local.INFO: Datos recibidos: {"id":1,"nombreAula":"606","capacidadEstudiantes":50,"edificio":"Departamento de Biologia","piso":"1","Tipo":"Aula auditorio Biologia 1","diasHoras":{"Martes":["08:15-09:45","17:45-18:45"],"Lunes":[],"Miércoles":[],"Jueves":[],"Viernes":["12:45-14:15","14:15-15:45"]}} 
+[2024-05-04 02:52:47] local.INFO: Días hábiles obtenidos para el ambiente 1:  
+[2024-05-04 02:52:47] local.INFO: Días hábiles obtenidos para Martes:  
+[2024-05-04 02:52:47] local.INFO: Días hábiles obtenidos para el ambiente [{"id_horario":63,"id_dia":8,"id_hora":13,"created_at":"2024-05-04T02:52:43.000000Z","updated_at":"2024-05-04T02:52:43.000000Z"},{"id_horario":64,"id_dia":8,"id_hora":14,"created_at":"2024-05-04T02:52:43.000000Z","updated_at":"2024-05-04T02:52:43.000000Z"}]:  
+[2024-05-04 02:52:47] local.INFO: Días hábiles obtenidos para el ambiente 08:15:00:  
+[2024-05-04 02:52:47] local.INFO: Días hábiles obtenidos para el ambiente 09:45:00:  
+[2024-05-04 02:52:47] local.INFO: Días hábiles obtenidos para el ambiente 17:45:00:  
+[2024-05-04 02:52:47] local.INFO: Días hábiles obtenidos para el ambiente 18:45:00:  
+[2024-05-04 02:52:47] local.INFO: Días hábiles obtenidos para Lunes:  
+[2024-05-04 02:52:47] local.INFO: Días hábiles obtenidos para el ambiente []:  
+[2024-05-04 02:52:47] local.INFO: Días hábiles obtenidos para Miércoles:  
+[2024-05-04 02:52:47] local.INFO: Días hábiles obtenidos para el ambiente []:  
+[2024-05-04 02:52:47] local.INFO: Días hábiles obtenidos para Jueves:  
+[2024-05-04 02:52:47] local.INFO: Días hábiles obtenidos para el ambiente []:  
+[2024-05-04 02:52:47] local.INFO: Días hábiles obtenidos para Viernes:  
+[2024-05-04 02:52:47] local.INFO: Días hábiles obtenidos para el ambiente [{"id_horario":65,"id_dia":12,"id_hora":15,"created_at":"2024-05-04T02:52:43.000000Z","updated_at":"2024-05-04T02:52:43.000000Z"},{"id_horario":66,"id_dia":12,"id_hora":16,"created_at":"2024-05-04T02:52:43.000000Z","updated_at":"2024-05-04T02:52:43.000000Z"}]:  
+[2024-05-04 02:52:47] local.INFO: Días hábiles obtenidos para el ambiente 12:45:00:  
+[2024-05-04 02:52:47] local.INFO: Días hábiles obtenidos para el ambiente 14:15:00:  
+[2024-05-04 02:52:47] local.INFO: Días hábiles obtenidos para el ambiente 14:15:00:  
+[2024-05-04 02:52:47] local.INFO: Días hábiles obtenidos para el ambiente 15:45:00:  

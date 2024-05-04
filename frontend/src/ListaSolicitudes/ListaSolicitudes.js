@@ -1,8 +1,20 @@
-import React, {useEffect,useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import './ListaSolicitudes.css';
 
 const ListaSolicitudes = () => {
   const [solicitudes, setSolicitudes] = useState([]);
+  const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [formularioData, setFormData] = useState({
+    Docente: "",
+    Materia: "",
+    Grupo: "",
+    Aula: "",
+    Capacidad: "",
+    Fecha: "",
+    Hora: "",
+    Motivo: "",
+    Tipo_de_solicitud: ""
+  });
 
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/SolicitudUrgencias', {
@@ -19,8 +31,35 @@ const ListaSolicitudes = () => {
       .catch((error) => console.error('Error al obtener los datos:', error));
   }, []);
 
+  const mostrarFormularioParaSolicitud = (solicitud) => {
+    setFormData({
+      docente: solicitud.nombre,
+      materia: solicitud.nombre_materia,
+      grupo: solicitud.grupo,
+      aula: solicitud.nombre_ambiente,
+      capacidad: solicitud.numero_estudiantes,
+      tipo_de_solicitud: solicitud.tipo_solicitud,
+      fecha: solicitud.fecha_solicitud,
+      hora: solicitud.hora_inicio,
+      motivo: solicitud.motivo
+    });
+    setMostrarFormulario(true);
+  };
+
+  const cerrarFormulario = () => {
+    setMostrarFormulario(false);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
   return (
-    <div className="container" style={{ height: '100vh' }}>
+    <div className="container" style={{ minHeight: '78.7vh' }}>
       <div style={{ height: '4vh' }}></div>
       <div
         style={{
@@ -48,8 +87,11 @@ const ListaSolicitudes = () => {
           </tr>
         </thead>
         <tbody>
-        {Array.isArray(solicitudes) && solicitudes.map((solicitud, index) => (
-           <tr key={index}>
+          {solicitudes.map((solicitud, index) => (
+            <tr key={index}
+              className="fila-lista"
+              onClick={() => mostrarFormularioParaSolicitud(solicitud)}
+            >
               <td>{index + 1}</td>
               <td>{solicitud.nombre}</td>
               <td>{solicitud.nombre_materia}</td>
@@ -64,8 +106,33 @@ const ListaSolicitudes = () => {
           ))}
         </tbody>
       </table>
+      {mostrarFormulario && (
+        <div className="overlay" onClick={cerrarFormulario}>
+          <div className="formulario-emergente" onClick={(e) => e.stopPropagation()}>
+            <div className="contact-form-container">
+              <section className="contenedor">
+                <div className="contact-form-sub-heading-cta">
+                  <b className="contact-form-enter-details">Detalles de Solicitud</b>
+                  {Object.entries(formularioData).map(([key, value]) => (
+                    <div key={key} className="contact-form-phone-parent">
+                      <div className="contact-form-phone">{key.replace(/_/g, ' ')}</div>
+                      <input
+                        className="contact-form-rectangle"
+                        type="text"
+                        name={key}
+                        value={value}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default ListaSolicitudes
+export default ListaSolicitudes;
