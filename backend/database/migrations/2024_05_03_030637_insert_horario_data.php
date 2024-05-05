@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class InsertDiashabilesData extends Migration
+class InsertHorarioData extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class InsertDiashabilesData extends Migration
      */
     public function up()
     {
-        $diashabiles = [
+        $horarios = [
             [
                 "id_dia" => '1',
                 "id_hora" => '1'
@@ -256,13 +256,14 @@ class InsertDiashabilesData extends Migration
             ],            
         ];
 
-        foreach ($diashabiles as $dia) {
-            DB::table('hora')->insert($dia);
+        foreach ($horarios as $horario) {
+            DB::table('horario')->insert($horario);
         }
     }
 
     /**
      * Reverse the migrations.
+     *
      * @return void
      */
     public function down()

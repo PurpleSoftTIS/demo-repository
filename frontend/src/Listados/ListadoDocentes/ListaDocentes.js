@@ -91,7 +91,7 @@ const ListaDocentes = () => {
   const cancelarBorrarTodo = () => {
     setShowDeleteConfirmation(false);
   }; 
-  const handleArchivoSeleccionado = (event) => {
+  const cargaMasiva = (event) => {
     const files = event.target.files;
     if (files.length) {
       const file = files[0];
@@ -162,7 +162,7 @@ const ListaDocentes = () => {
                 type="file"
                 accept=".csv"
                 style={{ display: 'none' }}
-                onChange={handleArchivoSeleccionado} // Asociado a la importación de ambientes
+                onChange={cargaMasiva} // Asociado a la importación de ambientes
           />          
           <button className="butn butn-borrar" onClick={borrarTodo}>
             Borrar Todo<FaTrash className="icon"/>

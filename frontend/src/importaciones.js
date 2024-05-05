@@ -24,7 +24,7 @@ import RegistrarDiaHoras from './Registrar/dia_hora/RegistrarDiaHoraActualizar';
 import ListaMaterias from './Listados/ListadoMaterias/ListaMaterias';
 import ListaDocentes from './Listados/ListadoDocentes/ListaDocentes';
 import { Footer } from './navegador/Footer';
-import Solicitar3 from './Usuario/Solicitar/solicitar3';
+import Solicitar3 from './Usuario/Solicitar/Solicitar3';
 import Solicitar1 from './Usuario/Solicitar/Solicitar1';
 import MensajeExitosoU from './Usuario/MensajesUsuario/MensajeExitosoU';
 import MensajeErrorU from './Usuario/MensajesUsuario/MensajeErrorU';

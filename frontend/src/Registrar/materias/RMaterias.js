@@ -1,6 +1,6 @@
 import React, { useEffect, useState  } from 'react'
 import "./RMaterias.css";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const RegistrarMateria = () => {
   const [docentes, setDocentes] = useState([]);
@@ -10,6 +10,7 @@ const RegistrarMateria = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [carreras, setCarreras] = useState([]);
   const { id } = useParams();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nombre_materia: '',
     codigo_materia: '',
@@ -82,11 +83,14 @@ const RegistrarMateria = () => {
           grupo: '',
           id_carrera: '',
         });
+        navigate("/Admin/Mensaje/RegistroExitoso");
       } else {
         console.error(`Error al ${id ? 'actualizar' : 'registrar'} materia`);
+        navigate("/Admin/Mensaje/RegistroError");
       }
     } catch (error) {
       console.error(`Error al ${id ? 'actualizar' : 'registrar'} materia:`, error);
+      navigate("/Admin/Mensaje/RegistroError");
     } finally {
       setIsSubmitting(false);
     }

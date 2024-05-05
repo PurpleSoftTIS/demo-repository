@@ -7,21 +7,10 @@ use App\Models\Ambiente;
 use App\Models\Ubicacion;
 use App\Models\Dia;
 use App\Models\Hora;
-use  App\Models\Horario;
-use App\Models\Diashabiles;
 use App\Models\Usuario;
 use App\Models\Docente;
-use App\Models\Materia;
-use App\Models\MateriaDocente;
-use App\Models\Solicitud;
-use Illuminate\Support\Facades\Response;
-
-
-
-
-
-
-
+use  App\Models\Horario;
+use App\Models\Diashabiles;
 use DB;
 
 class AmbienteController extends Controller
@@ -118,7 +107,16 @@ public function ambientesDis($capacidad, $dia, $hora_inicio, $hora_fin)
 }
 
 
+public function ambientesDi($capacidad)
+{
+    $ambientes = DB::table('ambiente')
+        ->join('ubicacion', 'ambiente.id_ubicacion', '=', 'ubicacion.id_ubicacion')
+        ->where('ambiente.capacidad', '>=', $capacidad)
+        ->select('ambiente.*', 'ubicacion.*')
 
+        ->get();
+    return response()->json($ambientes, 200);
+}
 
     public function actualizarAmbiente(Request $request, $id_ambiente)
 {   
@@ -321,13 +319,9 @@ public function CargaMasivaDias(Request $request)
         }
     }
 }
-
 public function MateriasObtener($Correo)
 {   
-
-     $correo_docente= str_replace("%", ".", $Correo);
-
-    $usuario = Usuario::where('correo_electronico', $correo_docente)->first();
+    $usuario = Usuario::where('correo_electronico', $Correo)->first();
 
     if ($usuario) {
         // Obtener el ID del usuario
@@ -358,4 +352,5 @@ public function MateriasObtener($Correo)
         return response()->json(["error" => "No se encontró el usuario con el correo electrónico proporcionado."], 404);
     }
 }
+
 }

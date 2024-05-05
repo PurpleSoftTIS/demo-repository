@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import './ListaSolicitudes.css';
 
@@ -39,32 +38,26 @@ const ListaSolicitudesUr = () => {
       <table className="table table-hover">
         <thead className="thead">
           <tr>
-            <th>Nro.</th>
+          <th>Nro.</th>
             <th>Docente</th>
             <th>Materia</th>
-            <th>Capacidad</th>
-            <th>Aula</th>
-            <th>Grupo</th>
-            <th>Tipo Solicitud</th>
+            <th>Motivo</th>
             <th>Fecha</th>
             <th>Hora</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
-          {solicitudes.map((solicitud, index) => (
-            <tr key={index}>
+        {Array.isArray(solicitudes) && solicitudes.map((solicitud, index) => (
+           <tr key={index}>
               <td>{index + 1}</td>
               <td>{solicitud.apellido_paterno}</td>
               <td>{solicitud.nombre_materia}</td>
-              <td>{solicitud.capacidad}</td>
-              <td>{solicitud.nombre_ambiente}</td>
-              <td>{solicitud.grupo}</td>
-              <td>{solicitud.tipo_solicitud}</td>
+              <td>{solicitud.motivo}</td>
               <td>{solicitud.fecha_solicitud}</td>
               <td>{solicitud.hora_inicio}</td>
               <td>
-                <button className="btn btn-primary">Aprobar</button>
+                <button className="btn btn-primary">Aceptar</button>
                 <button className="btn btn-danger">Rechazar</button>
               </td>
             </tr>

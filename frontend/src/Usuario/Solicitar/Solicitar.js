@@ -8,8 +8,7 @@ import "./Solicitar.css";
 
 const Solicitar = () => {
   const navigate = useNavigate();
-  const location =useLocation();
-  console.log("Datos de ubicación:", location.state);
+  const { state: correoElectronico } = useLocation();
 
   const [inputValue, setInputValue] = useState('');
   const [date, setDate] = useState(new Date());
@@ -18,7 +17,7 @@ const Solicitar = () => {
   const [selectedOption, setSelectedOption] = useState('');
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [errorInconpleto, setErrorIncompleto] = useState("");
-  const correoElectronico = location.state.correo;
+  const correo = correoElectronico;
 
 
   useEffect(() => {
@@ -60,7 +59,7 @@ const Solicitar = () => {
     const dataToSend = {
       numeroEstudiantes: inputValue,
       diaSeleccionado: selectedDay,
-      correo:correoElectronico,
+      correo:correo,
       fechaSeleccionada: date.toLocaleDateString(), 
 
     };
