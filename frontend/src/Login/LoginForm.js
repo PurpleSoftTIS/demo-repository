@@ -28,8 +28,8 @@ const { setEmailC, setUserC } = useContext(UserContext);
   const [menuOpen, setMenuOpen] = useState(false); 
   const [emailValido, setEmailValido] = useState(false);
   const [contraseñaValido, setContraseñaValido] = useState(false);
-  const [login, setLogin] = useState(false);
-  const [logRecuperacion, setRecuperacion] = useState(true);
+  const [login, setLogin] = useState(true);
+  const [logRecuperacion, setRecuperacion] = useState(false);
   const [mostrarTituloUno , setMostrarTituloUno] = useState(true);
   const [mostrarTituloDos , setMostrarTituloDos] = useState(false);
 
@@ -133,17 +133,17 @@ const { setEmailC, setUserC } = useContext(UserContext);
                         setContraseñaValido(false);
                     } else {
                         sessionStorage.setItem('user', data.nombre);
-                        sessionStorage.setItem('email', correoElectronico);
-                        setEmailC(correoElectronico);
+                        sessionStorage.setItem('email', email);
+                        setEmailC(email);
                         setUserC(data.nombre);
                         setEmailValido(true);
                         setContraseñaValido(true);
                         setErrorEmailValido("");
                         setErrorContraseñaValido("");
                         console.log("Nombre de usuario:", data.nombre);
-                        console.log("Correo electrónico:", correoElectronico);
+                        console.log("Correo electrónico:", email);
                         const rutaRedireccion = "/Usuario/Inicio/HomeDos" ;
-                        const estadoRedireccion = { state: correoElectronico };
+                        const estadoRedireccion = { state: email };
                         navigate(rutaRedireccion, estadoRedireccion);
                     }
                 } else {

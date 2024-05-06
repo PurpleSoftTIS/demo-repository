@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import "./Reservar.css"
 import { FaPlus } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom'; 
+import Ico1 from '../../assets/IcoGood.png';
+import Ico2 from '../../assets/IcoState.png';
 
  const Reservar = () => {
   const [reservas, setReservas] = useState([]);
@@ -55,7 +57,13 @@ import { NavLink } from 'react-router-dom';
               <td>{reserva.nombre_ambiente}</td>
               <td>{reserva.fecha_solicitud}</td>
               <td>{reserva.hora_inicio}</td>
-              <td>{reserva.tipo_solicitud}</td>
+              <td>
+                {reserva.estado_solicitud === "activo" ? (
+                  <img className="iconos2" src={Ico1} alt="aceptado" width="50px" height="50px" />
+                ) : (
+                  <img className="iconos2" src={Ico2} alt="pendiente" width="50px" height="50px" />
+                )}
+              </td>
 
               <td>
                 <button className="btn btn-primary">Eliminar</button>
