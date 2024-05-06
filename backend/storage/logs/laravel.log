@@ -728,3 +728,6 @@
 [2024-05-04 02:52:47] local.INFO: Días hábiles obtenidos para el ambiente 14:15:00:  
 [2024-05-04 02:52:47] local.INFO: Días hábiles obtenidos para el ambiente 14:15:00:  
 [2024-05-04 02:52:47] local.INFO: Días hábiles obtenidos para el ambiente 15:45:00:  
+[2024-05-04 15:59:08] local.ERROR: Error al enviar el correo electrónico de restablecimiento: Expected response code 250 but got code "530", with message "530-5.7.0 Authentication Required. For more information, go to
+530 5.7.0  https://support.google.com/mail/?p=WantAuthError jy8-20020a17090342c800b001ec5f1f363csm5219778plb.90 - gsmtp
+"  

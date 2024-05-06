@@ -33,11 +33,15 @@ class UsuarioController extends Controller
             return response()->json(['error' => 'Error al obtener el nombre del usuario'], 500);
         }
     }
-    public function restablecerContrasenia(Request $request)
+    public function restablecerContrasenia()
     {
+        $detalis = [
+            'title' => 'Correo para restablecer su contraseña en el sistema SIRA-FCYT',
+            'body' => 'Ingrese su nueva contrasenia'
+        ];        
         try {
-            Mail::to("gabo2cabero@gmail.com")->send(new Restablecer());
-            return "Correo enviado exitosamente";
+            Mail::to("gabo2cabero@gmail.com")->send(new Restablecer($detalis));
+        return "Correo electronico enviado";
         } catch (\Exception $e) {
             \Log::error('Error al enviar el correo electrónico de restablecimiento: ' . $e->getMessage());
             return "Error al enviar el correo electrónico de restablecimiento";

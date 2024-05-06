@@ -14,8 +14,7 @@ use DB;
 
 class SolicitudController extends Controller
 {
-    public function obtenerSolicitud()
-    {
+public function obtenerSolicitud() {
         try{
             $datosSolicitudes = DB::table('solicitud')
             ->join('solicitudes','solicitudes.id_solicitud','=', 'solicitud.id_solicitud')
@@ -34,8 +33,7 @@ class SolicitudController extends Controller
                 'solicitud.*', 
                 'materia.*'
             )
-            ->selectRaw('CONCAT(usuario.nombre, " ", usuario.apellido_paterno, " ", usuario.apellido_materno) as nombre')
-            
+            ->selectRaw('CONCAT(usuario.nombre, " ", usuario.apellido_paterno, " ", usuario.apellido_materno) as nombre')            
             ->get();
             return response()->json($datosSolicitudes, 200);
     
@@ -45,7 +43,7 @@ class SolicitudController extends Controller
         }
 
     }
-    public function obtenerHora(){
+public function obtenerHora() {
         $datosSolicitados = DB::table('hora')
         ->select(
             'hora.*'
@@ -55,56 +53,108 @@ class SolicitudController extends Controller
 
     }
 
-    public function registrarSolicitud(Request $datos){
+public function registrarSolicitud(Request $datos){
         try {
             \Log::info('Datos recibidos del frontend: ' . json_encode($datos->all()));
             $datosReserva=$datos->all();
             $correo = $datosReserva['correo'];
-             $usuario=Usuario::where('correo_electronico',$correo)->first();
-             $id_usuario=$usuario->id_usuario;
-             $docente=Docente::where('id_usuario',$id_usuario)->first();
-             $idDocente=$docente->id_docente;  
-             $id_ambiente=$datosReserva['aula'];
+            $usuario=Usuario::where('correo_electronico',$correo)->first();
+            $id_usuario=$usuario->id_usuario;
+            $docente=Docente::where('id_usuario',$id_usuario)->first();
+            $idDocente=$docente->id_docente;  
+            $id_ambiente=$datosReserva['aula'];
    
-             $solicitud = new Solicitud(); 
-             $horaInicio = $datosReserva['horaInicio'];
-             $horaFin = $datosReserva['horaFin'];
-             $horaCoincidente = Hora::where('hora_inicio', $horaInicio)
+            $solicitud = new Solicitud(); 
+            $horaInicio = $datosReserva['horaInicio'];
+            $horaFin = $datosReserva['horaFin'];
+            $horaCoincidente = Hora::where('hora_inicio', $horaInicio)
                                       ->where('hora_fin', $horaFin)
                                       ->first();
-              $id_hora=$horaCoincidente->id_hora;
-              $solicitud->id_hora=$id_hora;
-              $numero_estudiantes=$datosReserva['numeroEstudiantes'];
-              $solicitud->numero_estudiantes=$numero_estudiantes;
-              $fecha = $datosReserva['fecha'];
-        // Convertir la fecha al formato adecuado (año-mes-día)
-        $fechaFormateada = date('Y-m-d', strtotime($fecha));
+            $id_hora=$horaCoincidente->id_hora;
+            $solicitud->id_hora=$id_hora;
+            $numero_estudiantes=$datosReserva['numeroEstudiantes'];
+            $solicitud->numero_estudiantes=$numero_estudiantes;
+            $fecha = $datosReserva['fecha'];
+            // Convertir la fecha al formato adecuado (año-mes-día)
+            $fechaFormateada = date('Y-m-d', strtotime($fecha));
         
-        // Asignar la fecha formateada al objeto de solicitud
-        $solicitud->fecha_solicitud = $fechaFormateada;
-              $motivo=$datosReserva['motivo'];
-              $solicitud->motivo=$motivo;
-              $estado_solicitud='espera';
-              $solicitud->estado_solicitud=$estado_solicitud;
-              $solicitud->tipo_solicitud = 'individual'; 
-              $solicitud->save();
+            // Asignar la fecha formateada al objeto de solicitud
+            $solicitud->fecha_solicitud = $fechaFormateada;
+            $motivo=$datosReserva['motivo'];
+            $solicitud->motivo=$motivo;
+            $estado_solicitud='espera';
+            $solicitud->estado_solicitud=$estado_solicitud;
+            $solicitud->tipo_solicitud = 'individual'; 
+            $solicitud->save();
    
-              $solicitudes=new Solicitudes ();
-              $id_ambiente=$datosReserva['aula'];
-              $solicitudes->id_ambiente=$id_ambiente;
-              $id_solicitud= $solicitud->id_solicitud;
-              $solicitudes->id_solicitud=$id_solicitud;
-              $solicitudes->save ();
+            $solicitudes=new Solicitudes ();
+            $id_ambiente=$datosReserva['aula'];
+            $solicitudes->id_ambiente=$id_ambiente;
+            $id_solicitud= $solicitud->id_solicitud;
+            $solicitudes->id_solicitud=$id_solicitud;
+            $solicitudes->save ();
    
-              $solicitudesDo=new solicitudes_docentes ();
-              $solicitudesDo->id_docente = $idDocente;
-              $solicitudesDo->id_solicitud = $id_solicitud;
-              $solicitudesDo->save ();
-               //$datosReserva = $datos->all();
+            $solicitudesDo=new solicitudes_docentes ();
+            $solicitudesDo->id_docente = $idDocente;
+            $solicitudesDo->id_solicitud = $id_solicitud;
+            $solicitudesDo->save ();
+            //$datosReserva = $datos->all();
         } catch (\Exception $e) {
             \Log::error('Error al registrar la solicitud: ' . $e->getMessage());
             return response()->json(['error' => 'Error al registrar la solicitud'], 500);
         }
     }
     
+public function registrarSolicitudesConjuntas(Request $datos){
+        try {
+            \Log::info('Datos recibidos del frontend: ' . json_encode($datos->all()));
+            $datosReserva=$datos->all();
+            $correo = $datosReserva['correo'];
+            $usuario=Usuario::where('correo_electronico',$correo)->first();
+            $id_usuario=$usuario->id_usuario;
+            $docente=Docente::where('id_usuario',$id_usuario)->first();
+            $idDocente=$docente->id_docente;  
+            $id_ambiente=$datosReserva['aula'];
+   
+            $solicitud = new Solicitud(); 
+            $horaInicio = $datosReserva['horaInicio'];
+            $horaFin = $datosReserva['horaFin'];
+            $horaCoincidente = Hora::where('hora_inicio', $horaInicio)
+                                      ->where('hora_fin', $horaFin)
+                                      ->first();
+            $id_hora=$horaCoincidente->id_hora;
+            $solicitud->id_hora=$id_hora;
+            $numero_estudiantes=$datosReserva['numeroEstudiantes'];
+            $solicitud->numero_estudiantes=$numero_estudiantes;
+            $fecha = $datosReserva['fecha'];
+            // Convertir la fecha al formato adecuado (año-mes-día)
+            $fechaFormateada = date('Y-m-d', strtotime($fecha));
+        
+            // Asignar la fecha formateada al objeto de solicitud
+            $solicitud->fecha_solicitud = $fechaFormateada;
+            $motivo=$datosReserva['motivo'];
+            $solicitud->motivo=$motivo;
+            $estado_solicitud='espera';
+            $solicitud->estado_solicitud=$estado_solicitud;
+            $solicitud->tipo_solicitud = 'individual'; 
+            $solicitud->save();
+   
+            $solicitudes=new Solicitudes ();
+            $id_ambiente=$datosReserva['aula'];
+            $solicitudes->id_ambiente=$id_ambiente;
+            $id_solicitud= $solicitud->id_solicitud;
+            $solicitudes->id_solicitud=$id_solicitud;
+            $solicitudes->save ();
+   
+            $solicitudesDo=new solicitudes_docentes ();
+            $solicitudesDo->id_docente = $idDocente;
+            $solicitudesDo->id_solicitud = $id_solicitud;
+            $solicitudesDo->save ();
+            //$datosReserva = $datos->all();
+        } catch (\Exception $e) {
+            \Log::error('Error al registrar la solicitud: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al registrar la solicitud'], 500);
+        }
+
+    }
 }

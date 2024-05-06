@@ -16,7 +16,7 @@ const Solicitar1 = () => {
     console.log("solicitar 1",correo);
     useEffect(() => {
         if (capacidad) {
-            fetch(`http://127.0.0.1:8000/api/ambientesDispoDos/${capacidad}`)
+            fetch(`http://127.0.0.1:8000/api/ambientesDispo/${capacidad}/${diaSeleccionado}/${hora_inicio}/${hora_fin}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error al cargar ambientes  disponibles');
@@ -36,16 +36,14 @@ const Solicitar1 = () => {
       console.log("datos send",datosSend);
       const datosConAula = { ...datosSend, aulaSeleccionada };
 
-        navigate('/Usuario/Usu/DetallesSol', { state: datosConAula  });
+        navigate('/Usuario/Usu/Solicitar3', { state: datosConAula  });
     };
 
     return (
         <div className="container" style={{ minHeight: '78.7vh' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h2 style={{ margin: 0 }}>Ambientes Disponibles:</h2>
-                <div>
-                    <button className="butn butn-filtro" >Atras</button>
-                </div>
+                
             </div>
             <div style={{ display: 'flex', justifyContent: 'Right', alignItems: 'center', marginTop: '15px' }}>
                 <div></div>
