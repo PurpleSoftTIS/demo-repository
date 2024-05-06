@@ -20,7 +20,7 @@ const ListaSolicitudesUr = () => {
   }, []);
 
   return (
-    <div className="container" style={{ height: '100vh' }}>
+    <div className="container" style={{ minHeight: '78.7vh' }}>
       <div style={{ height: '4vh' }}></div>
       <div
         style={{

@@ -321,7 +321,10 @@ public function CargaMasivaDias(Request $request)
 }
 public function MateriasObtener($Correo)
 {   
-    $usuario = Usuario::where('correo_electronico', $Correo)->first();
+
+     $correo_docente= str_replace("%", ".", $Correo);
+
+    $usuario = Usuario::where('correo_electronico', $correo_docente)->first();
 
     if ($usuario) {
         // Obtener el ID del usuario
@@ -352,5 +355,4 @@ public function MateriasObtener($Correo)
         return response()->json(["error" => "No se encontró el usuario con el correo electrónico proporcionado."], 404);
     }
 }
-
 }

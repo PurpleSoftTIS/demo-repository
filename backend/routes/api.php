@@ -33,8 +33,7 @@ Route::get('/materias/{id}', [MateriaController::class, 'show']);
 Route::get('/obtenerHoras', [SolicitudController::class, 'obtenerHora']);
 Route::get('/obtenerSol', [SolicitudController::class, 'obtenerSolicitud']);
 Route::get('/SolicitudUrgencias', [SolicitudUrgencia::class, 'urgencias']);
-Route::get('/obtenerMara/{Correo}', [AmbienteController::class, 'MateriasObtener']);
-
+Route::get('/obtenerMara/{correoCodificado}', [AmbienteController::class, 'MateriasObtener']);
 //Registrar Datos
 Route::post('/docentesRegistrar', [DocenteRegistrarController::class, 'registrar']);
 Route::post('/materiaRegistrar', [MateriaRegistrarController::class, 'registrarMateria']);

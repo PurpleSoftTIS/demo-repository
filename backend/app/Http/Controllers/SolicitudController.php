@@ -77,11 +77,7 @@ class SolicitudController extends Controller
               $numero_estudiantes=$datosReserva['numeroEstudiantes'];
               $solicitud->numero_estudiantes=$numero_estudiantes;
               $fecha = $datosReserva['fecha'];
-        // Convertir la fecha al formato adecuado (año-mes-día)
-        $fechaFormateada = date('Y-m-d', strtotime($fecha));
-        
-        // Asignar la fecha formateada al objeto de solicitud
-        $solicitud->fecha_solicitud = $fechaFormateada;
+              $solicitud->fecha_solicitud = $fecha;
               $motivo=$datosReserva['motivo'];
               $solicitud->motivo=$motivo;
               $estado_solicitud='espera';
@@ -95,16 +91,19 @@ class SolicitudController extends Controller
               $id_solicitud= $solicitud->id_solicitud;
               $solicitudes->id_solicitud=$id_solicitud;
               $solicitudes->save ();
-   
+             
+             
               $solicitudesDo=new solicitudes_docentes ();
               $solicitudesDo->id_docente = $idDocente;
               $solicitudesDo->id_solicitud = $id_solicitud;
               $solicitudesDo->save ();
+              
                //$datosReserva = $datos->all();
         } catch (\Exception $e) {
             \Log::error('Error al registrar la solicitud: ' . $e->getMessage());
             return response()->json(['error' => 'Error al registrar la solicitud'], 500);
         }
     }
+    
 }
     

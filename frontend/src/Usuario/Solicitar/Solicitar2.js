@@ -6,12 +6,14 @@ const Solicitar3 = () => {
   const navigate = useNavigate();   
   const location = useLocation();
   console.log("datos enviado",location.state);
-  const [grupo, setGrupo] = useState('');
   const [motivo, setMotivo] = useState('');
   const [materia, setMateria] = useState([]);
-  const [grupoSeleccionado, setGrupoSeleccionado] = useState(false);
+  console.log(materia);
+  const [materiaSeleccionada, setMateriaSeleccionada] = useState('');
+ const [grupoSeleccionado, setGrupoSeleccionado] = useState('');
+  
   const { state: datosRecibidos } = useLocation();
-  const correo = datosRecibidos.correo;
+  const correo = datosRecibidos.correo.correo;
   const aula =datosRecibidos.aulaSeleccionada.id_ambiente;
   const horaFin=datosRecibidos.horaFin;
   const horaInicio=datosRecibidos.horaInicio;
@@ -25,7 +27,7 @@ const Solicitar3 = () => {
     const Correo = correo;
     const codificarPunto = (cadena) => {
       if (typeof cadena === 'string') {
-        return cadena.replace(/\./g, '.');
+        return cadena.replace(/\./g, '%');
       } else {
         
         return ''; 
@@ -55,7 +57,8 @@ const Solicitar3 = () => {
      horaFin,
      fecha,
      aula,
-     motivo
+     motivo,
+     materia:materiaSeleccionada
 
 
 
@@ -90,14 +93,7 @@ const Solicitar3 = () => {
   };
 
 
-  const handleMateriaChange = (e) => {
-    const materiaSeleccionada = e.target.value;
-    const materiaData = materia.find(item => item.nombre_materia === materiaSeleccionada);
-    if (materiaData) {
-      setGrupo(materiaData.grupo);
-      setGrupoSeleccionado(true);
-    }
-  };
+  
 
   return (
     <div className="contact-form-container">
@@ -109,31 +105,40 @@ const Solicitar3 = () => {
           <div className="contact-form-phone-parent">
             <div className="contact-form-phone">Materia</div>
             <select
-              className="input24"
-              value={materia}
-              onChange={handleMateriaChange}
-            >
-              {materia.map((item, index) => (
-                <option key={index} value={item.nombre_materia}>
-                  {item.nombre_materia}
-                </option>
-              ))}
-            </select>
+  className="input24"
+  value={materiaSeleccionada}
+  onChange={(e) => {
+    const materiaSeleccionada = e.target.value;
+    const materiaData = materia.find(item => item.nombre_materia === materiaSeleccionada);
+    if (materiaData) {
+      setMateriaSeleccionada(materiaSeleccionada);
+      setGrupoSeleccionado(materiaData.grupo);
+    }
+  }}
+>
+  <option value="">Seleccione una materia</option>
+  {materia.map((item, index) => (
+    <option key={index} value={item.nombre_materia}>
+      {item.nombre_materia}
+    </option>
+  ))}
+</select>
+
           </div>
           <div className="contact-form-frame-parent">
             <div className="contact-form-full-name-parent">
               <div className="contact-form-full-name">Grupo</div>
             </div>
             <div className="contact-form-rectangle-parent">
-              <input 
-                className="contact-form-rectangle1" 
-                type="text"
-                value={grupo}
-                onChange={(e) => setGrupo(e.target.value)}
-                placeholder="Ingrese el grupo"
-                disabled={grupoSeleccionado} // Deshabilita la edición si se seleccionó una materia
-              />
-            </div>
+  <input 
+    className="contact-form-rectangle1" 
+    type="text"
+    value={grupoSeleccionado}
+    placeholder="Grupo"
+    disabled
+  />
+</div>
+
           </div>
           <div className="contact-form-message-parent">
             <div className="contact-form-message">Motivo</div>

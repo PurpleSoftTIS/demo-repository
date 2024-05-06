@@ -37,7 +37,7 @@ const Solicitar1 = () => {
       console.log("datos send",datosSend);
       const datosConAula = { ...datosSend, aulaSeleccionada };
 
-        navigate('/Usuario/Usu/Solicitar3', { state: datosConAula  });
+        navigate('/Usuario/Usu/DetallesSol', { state: datosConAula  });
     };
 
     return (
