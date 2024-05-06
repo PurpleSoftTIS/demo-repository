@@ -1,50 +1,41 @@
-import React, { useState, useEffect,useRef } from 'react';
-import { useNavigate } from "react-router-dom";
-
-import { NavLink, useLocation } from 'react-router-dom';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import logo from '../assets/LogoDefinitivo.jpeg';
 import userLogo from '../assets/IcoUser.png';
 import { FaBars } from 'react-icons/fa';
+import { UserContext } from '../Context/UserContext';
+
 import './Navbar.css';
 
 
 const NarbarUsuario = () => {
+
   const [isOpen, setIsOpen] = useState(false);
   const [showSesion, setShowSesion] = useState(false);
-  const { state: correoElectronico } = useLocation();
   const [showDropdown2, setShowDropdown2] = useState(false);
   const dropdownRef2 = useRef(null);
-  const [correo, setCorreo] = useState("");
-  const navigate = useNavigate(); // Importa useNavigate
+  const { setUserC, setEmailC ,userC } = useContext(UserContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 991) {
         setIsOpen(false);
       }
-      if (correoElectronico) {
-        fetch('http://127.0.0.1:8000/api/nombre', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ correo_electronico: correoElectronico }),
-        })
-          .then(response => response.json())
-          .then(data => {
-            setNombreUsuario(data.nombre);
-          })
-          .catch(error => {
-            console.error('Error al obtener el nombre del usuario:', error);
-          });
-      }    
     };
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
     };   
-  }, [correoElectronico]);  
-  const [nombreUsuario, setNombreUsuario] = useState("Usuario");
+  }, []);
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('email');
+    setUserC(null);
+    setEmailC(null);
+    navigate("/");
+  };
 
   const toggleSesion = () => {
     setShowSesion(!showSesion);
@@ -96,10 +87,10 @@ const NarbarUsuario = () => {
               <img className="" src={userLogo} alt="logo" width='50px' height='50px' />
             </button>
             <button className='Rol'onClick={toggleSesion}>
-            {nombreUsuario}
+            {userC}
               {showSesion && (
                 <div className="sesion">
-                  <NavLink className="opciones" to='/' activeClassName="active">Cerrar sesion</NavLink>                          
+                  <button className="opciones" onClick={handleLogout}>Cerrar sesión</button>
                 </div>
               )}
             </button>

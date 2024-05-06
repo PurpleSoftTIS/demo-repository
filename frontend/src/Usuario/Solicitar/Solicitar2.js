@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './Solicitar2.css';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { UserContext } from '../../Context/UserContext';
 
 const Solicitar3 = () => {
   const navigate = useNavigate();   
   const location = useLocation();
   console.log("datos enviado",location.state);
+  const { emailC } = useContext(UserContext);
+  const [grupo, setGrupo] = useState('');
   const [motivo, setMotivo] = useState('');
   const [materia, setMateria] = useState([]);
   console.log(materia);
@@ -13,7 +16,7 @@ const Solicitar3 = () => {
  const [grupoSeleccionado, setGrupoSeleccionado] = useState('');
   
   const { state: datosRecibidos } = useLocation();
-  const correo = datosRecibidos.correo.correo;
+  const correo = emailC;
   const aula =datosRecibidos.aulaSeleccionada.id_ambiente;
   const horaFin=datosRecibidos.horaFin;
   const horaInicio=datosRecibidos.horaInicio;

@@ -411,3 +411,4 @@ final class BigRational extends BigNumber
         $this->denominator = $data['denominator'];
     }
 }
+
