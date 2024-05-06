@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-import React, { useState, useEffect, useRef } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
-=======
 import React, { useState, useEffect,useRef } from 'react';
 import { NavLink, useLocation,useNavigate } from 'react-router-dom';
->>>>>>> rama_antes_de_la_main
 import logo from '../assets/LogoDefinitivo.jpeg';
 import userLogo from '../assets/IcoUser.png';
 import { FaBars } from 'react-icons/fa';
@@ -18,13 +13,8 @@ const NarbarUsuario = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showSesion, setShowSesion] = useState(false);
   const { state: correoElectronico } = useLocation();
-<<<<<<< HEAD
-  const [showDropdown, setShowDropdown] = useState(false);
-  const dropdownRef = useRef(null);
-=======
   const [showDropdown2, setShowDropdown2] = useState(false);
   const dropdownRef2 = useRef(null);
->>>>>>> rama_antes_de_la_main
 
   useEffect(() => {
     const handleResize = () => {
@@ -64,10 +54,6 @@ const NarbarUsuario = () => {
     setShowDropdown2(!showDropdown2);
   };
 
-  const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
-  };
-
   return (
     <div className='barraNavAdmi'>
       <nav className="navbar navbar-expand-lg">
@@ -85,33 +71,6 @@ const NarbarUsuario = () => {
           </button>
           <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarNav">
             <ul className="navbar-nav mx-auto">
-<<<<<<< HEAD
-              <li className="nav-item">
-                <NavLink className="nav-link" to='/Usuario/inicio/HomeDos' exact>Inicio</NavLink> 
-              </li>
-
-            
-
-              <div className="dropdown-container" ref={dropdownRef}>
-                  <button className="nav-link dropdown-toggle" onClick={toggleDropdown} style={{ cursor: 'pointer' }}>Solicitar</button>
-                  {showDropdown && (
-                      <div className="menu">
-                          <NavLink className="opciones" to='/Usuario/Usu/Solicitar' activeclassname="active">Individual</NavLink>
-                          <NavLink className="opciones" to='' activeclassname="active">Conjunta</NavLink>
-        
-                      </div>              
-                  )}              
-              </div>
-
-
-
-
-
-
-
-
-
-=======
             <li className="nav-item">
                 <NavLink className="nav-link" to='/Admin/inicio/HomeDos'>Inicio</NavLink> 
               </li>
@@ -124,7 +83,6 @@ const NarbarUsuario = () => {
                       </div>              
                   )}              
               </div>             
->>>>>>> rama_antes_de_la_main
               <li className="nav-item">
                 <NavLink className="nav-link" to='/Usuario/Usu/Reservas'>Reservas</NavLink>
               </li>

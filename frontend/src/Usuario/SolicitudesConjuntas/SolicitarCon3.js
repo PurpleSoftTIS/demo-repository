@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-import React from 'react'
-import { useLocation } from 'react-router-dom';
-
-const SolicitarCon3 = () => {
-    //FORMA DE RECIBIR DATOS/
-
-  const { state: datos } = useLocation();
-  const capacidad = datos ? datos.capacidad : null; 
-  const dia = datos ? datos.dia : null;
-  const hora = datos ? datos.hora : null; 
-  console.log(datos)
-=======
 import React, { useState, useEffect } from 'react';
 import './SolicitarCon3.css'; // Ajusta la importación del CSS según la ubicación real del archivo CSS
 import { useNavigate, useLocation } from "react-router-dom";
@@ -55,7 +42,6 @@ const SolicitarCon3 = () => {
     navigate('/Usuario/Usu/SolicitarCon4', { state: datos3 });
   };
 
->>>>>>> rama_antes_de_la_main
   return (
     <div className="container" style={{ height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <div style={{ height: '4vh' }}></div>

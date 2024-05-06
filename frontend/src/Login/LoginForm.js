@@ -256,7 +256,7 @@ const handleSubmitRestablecer = (e) => {
                                                 {errorInconpleto && <p className="error2">{errorInconpleto}</p>}                                                
                                             </div>
                                             <div className="mb-0 pb-3 text-center">
-                                            <button className="btn-block" onClick={handleSubmit}> Ingresarrrr </button>                                         
+                                            <button className="btn-block" onClick={handleSubmit}> Ingresar </button>                                         
                                             </div>
                                                 <p className="mt-3 text-center">
                                                     <button  onClick={toggleVisibility} className="olvidar">¿Olvidaste tu Contraseña?</button>

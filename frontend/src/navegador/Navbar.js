@@ -10,12 +10,10 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showDropdown2, setShowDropdown2] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-<<<<<<< HEAD
-  const [showDropdown1, setShowDropdown1] = useState(false);
-=======
+
 
   const dropdownRef2 = useRef(null);
->>>>>>> rama_antes_de_la_main
+
   const dropdownRef = useRef(null);
 
   const [showSesion, setShwoSesion] = useState(false);
@@ -64,17 +62,11 @@ const Navbar = () => {
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
-<<<<<<< HEAD
 
-  const toggleDropdown1 = () => {
-    setShowDropdown1(!showDropdown1);
-  };
-
-=======
   const toggleDropdown2 = () => {
     setShowDropdown2(!showDropdown2);
   };
->>>>>>> rama_antes_de_la_main
+
   const toggleSesion = ()=>{
     setShwoSesion(!showSesion);
   };
@@ -112,22 +104,7 @@ const Navbar = () => {
             <ul className="navbar-nav mx-auto">
               <li className="nav-item">
                 <NavLink className="nav-link" to='/Admin/inicio/HomeUno'>Inicio</NavLink> 
-<<<<<<< HEAD
-              </li>
 
-
-              <div className="dropdown-container" ref={dropdownRef}>
-                  <button className="nav-link dropdown-toggle" onClick={toggleDropdown1} style={{ cursor: 'pointer' }}>Solicitud</button>
-                  {showDropdown1 && (
-                      <div className="menu">
-                          <NavLink className="opciones" to='/Admin/ListaSolicitudes' activeclassname="active">Todas</NavLink>
-                          <NavLink className="opciones" to='' activeclassname="active">Urgente</NavLink>
-                      </div>              
-                  )}              
-              </div>
-
-
-=======
               </li>              
               <div className="dropdown-container" ref={dropdownRef2}>
                   <button className="nav-link dropdown-toggle" onClick={toggleDropdown2} style={{ cursor: 'pointer' }}>Solicitudes</button>
@@ -138,7 +115,7 @@ const Navbar = () => {
                       </div>              
                   )}              
               </div>
->>>>>>> rama_antes_de_la_main
+
               <div className="dropdown-container" ref={dropdownRef}>
                   <button className="nav-link dropdown-toggle" onClick={toggleDropdown} style={{ cursor: 'pointer' }}>Registrar</button>
                   {showDropdown && (
