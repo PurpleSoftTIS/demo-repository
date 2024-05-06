@@ -29,7 +29,7 @@ Route::get('/materias', [MateriaController::class, 'index']);
 Route::get('/listaAmbiente', [AmbienteController::class, 'index']);
 Route::get('/ambientesDispo/{capacidad}/{dia}/{hora_inicio}/{hora_fin}', [AmbienteController::class, 'ambientesDis']);
 Route::get('/ambientesDispoDos/{capacidad}', [AmbienteController::class, 'ambientesDi']);
-
+Route::get('/docentespormateria/{nombre_materia}/{correo_usuario}', [MateriaController::class,'docentesPorMateria']);
 Route::get('/carreras', [CarreraController::class, 'index']);
 Route::get('/materias/{id}', [MateriaController::class, 'show']);
 Route::get('/obtenerHoras', [SolicitudController::class, 'obtenerHora']);

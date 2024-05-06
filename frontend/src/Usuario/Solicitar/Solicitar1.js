@@ -16,7 +16,7 @@ const Solicitar1 = () => {
     console.log("solicitar 1",correo);
     useEffect(() => {
         if (capacidad) {
-            fetch(`http://127.0.0.1:8000/api/ambientesDispoDos/${capacidad}`)
+            fetch(`http://127.0.0.1:8000/api/ambientesDispo/${capacidad}/${diaSeleccionado}/${hora_inicio}/${hora_fin}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Error al cargar ambientes  disponibles');

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { FaBars,FaAt, FaLock } from "react-icons/fa"; 
 import { Collapse, Row,Col,Container } from "react-bootstrap";
@@ -14,9 +14,11 @@ import Ico6 from "../assets/IconosLan/IcoReactL.png";
 import Ico7 from "../assets/IconosLan/IcoFacultad.png";
 import Ico8 from "../assets/IconosLan/IcoFacultadEscudo.png";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../Context/UserContext";
 
 const LoginForm = () => {
 const navigate = useNavigate();   
+const { setEmailC, setUserC } = useContext(UserContext);
 
   const [menuClicked, setMenuClicked] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -131,12 +133,17 @@ const navigate = useNavigate();
                         setErrorContraseñaValido("Contraseña incorrecta");
                         setContraseñaValido(false);
                     } else {
+                        sessionStorage.setItem('user', data.nombre);
+                        sessionStorage.setItem('email', correoElectronico);
+                        setEmailC(correoElectronico);
+                        setUserC(data.nombre);
                         setEmailValido(true);
                         setContraseñaValido(true);
                         setErrorEmailValido("");
                         setErrorContraseñaValido("");
-                        const credencialesValidas = emailValido && contraseñaValido;
-                        const rutaRedireccion = credencialesValidas ? "/Usuario/Inicio/HomeDos" : "/";
+                        console.log("Nombre de usuario:", data.nombre);
+                        console.log("Correo electrónico:", correoElectronico);
+                        const rutaRedireccion = "/Usuario/Inicio/HomeDos" ;
                         const estadoRedireccion = { state: correoElectronico };
                         navigate(rutaRedireccion, estadoRedireccion);
                     }
