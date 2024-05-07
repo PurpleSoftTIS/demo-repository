@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Usuario;
 use App\Models\Docente;
+use App\Models\Materia;
+
 use App\Models\Hora;
 use App\Models\Solicitud;
 use App\Models\Solicitudes;
 use App\Models\solicitudes_docentes;
+use App\Models\solicitudes_materia;
+
 use Illuminate\Http\Request;
 use DB;
 
@@ -16,44 +20,34 @@ class SolicitudController extends Controller
 {
     public function obtenerSolicitud()
     {
-        try{
+        try {
             $datosSolicitudes = DB::table('solicitud')
-            ->join('solicitudes','solicitudes.id_solicitud','=', 'solicitud.id_solicitud')
-            ->join('hora', 'hora.id_hora', '=', 'solicitud.id_hora')
-            ->join('ambiente', 'ambiente.id_ambiente', '=', 'solicitudes.id_ambiente')
-            ->join('ubicacion', 'ubicacion.id_ubicacion', '=', 'ambiente.id_ubicacion')
-            ->join('solicitudes_docentes', 'solicitudes_docentes.id_solicitud', '=', 'solicitud.id_solicitud')
-            ->join('docente', 'docente.id_docente', '=', 'solicitudes_docentes.id_docente')
-            ->join('materia_docente', 'materia_docente.id_docente', '=', 'docente.id_docente')
-            ->join('materia', 'materia.id_materia', '=', 'materia_docente.id_materia')
-            ->join('usuario', 'usuario.id_usuario', '=', 'docente.id_usuario')
-            ->select(
-                'hora.*',
-                'ambiente.*',
-                'ubicacion.*',
-                'solicitud.*', 
-                'materia.*'
-            )
-            ->selectRaw('CONCAT(usuario.nombre, " ", usuario.apellido_paterno, " ", usuario.apellido_materno) as nombre')
-            
-            ->get();
+                ->join('solicitudes', 'solicitudes.id_solicitud', '=', 'solicitud.id_solicitud')
+                ->join('hora', 'hora.id_hora', '=', 'solicitud.id_hora')
+                ->join('ambiente', 'ambiente.id_ambiente', '=', 'solicitudes.id_ambiente')
+                ->join('ubicacion', 'ubicacion.id_ubicacion', '=', 'ambiente.id_ubicacion')
+                ->join('solicitudes_docentes', 'solicitudes_docentes.id_solicitud', '=', 'solicitud.id_solicitud')
+                ->join('docente', 'docente.id_docente', '=', 'solicitudes_docentes.id_docente')
+                ->join('usuario', 'usuario.id_usuario', '=', 'docente.id_usuario')
+                ->join('solicitudes_materia', 'solicitudes_materia.id_solicitud', '=', 'solicitud.id_solicitud')
+                ->join('materia', 'materia.id_materia', '=', 'solicitudes_materia.id_materia')
+                ->select(
+                    'hora.*',
+                    'ambiente.*',
+                    'ubicacion.*',
+                    'solicitud.*',
+                    'materia.*'
+                )
+                ->get();
+                
             return response()->json($datosSolicitudes, 200);
     
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             \Log::error('Error al intentar obtener una solicitud: ' . $e->getMessage());
             return response()->json(['error' => 'Error al obtener la solicitud'], 500);
         }
-
     }
-    public function obtenerHora(){
-        $datosSolicitados = DB::table('hora')
-        ->select(
-            'hora.*'
-        )
-        ->get();
-        return response()->json($datosSolicitados, 200);
-
-    }
+    
 
     public function registrarSolicitud(Request $datos){
         try {
@@ -97,13 +91,55 @@ class SolicitudController extends Controller
               $solicitudesDo->id_docente = $idDocente;
               $solicitudesDo->id_solicitud = $id_solicitud;
               $solicitudesDo->save ();
-              
-               //$datosReserva = $datos->all();
+              $solicitudMateria=new solicitudes_materia();
+              $nombremateria=$datosReserva['materia'];
+              $materia=Materia::where('nombre_materia',$nombremateria)->first();
+              $idmateria=$materia->id_materia;
+              $solicitudMateria->id_materia=$idmateria;
+              $solicitudMateria->id_solicitud=$id_solicitud;
+              $solicitudMateria->save();
+             
+             
+             
         } catch (\Exception $e) {
             \Log::error('Error al registrar la solicitud: ' . $e->getMessage());
             return response()->json(['error' => 'Error al registrar la solicitud'], 500);
         }
     }
+    public function aceptarSolicitud(Request $request, $id) {
+        try {
+            $solicitud = Solicitud::where('id_solicitud', $id)->first();
     
-}
+            if ($solicitud) {
+                $estado = "aceptada";
+                $solicitud->estado_solicitud = $estado;
+                $solicitud->save();
     
+                return response()->json(['message' => 'Solicitud aceptada exitosamente'], 200);
+            } else {
+                return response()->json(['error' => 'No se encontró la solicitud'], 404);
+            }
+        } catch (\Exception $e) {
+            \Log::error('Error al aceptar la solicitud: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al aceptar la solicitud'], 500);
+        }
+    }
+    public function rechazarsolicitud(Request $request, $id) {
+        try {
+            $solicitud = Solicitud::where('id_solicitud', $id)->first();
+    
+            if ($solicitud) {
+                $estado = "rechaza";
+               $solicitud->estado_solicitud = $estado;
+                $solicitud->save();
+    
+                return response()->json(['message' => 'Solicitud aceptada exitosamente'], 200);
+            } else {
+                return response()->json(['error' => 'No se encontró la solicitud'], 404);
+            }
+        } catch (\Exception $e) {
+            \Log::error('Error al aceptar la solicitud: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al aceptar la solicitud'], 500);
+        }
+    }
+}    

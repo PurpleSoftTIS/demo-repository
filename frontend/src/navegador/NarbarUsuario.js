@@ -44,9 +44,7 @@ const NarbarUsuario = () => {
     setShowDropdown2(!showDropdown2);
   };
   const handleSolicitar = () => {
-    console.log("correo es", correoElectronico);
-    setCorreo(correoElectronico); 
-    navigate('/Usuario/Usu/Solicitar', { state: { correo: correoElectronico } });
+    navigate('/Usuario/Usu/Solicitar');
   };
   return (
     <div className='barraNavAdmi'>

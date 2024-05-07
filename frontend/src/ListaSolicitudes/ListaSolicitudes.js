@@ -15,6 +15,51 @@ const ListaSolicitudes = () => {
     Motivo: "",
     Tipo_de_solicitud: ""
   });
+ 
+  const aceptarsolicitud = (id_solicitud) => {
+    fetch(`http://127.0.0.1:8000/api/aceptarsolicitud/${id_solicitud}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Error al cambiar el estado de la solicitud');
+            }
+            console.log('Solicitud actualizada:', response);
+            return response.json();
+        })
+        .then((data) => {
+            console.log('Datos de la solicitud actualizada:', data);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+};
+
+const rechazarsolicitud= (id_solicitud) => {
+  fetch(`http://127.0.0.1:8000/api/rechazarsolicitud/${id_solicitud}`, {
+      method: 'PUT',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+  })
+      .then((response) => {
+          if (!response.ok) {
+              throw new Error('Error al cambiar el estado de la solicitud');
+          }
+          console.log('Solicitud actualizada:', response);
+          return response.json();
+      })
+      .then((data) => {
+          console.log('Datos de la solicitud actualizada:', data);
+      })
+      .catch((error) => {
+          console.error(error);
+      });
+};
+
 
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/obtenerSol', {
@@ -87,7 +132,7 @@ const ListaSolicitudes = () => {
           </tr>
         </thead>
         <tbody>
-          {solicitudes.map((solicitud, index) => (
+          {Array.isArray(solicitudes) && solicitudes.map((solicitud, index) => (
             <tr key={index}
               className="fila-lista"
               onClick={() => mostrarFormularioParaSolicitud(solicitud)}
@@ -98,11 +143,11 @@ const ListaSolicitudes = () => {
               <td>{solicitud.fecha_solicitud}</td>
               <td>{solicitud.id_hora}</td>
               <td>
-                <button className="btn btn-editar mr-2">
+                <button className="btn btn-editar mr-2" onClick={() => aceptarsolicitud(solicitud.id_solicitud)}>
                   Aceptar
                 </button>
 
-                <button className="btn btn-eliminar" >
+                <button className="btn btn-eliminar"  onClick={() => rechazarsolicitud(solicitud.id_solicitud)} >
                   Rechazar
                 </button>
               </td>

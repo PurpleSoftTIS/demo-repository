@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class solicitudes_docentes extends Model
 {
     protected $table = 'solicitudes_docentes';
+    public $incrementing = false;
 
     protected $fillable = [
         'id_docente',

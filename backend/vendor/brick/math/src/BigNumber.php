@@ -507,4 +507,3 @@ abstract class BigNumber implements \JsonSerializable
         return $this->__toString();
     }
 }
-

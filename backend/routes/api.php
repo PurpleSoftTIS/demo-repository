@@ -60,5 +60,7 @@ Route::put('/ambiente/{id_ambiente}', [AmbienteController::class, 'actualizarAmb
 Route::put ('/actualizar/{id_ambiente}',[AmbienteController::class,'actualizarAmb']);
 Route::put('/materias/{id}', [MateriaRegistrarController::class, 'update']);
 Route::put('/actualizarDocente/{id_docente}', [DocenteController::class, 'editarDocentes']);
+Route::put('/aceptarsolicitud/{id}', [SolicitudController::class, 'aceptarSolicitud']);
+Route::put('/rechazarsolicitud/{id}', [SolicitudController::class, 'rechazarsolicitud']);
 
 Route::get('/obtenerMara/{Correo}', [AmbienteController::class, 'MateriasObtener']);

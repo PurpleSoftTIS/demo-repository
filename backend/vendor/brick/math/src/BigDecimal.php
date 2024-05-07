@@ -752,4 +752,3 @@ final class BigDecimal extends BigNumber
         return $value;
     }
 }
-
