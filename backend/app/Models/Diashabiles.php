@@ -12,9 +12,10 @@ class Diashabiles extends Model
     public $incrementing = false;
 
     protected $table = 'diashabiles';
-    protected $primaryKey = 'id_dia';
     protected $fillable = [
-        "id_ambiente"       
+        "id_ambiente",
+        "id_dia"       
+       
       ];
  
 }

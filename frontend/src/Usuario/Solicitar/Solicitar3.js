@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './Solicitar2.css';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { UserContext } from '../../Context/UserContext';
 
 const Solicitar3 = () => {
   const navigate = useNavigate();   
   const location = useLocation();
   console.log("datos enviado",location.state);
+  const { emailC } = useContext(UserContext);
   const [grupo, setGrupo] = useState('');
   const [motivo, setMotivo] = useState('');
   const [materia, setMateria] = useState([]);
   const [grupoSeleccionado, setGrupoSeleccionado] = useState(false);
   const { state: datosRecibidos } = useLocation();
-  const correo = datosRecibidos.correo;
+  const correo = emailC;
   const aula =datosRecibidos.aulaSeleccionada.id_ambiente;
   const horaFin=datosRecibidos.horaFin;
   const horaInicio=datosRecibidos.horaInicio;
@@ -20,20 +22,10 @@ const Solicitar3 = () => {
   
 
  console.log(correo);
- console.log(aula);
   useEffect(() => {
-    const Correo = correo;
-    const codificarPunto = (cadena) => {
-      if (typeof cadena === 'string') {
-        return cadena.replace(/\./g, '.');
-      } else {
-        
-        return ''; 
-      }
-    };
+    
  
-    const correoCodificado = codificarPunto(Correo);
-    fetch(`http://127.0.0.1:8000/api/obtenerMara/${correoCodificado}`)
+    fetch(`http://127.0.0.1:8000/api/obtenerMara/${correo}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Error en la solicitud a ' + response.url + ': ' + response.statusText);

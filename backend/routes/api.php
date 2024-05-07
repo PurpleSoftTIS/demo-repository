@@ -8,11 +8,12 @@ use App\Http\Controllers\AmbienteController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\RegistrarSolicitud;
 use App\Http\Controllers\SolicitudUrgencia;
+use App\Http\Controllers\RerservasUsuario;
 use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\CarreraController;
 use App\Http\Controllers\DeleteAmbienteController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Route;   
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -29,12 +30,13 @@ Route::get('/materias', [MateriaController::class, 'index']);
 Route::get('/listaAmbiente', [AmbienteController::class, 'index']);
 Route::get('/ambientesDispo/{capacidad}/{dia}/{hora_inicio}/{hora_fin}', [AmbienteController::class, 'ambientesDis']);
 Route::get('/ambientesDispoDos/{capacidad}', [AmbienteController::class, 'ambientesDi']);
-
+Route::get('/docentespormateria/{nombre_materia}/{correo_usuario}', [MateriaController::class,'docentesPorMateria']);
 Route::get('/carreras', [CarreraController::class, 'index']);
 Route::get('/materias/{id}', [MateriaController::class, 'show']);
 Route::get('/obtenerHoras', [SolicitudController::class, 'obtenerHora']);
 Route::get('/obtenerSol', [SolicitudController::class, 'obtenerSolicitud']);
 Route::get('/SolicitudUrgencias', [SolicitudUrgencia::class, 'urgencias']);
+Route::get('/ReservasDocentes', [RerservasUsuario::class, 'reservasDocentes']);
 Route::get('/obtenerMara/{Correo}', [AmbienteController::class, 'MateriasObtener']);
 
 //Registrar Datos
@@ -45,10 +47,10 @@ Route::post('/carreraRegistrar', [CarreraController::class, 'registrarCarrera'])
 Route::post('/CargaAmbientes', [AmbienteController::class, 'CargaMasiva']);
 Route::post('/CargaDiasHoras', [AmbienteController::class, 'CargaMasivaDias']);
 Route::post('/RegistrarSol', [RegistrarSolicitud::class, 'registrar']);
-Route::post('enviar',[UsuarioController::class, 'restablecerContrasenia']);
 Route::post('/masivoDocentes', [CargaDocente::class, 'cargaDocentes']);
 Route::post('/importMaterias', [MateriaController::class, 'import']);
 Route::post('/registrarSolicitud',[SolicitudController::class,'registrarSolicitud']);
+Route::post('/registrarSolicitudCon',[SolicitudController::class,'registrarSolicitudesConjuntas']);
 
 //Elimnar datos
 Route::delete('/docentes/{id_docente}', [DocenteController::class, 'eliminar']);

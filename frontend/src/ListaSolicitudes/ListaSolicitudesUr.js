@@ -17,10 +17,15 @@ const ListaSolicitudesUr = () => {
         console.log(data);
       })
       .catch((error) => console.error('Error al obtener los datos:', error));
+
+
+      
+    
+
   }, []);
 
   return (
-    <div className="container" style={{ height: '100vh' }}>
+    <div className="container" style={{ minHeight: '78.7vh' }}>
       <div style={{ height: '4vh' }}></div>
       <div
         style={{

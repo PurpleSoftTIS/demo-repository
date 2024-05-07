@@ -6,7 +6,6 @@ const SolicitarCon3 = () => {
   const navigate = useNavigate();
   const { state: datos2 } = useLocation();
   const { materia, carrera, docente, numeroEstudiantes, diaSeleccionado, horaSeleccionada } = datos2 || {};
-
   const [ambientesDisponibles, setAmbientesDisponibles] = useState([]);
 
   useEffect(() => {
@@ -27,7 +26,7 @@ const SolicitarCon3 = () => {
     }
   }, [numeroEstudiantes,ambientesDisponibles]);
 
-   const handleNextStep = (ambiente) => {
+  const handleNextStep = (ambiente) => {
     const datos3 = {
       materia,
       carrera,
