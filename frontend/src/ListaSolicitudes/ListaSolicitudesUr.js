@@ -16,11 +16,7 @@ const ListaSolicitudesUr = () => {
         setSolicitudes(data);
         console.log(data);
       })
-      .catch((error) => console.error('Error al obtener los datos:', error));
-
-
-      
-    
+      .catch((error) => console.error('Error al obtener los datos:', error)); 
 
   }, []);
 

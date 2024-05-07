@@ -15,8 +15,10 @@ class Restablecer extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public $data;
+    public function __construct($data)
     {
+        $this->data= $data;
     }
     /**
      * Build the message.
@@ -25,6 +27,9 @@ class Restablecer extends Mailable
      */
     public function build()
     {
-        return $this->subject('Prueba de corrreo para restablecer contrasenia')->view('mails.restablecer');
+        return $this->from('purplesoft51@gmail.com',env('MAIL_FROM_NAME'))
+        ->view('restablecerCon')
+        ->subject('Restablecer contraceña')
+        ->with($this-> data);
     }
 }

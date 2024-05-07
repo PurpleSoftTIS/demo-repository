@@ -157,4 +157,41 @@ public function registrarSolicitudesConjuntas(Request $datos){
         }
 
     }
+
+    public function aceptarSolicitud(Request $request, $id) {
+        try {
+            $solicitud = Solicitud::where('id_solicitud', $id)->first();
+    
+            if ($solicitud) {
+                $estado = "aceptada";
+                $solicitud->estado_solicitud = $estado;
+                $solicitud->save();
+    
+                return response()->json(['message' => 'Solicitud aceptada exitosamente'], 200);
+            } else {
+                return response()->json(['error' => 'No se encontró la solicitud'], 404);
+            }
+        } catch (\Exception $e) {
+            \Log::error('Error al aceptar la solicitud: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al aceptar la solicitud'], 500);
+        }
+    }
+    public function rechazarsolicitud(Request $request, $id) {
+        try {
+            $solicitud = Solicitud::where('id_solicitud', $id)->first();
+    
+            if ($solicitud) {
+                $estado = "rechaza";
+               $solicitud->estado_solicitud = $estado;
+                $solicitud->save();
+    
+                return response()->json(['message' => 'Solicitud aceptada exitosamente'], 200);
+            } else {
+                return response()->json(['error' => 'No se encontró la solicitud'], 404);
+            }
+        } catch (\Exception $e) {
+            \Log::error('Error al aceptar la solicitud: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al aceptar la solicitud'], 500);
+        }
+    }
 }

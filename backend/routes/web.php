@@ -20,4 +20,4 @@ Route::get('/Mail', function () {
     Mail::to('gabo2cabero@gmail.com')->send(new Restablecer());
     return 'Mail sent';
 });
-//Route::get('/enviarCorreo',[UsuarioController::class, 'restablecerContrasenia']);
+Route::get('/enviarCorreo',[UsuarioController::class, 'restablecerContrasenia']);

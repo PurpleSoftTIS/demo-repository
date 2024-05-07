@@ -7,9 +7,10 @@ import Ico2 from '../../assets/IcoState.png';
 import { UserContext } from '../../Context/UserContext';
 
 
- const Reservar = () => {
-  const [reservas, setReservas] = useState([]);
-  const { setUserC, setEmailC , userC } = useContext(UserContext);
+const Reservar = () => {
+const [reservas, setReservas] = useState([]);
+const {setEmailC} = useContext(UserContext);
+  
 
   useEffect(() => {
     fetch(`http://127.0.0.1:8000/api/ReservasDocentes/${setEmailC}`, {
@@ -24,7 +25,7 @@ import { UserContext } from '../../Context/UserContext';
         console.log(data);
       })
       .catch((error) => console.error('Error al obtener los datos:', error));
-  }, []);
+  }, [setEmailC]);
 
   return (
     <div className="container" style={{ height: '100vh.' }}>
@@ -61,13 +62,12 @@ import { UserContext } from '../../Context/UserContext';
               <td>{reserva.fecha_solicitud}</td>
               <td>{reserva.hora_inicio}</td>
               <td>
-                {reserva.estado_solicitud === "activo" ? (
+                {reserva.estado_solicitud === "aceptada" ? (
                   <img className="iconos2" src={Ico1} alt="aceptado" width="50px" height="50px" />
                 ) : (
                   <img className="iconos2" src={Ico2} alt="pendiente" width="50px" height="50px" />
                 )}
               </td>
-
               <td>
                 <button className="btn btn-primary">Eliminar</button>
               </td>
