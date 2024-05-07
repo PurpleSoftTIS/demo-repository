@@ -10,15 +10,13 @@ use Illuminate\Queue\SerializesModels;
 class Restablecer extends Mailable
 {
     use Queueable, SerializesModels;
-    public $detalis;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($detalis)
+    public function __construct()
     {
-        $this->detalis = $detalis;
     }
     /**
      * Build the message.

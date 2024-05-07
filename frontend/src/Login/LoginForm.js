@@ -19,7 +19,6 @@ import { UserContext } from "../Context/UserContext";
 const LoginForm = () => {
 const navigate = useNavigate();   
 const { setEmailC, setUserC } = useContext(UserContext);
-
   
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -97,7 +96,6 @@ const { setEmailC, setUserC } = useContext(UserContext);
         setErrorPassword("");
     }
 
-
     if (email === "purpleSoft@gmail.com" && password === "purplesoft2024") {
         navigate("/Admin/Inicio/HomeUno");
     }else{
@@ -115,7 +113,7 @@ const { setEmailC, setUserC } = useContext(UserContext);
                 
                 if (!response.ok) {
                     setErrorEmailValido("Ingrese una cuenta valida");
-
+                    emailValido = false;
                     throw new Error("La solicitud al servidor falló");
                 }
 
@@ -131,6 +129,7 @@ const { setEmailC, setUserC } = useContext(UserContext);
                         setEmailValido(true);
                         setErrorContraseñaValido("Contraseña incorrecta");
                         setContraseñaValido(false);
+                        contraseñaValido = false;
                     } else {
                         sessionStorage.setItem('user', data.nombre);
                         sessionStorage.setItem('email', email);
@@ -158,7 +157,7 @@ const { setEmailC, setUserC } = useContext(UserContext);
                 }  
             };
         const handleSubmitRestablecer = () => {
-            fetch('http://127.0.0.1:8000/web/enviarCorreo', {
+            fetch('http://127.0.0.1:8000/web/Mail', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

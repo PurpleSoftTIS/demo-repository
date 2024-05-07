@@ -36,7 +36,7 @@ Route::get('/materias/{id}', [MateriaController::class, 'show']);
 Route::get('/obtenerHoras', [SolicitudController::class, 'obtenerHora']);
 Route::get('/obtenerSol', [SolicitudController::class, 'obtenerSolicitud']);
 Route::get('/SolicitudUrgencias', [SolicitudUrgencia::class, 'urgencias']);
-Route::get('/ReservasDocentes', [RerservasUsuario::class, 'reservasDocentes']);
+Route::get('/ReservasDocentes/{setEmailC}', [RerservasUsuario::class, 'reservasDocentes']);
 Route::get('/obtenerMara/{Correo}', [AmbienteController::class, 'MateriasObtener']);
 
 //Registrar Datos

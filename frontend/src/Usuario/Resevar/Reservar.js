@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import "./Reservar.css"
 import { FaPlus } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom'; 
 import Ico1 from '../../assets/IcoGood.png';
 import Ico2 from '../../assets/IcoState.png';
+import { UserContext } from '../../Context/UserContext';
+
 
  const Reservar = () => {
   const [reservas, setReservas] = useState([]);
+  const { setUserC, setEmailC , userC } = useContext(UserContext);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/reservasDocentes', {
+    fetch(`http://127.0.0.1:8000/api/ReservasDocentes/${setEmailC}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
