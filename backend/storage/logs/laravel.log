@@ -1331,3 +1331,211 @@
 #57 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\server.php(21): require_once('C:\\\\Users\\\\Gabrie...')
 #58 {main}
 "} 
+[2024-05-07 19:36:07] local.ERROR: During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation-contracts\TranslatorTrait.php:138
+Stack trace:
+#0 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(427): Composer\Autoload\{closure}('C:\\Users\\Gabrie...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Contrac...')
+#2 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation\IdentityTranslator.php(23): spl_autoload_call('Symfony\\Contrac...')
+#3 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(576): include('C:\\Users\\Gabrie...')
+#4 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoade {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation-contracts\\TranslatorTrait.php:138
+Stack trace:
+#0 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\Users\\\\Gabrie...')
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('Symfony\\\\Contrac...')
+#2 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php(23): spl_autoload_call('Symfony\\\\Contrac...')
+#3 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(576): include('C:\\\\Users\\\\Gabrie...')
+#4 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoade at C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php:23)
+[stacktrace]
+#0 {main}
+"} 
+[2024-05-07 19:39:11] local.ERROR: During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation-contracts\TranslatorTrait.php:138
+Stack trace:
+#0 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(427): Composer\Autoload\{closure}('C:\\Users\\Gabrie...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Contrac...')
+#2 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation\IdentityTranslator.php(23): spl_autoload_call('Symfony\\Contrac...')
+#3 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(576): include('C:\\Users\\Gabrie...')
+#4 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoade {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation-contracts\\TranslatorTrait.php:138
+Stack trace:
+#0 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\Users\\\\Gabrie...')
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('Symfony\\\\Contrac...')
+#2 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php(23): spl_autoload_call('Symfony\\\\Contrac...')
+#3 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(576): include('C:\\\\Users\\\\Gabrie...')
+#4 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoade at C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php:23)
+[stacktrace]
+#0 {main}
+"} 
+[2024-05-07 20:21:52] local.ERROR: During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation-contracts\TranslatorTrait.php:138
+Stack trace:
+#0 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(427): Composer\Autoload\{closure}('C:\\Users\\Gabrie...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Contrac...')
+#2 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation\IdentityTranslator.php(23): spl_autoload_call('Symfony\\Contrac...')
+#3 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(576): include('C:\\Users\\Gabrie...')
+#4 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoade {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation-contracts\\TranslatorTrait.php:138
+Stack trace:
+#0 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\Users\\\\Gabrie...')
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('Symfony\\\\Contrac...')
+#2 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php(23): spl_autoload_call('Symfony\\\\Contrac...')
+#3 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(576): include('C:\\\\Users\\\\Gabrie...')
+#4 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoade at C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php:23)
+[stacktrace]
+#0 {main}
+"} 
+[2024-05-07 20:22:16] local.ERROR: During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation-contracts\TranslatorTrait.php:138
+Stack trace:
+#0 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(427): Composer\Autoload\{closure}('C:\\Users\\Gabrie...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Contrac...')
+#2 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation\IdentityTranslator.php(23): spl_autoload_call('Symfony\\Contrac...')
+#3 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(576): include('C:\\Users\\Gabrie...')
+#4 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoade {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation-contracts\\TranslatorTrait.php:138
+Stack trace:
+#0 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\Users\\\\Gabrie...')
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('Symfony\\\\Contrac...')
+#2 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php(23): spl_autoload_call('Symfony\\\\Contrac...')
+#3 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(576): include('C:\\\\Users\\\\Gabrie...')
+#4 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoade at C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php:23)
+[stacktrace]
+#0 {main}
+"} 
+[2024-05-07 20:22:16] local.ERROR: During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation-contracts\TranslatorTrait.php:138
+Stack trace:
+#0 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(427): Composer\Autoload\{closure}('C:\\Users\\Gabrie...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Contrac...')
+#2 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation\IdentityTranslator.php(23): spl_autoload_call('Symfony\\Contrac...')
+#3 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(576): include('C:\\Users\\Gabrie...')
+#4 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoade {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation-contracts\\TranslatorTrait.php:138
+Stack trace:
+#0 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\Users\\\\Gabrie...')
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('Symfony\\\\Contrac...')
+#2 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php(23): spl_autoload_call('Symfony\\\\Contrac...')
+#3 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(576): include('C:\\\\Users\\\\Gabrie...')
+#4 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoade at C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php:23)
+[stacktrace]
+#0 {main}
+"} 
+[2024-05-07 20:22:16] local.ERROR: During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation-contracts\TranslatorTrait.php:138
+Stack trace:
+#0 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(427): Composer\Autoload\{closure}('C:\\Users\\Gabrie...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Contrac...')
+#2 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation\IdentityTranslator.php(23): spl_autoload_call('Symfony\\Contrac...')
+#3 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(576): include('C:\\Users\\Gabrie...')
+#4 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoade {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation-contracts\\TranslatorTrait.php:138
+Stack trace:
+#0 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\Users\\\\Gabrie...')
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('Symfony\\\\Contrac...')
+#2 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php(23): spl_autoload_call('Symfony\\\\Contrac...')
+#3 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(576): include('C:\\\\Users\\\\Gabrie...')
+#4 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoade at C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php:23)
+[stacktrace]
+#0 {main}
+"} 
+[2024-05-07 20:22:21] local.ERROR: During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation-contracts\TranslatorTrait.php:138
+Stack trace:
+#0 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(427): Composer\Autoload\{closure}('C:\\Users\\Gabrie...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Contrac...')
+#2 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation\IdentityTranslator.php(23): spl_autoload_call('Symfony\\Contrac...')
+#3 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(576): include('C:\\Users\\Gabrie...')
+#4 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoade {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation-contracts\\TranslatorTrait.php:138
+Stack trace:
+#0 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\Users\\\\Gabrie...')
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('Symfony\\\\Contrac...')
+#2 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php(23): spl_autoload_call('Symfony\\\\Contrac...')
+#3 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(576): include('C:\\\\Users\\\\Gabrie...')
+#4 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoade at C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php:23)
+[stacktrace]
+#0 {main}
+"} 
+[2024-05-07 20:22:21] local.ERROR: During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation-contracts\TranslatorTrait.php:138
+Stack trace:
+#0 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(427): Composer\Autoload\{closure}('C:\\Users\\Gabrie...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Contrac...')
+#2 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation\IdentityTranslator.php(23): spl_autoload_call('Symfony\\Contrac...')
+#3 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(576): include('C:\\Users\\Gabrie...')
+#4 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoade {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation-contracts\\TranslatorTrait.php:138
+Stack trace:
+#0 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\Users\\\\Gabrie...')
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('Symfony\\\\Contrac...')
+#2 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php(23): spl_autoload_call('Symfony\\\\Contrac...')
+#3 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(576): include('C:\\\\Users\\\\Gabrie...')
+#4 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoade at C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php:23)
+[stacktrace]
+#0 {main}
+"} 
+[2024-05-07 20:22:31] local.ERROR: During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation-contracts\TranslatorTrait.php:138
+Stack trace:
+#0 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(427): Composer\Autoload\{closure}('C:\\Users\\Gabrie...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Contrac...')
+#2 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation\IdentityTranslator.php(23): spl_autoload_call('Symfony\\Contrac...')
+#3 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(576): include('C:\\Users\\Gabrie...')
+#4 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoade {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation-contracts\\TranslatorTrait.php:138
+Stack trace:
+#0 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\Users\\\\Gabrie...')
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('Symfony\\\\Contrac...')
+#2 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php(23): spl_autoload_call('Symfony\\\\Contrac...')
+#3 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(576): include('C:\\\\Users\\\\Gabrie...')
+#4 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoade at C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php:23)
+[stacktrace]
+#0 {main}
+"} 
+[2024-05-07 20:22:31] local.ERROR: During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation-contracts\TranslatorTrait.php:138
+Stack trace:
+#0 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(427): Composer\Autoload\{closure}('C:\\Users\\Gabrie...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Contrac...')
+#2 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation\IdentityTranslator.php(23): spl_autoload_call('Symfony\\Contrac...')
+#3 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(576): include('C:\\Users\\Gabrie...')
+#4 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoade {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation-contracts\\TranslatorTrait.php:138
+Stack trace:
+#0 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\Users\\\\Gabrie...')
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('Symfony\\\\Contrac...')
+#2 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php(23): spl_autoload_call('Symfony\\\\Contrac...')
+#3 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(576): include('C:\\\\Users\\\\Gabrie...')
+#4 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoade at C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php:23)
+[stacktrace]
+#0 {main}
+"} 
+[2024-05-07 20:22:31] local.ERROR: During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation-contracts\TranslatorTrait.php:138
+Stack trace:
+#0 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(427): Composer\Autoload\{closure}('C:\\Users\\Gabrie...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Contrac...')
+#2 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation\IdentityTranslator.php(23): spl_autoload_call('Symfony\\Contrac...')
+#3 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(576): include('C:\\Users\\Gabrie...')
+#4 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoade {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation-contracts\\TranslatorTrait.php:138
+Stack trace:
+#0 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\Users\\\\Gabrie...')
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('Symfony\\\\Contrac...')
+#2 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php(23): spl_autoload_call('Symfony\\\\Contrac...')
+#3 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(576): include('C:\\\\Users\\\\Gabrie...')
+#4 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoade at C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php:23)
+[stacktrace]
+#0 {main}
+"} 
+[2024-05-07 20:23:31] local.ERROR: During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation-contracts\TranslatorTrait.php:138
+Stack trace:
+#0 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(427): Composer\Autoload\{closure}('C:\\Users\\Gabrie...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Contrac...')
+#2 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation\IdentityTranslator.php(23): spl_autoload_call('Symfony\\Contrac...')
+#3 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(576): include('C:\\Users\\Gabrie...')
+#4 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoade {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation-contracts\\TranslatorTrait.php:138
+Stack trace:
+#0 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\Users\\\\Gabrie...')
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('Symfony\\\\Contrac...')
+#2 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php(23): spl_autoload_call('Symfony\\\\Contrac...')
+#3 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(576): include('C:\\\\Users\\\\Gabrie...')
+#4 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoade at C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php:23)
+[stacktrace]
+#0 {main}
+"} 
+[2024-05-07 20:26:26] local.ERROR: During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation-contracts\TranslatorTrait.php:138
+Stack trace:
+#0 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(427): Composer\Autoload\{closure}('C:\\Users\\Gabrie...')
+#1 [internal function]: Composer\Autoload\ClassLoader->loadClass('Symfony\\Contrac...')
+#2 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\symfony\translation\IdentityTranslator.php(23): spl_autoload_call('Symfony\\Contrac...')
+#3 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoader.php(576): include('C:\\Users\\Gabrie...')
+#4 C:\Users\Gabriel\Desktop\Documentos\I-2024\Taller de Ing software\purpleSoftTIS\purpleSoft\backend\vendor\composer\ClassLoade {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): During class fetch: Uncaught ParseError: syntax error, unexpected ',' in C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation-contracts\\TranslatorTrait.php:138
+Stack trace:
+#0 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(427): Composer\\Autoload\\{closure}('C:\\\\Users\\\\Gabrie...')
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass('Symfony\\\\Contrac...')
+#2 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php(23): spl_autoload_call('Symfony\\\\Contrac...')
+#3 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoader.php(576): include('C:\\\\Users\\\\Gabrie...')
+#4 C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\composer\\ClassLoade at C:\\Users\\Gabriel\\Desktop\\Documentos\\I-2024\\Taller de Ing software\\purpleSoftTIS\\purpleSoft\\backend\\vendor\\symfony\\translation\\IdentityTranslator.php:23)
+[stacktrace]
+#0 {main}
+"} 
