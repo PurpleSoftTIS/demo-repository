@@ -14,6 +14,7 @@ class CreateHorarioTable extends Migration
     public function up()
     {
         Schema::create('horario', function (Blueprint $table) {
+            $table->id('id_horario');
             $table->foreignId("id_dia")->constrained("dia", "id_dia");
             $table->foreignId("id_hora")->constrained("hora", "id_hora");
 

@@ -2,9 +2,15 @@ import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { useNavigate } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
+
 import './SolicitarCon2.css'
 const SolicitarCon2 = () => {
-    
+  const { state: datos } = useLocation();
+  const materia = datos ? datos.materia : null; 
+  const carrera = datos ? datos.carrera : null;
+  const docente = datos ? datos.docente : null;
+
   const navigate = useNavigate();   
 
   const [inputValue, setInputValue] = useState('');
@@ -12,8 +18,6 @@ const SolicitarCon2 = () => {
   const [horariosDisponibles, setHorariosDisponibles] = useState([]);
   const [selectedDay, setSelectedDay] = useState(''); 
   const [selectedOption, setSelectedOption] = useState('');
-  const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const [errorInconpleto, setErrorIncompleto] = useState("");
 
 
   useEffect(() => {
@@ -50,32 +54,17 @@ const SolicitarCon2 = () => {
   };
 
   const handleNextStep = () => {
-    const tipoNumero = /^\d+$/;
-
-    const dataToSend = {
+    const datos2 = {
+      materia,
+      carrera,
+      docente,
       numeroEstudiantes: inputValue,
       diaSeleccionado: selectedDay,
       horaSeleccionada: selectedOption
     };
-    if (!inputValue) {
-      setErrorIncompleto(" Por favor, complete todos los campos del formulario");
-      return;
-    }else{
-      setShowErrorMessage("");
-      if(!tipoNumero.test(inputValue)){
-        setShowErrorMessage("Ingrese solo numeros")
-  
-      }else{
-        setShowErrorMessage("")
-  
-        navigate('/Usuario/Usu/SolicitarCon3', { state: dataToSend });
-  
-      }
-     
-    } 
-    
-
+    navigate('/Usuario/Usu/SolicitarCon3', { state: datos2});
   };
+  
 
     return (
         <div className='contenedorGeneral'>
@@ -106,7 +95,6 @@ const SolicitarCon2 = () => {
                 placeholder='Ingrese la capacidad es estudiantes'
                 className="input"
               />
-             {showErrorMessage && <p className="error">{showErrorMessage}</p>}
     
             </div>
     
@@ -119,8 +107,6 @@ const SolicitarCon2 = () => {
                   </option>
                 ))}
               </select>
-              {showErrorMessage && selectedOption === '' && <p className="solo-numero">Este campo es obligatorio</p>}
-              {errorInconpleto && <p className="error">{errorInconpleto}</p>}
     
               <button className="boton-siguiente" onClick={handleNextStep}>Siguiente paso</button>
             </div>

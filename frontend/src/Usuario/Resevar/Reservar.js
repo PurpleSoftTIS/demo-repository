@@ -1,10 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import "./Reservar.css"
 import { FaPlus } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom'; 
+import Ico1 from '../../assets/IcoGood.png';
+import Ico2 from '../../assets/IcoState.png';
+import { UserContext } from '../../Context/UserContext';
 
- const Reservar = () => {
- 
+
+const Reservar = () => {
+const [reservas, setReservas] = useState([]);
+const {setEmailC} = useContext(UserContext);
+  
+
+  useEffect(() => {
+    fetch(`http://127.0.0.1:8000/api/ReservasDocentes/${setEmailC}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setReservas(data);
+        console.log(data);
+      })
+      .catch((error) => console.error('Error al obtener los datos:', error));
+  }, [setEmailC]);
 
   return (
     <div className="container" style={{ height: '100vh.' }}>
@@ -31,8 +52,28 @@ import { NavLink } from 'react-router-dom';
             <th>Hora</th>
             <th>Capacidad</th>
             <th>Estado</th>
-
           </tr>
+          <tbody>
+          {reservas.map((reserva, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{reserva.nombre_materia}</td>
+              <td>{reserva.nombre_ambiente}</td>
+              <td>{reserva.fecha_solicitud}</td>
+              <td>{reserva.hora_inicio}</td>
+              <td>
+                {reserva.estado_solicitud === "aceptada" ? (
+                  <img className="iconos2" src={Ico1} alt="aceptado" width="50px" height="50px" />
+                ) : (
+                  <img className="iconos2" src={Ico2} alt="pendiente" width="50px" height="50px" />
+                )}
+              </td>
+              <td>
+                <button className="btn btn-primary">Eliminar</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
         </thead>      
       </table>
     </div>

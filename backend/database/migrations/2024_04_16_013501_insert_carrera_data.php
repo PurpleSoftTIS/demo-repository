@@ -21,6 +21,13 @@ class InsertCarreraData extends Migration
             ['nombre_carrera' => 'Ingeniería Matemática'],
             ['nombre_carrera' => 'Ingeniería Mecánica'],
             ['nombre_carrera' => 'Ingeniería en Biotecnología'],
+            ['nombre_carrera' => 'Lic. en biologia'],
+            ['nombre_carrera' => 'Ingenieria en Energia'],
+            ['nombre_carrera' => 'Lic. didactica de la fisica'],
+            ['nombre_carrera' => 'Lic. en fisica'],
+            ['nombre_carrera' => 'Lic. en  matematica'],
+            ['nombre_carrera' => 'Ingenieria Quimica '],
+            ['nombre_carrera' => 'Lic. en quimica'],
         ];
 
         foreach ($carreras as $carrera) {

@@ -108,4 +108,20 @@ class MateriaController extends Controller
             return response()->json(['error' => 'Error al importar'], 500);
         }
     }
+
+    public function docentesPorMateria($nombre_materia, $correo_usuario)
+    {
+        $docentesPorMateria = Materia::select(
+                'usuario.id_usuario',
+                DB::raw("CONCAT(usuario.nombre, '  ', usuario.apellido_paterno, '  ', usuario.apellido_materno) AS nombre_completo_docente")
+            )
+            ->join('materia_docente', 'materia.id_materia', '=', 'materia_docente.id_materia')
+            ->join('docente', 'materia_docente.id_docente', '=', 'docente.id_docente')
+            ->join('usuario', 'docente.id_usuario', '=', 'usuario.id_usuario')
+            ->where('materia.nombre_materia', $nombre_materia)
+            ->where('usuario.correo_electronico', '!=', $correo_usuario) // Excluir al usuario que realiza la solicitud
+            ->get();
+
+        return response()->json($docentesPorMateria, 200);
+    }
 }

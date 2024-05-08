@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { FaBars,FaAt, FaLock } from "react-icons/fa"; 
 import { Collapse, Row,Col,Container } from "react-bootstrap";
@@ -14,22 +14,23 @@ import Ico6 from "../assets/IconosLan/IcoReactL.png";
 import Ico7 from "../assets/IconosLan/IcoFacultad.png";
 import Ico8 from "../assets/IconosLan/IcoFacultadEscudo.png";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../Context/UserContext";
 
 const LoginForm = () => {
 const navigate = useNavigate();   
-
-  const [menuClicked, setMenuClicked] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+const { setEmailC, setUserC } = useContext(UserContext);
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [menuClicked, setMenuClicked] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false); 
   const [emailValido, setEmailValido] = useState(false);
   const [contraseñaValido, setContraseñaValido] = useState(false);
-
-  const correoElectronico = email;
-  const [login0, setIsVisible] = useState(false);
-  const [logRecuperacion, setInvisible] = useState(true);
-  const [mostrarIniciar , setIniciar] = useState(true);
-  const [mostrarRestablecer, setMostrarRestablecer] = useState(false);
+  const [login, setLogin] = useState(true);
+  const [logRecuperacion, setRecuperacion] = useState(false);
+  const [mostrarTituloUno , setMostrarTituloUno] = useState(true);
+  const [mostrarTituloDos , setMostrarTituloDos] = useState(false);
 
   const [errorCorreo, setErrorCorreo] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
@@ -38,17 +39,16 @@ const navigate = useNavigate();
   const [errorContraseñaValido, setErrorContraseñaValido] = useState("");
 
   const toggleVisibility = () => {
-
-    setIsVisible(!login0); 
-    setInvisible(!logRecuperacion);
-    setIniciar(!mostrarIniciar);
-    setMostrarRestablecer(!mostrarRestablecer);
+    setLogin(false);
+    setMostrarTituloUno(false); 
+    setRecuperacion(true);
+    setMostrarTituloDos(true);
   };
   const toggleVisibility2 = () =>{
-    setIsVisible(!login0); 
-    setInvisible(!logRecuperacion);
-    setIniciar(!mostrarIniciar);
-    setMostrarRestablecer(!mostrarRestablecer);
+    setLogin(true);
+    setMostrarTituloUno(true); 
+    setRecuperacion(false);
+    setMostrarTituloDos(false);
   }
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -96,7 +96,6 @@ const navigate = useNavigate();
         setErrorPassword("");
     }
 
-
     if (email === "purpleSoft@gmail.com" && password === "purplesoft2024") {
         navigate("/Admin/Inicio/HomeUno");
     }else{
@@ -114,7 +113,7 @@ const navigate = useNavigate();
                 
                 if (!response.ok) {
                     setErrorEmailValido("Ingrese una cuenta valida");
-
+                    emailValido = false;
                     throw new Error("La solicitud al servidor falló");
                 }
 
@@ -130,14 +129,20 @@ const navigate = useNavigate();
                         setEmailValido(true);
                         setErrorContraseñaValido("Contraseña incorrecta");
                         setContraseñaValido(false);
+                        contraseñaValido = false;
                     } else {
+                        sessionStorage.setItem('user', data.nombre);
+                        sessionStorage.setItem('email', email);
+                        setEmailC(email);
+                        setUserC(data.nombre);
                         setEmailValido(true);
                         setContraseñaValido(true);
                         setErrorEmailValido("");
                         setErrorContraseñaValido("");
-                        const credencialesValidas = emailValido && contraseñaValido;
-                        const rutaRedireccion = credencialesValidas ? "/Usuario/Inicio/HomeDos" : "/";
-                        const estadoRedireccion = { state: correoElectronico };
+                        console.log("Nombre de usuario:", data.nombre);
+                        console.log("Correo electrónico:", email);
+                        const rutaRedireccion = "/Usuario/Inicio/HomeDos" ;
+                        const estadoRedireccion = { state: email };
                         navigate(rutaRedireccion, estadoRedireccion);
                     }
                 } else {
@@ -150,30 +155,26 @@ const navigate = useNavigate();
                     
                     }                
                 }  
-                
-                
-    
-};
-const handleSubmitRestablecer = (e) => {
-    e.preventDefault();
-    fetch('http://127.0.0.1:8000/api/enviar', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({email}),
-    })
-    .then(response => {
-        if (response.ok) {
-            console.log('Correo electrónico enviado correctamente');
-        } else {
-            console.error('Error al enviar correo electrónico');
-        }
-    })
-    .catch(error => {
-        console.error('Error de red:', error);
-    });
-};
+            };
+        const handleSubmitRestablecer = () => {
+            fetch('http://127.0.0.1:8000/web/Mail', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({}),
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Correo electrónico enviado correctamente');
+                } else {
+                    console.error('Error al enviar correo electrónico');
+                }
+            })
+            .catch(error => {
+                console.error('Error de red:', error);
+            });
+        };
 
   return (
     <div className="hero-6" style={{ height: '100vh' }}>
@@ -222,70 +223,72 @@ const handleSubmitRestablecer = (e) => {
                             <Col xs={12} sm={10} md={8} lg={6}> {/* Define el ancho del formulario en diferentes tamaños de pantalla */}
                                 <div className="login-box">
                                     <div className="section">
-                                    {mostrarIniciar && (
-                                            <h6 className="mb-0 pb-3 text-center" id="Iniciar">Iniciar sesión</h6>)}
-                                        <form className="login0"onSubmit={handleSubmit} style={{ display: logRecuperacion ? 'block' : 'none' }}>
-                                            <div className="form-group">
-                                                <span className="input-icon"><FaAt /></span>
-                                                <input 
-                                                    type="email"
-                                                    name="logemail"
-                                                    className="form-control"
-                                                    placeholder="Ingrese su correo"
-                                                    value={email}
-                                                    onChange={(e) => setEmail(e.target.value)}
-                                                />
-                                                {errorCorreo && <p className="error2">{errorCorreo}</p>}
-                                                {errorEmailValido && <p className="error2">{errorEmailValido}</p>}
+                                    {mostrarTituloUno && (
+                                        <h6 className="mb-0 pb-3 text-center" id="Iniciar">Iniciar sesión</h6>
+                                    )}
+                                    {login && (
+                                        <form className="login0">
+                                        <div className="form-group">
+                                            <span className="input-icon"><FaAt /></span>
+                                            <input 
+                                                type="email"
+                                                name="logemail"
+                                                className="form-control"
+                                                placeholder="Ingrese su correo"
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                            />
+                                            {errorCorreo && <p className="error2">{errorCorreo}</p>}
+                                            {errorEmailValido && <p className="error2">{errorEmailValido}</p>}
+                                        </div>
+                                         <div className="form-group">
+                                            <span className="input-icon"><FaLock /></span>
+                                            <input
+                                                type="password"
+                                                name="logpass"
+                                                className="form-control"
+                                                placeholder="Ingrese su contaraseña"
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
+                                            />
+                                            {errorPassword && <p className="error2">{errorPassword}</p>}
+                                            {errorContraseñaValido && <p className="error2">{errorContraseñaValido}</p>}
 
-
-                                            </div>
-                                             <div className="form-group">
-                                                <span className="input-icon"><FaLock /></span>
-                                                <input
-                                                    type="password"
-                                                    name="logpass"
-                                                    className="form-control"
-                                                    placeholder="Ingrese su contaraseña"
-                                                    value={password}
-                                                    onChange={(e) => setPassword(e.target.value)}
-                                                />
-                                                {errorPassword && <p className="error2">{errorPassword}</p>}
-                                                {errorContraseñaValido && <p className="error2">{errorContraseñaValido}</p>}
-
-                                                {errorInconpleto && <p className="error2">{errorInconpleto}</p>}                                                
-                                            </div>
-                                            <div className="mb-0 pb-3 text-center">
-                                            <button className="btn-block" onClick={handleSubmit}> Ingresar </button>                                         
-                                            </div>
-                                                <p className="mt-3 text-center">
-                                                    <button  onClick={toggleVisibility} className="olvidar">¿Olvidaste tu Contraseña?</button>
-                                                </p>                                           
-                                        </form>
-                                        {mostrarRestablecer && (
-                                            <h6 className="mb-0 pb-3 text-center" id="Reestablecer">Restablecer Contraseña</h6>)}
-                                              <form className="logRecuperacion"onSubmit={handleSubmit} style={{ display: login0 ? 'block' : 'none' }} >
-                                                        <div className="form-group">
-                                                            <span className="input-icon"><FaAt /></span>
-                                                            <input 
-                                                                type="email"
-                                                                name="logemail"
-                                                                className="form-control"
-                                                                placeholder="Correo Institucional"
-                                                                id="logemail1" 
-                                                                autoComplete="off"
-                                                                value={email}
-
-                                                            />
-                                            </div>
-                                            <div className="mb-0 pb-3 text-center">
-                                                <button className="btn-block"  onClick={handleSubmitRestablecer}>Enviar Codigo</button>
-                                         
-                                            </div>
+                                            {errorInconpleto && <p className="error2">{errorInconpleto}</p>}                                                
+                                        </div>
+                                        <div className="mb-0 pb-3 text-center">
+                                        <button className="btn-block" onClick={handleSubmit}> Ingresar </button>                                         
+                                        </div>
                                             <p className="mt-3 text-center">
-                                                    <button  onClick={toggleVisibility2} className="olvidar">Iniciar sesión</button>
-                                                </p>                                          
-                                        </form>                                        
+                                                <button  onClick={toggleVisibility} className="olvidar">¿Olvidaste tu Contraseña?</button>
+                                            </p>                                           
+                                    </form>
+                                    )}
+                                        
+                                    {mostrarTituloDos && (
+                                            <h6 className="mb-0 pb-3 text-center" id="Reestablecer">Restablecer Contraseña</h6>
+                                        )}
+                                        {logRecuperacion && (
+                                              <form className="logRecuperacion">
+                                              <div className="form-group">
+                                                  <span className="input-icon"><FaAt /></span>
+                                                  <input 
+                                                      type="email"
+                                                      name="logemail"
+                                                      className="form-control"
+                                                      placeholder="Correo Institucional"
+                                                      id="logemail1" 
+                                                  />
+                                              </div>
+                                              <div className="mb-0 pb-3 text-center">
+                                                  <button className="btn-block"  onClick={handleSubmitRestablecer}>Enviar Codigo</button>
+                                              </div>
+                                              <p className="mt-3 text-center">
+                                                  <button  onClick={toggleVisibility2} className="olvidar">Iniciar sesión</button>
+                                              </p>                                          
+                                      </form> 
+                                        )}
+                                                                                   
                                     </div>
                                 </div>
                             </Col>
@@ -329,7 +332,7 @@ const handleSubmitRestablecer = (e) => {
                         <img className="iconos2" src={Ico6} alt="logo" width="40px" height="40px" /> 
                     </div>
                 </div>
-            </footer>
+        </footer>
 
     </div>
     
@@ -337,4 +340,3 @@ const handleSubmitRestablecer = (e) => {
 };
 
 export default LoginForm;
-                                

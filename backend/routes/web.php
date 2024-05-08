@@ -1,6 +1,9 @@
 <?php
 
+use App\Mail\Restablecer;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\UsuarioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/Mail', function () {
+    Mail::to('gabo2cabero@gmail.com')->send(new Restablecer());
+    return 'Mail sent';
 });
+Route::get('/enviarCorreo',[UsuarioController::class, 'restablecerContrasenia']);

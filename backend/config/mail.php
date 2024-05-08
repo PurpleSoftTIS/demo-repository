@@ -36,11 +36,11 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.gmail.com'),
+            'host' => env('MAIL_HOST', 'smtp.googlemail.com'),
             'port' => env('MAIL_PORT', 465),
             'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
             'username' => env('purplesoft51@gmail.com'),
-            'password' => env('pkddczdktudedjn'),
+            'password' => env('hyraqgnazlfwannv'),
             'timeout' => null,
             'auth_mode' => null,
         ],

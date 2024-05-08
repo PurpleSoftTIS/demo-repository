@@ -52,7 +52,6 @@ IMPORTANTE
 Servidor de prueba para ejecutar el bakcned:
 php -S 127.0.0.1:8000 -t public
 
-
 Como crear un controlador:
 php artisan make:controller_nombre
 
@@ -70,5 +69,8 @@ apellido_paterno + apellido_materno
 
 Reiniciar las credenciales de Laravel 
 php artisan config:clear
->> php artisan cache:clear   
->> php artisan optimize
+php artisan cache:clear   
+php artisan optimize
+
+Para dejar de depender de los paquetes de composer
+composer install --ignore-platform-reqs

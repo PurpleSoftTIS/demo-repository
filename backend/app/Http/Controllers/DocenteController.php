@@ -41,8 +41,11 @@ class DocenteController extends Controller
     public function eliminarAll()
     {
         try {
+            DB::statement('SET FOREIGN_KEY_CHECKS=0');
+
             Docente::truncate();
-            Usuario::truncate();     
+            Usuario::truncate(); 
+                
             DB::statement("ALTER TABLE usuario AUTO_INCREMENT = 1");
             DB::statement("ALTER TABLE docente AUTO_INCREMENT = 1");
     
@@ -71,7 +74,7 @@ class DocenteController extends Controller
     } else {
         return response()->json(['correcta' => false, 'mensaje' => 'Contraseña no proporcionada'], 400);
     }    
-    return response()->json(['exists' => true, 'correcta' => true]);
+    return response()->json(['exists' => true, 'correcta' => true, 'nombre' => $usuario->nombre]);
 }
 
 

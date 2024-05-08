@@ -10,17 +10,16 @@ use Illuminate\Queue\SerializesModels;
 class Restablecer extends Mailable
 {
     use Queueable, SerializesModels;
-
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public $data;
+    public function __construct($data)
     {
-        //
+        $this->data= $data;
     }
-
     /**
      * Build the message.
      *
@@ -28,6 +27,9 @@ class Restablecer extends Mailable
      */
     public function build()
     {
-        return $this->view('view.welcome.blade');
+        return $this->from('purplesoft51@gmail.com',env('MAIL_FROM_NAME'))
+        ->view('restablecerCon')
+        ->subject('Restablecer contraceña')
+        ->with($this-> data);
     }
 }
