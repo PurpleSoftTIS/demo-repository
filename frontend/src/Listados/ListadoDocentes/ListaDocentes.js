@@ -13,6 +13,7 @@ const ListaDocentes = () => {
   const [docentes, setDocentes] = useState([]);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [showDeleteDocente, setShowDeleteDocente] = useState(false);
+  const [docentesFilter, setDocentesFilter] = useState([]);
   const [docenteToDelete, setDocenteToDelete] = useState([]);
 
   useEffect(() => {
@@ -25,6 +26,7 @@ const ListaDocentes = () => {
       .then(response => response.json())
       .then(data => {
         setDocentes(data);
+        setDocentesFilter(data);
       })
       .catch(error => console.error('Error al obtener los datos:', error));
   }, []);
@@ -138,6 +140,26 @@ const ListaDocentes = () => {
     };
     navigate('/Admin/Registro/DocentesActualizar', { state: datos });
   };
+  
+  const searchData = (e) => {
+    const value = e.target.value;
+    if (value === '') {
+      setDocentesFilter(docentes);
+      return;
+    }
+    const data = docentes.filter((docente) => {
+      return docente.id_docente.toString().toLowerCase().includes(value.toLowerCase())
+      || docente.nombre.toString().toLowerCase().includes(value.toLowerCase())
+      || docente.apellido_paterno.toString().toLowerCase().includes(value.toLowerCase())
+      || docente.apellido_materno.toLowerCase().includes(value.toLowerCase())
+      || docente.codigo_docente.toString().toLowerCase().includes(value.toLowerCase())
+      || docente.correo_electronico.toString().toLowerCase().includes(value.toLowerCase())
+      || docente.tipo_docente.toString().toLowerCase().includes(value.toLowerCase());
+
+    });
+    setDocentesFilter(data);
+   
+  }
   return (
     
     <div className="container" style={{ minHeight: '78.7vh' }}>
@@ -145,7 +167,7 @@ const ListaDocentes = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ margin: 0 }}>Docentes Registrados:</h2>
         <div>
-          <input type="text" placeholder="Buscar" className="input-text" />
+          <input type="text" placeholder="Buscar"onChangeCapture={searchData} className="input-text" />
           <button className="butn butn-filtro">Filtros</button>
           <NavLink to="/Admin/Registro/Docentes" className="butn butn-nuevo">
             Nuevo Docente<FaPlus className="icon" />
@@ -184,7 +206,7 @@ const ListaDocentes = () => {
           </tr>
         </thead>
         <tbody>
-          {docentes.map(docente => (
+          {docentesFilter.map(docente => (
             <tr key={docente.id} className="fila-lista">
               <td>{docente.id_docente}</td>
               <td>{docente.nombre}</td>

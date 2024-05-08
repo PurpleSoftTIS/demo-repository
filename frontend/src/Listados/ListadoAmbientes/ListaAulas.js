@@ -11,6 +11,7 @@ function ListaAulas() {
   const [Advertencia, setAdvertencia] = useState(false);
   const [Advertencia2, setAdvertencia2] = useState(false);
   const [aulas, setAulas] = useState([]);
+  const[aulasFilter, setAulasFilter] = useState([]);
   const [importar, setImportar] = useState(false);
   const [ambienteToDelete, setAmibienteToDelete] = useState("");
 
@@ -175,12 +176,31 @@ function ListaAulas() {
       })
       .then((data) => {
         setAulas(data);
+        setAulasFilter(data);
         console.log(data);
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
+  const searchData = (e) => {
+    const value = e.target.value;
+    if (value === '') {
+      setAulasFilter(aulas);
+      return;
+    }
+    const data = aulas.filter((aula) => {
+      return aula.nombre_ambiente.toLowerCase().includes(value.toLowerCase())
+      || aula.id_ambiente.toString().toLowerCase().includes(value.toLowerCase())
+      || aula.edificio.toString().toLowerCase().includes(value.toLowerCase())
+      || aula.tipo_ambiente.toLowerCase().includes(value.toLowerCase())
+      || aula.numero_piso.toLowerCase().includes(value.toLowerCase())
+      || aula.capacidad.toString().toLowerCase().includes(value.toLowerCase());
+
+    });
+    setAulasFilter(data);
+   
+  }
 
   const obtenerId = (aula) => {
     const idAmniente= aula.id_ambiente;
@@ -194,7 +214,7 @@ function ListaAulas() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ margin: 0 }}>Ambientes Registrados:</h2>
         <div>
-          <input type="text" placeholder="Buscar" />
+          <input type="text" placeholder="Buscar"onChangeCapture={searchData} />
           <button className="butn butn-filtro">Filtros</button>
           <NavLink to="/Admin/Registro/Ambientes" className="butn butn-nuevo">
               Nuevo Ambiente<FaPlus className="icon" />
@@ -252,7 +272,7 @@ function ListaAulas() {
           </tr>
         </thead>
         <tbody>
-          {aulas.map((aula) => (
+          {aulasFilter.map((aula) => (
             <tr key={aula.id_ambiente} className="fila-lista">
               <td>{aula.id_ambiente}</td>
               <td>{aula.nombre_ambiente}</td>
