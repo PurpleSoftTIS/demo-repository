@@ -26,6 +26,25 @@ const Solicitar1 = () => {
             })
             .then(data => {
                 setDatos(data);
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Error al cargar los ambientes disponibles:', error);
+            });
+        }       
+    }, []);  
+
+    useEffect(() => {
+        if (capacidad) {
+            fetch(`http://127.0.0.1:8000/api/ambientesContiguos/${capacidad}/${diaSeleccionado}/${hora_inicio}/${hora_fin}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al cargar ambientes  disponibles');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("DATOS CONTIGUOS",data);
             })
             .catch(error => {
                 console.error('Error al cargar los ambientes disponibles:', error);

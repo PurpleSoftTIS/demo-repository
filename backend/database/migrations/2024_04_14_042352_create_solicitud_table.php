@@ -20,7 +20,7 @@ class CreateSolicitudTable extends Migration
             $table->date("fecha_solicitud");
             $table->string("motivo");
             $table->string("tipo_solicitud");
-            $table->string("estado_solicitud", 8);
+            $table->string("estado_solicitud", 15);
             $table->timestamps();           
         });
     }

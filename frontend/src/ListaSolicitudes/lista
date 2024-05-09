@@ -1,19 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 import './ListaSolicitudes.css';
 
 const ListaSolicitudes = () => {
   const [solicitudes, setSolicitudes] = useState([]);
-  const [solicitudesTodas, setSolicitudesTodas] = useState([]);
-  const [solicitudesPendientes, setSolicitudesPendientes] = useState([]);
-
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
-  const [mostrarSolicitudesTodass, setMostrarSolicitudesTodas] = useState(false);
-  const [show, setShow] = useState(false);
-  const [motivo, setMotivo] = useState('');
-  const [fecha, setFecha] = useState('')
   const [formularioData, setFormData] = useState({
     Docente: "",
     Materia: "",
@@ -25,8 +15,7 @@ const ListaSolicitudes = () => {
     Motivo: "",
     Tipo_de_solicitud: ""
   });
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+ 
   const aceptarsolicitud = (id_solicitud) => {
       fetch(`http://127.0.0.1:8000/api/aceptarsolicitud/${id_solicitud}`, {
           method: 'PUT',
@@ -82,29 +71,10 @@ const ListaSolicitudes = () => {
         .then(response => response.json())
         .then(data => {
           setSolicitudes(data);
-          setSolicitudesPendientes(data);
-          
           console.log("datos",data);
         })
         .catch(error => console.error('Error al obtener los datos:', error));
   }, []);
-  useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/obtenerTodasSolicitudes', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => response.json())
-      .then(data => {
-        setSolicitudesTodas(data);
-        
-        console.log("datos",data);
-      })
-      .catch(error => console.error('Error al obtener los datos:', error));
-}, []);
-
-
   const [mostrarOpciones, setMostrarOpciones] = useState(false); // Estado para controlar la aparición de los botones "Todas" y "Pendientes"
 
   const mostrarFormularioParaSolicitud = (solicitud) => {
@@ -125,49 +95,6 @@ const ListaSolicitudes = () => {
   const cerrarFormulario = () => {
       setMostrarFormulario(false);
   };
-  const filtrarSolicitudes = () => {
-    let solicitudesFiltradas = solicitudesPendientes; // Filtrar las solicitudes pendientes
-    if (motivo !== '') {
-      solicitudesFiltradas = solicitudesPendientes.filter(solicitud => {
-        return solicitud.motivo.toLowerCase().includes(motivo.toLowerCase());
-      });
-    }
-  
-    solicitudesFiltradas.sort((a, b) => {
-      const fechaA = new Date(a.fecha_solicitud);
-      const fechaB = new Date(b.fecha_solicitud);
-      return fechaA - fechaB;
-    });
-  
-    return solicitudesFiltradas; // Devolver las solicitudes filtradas
-  };
-  const aplicarFiltros = () => {
-    const solicitudesFiltradas = filtrarSolicitudes(); // Filtrar las solicitudes
-    setSolicitudes(solicitudesFiltradas); // Actualizar el estado de solicitudes
-    handleClose();
-  };
-  
-  
- 
-  const mostrarSolicitudesPendientes = () => {
-      setMostrarSolicitudesTodas(false);
-    
-  
-    setSolicitudes(solicitudesPendientes);
-  };
-  
-  const mostrarSolicitudesTodas = () => {
-    setMostrarSolicitudesTodas(true); 
-
-    const solicitudesMostrables = solicitudesTodas.map(solicitud => {
-        const { id_solicitud, nombre, apellido_paterno, apellido_materno, nombre_materia, motivo, fecha_solicitud, hora_inicio, hora_fin } = solicitud;
-        return { id_solicitud, nombre, apellido_paterno, apellido_materno, nombre_materia, motivo, fecha_solicitud, hora_inicio, hora_fin };
-    });
-
-    setSolicitudes(solicitudesMostrables);
-};
-
-
 
   const handleChange = (e) => {
       const { name, value } = e.target;
@@ -193,17 +120,11 @@ return (
           <button className="butn butn-filtro" onClick={() => setMostrarOpciones(!mostrarOpciones)}>Solicitudes</button>
           {mostrarOpciones && (
             <div className="opciones-solicitudes">
-              <button className="butn butn-filtro" onClick={() => { setMostrarOpciones(false);
-              mostrarSolicitudesTodas();
-              }}>Todas</button>
-            <button className="butn butn-filtro" onClick={() => {
-    setMostrarOpciones(false);
-   mostrarSolicitudesPendientes();
-  }}>Pendientes</button>
-
+              <button className="butn butn-filtro" onClick={() => setMostrarOpciones(false)}>Todas</button>
+              <button className="butn butn-filtro" onClick={() => setMostrarOpciones(false)}>Pendientes</button>
             </div>
           )}
- <button className="butn butn-filtro" onClick={handleShow}>Filtros</button>
+          <button className="butn butn-filtro">Filtros</button>
         </div>
       </div>
 
@@ -216,8 +137,7 @@ return (
             <th>Motivo</th>
             <th>Fecha</th>
             <th>Hora</th>
-            {!mostrarSolicitudesTodass && <th>Acciones</th>}
-
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -228,53 +148,23 @@ return (
             >
               <td>{index + 1}</td>
               <td>{`${solicitud.nombre} ${solicitud.apellido_paterno} ${solicitud.apellido_materno}`}</td>
-              <td>{solicitud.nombre_materia}</td>
+             <td>{solicitud.nombre_materia}</td>
               <td>{solicitud.motivo}</td>
               <td>{solicitud.fecha_solicitud}</td>
               <td>{solicitud.hora_inicio+" "+solicitud.hora_fin}</td>
-              {!mostrarSolicitudesTodass && (
-                <td>
-                  <button className="btn btn-editar mr-2" onClick={() => aceptarsolicitud(solicitud.id_solicitud)}>Aceptar</button>
-                  <button className="btn btn-eliminar" onClick={() => rechazarsolicitud(solicitud.id_solicitud)}>Rechazar</button>
-                </td>
-              )}
+              <td>
+                <button className="btn btn-editar mr-2" onClick={() => aceptarsolicitud(solicitud.id_solicitud)}>
+                  Aceptar
+                </button>
+
+                <button className="btn btn-eliminar"  onClick={() => rechazarsolicitud(solicitud.id_solicitud)} >
+                  Rechazar
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Filtros</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        <Form.Control 
-        as="select" 
-        value={motivo} 
-        onChange={(e) => setMotivo(e.target.value)}
-        style={{ backgroundColor: 'white', color: 'black' }}
-      >
-        <option value="">Selecciona un motivo</option>
-        <option value="Examen de Mesa">Examen de Mesa</option>
-        <option value="Examen Primer Parcial">Examen Primer Parcial</option>
-        <option value="Examen Segundo Parcial">Examen Segundo Parcial</option>
-        <option value="Examen Final">Examen Final</option>
-        <option value="Examen Segunda Instancia">Examen Segunda Instancia</option>
-        <option value="Elecciones">Elecciones</option>
-        <option value="Congreso">Congreso</option>
-
-      </Form.Control>
-      
-    
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Cerrar
-          </Button>
-          <Button variant="primary" onClick={aplicarFiltros}>
-            Aplicar Filtros
-          </Button>
-        </Modal.Footer>
-      </Modal>
       {mostrarFormulario && (
         <div className="overlay" onClick={cerrarFormulario}>
           <div className="formulario-emergente" onClick={(e) => e.stopPropagation()}>

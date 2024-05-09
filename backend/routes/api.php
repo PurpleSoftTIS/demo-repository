@@ -26,15 +26,17 @@ Route::get('/usuarios', [UsuarioController::class, 'index']);
 Route::get('/materias', [MateriaController::class, 'index']);
 Route::get('/listaAmbiente', [AmbienteController::class, 'index']);
 Route::get('/ambientesDispo/{capacidad}/{dia}/{hora_inicio}/{hora_fin}', [AmbienteController::class, 'ambientesDis']);
+Route::get('/ambientesContiguos/{capacidad}/{dia}/{hora_inicio}/{hora_fin}', [SolicitudController::class, 'ambientesContiguos']);
+
 Route::get('/ambientesDispoDos/{capacidad}', [AmbienteController::class, 'ambientesDi']);
 Route::get('/docentespormateria/{nombre_materia}/{correo_usuario}', [MateriaController::class,'docentesPorMateria']);
 Route::get('/carreras', [CarreraController::class, 'index']);
 Route::get('/materias/{id}', [MateriaController::class, 'show']);
 Route::get('/obtenerHoras', [SolicitudController::class, 'obtenerHora']);
 Route::get('/obtenerSol', [SolicitudController::class, 'obtenerSolicitud']);
+Route::get('/obtenerTodasSolicitudes', [SolicitudController::class, 'obtenerSolicitudTodas']);
 Route::get('/SolicitudUrgencias', [SolicitudUrgencia::class, 'urgencias']);
 Route::get('/obtenerMara/{correoCodificado}', [AmbienteController::class, 'MateriasObtener']);
-//Registrar Datos
 Route::post('/docentesRegistrar', [DocenteRegistrarController::class, 'registrar']);
 Route::post('/materiaRegistrar', [MateriaRegistrarController::class, 'registrarMateria']);
 Route::post('/registrarambiente', [AmbienteController::class, 'guardarAmbiente']);
