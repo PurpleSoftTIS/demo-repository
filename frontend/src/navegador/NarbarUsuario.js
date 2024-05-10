@@ -13,7 +13,7 @@ const NarbarUsuario = () => {
   const [showSesion, setShowSesion] = useState(false);
   const [showDropdown2, setShowDropdown2] = useState(false);
   const dropdownRef2 = useRef(null);
-  const { setUserC, setEmailC ,userC } = useContext(UserContext);
+  const { setUserC, setEmailC, setUrole,  userC } = useContext(UserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,8 +31,10 @@ const NarbarUsuario = () => {
   const handleLogout = () => {
     sessionStorage.removeItem('user');
     sessionStorage.removeItem('email');
+    sessionStorage.removeItem('role');
     setUserC(null);
     setEmailC(null);
+    setUrole(null);
     navigate("/");
   };
 
@@ -61,8 +63,8 @@ const NarbarUsuario = () => {
           <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarNav">
             <ul className="navbar-nav mx-auto">
             <li className="nav-item">
-                <NavLink className="nav-link" to='/Admin/inicio/HomeDos'>Inicio</NavLink> 
-              </li>
+              <NavLink className="nav-link" to='/Usuario/Inicio/HomeDos'>Inicio</NavLink> 
+            </li>
               <div className="dropdown-container" ref={dropdownRef2}>
                   <button className="nav-link dropdown-toggle" onClick={toggleDropdown2} style={{ cursor: 'pointer' }}>Solicitar</button>
                   {showDropdown2 && (

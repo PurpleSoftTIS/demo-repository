@@ -162,9 +162,9 @@ body {
 .input-icon {
   position: absolute;
   top: 0;
-  height: 45px;
+  height: 50px;
   font-size: 24px;
-  line-height: 48px;
+  line-height: 47px;
   text-align: left;
   color: #f2f2f2;
   -webkit-transition: all 200ms linear;
@@ -186,7 +186,8 @@ h6{
 .form-group { 
   position: relative;
   display: block;
-  padding: 7px 45px;
+  padding: 5px 0px;
+  padding-left: 40px;
   height: 48px;
   width:90%;
   background-color: #010a26;
@@ -443,9 +444,16 @@ height: 100px;
   transform: scale(1.1);
 }
 
-
-#verPassword{
-  position: relative;
-  top: -88px;
-  left: 98%;
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  height: 50px;
+  font-size: 24px;
+  line-height: 46px;
+  text-align: right;
+  color: #f2f2f2;
+  background: transparent;
+  border: none;
+  right: 5px; /* Ajustar la posición relativa al lado derecho del contenedor */
+  transform: translateY(-50%);
 }

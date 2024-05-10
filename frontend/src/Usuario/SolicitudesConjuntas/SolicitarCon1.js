@@ -89,7 +89,7 @@ const masDocente = () => {
           console.error('Error en la solicitud:', error);
         });
     }
-  }, [formData.nombre_materia]);
+  }, [formData.nombre_materia, correo]);
 
   const handleRegistroSolicitud = () => { 
     navigate('/Usuario/Usu/SolicitarCon2', { state: formData });    

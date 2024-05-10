@@ -207,7 +207,7 @@ const ListaDocentes = () => {
         </thead>
         <tbody>
           {resultado.map(docente => (
-            <tr key={docente.id} className="fila-lista">
+            <tr key={docente.id_docente} className="fila-lista">
               <td>{docente.id_docente}</td>
               <td>{docente.nombre}</td>
               <td>{docente.apellido_paterno}</td>

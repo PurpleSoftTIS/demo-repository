@@ -36,7 +36,7 @@ const Solicitar3 = () => {
       .catch(error => {
         console.error('Error en la solicitud:', error);
       });
-  }, []);
+  }, [correo]);
 
   const createJSON = () =>{
     const json ={
