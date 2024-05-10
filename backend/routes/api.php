@@ -12,6 +12,7 @@ use App\Http\Controllers\RerservasUsuario;
 use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\CarreraController;
 use App\Http\Controllers\DeleteAmbienteController;
+use App\Http\Controllers\CorreoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;   
 
@@ -51,7 +52,7 @@ Route::post('/masivoDocentes', [CargaDocente::class, 'cargaDocentes']);
 Route::post('/importMaterias', [MateriaController::class, 'import']);
 Route::post('/registrarSolicitud',[SolicitudController::class,'registrarSolicitud']);
 Route::post('/registrarSolicitudCon',[SolicitudController::class,'registrarSolicitudesConjuntas']);
-
+Route::post('/enviarcorreo', [CorreoController::class, 'enviarCorreo']);
 //Elimnar datos
 Route::delete('/docentes/{id_docente}', [DocenteController::class, 'eliminar']);
 Route::delete('/borrar/{id_ambiente}', [AmbienteController::class, 'borrarAmbiente']);

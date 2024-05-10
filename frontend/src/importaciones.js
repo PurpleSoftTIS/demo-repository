@@ -1,7 +1,7 @@
 // importaciones.js
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import HomeUno from './inicio/HomeUno';
 import Ambientes from './Registrar/ambientes/Ambientes';
 import AmbientesActualizar from './Registrar/ambientes/AmbientesActualizar';
@@ -42,5 +42,5 @@ export {
   Ayuda, ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,AmbientesActualizar,
   Footer,ListaMaterias,Solicitar3,Solicitar1,MensajeExitosoU,MensajeErrorU,MensajeActExito,MensajeActError
   ,DocentesActualizar,MensajeDatExito,MensajeDatError,SolicitarCon1,SolicitarCon2,SolicitarCon3,
-  ListaSolicitudesUr
+  ListaSolicitudesUr,Navigate
 };

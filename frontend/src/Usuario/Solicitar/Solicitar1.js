@@ -29,7 +29,7 @@ const Solicitar1 = () => {
                     console.error('Error al cargar los ambientes disponibles:', error);
                 });
             }       
-        }, []);  
+        }, [capacidad, diaSeleccionado, hora_inicio, hora_fin]);  
     const handleReservar = (aulaSeleccionada) => {
         console.log("datos send",datosSend);
         const datosConAula = { ...datosSend, aulaSeleccionada };
