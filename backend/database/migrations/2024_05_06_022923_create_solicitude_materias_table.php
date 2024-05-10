@@ -14,7 +14,8 @@ class CreateSolicitudeMateriasTable extends Migration
     public function up()
     {
         Schema::create('solicitude_materias', function (Blueprint $table) {
-            $table->id();
+            $table->foreignId("id_solicitud")->constrained("solicitud", "id_solicitud");
+            $table->foreignId("id_materia")->constrained("materia", "id_materia");
             $table->timestamps();
         });
     }

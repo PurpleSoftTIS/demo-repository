@@ -30,8 +30,7 @@ function AdminRoutes() {
       <Route path='/Mensaje/ActualizacionExitosa' element={<MensajeActExito/>}/>
       <Route path='/Mensaje/ErrorActualizacion' element={<MensajeActError/>}/>
       <Route path='/Mensaje/CargaMasiva' element={<MensajeDatExito/>}/> 
-      <Route path='/Mensaje/ErrorCargaMasiva' element={<MensajeDatError/>}/>             
-
+      <Route path='/Mensaje/ErrorCargaMasiva' element={<MensajeDatError/>}/> 
     </Routes>
     <Footer/>
   </div>
@@ -56,7 +55,6 @@ function UserRoutes() {
       <Route path='/Usu/SolicitarCon3' element={<SolicitarCon3/>} />
     </Routes>
     <Footer/>
-
   </div>        
   );
 }

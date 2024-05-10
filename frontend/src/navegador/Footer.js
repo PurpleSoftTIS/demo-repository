@@ -17,12 +17,14 @@ export const Footer = () => {
   const reloadPage = () => {
     window.location.reload();
   };
-  const { setEmailC } = useContext(UserContext);
-  const homePage = () => {
-    if(setEmailC != "purpleSoft@gmail.com"){
-     navigate ("/Usuario/Inicio/HomeDos"); 
+  const { emailC } = useContext(UserContext);
+
+
+const homePage = () => {
+    if(emailC === "purpleSoft@gmail.com"){
+     navigate("/Admin/Inicio/HomeUno"); 
     }else{
-      navigate ("/Admin/Inicio/HomeUno");
+      navigate("/Usuario/Inicio/HomeDos");
     }
   };
   return (
@@ -34,12 +36,13 @@ export const Footer = () => {
           </p>            
         </div>
         <div className='HomeReload'>
-            <img className="" src={ico7} alt="logo" width='40px' height='40px' onClick={homePage} />
+        <button className="iconos" onClick={homePage}>         
+          <img className="" src={ico7} alt="logo" width='40px' height='40px'/>
+        </button>
           <button className="iconos" onClick={reloadPage}>         
             <img className="" src={ico8} alt="logo" width='40px' height='40px' />
           </button>
         </div>
-
         <div className='iconosTec'>
           <img className="iconos" src={ico1} alt="logo" width='40px' height='40px' />
           <img className="iconos" src={ico2} alt="logo" width='40px' height='40px' />

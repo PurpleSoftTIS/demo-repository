@@ -8,24 +8,24 @@ const SolicitarCon3 = () => {
   const { materia, carrera, docente, numeroEstudiantes, diaSeleccionado, horaSeleccionada } = datos2 || {};
   const [ambientesDisponibles, setAmbientesDisponibles] = useState([]);
   const [json, setJson] = useState([]);
-
   useEffect(() => {
     if (numeroEstudiantes) {
-      fetch(`http://127.0.0.1:8000/api/ambienteDispoDos/${numeroEstudiantes}`)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Error al cargar los ambientes disponibles');
-          }
-          return response.json();
-        })
-        .then(data => {
-          setAmbientesDisponibles(data);
-        })
-        .catch(error => {
-          console.error('Error al cargar los ambientes disponibles:', error);
-        });
-    }
-  }, [numeroEstudiantes]);
+        fetch(`http://127.0.0.1:8000/api/ambientesDispo/${numeroEstudiantes}/${diaSeleccionado}/${horaSeleccionada}/${horaSeleccionada}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al cargar ambientes  disponibles');
+                }
+                return response.json();
+            })
+            .then(data => {
+              setAmbientesDisponibles(data);
+            })
+            .catch(error => {
+                console.error('Error al cargar los ambientes disponibles:', error);
+            });
+        }       
+    }, []); 
+  
 
   const agregarMore = (ambiente) => { 
     // Agrega el ambiente seleccionado al estado json

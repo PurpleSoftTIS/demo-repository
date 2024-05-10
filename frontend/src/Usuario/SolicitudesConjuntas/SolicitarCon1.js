@@ -130,31 +130,31 @@ const masDocente = () => {
               ))}
             </select>
               
-      {MoreDocente && (
-        <select 
-          className="input24" 
-          value={additionalDocentes[0]}
-          onChange={e => handleAdditionalDocenteChange(0, e.target.value)}
-        >
-          <option value="">Seleccione un Docente</option>
-          {docentes.map((docente, index) => (
-            <option key={index} value={docente.id_docente}>{docente.nombre_completo_docente}</option>
-          ))}
-        </select>
-      )}
+            {MoreDocente && (
+              <select 
+                className="input24" 
+                value={additionalDocentes[0]}
+                onChange={e => handleAdditionalDocenteChange(0, e.target.value)}
+              >
+                <option value="">Seleccione un Docente</option>
+                {docentes.map((docente, index) => (
+                  <option key={index} value={docente.id_docente}>{docente.nombre_completo_docente}</option>
+                ))}
+              </select>
+            )}
 
-      {MoreDocenteDos && (
-        <select 
-          className="input24" 
-          value={additionalDocentes[1]}
-          onChange={e => handleAdditionalDocenteChange(1, e.target.value)}
-        >
-          <option value="">Seleccione un Docente</option>
-          {docentes.map((docente, index) => (
-            <option key={index} value={docente.id_docente}>{docente.nombre_completo_docente}</option>
-          ))}
-        </select>
-      )}
+            {MoreDocenteDos && (
+              <select 
+                className="input24" 
+                value={additionalDocentes[1]}
+                onChange={e => handleAdditionalDocenteChange(1, e.target.value)}
+              >
+                <option value="">Seleccione un Docente</option>
+                {docentes.map((docente, index) => (
+                  <option key={index} value={docente.id_docente}>{docente.nombre_completo_docente}</option>
+                ))}
+              </select>
+            )}
 
           </div>
           

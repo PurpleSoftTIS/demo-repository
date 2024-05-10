@@ -4,10 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Materia;
-use App\Models\MateriaDocente;
-use App\Models\Docente;
-use App\Models\Usuario;
-use App\Models\Carrera;
 use App\Imports\MateriaImport;
 use Maatwebsite\Excel\Facades\Excel;
 use DB;
@@ -86,6 +82,7 @@ class MateriaController extends Controller
 
             // Eliminar todas las filas de la tabla materias
             Materia::truncate();
+            DB::statement('ALTER TABLE materia AUTO_INCREMENT = 1');
 
             // Volver a activar restricciones de clave externa
             DB::statement('SET FOREIGN_KEY_CHECKS=1');

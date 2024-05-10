@@ -10,13 +10,11 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showDropdown2, setShowDropdown2] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-
   const dropdownRef2 = useRef(null);
   const dropdownRef = useRef(null);
-
   const [showSesion, setShwoSesion] = useState(false);
   const sesionRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(true);  
   
   const checkVisibility = () => {
     if (window.innerWidth > 990) {
@@ -25,9 +23,7 @@ const Navbar = () => {
       setIsVisible(false);
     }
   };
-
   useEffect(() => {
-
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setShowDropdown(false); 
@@ -36,9 +32,7 @@ const Navbar = () => {
         setShwoSesion(false);
       }
     };
-
     document.body.addEventListener('click', handleClickOutside);
-
     const handleResize = () => {
       if (window.innerWidth > 990) {
         setIsOpen(false);
@@ -47,10 +41,8 @@ const Navbar = () => {
         setIsVisible(false);
       }
     };
-
     window.addEventListener('resize', handleResize);
     checkVisibility();
-
     return () => {
       document.body.removeEventListener('click', handleClickOutside);
       window.removeEventListener('resize', handleResize);

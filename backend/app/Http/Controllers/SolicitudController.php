@@ -58,50 +58,50 @@ class SolicitudController extends Controller
             \Log::info('Datos recibidos del frontend: ' . json_encode($datos->all()));
             $datosReserva=$datos->all();
             $correo = $datosReserva['correo'];
-             $usuario=Usuario::where('correo_electronico',$correo)->first();
-             $id_usuario=$usuario->id_usuario;
-             $docente=Docente::where('id_usuario',$id_usuario)->first();
-             $idDocente=$docente->id_docente;  
-             $id_ambiente=$datosReserva['aula'];
+            $usuario=Usuario::where('correo_electronico',$correo)->first();
+            $id_usuario=$usuario->id_usuario;
+            $docente=Docente::where('id_usuario',$id_usuario)->first();
+            $idDocente=$docente->id_docente;  
+            $id_ambiente=$datosReserva['aula'];
    
-             $solicitud = new Solicitud(); 
-             $horaInicio = $datosReserva['horaInicio'];
-             $horaFin = $datosReserva['horaFin'];
-             $horaCoincidente = Hora::where('hora_inicio', $horaInicio)
+            $solicitud = new Solicitud(); 
+            $horaInicio = $datosReserva['horaInicio'];
+            $horaFin = $datosReserva['horaFin'];
+            $horaCoincidente = Hora::where('hora_inicio', $horaInicio)
                                       ->where('hora_fin', $horaFin)
                                       ->first();
-              $id_hora=$horaCoincidente->id_hora;
-              $solicitud->id_hora=$id_hora;
-              $numero_estudiantes=$datosReserva['numeroEstudiantes'];
-              $solicitud->numero_estudiantes=$numero_estudiantes;
-              $fecha = $datosReserva['fecha'];
-              $solicitud->fecha_solicitud = $fecha;
-              $motivo=$datosReserva['motivo'];
-              $solicitud->motivo=$motivo;
-              $estado_solicitud='espera';
-              $solicitud->estado_solicitud=$estado_solicitud;
-              $solicitud->tipo_solicitud = 'individual'; 
-              $solicitud->save();
+            $id_hora=$horaCoincidente->id_hora;
+            $solicitud->id_hora=$id_hora;
+            $numero_estudiantes=$datosReserva['numeroEstudiantes'];
+            $solicitud->numero_estudiantes=$numero_estudiantes;
+            $fecha = $datosReserva['fecha'];
+            $solicitud->fecha_solicitud = $fecha;
+            $motivo=$datosReserva['motivo'];
+            $solicitud->motivo=$motivo;
+            $estado_solicitud='espera';
+            $solicitud->estado_solicitud=$estado_solicitud;
+            $solicitud->tipo_solicitud = 'individual'; 
+            $solicitud->save();
    
-              $solicitudes=new Solicitudes ();
-              $id_ambiente=$datosReserva['aula'];
-              $solicitudes->id_ambiente=$id_ambiente;
-              $id_solicitud= $solicitud->id_solicitud;
-              $solicitudes->id_solicitud=$id_solicitud;
-              $solicitudes->save ();
+            $solicitudes=new Solicitudes ();
+            $id_ambiente=$datosReserva['aula'];
+            $solicitudes->id_ambiente=$id_ambiente;
+            $id_solicitud= $solicitud->id_solicitud;
+            $solicitudes->id_solicitud=$id_solicitud;
+            $solicitudes->save ();
              
-             
-              $solicitudesDo=new solicitudes_docentes ();
-              $solicitudesDo->id_docente = $idDocente;
-              $solicitudesDo->id_solicitud = $id_solicitud;
-              $solicitudesDo->save ();
-              $solicitudMateria=new solicitudes_materia();
-              $nombremateria=$datosReserva['materia'];
-              $materia=Materia::where('nombre_materia',$nombremateria)->first();
-              $idmateria=$materia->id_materia;
-              $solicitudMateria->id_materia=$idmateria;
-              $solicitudMateria->id_solicitud=$id_solicitud;
-              $solicitudMateria->save();  
+            $solicitudesDo=new solicitudes_docentes ();
+            $solicitudesDo->id_docente = $idDocente;
+            $solicitudesDo->id_solicitud = $id_solicitud;
+            $solicitudesDo->save ();
+
+            $solicitudMateria=new solicitudes_materia();
+            $nombremateria=$datosReserva['materia'];
+            $materia=Materia::where('nombre_materia',$nombremateria)->first();
+            $idmateria=$materia->id_materia;
+            $solicitudMateria->id_materia=$idmateria;
+            $solicitudMateria->id_solicitud=$id_solicitud;
+            $solicitudMateria->save();  
              
         } catch (\Exception $e) {
             \Log::error('Error al registrar la solicitud: ' . $e->getMessage());

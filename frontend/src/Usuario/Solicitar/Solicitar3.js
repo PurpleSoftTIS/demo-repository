@@ -22,9 +22,7 @@ const Solicitar3 = () => {
   
 
  console.log(correo);
-  useEffect(() => {
-    
- 
+  useEffect(() => { 
     fetch(`http://127.0.0.1:8000/api/obtenerMara/${correo}`)
       .then(response => {
         if (!response.ok) {
@@ -39,6 +37,7 @@ const Solicitar3 = () => {
         console.error('Error en la solicitud:', error);
       });
   }, []);
+
   const createJSON = () =>{
     const json ={
      correo,
@@ -48,10 +47,6 @@ const Solicitar3 = () => {
      fecha,
      aula,
      motivo
-
-
-
-
   };
   return json;
 }
