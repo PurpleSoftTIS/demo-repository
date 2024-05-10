@@ -3,7 +3,7 @@ import { React, Router, Routes, Route, HomeUno, Ambientes, Docentes, Navbar, Reg
         ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,ListaSolicitudesUr,
         AmbientesActualizar,Footer,ListaMaterias,Solicitar3,Solicitar1,MensajeExitosoU,
         MensajeErrorU,MensajeActExito,MensajeActError,DocentesActualizar,MensajeDatExito,MensajeDatError
-      ,SolicitarCon1,SolicitarCon2,SolicitarCon3,SolicitarCon4,VerSolicitud} from './importaciones';
+      ,SolicitarCon1,SolicitarCon2,SolicitarCon3} from './importaciones';
        
 
 function AdminRoutes() {
@@ -13,7 +13,6 @@ function AdminRoutes() {
     <Routes>
       <Route path='/Inicio/HomeUno' element={<HomeUno/>}/>  
       <Route path='/ListaSolicitudes' element={<ListaSolicitudes />} />
-      <Route path='/DetallesSolicitud' element={<VerSolicitud />} />
       <Route path='/ListaSolicitudesUr' element={<ListaSolicitudesUr />} />
       <Route path='/Registro/Ambientes' element={<Ambientes />} />
       <Route path='/Registro/Materias' element={<RegistrarMateria />} />
@@ -31,8 +30,7 @@ function AdminRoutes() {
       <Route path='/Mensaje/ActualizacionExitosa' element={<MensajeActExito/>}/>
       <Route path='/Mensaje/ErrorActualizacion' element={<MensajeActError/>}/>
       <Route path='/Mensaje/CargaMasiva' element={<MensajeDatExito/>}/> 
-      <Route path='/Mensaje/ErrorCargaMasiva' element={<MensajeDatError/>}/>             
-
+      <Route path='/Mensaje/ErrorCargaMasiva' element={<MensajeDatError/>}/> 
     </Routes>
     <Footer/>
   </div>
@@ -55,10 +53,8 @@ function UserRoutes() {
       <Route path='/Usu/SolicitarCon1' element={<SolicitarCon1/>} />
       <Route path='/Usu/SolicitarCon2' element={<SolicitarCon2/>} />
       <Route path='/Usu/SolicitarCon3' element={<SolicitarCon3/>} />
-      <Route path='/Usu/SolicitarCon4' element={<SolicitarCon4/>} />
     </Routes>
     <Footer/>
-
   </div>        
   );
 }

@@ -147,6 +147,10 @@ const Ambientes = () => {
       }
     };
   }, []);
+ 
+  const backPage = () => {
+    navigate ('/Admin/Listas/ListaAmbientes');
+  };
 
   return (
     <div className="contact-4" style={{ height: '76.1vh' }}>
@@ -206,6 +210,9 @@ const Ambientes = () => {
         </button>
         <button className="button1" onClick={handleRegistroAmbiente}>
           <div className="button-cta1">Siguiente Paso</div>
+        </button>
+        <button className="button1" onClick={backPage}>
+          <div className="button-cta1" >Cancelar</div>
         </button>
         
       </div>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Restablecer;
+
 class UsuarioController extends Controller
 {
     public function index()
@@ -35,13 +36,11 @@ class UsuarioController extends Controller
     }
     public function restablecerContrasenia()
     {
-        $detalis = [
-            'title' => 'Correo para restablecer su contraseña en el sistema SIRA-FCYT',
-            'body' => 'Ingrese su nueva contrasenia'
+        $data = [
+            'title' => 'Correo para restablecer su contraseña en el sistema SIRA-FCYT'
         ];        
         try {
-            Mail::to("gabo2cabero@gmail.com")->send(new Restablecer($detalis));
-        return "Correo electronico enviado";
+            Mail::to("gabo2cabero@gmail.com")->send(new Restablecer($data));
         } catch (\Exception $e) {
             \Log::error('Error al enviar el correo electrónico de restablecimiento: ' . $e->getMessage());
             return "Error al enviar el correo electrónico de restablecimiento";

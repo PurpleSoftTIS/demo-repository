@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Solicitar1.css';
 import { useLocation } from "react-router-dom";
-import { NavLink } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 
 const Solicitar1 = () => {
@@ -12,41 +11,36 @@ const Solicitar1 = () => {
     const diaSeleccionado = datosSend.diaSeleccionado;
     const hora_fin = datosSend.horaFin;
     const hora_inicio = datosSend.horaInicio;
-    const correo=datosSend.correo;
+    const correo = datosSend.correo;
     console.log("solicitar 1",correo);
     useEffect(() => {
         if (capacidad) {
             fetch(`http://127.0.0.1:8000/api/ambientesDispo/${capacidad}/${diaSeleccionado}/${hora_inicio}/${hora_fin}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error al cargar ambientes  disponibles');
-                }
-                return response.json();
-            })
-            .then(data => {
-                setDatos(data);
-            })
-            .catch(error => {
-                console.error('Error al cargar los ambientes disponibles:', error);
-            });
-        }       
-    }, []);  
-
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al cargar ambientes  disponibles');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    setDatos(data);
+                })
+                .catch(error => {
+                    console.error('Error al cargar los ambientes disponibles:', error);
+                });
+            }       
+        }, []);  
     const handleReservar = (aulaSeleccionada) => {
-      console.log("datos send",datosSend);
-      const datosConAula = { ...datosSend, aulaSeleccionada };
-
-        navigate('/Usuario/Usu/Solicitar3', { state: datosConAula  });
+        console.log("datos send",datosSend);
+        const datosConAula = { ...datosSend, aulaSeleccionada };
+        navigate('/Usuario/Usu/DetallesSol', { state: datosConAula  });
     };
-
     return (
         <div className="container" style={{ minHeight: '78.7vh' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <h2 style={{ margin: 0 }}>Ambientes Disponibles:</h2>
-                
+                <h2 style={{ margin: 0 }}>Ambientes Disponibles:</h2>                
             </div>
             <div style={{ display: 'flex', justifyContent: 'Right', alignItems: 'center', marginTop: '15px' }}>
-                <div></div>
             </div>
             <table className="table table-hover">
                 <thead className="thead">
@@ -75,6 +69,5 @@ const Solicitar1 = () => {
         </div>
     );
 }
-
 export default Solicitar1;
   

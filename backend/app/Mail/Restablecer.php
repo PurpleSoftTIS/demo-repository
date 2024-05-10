@@ -10,15 +10,15 @@ use Illuminate\Queue\SerializesModels;
 class Restablecer extends Mailable
 {
     use Queueable, SerializesModels;
-    public $detalis;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($detalis)
+    public $data;
+    public function __construct($data)
     {
-        $this->detalis = $detalis;
+        $this->data= $data;
     }
     /**
      * Build the message.
@@ -27,6 +27,9 @@ class Restablecer extends Mailable
      */
     public function build()
     {
-        return $this->subject('Prueba de corrreo para restablecer contrasenia')->view('mails.restablecer');
+        return $this->from(env('MAIL_FROM_ADDRESS'),env('MAIL_FROM_NAME'))
+        ->view('restablecerCon')
+        ->subject('Restablecer contraceña')
+        ->with($this-> data);
     }
 }

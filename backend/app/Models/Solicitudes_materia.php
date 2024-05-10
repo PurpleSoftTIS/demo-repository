@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Solicitudes extends Model
+class Solicitudes_materia extends Model
 {
-    use HasFactory;
-    protected $table = 'solicitudes';
+    protected $table = 'solicitudes_materia';
+
     protected $fillable = [
-        "id_solicitud",
-        "id_ambiente"       
-    ];
-}
+        'id_materia',
+        'id_solicitud',
+    ];}

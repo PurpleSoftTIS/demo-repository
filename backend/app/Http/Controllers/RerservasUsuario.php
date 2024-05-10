@@ -27,7 +27,7 @@ class RerservasUsuario extends Controller
                     'solicitud.*', 
                     'materia.*'
                 )
-                ->where('usuario.correo_electronico'==$correo)                
+                ->where('usuario.correo_electronico', $correo)
                 ->get();
             return response()->json($datosSolicitudes, 200);
     

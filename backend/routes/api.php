@@ -36,7 +36,7 @@ Route::get('/materias/{id}', [MateriaController::class, 'show']);
 Route::get('/obtenerHoras', [SolicitudController::class, 'obtenerHora']);
 Route::get('/obtenerSol', [SolicitudController::class, 'obtenerSolicitud']);
 Route::get('/SolicitudUrgencias', [SolicitudUrgencia::class, 'urgencias']);
-Route::get('/ReservasDocentes', [RerservasUsuario::class, 'reservasDocentes']);
+Route::get('/ReservasDocentes/{setEmailC}', [RerservasUsuario::class, 'reservasDocentes']);
 Route::get('/obtenerMara/{Correo}', [AmbienteController::class, 'MateriasObtener']);
 
 //Registrar Datos
@@ -65,3 +65,5 @@ Route::put('/ambiente/{id_ambiente}', [AmbienteController::class, 'actualizarAmb
 Route::put ('/actualizar/{id_ambiente}',[AmbienteController::class,'actualizarAmb']);
 Route::put('/materias/{id}', [MateriaRegistrarController::class, 'update']);
 Route::put('/actualizarDocente/{id_docente}', [DocenteController::class, 'editarDocentes']);
+Route::put('/aceptarsolicitud/{id}', [SolicitudController::class, 'aceptarSolicitud']);
+Route::put('/rechazarsolicitud/{id}', [SolicitudController::class, 'rechazarsolicitud']);

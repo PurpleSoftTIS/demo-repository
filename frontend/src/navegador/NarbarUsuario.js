@@ -7,7 +7,6 @@ import { UserContext } from '../Context/UserContext';
 
 import './Navbar.css';
 
-
 const NarbarUsuario = () => {
 
   const [isOpen, setIsOpen] = useState(false);

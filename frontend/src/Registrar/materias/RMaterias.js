@@ -211,6 +211,9 @@ const RegistrarMateria = () => {
       }
     };
   }, []);
+  const backPage = () => {
+    navigate ('/Admin/Listas/ListaMaterias');
+  };
   return (
     <div className="contact-14">
       <div className="line2" />
@@ -324,9 +327,13 @@ const RegistrarMateria = () => {
             <h2>Agregar carrera</h2>
             <input type="text" value={nuevaCarreraNombre} onChange={(e) => setNuevaCarreraNombre(e.target.value)} />
             <button onClick={handleAddCarrera}>Agregar</button>
+            
           </div>
         </div>
       )}
+      <button className="button1" >
+          <div className="button-cta1" onClick={backPage}>Cancelar</div>
+        </button>
     </div>
   );
 };

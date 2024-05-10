@@ -31,6 +31,7 @@ const Solicitar = () => {
         })
         .then(data => {
           setHorariosDisponibles(data);
+          console.log(horariosDisponibles);
         })
         .catch(error => {
           console.error('Error al cargar las horas disponibles:', error);
@@ -78,6 +79,7 @@ const Solicitar = () => {
           return;
         }
         const horaSeleccionadaObj = horariosDisponibles.find(hora => hora.id_hora.toString() === selectedOption.toString());
+
         if (horaSeleccionadaObj) {
           const horaInicio = horaSeleccionadaObj.hora_inicio;
           const horaFin = horaSeleccionadaObj.hora_fin;
@@ -106,7 +108,7 @@ const Solicitar = () => {
               maxDate={new Date(2026, 11, 31)} 
             />
           </div>
-          <p className='fecha'>Fecha seleccionada: {date.toLocaleDateString()}</p>
+          <p className='fecha'> Fecha seleccionada: {date.toLocaleDateString()}</p>
         </div>
 
         <div className='capacidad'>
