@@ -265,7 +265,7 @@ const Docentes = () => {
         {errorInconpleto && <p className="error">{errorInconpleto}</p>}
       </form>
       <div className="checkout1" data-animate-on-scroll>
-        <button className="button" onClick={handleRegistroDocente}>
+        <button className="button1" onClick={handleRegistroDocente}>
         <div className="button-cta">Registrar Docente</div>
         </button>
         <button className="button1" onClick={backPage}>

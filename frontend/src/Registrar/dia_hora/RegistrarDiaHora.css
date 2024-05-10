@@ -191,9 +191,28 @@
     background-color: #010A26;
     color: #F2F0F2;
     border-radius: 5px;
-    height: 30px;
-    
-    
-    
-    
+    height: 30px;    
+}
+.btn1,.btn2{
+    color: white;
+    border: none;
+    background-color: #050259;
+  
+}
+.btn1,.btn2:hover{
+  border: 1px solid #010a26;
+  box-sizing: border-box;
+  background-color: #010a26;
+
+  
+}
+.btn1{
+    position: relative;
+    top: -130px;
+    left: 100px;
+}
+.btn2{
+    position: relative;
+    top: -158px;
+    left: -50px;
 }

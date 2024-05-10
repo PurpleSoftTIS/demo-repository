@@ -148,10 +148,6 @@ const Ambientes = () => {
     };
   }, []);
  
-  const backPage = () => {
-    navigate ('/Admin/Listas/ListaAmbientes');
-  };
-
   return (
     <div className="contact-4" style={{ height: '76.1vh' }}>
       <form className="billing-info1" data-animate-on-scroll>
@@ -205,16 +201,13 @@ const Ambientes = () => {
       </form>
       <div className="line1" />
       <div className="checkout3" data-animate-on-scroll>
-      <button className='button2'>
-          <NavLink className="button-cta1" to='/Admin/Listas/ListaAmbientes' activeclassname="active">Atras</NavLink>        
-        </button>
+      
         <button className="button1" onClick={handleRegistroAmbiente}>
-          <div className="button-cta1">Siguiente Paso</div>
+          <div>Siguiente Paso</div>
+        </button>       
+        <button className='button2'>
+          <NavLink  to='/Admin/Listas/ListaAmbientes' activeclassname="active">Cancelar</NavLink>        
         </button>
-        <button className="button1" onClick={backPage}>
-          <div className="button-cta1" >Cancelar</div>
-        </button>
-        
       </div>
     </div>
   );
