@@ -444,3 +444,8 @@ height: 100px;
 }
 
 
+#verPassword{
+  position: relative;
+  top: -90px;
+  left: 280px;
+}

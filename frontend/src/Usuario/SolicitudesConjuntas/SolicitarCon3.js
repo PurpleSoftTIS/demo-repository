@@ -7,9 +7,10 @@ const SolicitarCon3 = () => {
   const { state: datos2 } = useLocation();
   const { materia, carrera, docente, numeroEstudiantes, diaSeleccionado, horaSeleccionada } = datos2 || {};
   const [ambientesDisponibles, setAmbientesDisponibles] = useState([]);
+  const [json, setJson] = useState([]);
 
   useEffect(() => {
-    if (ambientesDisponibles) {
+    if (numeroEstudiantes) {
       fetch(`http://127.0.0.1:8000/api/ambienteDispoDos/${numeroEstudiantes}`)
         .then(response => {
           if (!response.ok) {
@@ -24,21 +25,46 @@ const SolicitarCon3 = () => {
           console.error('Error al cargar los ambientes disponibles:', error);
         });
     }
-  }, [numeroEstudiantes,ambientesDisponibles]);
+  }, [numeroEstudiantes]);
 
-  const handleNextStep = (ambiente) => {
-    const datos3 = {
+  const agregarMore = (ambiente) => { 
+    // Agrega el ambiente seleccionado al estado json
+    setJson(prevJson => [...prevJson, {        
+      edificio: ambiente.edificio, 
+      numero_piso: ambiente.numero_piso, 
+      nombre_ambiente: ambiente.nombre_ambiente 
+    }]);
+  }
+
+  const EnviarSolicitud = () => {
+    const data = {
       materia,
       carrera,
       docente,
       numeroEstudiantes,
       diaSeleccionado,
       horaSeleccionada,
-      edificio: ambiente.edificio,
-      numero_piso: ambiente.numero_piso,
-      nombre_ambiente: ambiente.nombre_ambiente
+      ambientes: json  // Agrega el estado json al objeto de datos a enviar
     };
-    navigate('/Usuario/Usu/SolicitarCon4', { state: datos3 });
+    console.log("Datos a enviar:", data); 
+    fetch("http://127.0.0.1:8000/api/registrarSolicitud", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data) 
+    })
+    .then(response => {
+      if (response.ok) {
+        console.log("Registro exitoso");
+        navigate('/Usuario/Usu/Reservas');
+      } else {
+        console.error("Error en el registro");
+      }
+    })
+    .catch(error => {
+      console.error("Error en la solicitud:", error);
+    });
   };
 
   return (
@@ -63,12 +89,15 @@ const SolicitarCon3 = () => {
               <td>{ambiente.numero_piso}</td>
               <td>{ambiente.nombre_ambiente}</td>
               <td>
-                <button className="btn btn-editar mr-2" onClick={() => handleNextStep(ambiente)}>Reservar</button>
+                <button className="btn btn-editar mr-2" onClick={() => agregarMore(ambiente)}>Reservar</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <button onClick={EnviarSolicitud}>
+        Enviar Solicitud
+      </button>
     </div>
   );
 };

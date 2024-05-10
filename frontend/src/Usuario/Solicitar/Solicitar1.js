@@ -33,7 +33,7 @@ const Solicitar1 = () => {
     const handleReservar = (aulaSeleccionada) => {
         console.log("datos send",datosSend);
         const datosConAula = { ...datosSend, aulaSeleccionada };
-        navigate('/Usuario/Usu/Solicitar3', { state: datosConAula  });
+        navigate('/Usuario/Usu/DetallesSol', { state: datosConAula  });
     };
     return (
         <div className="container" style={{ minHeight: '78.7vh' }}>

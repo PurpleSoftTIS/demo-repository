@@ -193,6 +193,10 @@ const Docentes = () => {
       setCodigoDocenteDisabled(false);
     }
   };
+  const backPage = () => {
+    navigate ('/Admin/Listas/ListaDocentes');
+  };
+
 
   return (
     <div className="contact-6" style={{ height: '94.4vh' }}>
@@ -263,6 +267,9 @@ const Docentes = () => {
       <div className="checkout1" data-animate-on-scroll>
         <button className="button" onClick={handleRegistroDocente}>
         <div className="button-cta">Registrar Docente</div>
+        </button>
+        <button className="button1" onClick={backPage}>
+          <div className="button-cta1" >Cancelar</div>
         </button>
       </div>
     </div>

@@ -76,8 +76,6 @@ const RegistrarDiaHoras = () => {
           "18:45-20:15",
           "20:15-21:45"
         ];
-      
-
         const firstFiveHours = allPossibleHours.slice(0, 5);
         const secondFiveHours = allPossibleHours.slice(5);
       

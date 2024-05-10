@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ico1 from '../assets/iconCss.png';
 import ico2 from '../assets/iconHtml.png';
 import ico3 from '../assets/iconJavascript.png';
@@ -8,13 +8,23 @@ import ico6 from '../assets/iconReact.png';
 import ico7 from '../assets/iconHome.png';
 import ico8 from '../assets/iconReload.png';
 import './Footer.css'
-import { NavLink } from 'react-router-dom';
+import { UserContext } from '../Context/UserContext';
+import {useNavigate } from 'react-router-dom';
 
 export const Footer = () => {
+  const navigate = useNavigate();
+
   const reloadPage = () => {
     window.location.reload();
   };
-
+  const { setEmailC } = useContext(UserContext);
+  const homePage = () => {
+    if(setEmailC != "purpleSoft@gmail.com"){
+     navigate ("/Usuario/Inicio/HomeDos"); 
+    }else{
+      navigate ("/Admin/Inicio/HomeUno");
+    }
+  };
   return (
     <footer className='mainfooter'>
       <div className='footer'>
@@ -24,9 +34,7 @@ export const Footer = () => {
           </p>            
         </div>
         <div className='HomeReload'>
-          <NavLink className="iconos" to='/Admin/Inicio/HomeUno'>         
-            <img className="" src={ico7} alt="logo" width='40px' height='40px' />
-          </NavLink>
+            <img className="" src={ico7} alt="logo" width='40px' height='40px' onClick={homePage} />
           <button className="iconos" onClick={reloadPage}>         
             <img className="" src={ico8} alt="logo" width='40px' height='40px' />
           </button>

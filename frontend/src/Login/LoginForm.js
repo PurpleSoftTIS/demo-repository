@@ -13,13 +13,19 @@ import Ico5 from "../assets/IconosLan/IcoPostL.png";
 import Ico6 from "../assets/IconosLan/IcoReactL.png";
 import Ico7 from "../assets/IconosLan/IcoFacultad.png";
 import Ico8 from "../assets/IconosLan/IcoFacultadEscudo.png";
+import Ico9 from "../assets/IcoVer.png";
+import Ico10 from "../assets/IcoNoVer.png";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
 
 const LoginForm = () => {
-const navigate = useNavigate();   
-const { setEmailC, setUserC } = useContext(UserContext);
-  
+    const navigate = useNavigate();   
+    const { setEmailC, setUserC } = useContext(UserContext);
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const [ojo, setOjo] = useState(true);
+    const [ojoDos, setOjoDos] = useState(false);
+
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -37,7 +43,7 @@ const { setEmailC, setUserC } = useContext(UserContext);
   const [errorInconpleto, setErrorIncompleto] = useState("");
   const [errorEmailValido, setErrorEmailValido] = useState("");
   const [errorContraseñaValido, setErrorContraseñaValido] = useState("");
-
+  
   const toggleVisibility = () => {
     setLogin(false);
     setMostrarTituloUno(false); 
@@ -175,7 +181,19 @@ const { setEmailC, setUserC } = useContext(UserContext);
                 console.error('Error de red:', error);
             });
         };
-
+        
+        const ver = () => {
+            setPasswordVisible(true);
+            setOjo(false);
+            setOjoDos(true);
+        };
+          
+        const noVer = () => {
+            setPasswordVisible(false);
+            setOjo(true);
+            setOjoDos(false);
+        };
+          
   return (
     <div className="hero-6" style={{ height: '100vh' }}>
         <div>
@@ -244,13 +262,22 @@ const { setEmailC, setUserC } = useContext(UserContext);
                                          <div className="form-group">
                                             <span className="input-icon"><FaLock /></span>
                                             <input
-                                                type="password"
+                                                type={passwordVisible ? "text" : "password"}                                                 
                                                 name="logpass"
                                                 className="form-control"
                                                 placeholder="Ingrese su contaraseña"
                                                 value={password}
                                                 onChange={(e) => setPassword(e.target.value)}
-                                            />
+                                                
+                                            /> 
+                                             {ojo && (
+                                                <img className="iconos2" id="verPassword" src={Ico9} alt="logo" width="20px" height="20px"  onClick={ver}/> 
+
+                                            )}
+                                            {ojoDos && (
+                                                <img className="iconos2" id="verPassword" src={Ico10} alt="logo" width="20px" height="20px"  onClick={noVer}/> 
+                                            )}
+
                                             {errorPassword && <p className="error2">{errorPassword}</p>}
                                             {errorContraseñaValido && <p className="error2">{errorContraseñaValido}</p>}
 

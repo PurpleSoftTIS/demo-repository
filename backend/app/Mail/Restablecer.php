@@ -27,7 +27,7 @@ class Restablecer extends Mailable
      */
     public function build()
     {
-        return $this->from('purplesoft51@gmail.com',env('MAIL_FROM_NAME'))
+        return $this->from(env('MAIL_FROM_ADDRESS'),env('MAIL_FROM_NAME'))
         ->view('restablecerCon')
         ->subject('Restablecer contraceña')
         ->with($this-> data);

@@ -3,7 +3,7 @@ import { React, Router, Routes, Route, HomeUno, Ambientes, Docentes, Navbar, Reg
         ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,ListaSolicitudesUr,
         AmbientesActualizar,Footer,ListaMaterias,Solicitar3,Solicitar1,MensajeExitosoU,
         MensajeErrorU,MensajeActExito,MensajeActError,DocentesActualizar,MensajeDatExito,MensajeDatError
-      ,SolicitarCon1,SolicitarCon2,SolicitarCon3,SolicitarCon4} from './importaciones';
+      ,SolicitarCon1,SolicitarCon2,SolicitarCon3} from './importaciones';
        
 
 function AdminRoutes() {
@@ -54,7 +54,6 @@ function UserRoutes() {
       <Route path='/Usu/SolicitarCon1' element={<SolicitarCon1/>} />
       <Route path='/Usu/SolicitarCon2' element={<SolicitarCon2/>} />
       <Route path='/Usu/SolicitarCon3' element={<SolicitarCon3/>} />
-      <Route path='/Usu/SolicitarCon4' element={<SolicitarCon4/>} />
     </Routes>
     <Footer/>
 
