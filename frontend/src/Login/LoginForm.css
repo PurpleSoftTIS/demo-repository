@@ -173,7 +173,6 @@ body {
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
-  z-index: 1;
   
 }
 h6{
@@ -518,4 +517,13 @@ height: 100px;
 
 .password-reset-modal-btn:hover {
   background-color: #031c66; 
+}
+
+.spinner-icon {
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

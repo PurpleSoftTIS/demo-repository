@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { FaBars,FaAt, FaLock, FaEye, FaEyeSlash } from "react-icons/fa"; 
+import { FaBars,FaAt, FaLock, FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa"; 
 import { Collapse, Row,Col,Container } from "react-bootstrap";
 import logo from "../assets/logoSIS.png";
 import logop from "../assets/logosol-1@2x.png";
@@ -38,6 +38,7 @@ const [showPassword, setShowPassword] = useState(false);
   const [errorCorreoNoExiste, setErrorCorreoNoExiste] = useState("");
   const [errorCodigoVacio, setErrorCodigoVacio] = useState("");
   const [errorCodigoNoExiste, setErrorCodigoNoExiste] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const toggleVisibility = () => {
     setIniciar(!mostrarIniciar);
@@ -166,6 +167,7 @@ const [showPassword, setShowPassword] = useState(false);
             setErrorCorreoVacio("Por favor, ingrese su correo electrónico");
             return;
         }
+        setLoading(true);
         try {
             const response = await fetch("http://127.0.0.1:8000/api/enviarcorreo", {
                 method: "POST",
@@ -177,6 +179,7 @@ const [showPassword, setShowPassword] = useState(false);
             if (response.ok) {
                 console.log("Correo electrónico enviado correctamente", email);
                 setCorreoEnviado(true);
+                setLoading(false);
             } else {
                 const responseData = await response.json();
                 if (responseData && responseData.message === "Usuario no encontrado") {
@@ -187,6 +190,8 @@ const [showPassword, setShowPassword] = useState(false);
             }
         } catch (error) {
             console.error("Error al enviar el correo:", error);
+            setLoading(false);
+            alert('No se pudo establecer conexión SMTP. Por favor, inténtalo de nuevo más tarde.');
         }
     };
 
@@ -339,7 +344,9 @@ const [showPassword, setShowPassword] = useState(false);
                                                             {errorCorreoNoExiste && <p className="error2">{errorCorreoNoExiste}</p>}
                                                         </div>
                                                         <div className="mb-0 pb-3 text-center">
-                                                            <button className="btn-block"  onClick={handleSubmitRestablecer}>Enviar Codigo</button>
+                                                        <button className="btn-block" onClick={handleSubmitRestablecer} disabled={loading}>
+                                                            {loading ? <FaSpinner className="spinner-icon" /> : 'Enviar Código'}
+                                                        </button>
                                                         </div>                                    
                                             </form>   
                                             <p className="mt-3 text-center">
