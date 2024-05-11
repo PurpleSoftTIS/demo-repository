@@ -16,10 +16,9 @@ class DeleteAmbienteController extends Controller
     public function Borrartodo(){
 
         try {
-            Horario::truncate();
+            DB::statement('SET FOREIGN_KEY_CHECKS=0');
+
             Diashabiles::truncate();
-            Hora::truncate();
-            Dia::truncate();
             Ambiente::truncate();
             Ubicacion::truncate();
             DB::statement('ALTER TABLE hora AUTO_INCREMENT = 1');

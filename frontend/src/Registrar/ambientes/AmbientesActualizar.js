@@ -227,7 +227,7 @@ const Ambientes = () => {
       <div className="line1" />
       <div className="checkout3" data-animate-on-scroll>
       <button className='button2'>
-          <NavLink className="button-cta1" to='/Admin/Listas/ListaAmbientes' activeclassname="active">Atras</NavLink>        
+          <NavLink className="button-cta1" to='/Admin/Listas/ListaAmbientes' activeclassname="active">Cancelar</NavLink>        
         </button>
         <button className="button1" onClick={handleRegistroAmbiente}>
           <div className="button-cta1">Siguiente Paso</div>

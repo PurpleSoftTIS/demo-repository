@@ -25,7 +25,6 @@ class SolicitudUrgencia extends Controller{
                     'materia.*'
                 )
                 ->selectRaw('CONCAT(usuario.nombre, " ", usuario.apellido_paterno, " ", usuario.apellido_materno) as nombre')
-                
                 ->get();
             return response()->json($datosSolicitudes, 200);
     

@@ -114,7 +114,11 @@ const ListaDocentes = () => {
         .then(response => {
           if (response.ok) {
             console.log('Datos enviados al servidor exitosamente.');
+            navigate("/Admin/Mensaje/CargaMasiva");
+
           } else {
+            navigate("/Admin/Mensaje/ErrorCargaMasiva");
+
             throw new Error('Error al enviar datos al servidor.');
           }
         })
@@ -207,7 +211,7 @@ const ListaDocentes = () => {
         </thead>
         <tbody>
           {resultado.map(docente => (
-            <tr key={docente.id} className="fila-lista">
+            <tr key={docente.id_docente} className="fila-lista">
               <td>{docente.id_docente}</td>
               <td>{docente.nombre}</td>
               <td>{docente.apellido_paterno}</td>

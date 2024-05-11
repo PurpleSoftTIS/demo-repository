@@ -355,3 +355,27 @@ body {
     justify-content: center;
   }
 }
+
+.button2,.button1{
+  color: white;
+  border: none;
+  background-color: #050259;
+
+}
+.button2,.button1:hover{
+  border: 1px solid #010a26;
+  box-sizing: border-box;
+}
+.button1{
+  position: relative;
+  top: -15px;
+  text-decoration: none;
+
+}
+.button2{
+  position: relative;
+  top: -80px;
+  color: white;
+  text-decoration: none;
+
+}

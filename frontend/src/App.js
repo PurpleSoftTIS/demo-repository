@@ -1,10 +1,29 @@
-import { React, Router, Routes, Route, HomeUno, Ambientes, Docentes, Navbar, RegistrarMateria,
+import { useContext } from 'react';
+import { UserContext } from './Context/UserContext';
+import { React, Router, Routes, Route, Navigate, HomeUno, Ambientes, Docentes, Navbar, RegistrarMateria,
         LoginForm, RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Reservar, Solicitar, Ayuda,
         ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,ListaSolicitudesUr,
         AmbientesActualizar,Footer,ListaMaterias,Solicitar3,Solicitar1,MensajeExitosoU,
         MensajeErrorU,MensajeActExito,MensajeActError,DocentesActualizar,MensajeDatExito,MensajeDatError
       ,SolicitarCon1,SolicitarCon2,SolicitarCon3} from './importaciones';
        
+function PrivateAdminRoute({ element }) {
+  const { urole } = useContext(UserContext);
+
+  return urole === 'admin' ? element : <Navigate to="/" replace />;
+}
+
+function PrivateUserRoute({ element }) {
+  const { urole } = useContext(UserContext);
+
+  return urole === 'user' ? element : <Navigate to="/" replace />;
+}
+
+function PrivateGestRoute({ element }) {
+  const { urole } = useContext(UserContext);
+  console.log (urole);
+  return urole === 'gest' ? element : <Navigate to="/" replace/>;
+}
 
 function AdminRoutes() {
   return (
@@ -59,15 +78,55 @@ function UserRoutes() {
   );
 }
 
+function GestRoutes() {
+  return (
+    <div>
+      <Routes>
+        <Route path='/Ayuda' element={<h1>Ayuda</h1>} />
+      </Routes>
+    </div>
+  );
+}
+
+function getHomeElement(urole) {
+  switch (urole) {
+    case 'admin':
+      return (
+        <div>
+          <Navbar />
+          <HomeUno />
+          <Footer />
+        </div>
+      );
+    case 'user':
+      return (
+        <div>
+          <NarbarUsuario />
+          <HomeDos />
+          <Footer />
+        </div>
+      );
+    case 'gest':
+      return <LoginForm />;
+    default:
+      return <Navigate to="/" replace />;
+  }
+}
 
 function App() {
+  const { isLoading, urole } = useContext(UserContext);
   return (
     <Router>
-      <Routes>
-        <Route path='/' element={<LoginForm />} />      
-        <Route path='/Admin/*' element={<AdminRoutes />} /> 
-        <Route path='/Usuario/*' element={<UserRoutes />} />                 
-      </Routes>
+      {isLoading ? (
+          <div>Loading...</div>
+        ) : (
+        <Routes>
+          <Route path='/' element={getHomeElement(urole)} />
+          <Route path="/Admin/*" element={<PrivateAdminRoute element={<AdminRoutes />} />} />
+          <Route path="/Usuario/*" element={<PrivateUserRoute element={<UserRoutes />} />} />
+          <Route path='/Gest/*' element={<PrivateGestRoute element={<GestRoutes />} />} />     
+        </Routes>
+      )}
     </Router>
   );
 }
