@@ -114,7 +114,11 @@ const ListaDocentes = () => {
         .then(response => {
           if (response.ok) {
             console.log('Datos enviados al servidor exitosamente.');
+            navigate("/Admin/Mensaje/CargaMasiva");
+
           } else {
+            navigate("/Admin/Mensaje/ErrorCargaMasiva");
+
             throw new Error('Error al enviar datos al servidor.');
           }
         })

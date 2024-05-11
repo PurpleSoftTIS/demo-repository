@@ -6,7 +6,6 @@ import "./Mensaje.css";
 const MensajeDatError = () => {
     const retroceder = () => {
         window.history.back();
-        window.history.back(); 
       };
     
       return (

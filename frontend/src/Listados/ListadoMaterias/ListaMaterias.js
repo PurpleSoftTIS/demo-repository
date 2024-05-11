@@ -4,8 +4,11 @@ import { FaPlus, FaFileCsv, FaTrash } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom'; 
 import Ico1 from "../../assets/IcoGood.png";
 import Ico2 from "../../assets/IcoState.png";
+import { useNavigate } from "react-router-dom";
 
 const ListaMaterias = () => {
+  const navigate = useNavigate(); 
+
   const [materias, setMaterias] = useState([]);
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -84,7 +87,11 @@ const ListaMaterias = () => {
           })
           .catch(error => console.error('Error al obtener las Materias:', error));
         console.log('Importación exitosa');
+        navigate("/Admin//Mensaje/CargaMasiva");
+
     } catch (error) {
+      navigate("/Admin/Mensaje/ErrorCargaMasiva");
+
         console.error('Error al importar:', error);
         setLoading(false);
     }
