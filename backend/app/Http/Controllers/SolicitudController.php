@@ -12,6 +12,7 @@ use App\Models\Solicitudes_docentes;
 use App\Models\Materia;
 use App\Models\Solicitudes_materia;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use DB;
 
 class SolicitudController extends Controller
@@ -74,7 +75,7 @@ class SolicitudController extends Controller
             $solicitud->id_hora=$id_hora;
             $numero_estudiantes=$datosReserva['numeroEstudiantes'];
             $solicitud->numero_estudiantes=$numero_estudiantes;
-            $fecha = $datosReserva['fecha'];
+            $fecha = Carbon::createFromFormat('d/m/Y', $datosReserva['fecha'])->format('Y-m-d');
             $solicitud->fecha_solicitud = $fecha;
             $motivo=$datosReserva['motivo'];
             $solicitud->motivo=$motivo;
@@ -90,15 +91,13 @@ class SolicitudController extends Controller
             $solicitudes->id_solicitud=$id_solicitud;
             $solicitudes->save ();
              
-            $solicitudesDo=new solicitudes_docentes ();
+            $solicitudesDo=new Solicitudes_docentes ();
             $solicitudesDo->id_docente = $idDocente;
             $solicitudesDo->id_solicitud = $id_solicitud;
             $solicitudesDo->save ();
 
-            $solicitudMateria=new solicitudes_materia();
-            $nombremateria=$datosReserva['materia'];
-            $materia=Materia::where('nombre_materia',$nombremateria)->first();
-            $idmateria=$materia->id_materia;
+            $solicitudMateria=new Solicitudes_materia();
+            $idmateria=$datosReserva['materia'];
             $solicitudMateria->id_materia=$idmateria;
             $solicitudMateria->id_solicitud=$id_solicitud;
             $solicitudMateria->save();  

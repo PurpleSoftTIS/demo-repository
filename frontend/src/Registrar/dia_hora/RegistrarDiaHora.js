@@ -187,15 +187,11 @@ const RegistrarDiaHora = () => {
               {showHours()}
             </div>
           </div>
-        </div>
-        
-        <div className="">
-            <NavLink className="btn1 " to={exitoso ? "/Admin/Mensaje/RegistroExitoso" : "/Admin/Mensaje/RegistroError" } onClick={handleRegistrarAmbiente}>Registrar Ambiente</NavLink>
-        </div>
-        <div className=''>
-          <NavLink className="btn2  " to='/Admin/Listas/ListaAmbientes' activeclassname="active">Cancelar</NavLink>        
-        </div>
-       
+          <div className="square3 mx-auto d-flex justify-content-center align-items-center">
+            <NavLink className="btn btn-primary custom-btn  " to='/Admin/Listas/ListaAmbientes' activeclassname="active">Cancelar</NavLink>        
+            <NavLink className="btn btn-primary custom-btn " to={exitoso ? "/Admin/Mensaje/RegistroExitoso" : "/Admin/Mensaje/RegistroError" } onClick={handleRegistrarAmbiente}>Registrar Ambiente</NavLink>
+          </div>
+        </div> 
       </div>
     );
 }

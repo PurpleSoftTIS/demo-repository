@@ -49,9 +49,9 @@ const ListaSolicitudesUr = () => {
           </tr>
         </thead>
         <tbody>
-        {Array.isArray(solicitudes) && solicitudes.map((solicitud, index) => (
-           <tr key={index}>
-              <td>{index + 1}</td>
+        {solicitudes.map((solicitud) => (
+           <tr key={solicitud.id_solicitud}>
+              <td>{solicitud.id_solicitud}</td>
               <td>{solicitud.nombre}</td>
               <td>{solicitud.nombre_materia}</td>
               <td>{solicitud.motivo}</td>
@@ -62,7 +62,7 @@ const ListaSolicitudesUr = () => {
                 <button className="btn btn-danger">Rechazar</button>
               </td>
             </tr>
-          ))}
+        ))}
         </tbody>
       </table>
     </div>

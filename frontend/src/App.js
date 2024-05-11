@@ -5,7 +5,7 @@ import { React, Router, Routes, Route, Navigate, HomeUno, Ambientes, Docentes, N
         ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,ListaSolicitudesUr,
         AmbientesActualizar,Footer,ListaMaterias,Solicitar3,Solicitar1,MensajeExitosoU,
         MensajeErrorU,MensajeActExito,MensajeActError,DocentesActualizar,MensajeDatExito,MensajeDatError
-      ,SolicitarCon1,SolicitarCon2,SolicitarCon3} from './importaciones';
+      ,SolicitarCon1,SolicitarCon2,SolicitarCon3,PasswordResetForm} from './importaciones';
        
 function PrivateAdminRoute({ element }) {
   const { urole } = useContext(UserContext);
@@ -23,6 +23,12 @@ function PrivateGestRoute({ element }) {
   const { urole } = useContext(UserContext);
   console.log (urole);
   return urole === 'gest' ? element : <Navigate to="/" replace/>;
+}
+
+function PrivateRestRoute({ element }) {
+  const { urole } = useContext(UserContext);
+  console.log (urole);
+  return urole === 'rest' ? element : <Navigate to="/" replace/>;
 }
 
 function AdminRoutes() {
@@ -82,7 +88,17 @@ function GestRoutes() {
   return (
     <div>
       <Routes>
-        <Route path='/Ayuda' element={<h1>Ayuda</h1>} />
+        <Route path='/Ayuda' element={<h1>Ayuda</h1>}/>
+      </Routes>
+    </div>
+  );
+}
+
+function RestRoutes() {
+  return (
+    <div>
+      <Routes>
+        <Route path='/password' element={<PasswordResetForm />} />
       </Routes>
     </div>
   );
@@ -107,6 +123,7 @@ function getHomeElement(urole) {
         </div>
       );
     case 'gest':
+    case 'rest':
       return <LoginForm />;
     default:
       return <Navigate to="/" replace />;
@@ -124,7 +141,8 @@ function App() {
           <Route path='/' element={getHomeElement(urole)} />
           <Route path="/Admin/*" element={<PrivateAdminRoute element={<AdminRoutes />} />} />
           <Route path="/Usuario/*" element={<PrivateUserRoute element={<UserRoutes />} />} />
-          <Route path='/Gest/*' element={<PrivateGestRoute element={<GestRoutes />} />} />     
+          <Route path='/Gest/*' element={<PrivateGestRoute element={<GestRoutes />} />} />
+          <Route path='/Rest/*' element={<PrivateRestRoute element={<RestRoutes />} />} />     
         </Routes>
       )}
     </Router>

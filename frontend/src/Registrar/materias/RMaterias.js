@@ -211,14 +211,12 @@ const RegistrarMateria = () => {
       }
     };
   }, []);
-  const backPage = () => {
-    navigate ('/Admin/Listas/ListaMaterias');
-  };
   return (
     <div className="contact-14">
       <div className="line2" />
       <form onSubmit={handleSubmit}>
       <div className="billing-info2" data-animate-on-scroll>
+        <button className="backon-button" type="button" onClick={() => navigate(-1)}></button>
         <div className="checkout-frame">
           <div className="checkout4">Registro de Materia</div>
         </div>
@@ -331,9 +329,6 @@ const RegistrarMateria = () => {
           </div>
         </div>
       )}
-      <button className="button1" >
-          <div className="button-cta1" onClick={backPage}>Cancelar</div>
-        </button>
     </div>
   );
 };

@@ -164,7 +164,7 @@ body {
   top: 0;
   height: 50px;
   font-size: 24px;
-  line-height: 47px;
+  line-height: 46px;
   text-align: left;
   color: #f2f2f2;
   -webkit-transition: all 200ms linear;
@@ -201,7 +201,8 @@ h6{
   border: none;
   -webkit-transition: all 200ms linear;
   transition: all 200ms linear;
-  margin-bottom: 40px; 
+  margin-top: 20px;
+  margin-bottom: 20px; 
   margin-left: auto; 
   margin-right: auto; 
 }
@@ -431,7 +432,7 @@ height: 100px;
   background-color: #071d5f;
   margin-top: 10px;
   margin-right: 30px;
-  width: 350px;
+  min-width: 250px;
 }
 
 .olvidar{
@@ -454,6 +455,67 @@ height: 100px;
   color: #f2f2f2;
   background: transparent;
   border: none;
-  right: 5px; /* Ajustar la posición relativa al lado derecho del contenedor */
+  right: 5px; 
   transform: translateY(-50%);
+}
+
+.password-reset-container {
+  background: linear-gradient(to bottom right, #010a26 60%, #bf0404 );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; 
+  padding: 0 20px; 
+}
+
+.password-reset-box {
+  max-width: 400px; 
+  width: 100%; 
+  margin: auto; 
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1); 
+  color: #F2f2f2;
+	background-color: #071d5f;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .password-reset-container {
+      padding: 0; 
+  }
+  .password-reset-box {
+      max-width: none; 
+  }
+}
+
+.password-reset-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.password-reset-modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.password-reset-modal-btn {
+  background-color: #010a26; 
+  color: white; 
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.password-reset-modal-btn:hover {
+  background-color: #031c66; 
 }
