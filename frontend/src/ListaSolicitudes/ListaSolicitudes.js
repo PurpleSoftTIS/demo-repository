@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 import './ListaSolicitudes.css';
 
 const ListaSolicitudes = () => {
@@ -16,6 +19,12 @@ const ListaSolicitudes = () => {
     Tipo_de_solicitud: ""
   });
   const [busqueda, setBusqueda] = useState('');
+  const [show, setShow] = useState(false);
+  const [motivo, setMotivo] = useState('');
+  const [fecha, setFecha] = useState('');
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const aceptarsolicitud = (id_solicitud) => {
     fetch(`http://127.0.0.1:8000/api/aceptarsolicitud/${id_solicitud}`, {
@@ -103,13 +112,13 @@ const ListaSolicitudes = () => {
   };
 
   const filtrarSolicitudes = Array.isArray(solicitudes)
-  ? solicitudes.filter(
-      (solicitud) =>
-        solicitud.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-        solicitud.nombre_materia.toLowerCase().includes(busqueda.toLowerCase()) ||
-        solicitud.motivo.toLowerCase().includes(busqueda.toLowerCase())
-    )
-  : [];
+    ? solicitudes.filter(
+        (solicitud) =>
+          solicitud.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
+          solicitud.nombre_materia.toLowerCase().includes(busqueda.toLowerCase()) ||
+          solicitud.motivo.toLowerCase().includes(busqueda.toLowerCase())
+      )
+    : [];
 
   return (
     <div className="container" style={{ minHeight: '78.7vh' }}>
@@ -129,7 +138,7 @@ const ListaSolicitudes = () => {
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
           />
-          <button className="butn butn-filtro">Filtros</button>
+          <button className="butn butn-filtro" onClick={handleShow}>Filtros</button>
         </div>
       </div>
 
@@ -170,6 +179,7 @@ const ListaSolicitudes = () => {
           ))}
         </tbody>
       </table>
+
       {mostrarFormulario && (
         <div className="overlay" onClick={cerrarFormulario}>
           <div className="formulario-emergente" onClick={(e) => e.stopPropagation()}>
@@ -195,6 +205,43 @@ const ListaSolicitudes = () => {
           </div>
         </div>
       )}
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Filtros</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <Form.Control 
+        as="select" 
+        value={motivo} 
+        onChange={(e) => setMotivo(e.target.value)}
+        style={{ backgroundColor: 'white', color: 'black' }}
+      >
+        <option value="">Selecciona un motivo</option>
+        <option value="motivo1">Examen</option>
+        <option value="motivo2">Examen de Mesa</option>
+        <option value="motivo3">Examen primer parcial</option>
+        <option value="motivo4">Examen segundo parcial</option>
+        {/* Agrega aquí más opciones si es necesario */}
+      </Form.Control>
+      
+      <Form.Control 
+        type="date" 
+        value={fecha} 
+        onChange={(e) => setFecha(e.target.value)}
+        style={{ backgroundColor: 'white', color: 'black' }}
+      />
+      
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cerrar
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Aplicar Filtros
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 import './ListaSolicitudes.css';
 
 const ListaSolicitudesUr = () => {
   const [solicitudes, setSolicitudes] = useState([]);
   const [busqueda, setBusqueda] = useState('');
+  const [show, setShow] = useState(false);
+  const [motivo, setMotivo] = useState('');
+  const [fecha, setFecha] = useState('');
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/SolicitudUrgencias', {
@@ -47,7 +56,7 @@ const ListaSolicitudesUr = () => {
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
           />
-          <button className="butn butn-filtro">Filtros</button>
+          <button className="butn butn-filtro" onClick={handleShow}>Filtros</button>
         </div>
       </div>
       <table className="table table-hover">
@@ -85,6 +94,48 @@ const ListaSolicitudesUr = () => {
           ))}
         </tbody>
       </table>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Filtros</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <Form.Control 
+        as="select" 
+        value={motivo} 
+        onChange={(e) => setMotivo(e.target.value)}
+        style={{ backgroundColor: 'white', color: 'black' }}
+      >
+        <option value="">Selecciona un motivo</option>
+        <option value="motivo1">Examen de Mesa</option>
+        <option value="motivo2">Examen Primer Parcial</option>
+        <option value="motivo3">Examen Segundo Parcial</option>
+        <option value="motivo4">Examen Final</option>
+        <option value="motivo5">Examen Segunda Instancia</option>
+        <option value="motivo6">Elecciones</option>
+        <option value="motivo7">Congreso</option>
+
+
+        {/* Agrega aquí más opciones si es necesario */}
+      </Form.Control>
+      
+      <Form.Control 
+        type="date" 
+        value={fecha} 
+        onChange={(e) => setFecha(e.target.value)}
+        style={{ backgroundColor: 'white', color: 'black' }}
+      />
+      
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cerrar
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Aplicar Filtros
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
