@@ -23,8 +23,15 @@ const ListaSolicitudesUr = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setSolicitudes(data);
-        console.log(data);
+        // Filtrar las solicitudes según los motivos especificados
+        const solicitudesFiltradas = data.filter(
+          (solicitud) =>
+            solicitud.motivo === 'Examen' ||
+            solicitud.motivo === 'Examen de mesa' ||
+            solicitud.motivo === 'Segunda instancia'
+        );
+        setSolicitudes(solicitudesFiltradas);
+        console.log(solicitudesFiltradas);
       })
       .catch((error) => console.error('Error al obtener los datos:', error));
   }, []);

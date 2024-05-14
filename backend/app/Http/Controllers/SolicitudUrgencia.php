@@ -24,6 +24,9 @@ class SolicitudUrgencia extends Controller{
                     'solicitud.*', 
                     'materia.*'
                 )
+                ->where("soliciud.motivo", "=", "Examen")
+                ->orWhere("soliciud.motivo", "=", "Examen de mesa")
+                ->orWhere("soliciud.motivo", "=", "Segunda instancia")
                 ->selectRaw('CONCAT(usuario.nombre, " ", usuario.apellido_paterno, " ", usuario.apellido_materno) as nombre')
                 ->get();
             
