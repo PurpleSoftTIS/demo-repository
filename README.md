@@ -74,3 +74,6 @@ php artisan optimize
 
 Para dejar de depender de los paquetes de composer
 composer install --ignore-platform-reqs
+
+Como volver a un estado anterior del commit 
+git checkout 641d5f45897e7c26883b54591aaf8c95dfaa8bef   

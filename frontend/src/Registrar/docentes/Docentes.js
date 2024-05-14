@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Docentes = () => {
-  var exitoso = true;
   const [nombres, setNombres] = useState("");
   const [apellidoPaterno, setApellidoPaterno] = useState("");
   const [apellidoMaterno, setApellidoMaterno] = useState("");
@@ -39,7 +38,7 @@ const Docentes = () => {
   );
 
   const handleRegistroDocente = (e) => {
-    exitoso = false;
+    
     e.preventDefault();
     const nombres = document.querySelector(".input11").value.trim();
     const apellidoPaterno = document.querySelector(".input12").value.trim();
@@ -153,13 +152,12 @@ const Docentes = () => {
         setApellidoMaterno("");
         setCorreo("");
         setCodigoDocente("");
-  
-        exitoso = true;
-        navigate("/Admin/Mensaje/RegistroExitoso");
+
+          navigate("/Admin/Mensaje/RegistroExitoso");
+        // Aquí puedes mostrar un mensaje de éxito o redirigir a otra página
       })
       .catch(error => {
         console.error("Error al registrar el ambiente:", error);
-        exitoso = false;
         navigate("/Admin/Mensaje/RegistroError")
       });
   };
@@ -207,6 +205,7 @@ const Docentes = () => {
     <div className="contact-6" style={{ height: '94.4vh' }}>
       <div className="line" />
       <form className="billing-info" data-animate-on-scroll>
+      <button className="backon-button" type="button" onClick={() => navigate(-1)}></button>
         <div className="checkout-wrapper">
           <div className="checkout">Registro de Docentes</div>
         </div>
@@ -240,6 +239,11 @@ const Docentes = () => {
           </button>
         </div>
       </form>
+      <div className="checkout1" data-animate-on-scroll>
+        <button className="button22" onClick={handleRegistroDocente}>
+        <div className="button-cta">Registrar Docente</div>
+        </button>
+      </div>
     </div>
   );
 };

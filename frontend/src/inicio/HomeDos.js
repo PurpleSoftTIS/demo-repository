@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import FotoInicio from '../assets/FotoInicio.JPG';
 import logo_fcyt from '../assets/logo_fcyt.png';
 import './HomeDos.css'
@@ -26,9 +25,7 @@ const HomeDos = () => {
             <p className="text-center texto-personalizado">Sistema de ayuda al administrador en la gestion de ambientes de la Facultad de 
               Ciencias y Tecnologia</p>
           </div>
-          <div>          
-            <Link to="/Admin/ListaSolicitudes" style={{backgroundColor: '#0d0d46', color: 'white'}} className="btn">Solicitudes</Link>
-          </div>
+          
         </div>
         <div className="col-md-6 d-flex align-items-center justify-content-center col2">
           <div className="rectangulo-azul">

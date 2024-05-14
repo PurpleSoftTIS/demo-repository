@@ -64,26 +64,22 @@ const SolicitarCon2 = () => {
     };
     navigate('/Usuario/Usu/SolicitarCon3', { state: datos2});
   };
-  
 
     return (
         <div className='contenedorGeneral'>
           <div className="contenedorsito">
             <div>
               <h4>Selecciona una fecha:</h4>
-              <div className='calendario-container'>
-               
+              <div className='calendario-container'>               
                  <Calendar
                 onChange={handleDateChange}
                 value={date}
                 minDate={new Date()} 
                 maxDate={new Date(2026, 11, 31)} 
               />
-              </div>
-    
+              </div>    
               <p className='fecha'>Fecha seleccionada: {date.toLocaleDateString()}</p> {/* Mostrar el día seleccionado */}
-            </div>
-    
+            </div>    
             <div className='capacidad'>
               <label htmlFor="campo" className="label">Nro de Estudiantes:</label>
               <input
@@ -94,10 +90,8 @@ const SolicitarCon2 = () => {
                 onChange={handleInputChange}
                 placeholder='Ingrese la capacidad es estudiantes'
                 className="input"
-              />
-    
-            </div>
-    
+              />    
+            </div>    
             <div className='horarios'>
               <label htmlFor="menu" className="label">Selecciona una opción:</label>
               <select id="menu" value={selectedOption} onChange={handleSelectChange} className="select" >

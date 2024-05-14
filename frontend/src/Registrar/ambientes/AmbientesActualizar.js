@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavLink, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { useNavigate } from "react-router-dom";
 
@@ -173,6 +173,7 @@ const Ambientes = () => {
     <div className="contact-4">
       <from className="billing-info1" data-animate-on-scroll>
         <div className="checkout-container">
+        <button className="backone-button" type="button" onClick={() => navigate(-1)}></button>  
           <h3 className="checkout2">Actualizar ambiente</h3>
         </div>
         <div className="frame-div">
@@ -226,13 +227,9 @@ const Ambientes = () => {
       </from>
       <div className="line1" />
       <div className="checkout3" data-animate-on-scroll>
-      <button className='button2'>
-          <NavLink className="button-cta1" to='/Admin/Listas/ListaAmbientes' activeclassname="active">Atras</NavLink>        
-        </button>
-        <button className="button1" onClick={handleRegistroAmbiente}>
-          <div className="button-cta1">Siguiente Paso</div>
-        </button>
-        
+        <button className="button22" onClick={handleRegistroAmbiente}>
+          <div className="button-cta22">Siguiente Paso</div>
+        </button>       
       </div>
     </div>
   );

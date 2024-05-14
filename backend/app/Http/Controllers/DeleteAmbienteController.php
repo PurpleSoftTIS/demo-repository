@@ -16,18 +16,15 @@ class DeleteAmbienteController extends Controller
     public function Borrartodo(){
 
         try {
-            Horario::truncate();
+            DB::statement('SET FOREIGN_KEY_CHECKS=0');
+
             Diashabiles::truncate();
-            Hora::truncate();
-            Dia::truncate();
             Ambiente::truncate();
             Ubicacion::truncate();
-            DB::statement('ALTER SEQUENCE hora_id_hora_seq RESTART WITH 1');
-            DB::statement('ALTER SEQUENCE dia_id_dia_seq RESTART WITH 1');
-            DB::statement('ALTER SEQUENCE ambiente_id_ambiente_seq RESTART WITH 1');
-            DB::statement('ALTER SEQUENCE ubicacion_id_ubicacion_seq RESTART WITH 1');
-
-            
+            DB::statement('ALTER TABLE hora AUTO_INCREMENT = 1');
+            DB::statement('ALTER TABLE dia AUTO_INCREMENT = 1');
+            DB::statement('ALTER TABLE ambiente AUTO_INCREMENT = 1');
+            DB::statement('ALTER TABLE ubicacion AUTO_INCREMENT = 1');           
             return response()->json(['message' => 'Todos los datos han sido eliminados correctamente'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Hubo un error al intentar borrar los datos'], 500);

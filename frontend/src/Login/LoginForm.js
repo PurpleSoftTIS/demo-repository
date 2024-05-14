@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { FaBars,FaAt, FaLock } from "react-icons/fa"; 
+import { FaBars,FaAt, FaLock, FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa"; 
 import { Collapse, Row,Col,Container } from "react-bootstrap";
 import logo from "../assets/logoSIS.png";
 import logop from "../assets/logosol-1@2x.png";
@@ -18,38 +18,43 @@ import { UserContext } from "../Context/UserContext";
 
 const LoginForm = () => {
 const navigate = useNavigate();   
-const { setEmailC, setUserC } = useContext(UserContext);
-  
+const { setEmailC, setUserC, setUrole} = useContext(UserContext);
+const [showPassword, setShowPassword] = useState(false);
+  const [menuClicked, setMenuClicked] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const [menuClicked, setMenuClicked] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false); 
-  const [emailValido, setEmailValido] = useState(false);
-  const [contraseñaValido, setContraseñaValido] = useState(false);
-  const [login, setLogin] = useState(true);
-  const [logRecuperacion, setRecuperacion] = useState(false);
-  const [mostrarTituloUno , setMostrarTituloUno] = useState(true);
-  const [mostrarTituloDos , setMostrarTituloDos] = useState(false);
-
+  const correoElectronico = email;
+  const [codigov, setCodigov ] = useState("");
+  const [mostrarIniciar , setIniciar] = useState(true);
+  const [mostrarRestablecer, setMostrarRestablecer] = useState(false);
+  const [correoEnviado, setCorreoEnviado] = useState(false);
   const [errorCorreo, setErrorCorreo] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
   const [errorInconpleto, setErrorIncompleto] = useState("");
   const [errorEmailValido, setErrorEmailValido] = useState("");
   const [errorContraseñaValido, setErrorContraseñaValido] = useState("");
+  const [errorCorreoVacio, setErrorCorreoVacio] = useState("");
+  const [errorCorreoNoExiste, setErrorCorreoNoExiste] = useState("");
+  const [errorCodigoVacio, setErrorCodigoVacio] = useState("");
+  const [errorCodigoNoExiste, setErrorCodigoNoExiste] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const toggleVisibility = () => {
-    setLogin(false);
-    setMostrarTituloUno(false); 
-    setRecuperacion(true);
-    setMostrarTituloDos(true);
+    setIniciar(!mostrarIniciar);
+    setMostrarRestablecer(!mostrarRestablecer);
   };
   const toggleVisibility2 = () =>{
-    setLogin(true);
-    setMostrarTituloUno(true); 
-    setRecuperacion(false);
-    setMostrarTituloDos(false);
+    setIniciar(!mostrarIniciar);
+    setMostrarRestablecer(!mostrarRestablecer);
   }
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+  const toggleVisibility3 = () =>{
+    setCorreoEnviado(false);
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!email || !password ) {
@@ -59,7 +64,6 @@ const { setEmailC, setUserC } = useContext(UserContext);
         setErrorCorreo("");
         setErrorPassword(""); 
         setErrorIncompleto("");
-        setContraseñaValido("");
         setErrorEmailValido("");
         setErrorContraseñaValido("");
       } 
@@ -96,8 +100,11 @@ const { setEmailC, setUserC } = useContext(UserContext);
         setErrorPassword("");
     }
 
+
     if (email === "purpleSoft@gmail.com" && password === "purplesoft2024") {
         navigate("/Admin/Inicio/HomeUno");
+        sessionStorage.setItem('role', 'admin');
+        setUrole('admin');
     }else{
         if(email === "purpleSoft@gmail.com" && password !== "purplesoft2024"){
             setErrorContraseñaValido("Contraseña incorrecta")
@@ -113,7 +120,7 @@ const { setEmailC, setUserC } = useContext(UserContext);
                 
                 if (!response.ok) {
                     setErrorEmailValido("Ingrese una cuenta valida");
-                    emailValido = false;
+
                     throw new Error("La solicitud al servidor falló");
                 }
 
@@ -123,26 +130,22 @@ const { setEmailC, setUserC } = useContext(UserContext);
                 if (data && typeof data === 'object') {
                     if (!data.exists) {
                         console.log("El correo electrónico no existe");
-                        setEmailValido(false);
                     } else if (!data.correcta) {
                         setErrorEmailValido("");
-                        setEmailValido(true);
                         setErrorContraseñaValido("Contraseña incorrecta");
-                        setContraseñaValido(false);
-                        contraseñaValido = false;
                     } else {
                         sessionStorage.setItem('user', data.nombre);
-                        sessionStorage.setItem('email', email);
-                        setEmailC(email);
+                        sessionStorage.setItem('email', correoElectronico);
+                        sessionStorage.setItem('role', 'user');
+                        setEmailC(correoElectronico);
                         setUserC(data.nombre);
-                        setEmailValido(true);
-                        setContraseñaValido(true);
+                        setUrole('user');
                         setErrorEmailValido("");
                         setErrorContraseñaValido("");
                         console.log("Nombre de usuario:", data.nombre);
-                        console.log("Correo electrónico:", email);
+                        console.log("Correo electrónico:", correoElectronico);
                         const rutaRedireccion = "/Usuario/Inicio/HomeDos" ;
-                        const estadoRedireccion = { state: email };
+                        const estadoRedireccion = { state: correoElectronico };
                         navigate(rutaRedireccion, estadoRedireccion);
                     }
                 } else {
@@ -152,29 +155,82 @@ const { setEmailC, setUserC } = useContext(UserContext);
             .catch((error) => {
                 console.error("Error en la solicitud:", error);
             });
-                    
-                    }                
-                }  
-            };
-        const handleSubmitRestablecer = () => {
-            fetch('http://127.0.0.1:8000/web/Mail', {
-                method: 'GET',
+            }                
+        }    
+    };
+    const handleSubmitRestablecer = async (e) => {
+        e.preventDefault();
+        setErrorCorreoVacio("");
+        setErrorCorreoNoExiste("");
+
+        if (!email) {
+            setErrorCorreoVacio("Por favor, ingrese su correo electrónico");
+            return;
+        }
+        setLoading(true);
+        try {
+            const response = await fetch("http://127.0.0.1:8000/api/enviarcorreo", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                 },
-                body: JSON.stringify({}),
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Correo electrónico enviado correctamente');
-                } else {
-                    console.error('Error al enviar correo electrónico');
-                }
-            })
-            .catch(error => {
-                console.error('Error de red:', error);
+                body: JSON.stringify({ correo: email }), 
             });
-        };
+            if (response.ok) {
+                console.log("Correo electrónico enviado correctamente", email);
+                setCorreoEnviado(true);
+                setLoading(false);
+            } else {
+                const responseData = await response.json();
+                if (responseData && responseData.message === "Usuario no encontrado") {
+                    setErrorCorreoNoExiste("Correo electrónico no Registrado ");
+                } else {
+                    throw new Error("Error al enviar el correo");
+                }
+            }
+        } catch (error) {
+            console.error("Error al enviar el correo:", error);
+            setLoading(false);
+            alert('No se pudo establecer conexión SMTP. Por favor, inténtalo de nuevo más tarde.');
+        }
+    };
+
+    const handleSubmitCodigo = async (e) => {
+        e.preventDefault();
+        setErrorCodigoVacio("");
+        setErrorCodigoNoExiste("");
+        if (!codigov) {
+            setErrorCodigoVacio("Por favor, ingrese el código");
+            return;
+        }
+        try {
+            const response = await fetch("http://127.0.0.1:8000/api/verificarCodigo", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ codigo: codigov }), 
+            });
+    
+            if (!response.ok) {
+                throw new Error("La solicitud al servidor falló");
+            }
+    
+            const data = await response.json();
+    
+            if (data && data.id_usuario) {
+                // Actualizar el contexto con el id_usuario y el role
+                setUrole('rest');
+                setEmailC(data.id_usuario);
+                console.log("Id_usuario:", data.id_usuario);
+                navigate("/Rest/password");
+            } else {
+                setErrorCodigoNoExiste("Código inválido");
+            }
+        } catch (error) {
+            setErrorCodigoNoExiste("Código inválido");
+        }
+    };
 
   return (
     <div className="hero-6" style={{ height: '100vh' }}>
@@ -223,72 +279,111 @@ const { setEmailC, setUserC } = useContext(UserContext);
                             <Col xs={12} sm={10} md={8} lg={6}> {/* Define el ancho del formulario en diferentes tamaños de pantalla */}
                                 <div className="login-box">
                                     <div className="section">
-                                    {mostrarTituloUno && (
+                                    {mostrarIniciar && !correoEnviado && (
+                                    <div className="contenidoo">
                                         <h6 className="mb-0 pb-3 text-center" id="Iniciar">Iniciar sesión</h6>
-                                    )}
-                                    {login && (
-                                        <form className="login0">
-                                        <div className="form-group">
-                                            <span className="input-icon"><FaAt /></span>
-                                            <input 
-                                                type="email"
-                                                name="logemail"
-                                                className="form-control"
-                                                placeholder="Ingrese su correo"
-                                                value={email}
-                                                onChange={(e) => setEmail(e.target.value)}
-                                            />
-                                            {errorCorreo && <p className="error2">{errorCorreo}</p>}
-                                            {errorEmailValido && <p className="error2">{errorEmailValido}</p>}
-                                        </div>
-                                         <div className="form-group">
-                                            <span className="input-icon"><FaLock /></span>
-                                            <input
-                                                type="password"
-                                                name="logpass"
-                                                className="form-control"
-                                                placeholder="Ingrese su contaraseña"
-                                                value={password}
-                                                onChange={(e) => setPassword(e.target.value)}
-                                            />
-                                            {errorPassword && <p className="error2">{errorPassword}</p>}
-                                            {errorContraseñaValido && <p className="error2">{errorContraseñaValido}</p>}
-
-                                            {errorInconpleto && <p className="error2">{errorInconpleto}</p>}                                                
-                                        </div>
-                                        <div className="mb-0 pb-3 text-center">
-                                        <button className="btn-block" onClick={handleSubmit}> Ingresar </button>                                         
-                                        </div>
+                                        <form className="login0" onSubmit={handleSubmit}>
+                                            <div className="form-group">
+                                                <span className="input-icon"><FaAt /></span>
+                                                <input 
+                                                    type="email"
+                                                    name="logemail"
+                                                    className="form-control"
+                                                    placeholder="Ingrese su correo"
+                                                    value={email}
+                                                    onChange={(e) => setEmail(e.target.value)}
+                                                />
+                                                {errorCorreo && <p className="error2">{errorCorreo}</p>}
+                                                {errorEmailValido && <p className="error2">{errorEmailValido}</p>}
+                                            </div>
+                                            <div className="form-group">
+                                                <span className="input-icon"><FaLock /></span>
+                                                <input
+                                                    type={showPassword ? 'text' : 'password'}
+                                                    name="logpass"
+                                                    className="form-control"
+                                                    placeholder="Ingrese su contraseña"
+                                                    value={password}
+                                                    onChange={(e) => setPassword(e.target.value)}
+                                                    style={{ paddingRight: '40px' }}
+                                                    autoComplete="new-password"
+                                                />
+                                                {/* Botón para alternar la visibilidad de la contraseña */}
+                                                <button className="toggle-password" type="button" onClick={togglePasswordVisibility}>
+                                                    {showPassword ? <FaEye /> : <FaEyeSlash />}
+                                                </button>
+                                                {errorPassword && <p className="error2">{errorPassword}</p>}
+                                                {errorContraseñaValido && <p className="error2">{errorContraseñaValido}</p>}
+                                                {errorInconpleto && <p className="error2">{errorInconpleto}</p>}                                                
+                                            </div>
+                                            <div className="mb-0 pb-3 text-center">
+                                                <button className="btn-block" onClick={handleSubmit}> Ingresar </button>                                         
+                                            </div>                                        
+                                        </form>
+                                        <p className="mt-3 text-center">
+                                            <button  onClick={toggleVisibility} className="olvidar">¿Olvidaste tu Contraseña?</button>
+                                        </p>   
+                                    </div>)}
+                                    {mostrarRestablecer && !correoEnviado && (
+                                        <div className="contenidoo">
+                                            <h6 className="mb-0 pb-3 text-center" id="Reestablecer">Reestablecer Contraseña</h6>
+                                            <form className="logRecuperacion">
+                                                        <div className="form-group">
+                                                            <span className="input-icon"><FaAt /></span>
+                                                            <input 
+                                                                type="email"
+                                                                name="logemail"
+                                                                className="form-control"
+                                                                placeholder="Correo electronico"
+                                                                id="logemail1" 
+                                                                autoComplete="off"
+                                                                value={email}
+                                                                onChange={(e) => setEmail(e.target.value)}
+                                                            />
+                                                            {errorCorreoVacio && <p className="error2">{errorCorreoVacio}</p>}
+                                                            {errorCorreoNoExiste && <p className="error2">{errorCorreoNoExiste}</p>}
+                                                        </div>
+                                                        <div className="mb-0 pb-3 text-center">
+                                                        <button className="btn-block" onClick={handleSubmitRestablecer} disabled={loading}>
+                                                            {loading ? <FaSpinner className="spinner-icon" /> : 'Enviar Código'}
+                                                        </button>
+                                                        </div>                                    
+                                            </form>   
                                             <p className="mt-3 text-center">
-                                                <button  onClick={toggleVisibility} className="olvidar">¿Olvidaste tu Contraseña?</button>
-                                            </p>                                           
-                                    </form>
-                                    )}
-                                        
-                                    {mostrarTituloDos && (
-                                            <h6 className="mb-0 pb-3 text-center" id="Reestablecer">Restablecer Contraseña</h6>
-                                        )}
-                                        {logRecuperacion && (
-                                              <form className="logRecuperacion">
-                                              <div className="form-group">
-                                                  <span className="input-icon"><FaAt /></span>
-                                                  <input 
-                                                      type="email"
-                                                      name="logemail"
-                                                      className="form-control"
-                                                      placeholder="Correo Institucional"
-                                                      id="logemail1" 
-                                                  />
-                                              </div>
-                                              <div className="mb-0 pb-3 text-center">
-                                                  <button className="btn-block"  onClick={handleSubmitRestablecer}>Enviar Codigo</button>
-                                              </div>
-                                              <p className="mt-3 text-center">
-                                                  <button  onClick={toggleVisibility2} className="olvidar">Iniciar sesión</button>
-                                              </p>                                          
-                                      </form> 
-                                        )}
-                                                                                   
+                                                <button  onClick={toggleVisibility2} className="olvidar">Iniciar sesión</button>
+                                            </p>
+                                        </div>)}
+                                        {correoEnviado && (
+                                        <div className="contenidoo">
+                                            <h6 className="mb-0 pb-3 text-center" id="Codigo">Codigo enviado</h6>
+                                            <form className="logRecuperacion">
+                                                    <div className="form-group">
+                                                        <span className="input-icon"><FaLock /></span>
+                                                        <input
+                                                            type={showPassword ? 'text' : 'password'}
+                                                            name="logpass"
+                                                            className="form-control"
+                                                            placeholder="Ingrese el codigo"
+                                                            value={codigov}
+                                                            onChange={(e) => setCodigov(e.target.value)}
+                                                            style={{ paddingRight: '40px' }}
+                                                            autoComplete="new-password"
+                                                        />
+                                                        {errorCodigoVacio && <p className="error2">{errorCodigoVacio}</p>}
+                                                        {errorCodigoNoExiste && <p className="error2">{errorCodigoNoExiste}</p>}
+                                                        {/* Botón para alternar la visibilidad de la contraseña */}
+                                                        <button className="toggle-password" type="button" onClick={togglePasswordVisibility}>
+                                                            {showPassword ? <FaEye /> : <FaEyeSlash />}
+                                                        </button>
+                                                    </div>
+                                                    <div className="mb-0 pb-3 text-center">
+                                                        <button className="btn-block"  onClick={handleSubmitCodigo}>Reestablecer</button>
+                                                    </div>                                    
+                                            </form>   
+                                            <p className="mt-3 text-center">
+                                                <button  onClick={toggleVisibility3} className="olvidar">Volver Atrás</button>
+                                            </p>
+                                        </div>)}                                             
                                     </div>
                                 </div>
                             </Col>
@@ -333,7 +428,6 @@ const { setEmailC, setUserC } = useContext(UserContext);
                     </div>
                 </div>
         </footer>
-
     </div>
     
   );

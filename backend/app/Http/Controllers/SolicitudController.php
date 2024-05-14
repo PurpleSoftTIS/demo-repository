@@ -8,13 +8,16 @@ use App\Models\Docente;
 use App\Models\Hora;
 use App\Models\Solicitud;
 use App\Models\Solicitudes;
-use App\Models\solicitudes_docentes;
+use App\Models\Solicitudes_docentes;
+use App\Models\Materia;
+use App\Models\Solicitudes_materia;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use DB;
 
 class SolicitudController extends Controller
 {
-public function obtenerSolicitud() {
+    public function obtenerSolicitud() {
         try{
             $datosSolicitudes = DB::table('solicitud')
             ->join('solicitudes','solicitudes.id_solicitud','=', 'solicitud.id_solicitud')
@@ -43,17 +46,15 @@ public function obtenerSolicitud() {
         }
 
     }
-public function obtenerHora() {
+    public function obtenerHora() {
         $datosSolicitados = DB::table('hora')
         ->select(
             'hora.*'
         )
         ->get();
         return response()->json($datosSolicitados, 200);
-
     }
-
-public function registrarSolicitud(Request $datos){
+    public function registrarSolicitud(Request $datos){
         try {
             \Log::info('Datos recibidos del frontend: ' . json_encode($datos->all()));
             $datosReserva=$datos->all();
@@ -74,12 +75,8 @@ public function registrarSolicitud(Request $datos){
             $solicitud->id_hora=$id_hora;
             $numero_estudiantes=$datosReserva['numeroEstudiantes'];
             $solicitud->numero_estudiantes=$numero_estudiantes;
-            $fecha = $datosReserva['fecha'];
-            // Convertir la fecha al formato adecuado (año-mes-día)
-            $fechaFormateada = date('Y-m-d', strtotime($fecha));
-        
-            // Asignar la fecha formateada al objeto de solicitud
-            $solicitud->fecha_solicitud = $fechaFormateada;
+            $fecha = Carbon::createFromFormat('d/m/Y', $datosReserva['fecha'])->format('Y-m-d');
+            $solicitud->fecha_solicitud = $fecha;
             $motivo=$datosReserva['motivo'];
             $solicitud->motivo=$motivo;
             $estado_solicitud='espera';
@@ -93,19 +90,25 @@ public function registrarSolicitud(Request $datos){
             $id_solicitud= $solicitud->id_solicitud;
             $solicitudes->id_solicitud=$id_solicitud;
             $solicitudes->save ();
-   
-            $solicitudesDo=new solicitudes_docentes ();
+             
+            $solicitudesDo=new Solicitudes_docentes ();
             $solicitudesDo->id_docente = $idDocente;
             $solicitudesDo->id_solicitud = $id_solicitud;
             $solicitudesDo->save ();
-            //$datosReserva = $datos->all();
+
+            $solicitudMateria=new Solicitudes_materia();
+            $idmateria=$datosReserva['materia'];
+            $solicitudMateria->id_materia=$idmateria;
+            $solicitudMateria->id_solicitud=$id_solicitud;
+            $solicitudMateria->save();  
+             
         } catch (\Exception $e) {
             \Log::error('Error al registrar la solicitud: ' . $e->getMessage());
             return response()->json(['error' => 'Error al registrar la solicitud'], 500);
         }
     }
     
-public function registrarSolicitudesConjuntas(Request $datos){
+    public function registrarSolicitudesConjuntas(Request $datos){
         try {
             \Log::info('Datos recibidos del frontend: ' . json_encode($datos->all()));
             $datosReserva=$datos->all();
@@ -157,7 +160,6 @@ public function registrarSolicitudesConjuntas(Request $datos){
         }
 
     }
-
     public function aceptarSolicitud(Request $request, $id) {
         try {
             $solicitud = Solicitud::where('id_solicitud', $id)->first();
@@ -192,6 +194,37 @@ public function registrarSolicitudesConjuntas(Request $datos){
         } catch (\Exception $e) {
             \Log::error('Error al aceptar la solicitud: ' . $e->getMessage());
             return response()->json(['error' => 'Error al aceptar la solicitud'], 500);
+        }
+    }
+    public function obtenerDocentesPorSolicitud($idSolicitud) {
+        try {
+            // Obtener los docentes asociados a la solicitud mediante su ID
+            $docentes = DB::table('solicitud')
+                ->join('solicitudes_docentes', 'solicitudes_docentes.id_solicitud', '=', 'solicitud.id_solicitud')
+                ->join('docente', 'solicitudes_docentes.id_docente', '=', 'docente.id_docente')
+                ->select('docente.*')
+                ->where('solicitud.id_solicitud', $idSolicitud)
+                ->get();
+            
+            return response()->json($docentes, 200);
+        } catch (\Exception $e) {
+            \Log::error('Error al obtener los datos de los docentes por solicitud: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al obtener los datos de los docentes por solicitud'], 500);
+        }
+    }    
+    public function obtenerAmbientesPorSolicitud($idSolicitud) {
+        try {
+            // Obtener los ambientes asociados a la solicitud mediante su ID
+            $ambientes = DB::table('solicitud')
+                ->join('ambiente', 'ambiente.id_ambiente', '=', 'solicitud.id_ambiente')
+                ->select('ambiente.*')
+                ->where('solicitud.id_solicitud', $idSolicitud)
+                ->get();
+            
+            return response()->json($ambientes, 200);
+        } catch (\Exception $e) {
+            \Log::error('Error al obtener los datos de los ambientes por solicitud: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al obtener los datos de los ambientes por solicitud'], 500);
         }
     }
 }

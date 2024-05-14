@@ -75,9 +75,9 @@ const ListaSolicitudesUr = () => {
           </tr>
         </thead>
         <tbody>
-          {filtrarSolicitudes.map((solicitud, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
+        {solicitudes.map((solicitud) => (
+           <tr key={solicitud.id_solicitud}>
+              <td>{solicitud.id_solicitud}</td>
               <td>{solicitud.nombre}</td>
               <td>{solicitud.nombre_materia}</td>
               <td>{solicitud.numero_estudiantes}</td>
@@ -91,7 +91,7 @@ const ListaSolicitudesUr = () => {
                 <button className="btn btn-eliminar">Rechazar</button>
               </td>
             </tr>
-          ))}
+        ))}
         </tbody>
       </table>
 

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class solicitudes_docentes extends Model
+class Solicitudes_docentes extends Model
 {
     protected $table = 'solicitudes_docentes';
 
@@ -13,6 +13,4 @@ class solicitudes_docentes extends Model
         'id_docente',
         'id_solicitud',
     ];
-    
-
 }

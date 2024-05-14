@@ -4,8 +4,11 @@ import { FaPlus, FaFileCsv, FaTrash } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom'; 
 import Ico1 from "../../assets/IcoGood.png";
 import Ico2 from "../../assets/IcoState.png";
+import { useNavigate } from "react-router-dom";
 
 const ListaMaterias = () => {
+  const navigate = useNavigate(); 
+
   const [materias, setMaterias] = useState([]);
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -13,6 +16,7 @@ const ListaMaterias = () => {
   const [advertenciaEliminar, setAdvertenciaEliminar] = useState(false);
   const [idMateria, setIdMateria] = useState(null);
   const sortedMaterias = materias.sort((a, b) => a.id_materia - b.id_materia);
+  const [buscar, setBuscar] = useState("");
 
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/materias')
@@ -83,10 +87,32 @@ const ListaMaterias = () => {
           })
           .catch(error => console.error('Error al obtener las Materias:', error));
         console.log('Importación exitosa');
+        navigate("/Admin//Mensaje/CargaMasiva");
+
     } catch (error) {
+      navigate("/Admin/Mensaje/ErrorCargaMasiva");
+
         console.error('Error al importar:', error);
         setLoading(false);
     }
+  }
+  const buscardor = (e) => {
+    setBuscar(e.target.value);
+    console.log(e.target.value);
+  }
+  let resultado = [];
+  if(!buscar){
+    resultado = sortedMaterias;
+  }else{
+    resultado = sortedMaterias.filter((materia) =>
+      materia.id_materia.toString().toLowerCase().includes(buscar.toLowerCase())||
+    materia.codigo_materia.toString().toLowerCase().includes(buscar.toLowerCase())||
+    materia.nombre_materia.toString().toLowerCase().includes(buscar.toLowerCase())||
+    materia.grupo.toString().toLowerCase().includes(buscar.toLowerCase())||
+    materia.nombre_carrera.toString().toLowerCase().includes(buscar.toLowerCase())||
+    materia.nombre_completo_docente.toString().toLowerCase().includes(buscar.toLowerCase())    
+    );
+    
   }
   
   return (
@@ -95,7 +121,7 @@ const ListaMaterias = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ margin: 0 }}>Materias Registradas:</h2>
         <div>
-          <input type="text" placeholder="Buscar" />
+        <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador' />
           <button className="butn butn-filtro">Filtros</button>
           <NavLink to="/Admin/Registro/Materias" className="butn butn-nuevo">
             Nueva Materia<FaPlus className="icon" />
@@ -128,7 +154,7 @@ const ListaMaterias = () => {
           </tr>
         </thead>
         <tbody>
-          {sortedMaterias.map((materia) => (
+          {resultado.map((materia) => (
               <tr key={materia.id_materia} className="fila-lista">
               <td>{materia.id_materia}</td>
               <td>{materia.codigo_materia}</td>

@@ -76,8 +76,6 @@ const RegistrarDiaHoras = () => {
           "18:45-20:15",
           "20:15-21:45"
         ];
-      
-
         const firstFiveHours = allPossibleHours.slice(0, 5);
         const secondFiveHours = allPossibleHours.slice(5);
       
@@ -203,11 +201,11 @@ const RegistrarDiaHoras = () => {
               {showHours()}
             </div>
           </div>
-        </div>
-        <div className="square3 mx-auto d-flex justify-content-center align-items-center">
-          <NavLink className="btn btn-primary custom-btn" to={exitoso ? "/Admin/Mensaje/ActualizacionExitosa" : "/Admin/Mensaje/ErrorActualizacion" } onClick={handleActualizarAmbiente}>Actualizar Ambiente</NavLink>
-
-        </div>
+          <div className="square3 mx-auto d-flex justify-content-center align-items-center">
+            <NavLink className="btn btn-primary custom-btn  " to='/Admin/Listas/ListaAmbientes' activeclassname="active">Cancelar</NavLink>        
+            <NavLink className="btn btn-primary custom-btn" to={exitoso ? "/Admin/Mensaje/ActualizacionExitosa" : "/Admin/Mensaje/ErrorActualizacion" } onClick={handleActualizarAmbiente}>Actualizar Ambiente</NavLink>
+          </div>
+        </div> 
       </div>
     );
 }
