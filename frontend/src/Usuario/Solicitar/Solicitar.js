@@ -31,7 +31,7 @@ const Solicitar = () => {
         })
         .then(data => {
           setHorariosDisponibles(data);
-          console.log(horariosDisponibles);
+          console.log(data);
         })
         .catch(error => {
           console.error('Error al cargar las horas disponibles:', error);

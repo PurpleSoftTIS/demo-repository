@@ -265,13 +265,13 @@ return (
           </tr>
         </thead>
         <tbody>
-          {Array.isArray(resultado) && resultado.map((solicitud, index) => (
-            <tr key={index}
+        {resultado.map((solicitud) => (
+            <tr key={solicitud.id_solicitud}
               className="fila-lista"
               onClick={() => mostrarFormularioParaSolicitud(solicitud)}
             >
-              <td>{index + 1}</td>
-              <td>{`${solicitud.nombre} ${solicitud.apellido_paterno} ${solicitud.apellido_materno}`}</td>
+              <td>{solicitud.id_solicitud}</td>
+              <td>{solicitud.nombre}</td>
               <td>{solicitud.nombre_materia}</td>
               <td>{solicitud.motivo}</td>
               <td>{solicitud.fecha_solicitud}</td>
