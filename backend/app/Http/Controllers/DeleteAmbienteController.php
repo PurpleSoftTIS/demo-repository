@@ -33,24 +33,7 @@ class DeleteAmbienteController extends Controller
     public function borrarAmbiente ($id_ambiente){
 
         $ambiente =Ambiente::find($id_ambiente); 
-        $diasHabiles = Diashabiles::where('id_ambiente', $id_ambiente)->get();
-        foreach ($diasHabiles as $diaHabil) {
-            $nombreDia = Dia::find($diaHabil->id_dia)->nombre;
-            $horarios = Horario::where('id_dia', $diaHabil->id_dia)->get();
-        foreach ($horarios as $horario) {
-             $id_hora = $horario->id_hora;
-             $horario->where('id_hora', $id_hora)->delete();
-             Hora::where('id_hora', $id_hora)->delete();
-           }
-           $id_dia=$diaHabil->id_dia;
-           $diaHabil->where('id_dia',$id_dia)->delete();
-           Dia::where('id_dia', $id_dia)->delete();
-           
-     
-        }
-    
-        Ambiente::where('id_ambiente',$id_ambiente)->delete();
-    
-    
+        Diashabiles::where('id_ambiente', $ambiente)->delete();        
+        Ambiente::where('id_ambiente',$id_ambiente)->delete();    
     }
 }

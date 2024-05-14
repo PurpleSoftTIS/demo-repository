@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 const Solicitar1 = () => {
     const navigate = useNavigate();
-    const [date, setDatos] = useState([]); 
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
     const { state: datosSend } = useLocation();
     const capacidad = datosSend.numeroEstudiantes;
     const diaSeleccionado = datosSend.diaSeleccionado;
@@ -13,32 +14,47 @@ const Solicitar1 = () => {
     const hora_inicio = datosSend.horaInicio;
     const correo = datosSend.correo;
     console.log("solicitar 1",correo);
+
     useEffect(() => {
         if (capacidad) {
             fetch(`http://127.0.0.1:8000/api/ambientesDispo/${capacidad}/${diaSeleccionado}/${hora_inicio}/${hora_fin}`)
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('Error al cargar ambientes  disponibles');
+                        throw new Error('Error al cargar ambientes disponibles');
                     }
                     return response.json();
                 })
                 .then(data => {
-                    setDatos(data);
+                    setData(data);
+                    setLoading(false);
                 })
                 .catch(error => {
                     console.error('Error al cargar los ambientes disponibles:', error);
+                    setLoading(false);
                 });
-            }       
-        }, [capacidad, diaSeleccionado, hora_inicio, hora_fin]);  
+        }
+    }, [capacidad, diaSeleccionado, hora_inicio, hora_fin]);
+
     const handleReservar = (aulaSeleccionada) => {
         console.log("datos send",datosSend);
         const datosConAula = { ...datosSend, aulaSeleccionada };
         navigate('/Usuario/Usu/DetallesSol', { state: datosConAula  });
     };
+
+    useEffect(() => {
+        if (!loading && !data.length) {
+            navigate("Usuario/Mensaje/NoEncontrado", { replace: true }); 
+                }
+    }, [data, loading, navigate]);
+
+    if (loading) {
+        return <div>Cargando...</div>;
+    }
+
     return (
         <div className="container" style={{ minHeight: '78.7vh' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <h2 style={{ margin: 0 }}>Ambientes Disponibles:</h2>                
+                <h2 style={{ margin: 0 }}>Ambientes Disponibles:</h2>
             </div>
             <div style={{ display: 'flex', justifyContent: 'Right', alignItems: 'center', marginTop: '15px' }}>
             </div>
@@ -53,14 +69,14 @@ const Solicitar1 = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {date.map((dato) => (
+                    {data.map((dato) => (
                         <tr key={dato.id_ambiente} className="fila-lista">
                             <td>{dato.nombre_ambiente}</td>
                             <td>{dato.edificio}</td>
                             <td>{dato.capacidad}</td>
-                            <td>{dato.numero_piso}</td>             
+                            <td>{dato.numero_piso}</td>
                             <td>
-                                <button className="btn btn-editar mr-2" onClick={() => handleReservar(dato)}>Reservar</button>               
+                                <button className="btn btn-editar mr-2" onClick={() => handleReservar(dato)}>Reservar</button>
                             </td>
                         </tr>
                     ))}
@@ -69,5 +85,6 @@ const Solicitar1 = () => {
         </div>
     );
 }
+
 export default Solicitar1;
-  
+

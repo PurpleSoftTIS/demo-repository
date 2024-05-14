@@ -216,8 +216,7 @@ const ListaSolicitudes = () => {
         solicitud.hora_fin.toString().toLowerCase().includes(buscar.toLowerCase())    
     );
     
-  }
- 
+  } 
 
 return (
     <div className="container" style={{ minHeight: '78.7vh' }}>

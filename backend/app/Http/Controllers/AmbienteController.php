@@ -50,22 +50,8 @@ class AmbienteController extends Controller
             $diashabiles=new Diashabiles();
             $diashabiles ->id_dia=$iddia;
             $diashabiles ->id_ambiente =$idambiente ;
-            $diashabiles -> save(); 
-            foreach($horas as $horario) {
-                $hora =new Hora();
-                $hor = explode('-', $horario);
-                $horaInicio = trim($hor[0]);
-                $horaFin = trim($hor[1]);
-                $hora ->hora_inicio=$horaInicio;
-                $hora ->hora_fin =$horaFin;
-                $hora-> save();
-                $horarios=new Horario;
-                $idhora = $hora->id_hora; 
-                $horarios -> id_hora = $idhora;
-                $horarios -> id_dia =  $iddia;
-                $horarios -> save ();
-            }
-        }
+            $diashabiles -> save();            
+        }        
     return response()->json(['message' => 'Ubicación y ambiente guardados correctamente']);
     } catch (\Exception $e) {
         \Log::error('Error al intentar guardar la ubicación y el ambiente: ' . $e->getMessage());        
@@ -227,30 +213,6 @@ public function actualizarAmb (Request $request, $id_ambiente){
 }
 
 }
-public function borrarAmbiente ($id_ambiente){
-
-
-    $ambiente =Ambiente::find($id_ambiente); 
-    $diasHabiles = Diashabiles::where('id:ambiente', $id_ambiente)->get();
-    foreach ($diasHabiles as $diaHabil) {
-        $nombreDia = Dia::find($diaHabil->id_dia)->nombre;
-        $horarios = Horario::where('id_dia', $diaHabil->id_dia)->get();
-    foreach ($horarios as $horario) {
-         $id_hora = $horario->id_hora;
-         $horario->where('id_hora', $id_hora)->delete();
-         Hora::where('id_hora', $id_hora)->delete();
-       }
-       $id_dia=$diaHabil->id_dia;
-       $diaHabil->where('id_dia',$id_dia)->delete();
-       Dia::where('id_dia', $id_dia)->delete();
-       
- 
-    }
-
-    Ambiente::where('id_ambiente',$id_ambiente)->delete();
-
-
-}
 public function CargaMasiva(Request $request){
  
     $datos = $request->all();
@@ -284,34 +246,27 @@ public function CargaMasivaDias(Request $request)
         // Buscar el ambiente por su nombre
         $ambiente = Ambiente::where('nombre_ambiente', $nombreAmbiente)->first();
 
-        // Verificar si el ambiente existe
         if ($ambiente) {
             // Obtener el ID del ambiente
             $idambiente = $ambiente->id_ambiente;
+            
+            $diaNombre=$dato[1];
+            $dia_id = Dia::where('nombre', $diaNombre->id_dia)->get();
 
-            // Crear un nuevo día
-            $dia = new Dia();
-            $dia->nombre = $dato[1];
-            $dia->save();
-            $iddia = $dia->id_dia;
-
-            // Asociar el día al ambiente como día hábil
             $diashabiles = new Diashabiles();
-            $diashabiles->id_dia = $iddia;
+            $diashabiles->id_dia = $dia_id;
             $diashabiles->id_ambiente = $idambiente;
             $diashabiles->save();
 
-            // Crear un nuevo horario
             $hora = new Hora();
             $hora->hora_inicio = $dato[2];
             $hora->hora_fin = $dato[3];
             $hora->save();
             $idhora = $hora->id_hora;
 
-            // Asociar el horario al día
             $horarios = new Horario;
             $horarios->id_hora = $idhora;
-            $horarios->id_dia = $iddia;
+            $horarios->id_dia = $dia_id;
             $horarios->save();
         } else {
             // Ambiente no encontrado, registrar un error
