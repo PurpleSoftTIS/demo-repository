@@ -7,14 +7,13 @@ import { UserContext } from '../Context/UserContext';
 
 import './Navbar.css';
 
-
 const NarbarUsuario = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [showSesion, setShowSesion] = useState(false);
   const [showDropdown2, setShowDropdown2] = useState(false);
   const dropdownRef2 = useRef(null);
-  const { setUserC, setEmailC ,userC } = useContext(UserContext);
+  const { setUserC, setEmailC, setUrole,  userC } = useContext(UserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,8 +31,10 @@ const NarbarUsuario = () => {
   const handleLogout = () => {
     sessionStorage.removeItem('user');
     sessionStorage.removeItem('email');
+    sessionStorage.removeItem('role');
     setUserC(null);
     setEmailC(null);
+    setUrole(null);
     navigate("/");
   };
 
@@ -43,9 +44,7 @@ const NarbarUsuario = () => {
   const toggleDropdown2 = () => {
     setShowDropdown2(!showDropdown2);
   };
-  const handleSolicitar = () => {
-    navigate('/Usuario/Usu/Solicitar');
-  };
+
   return (
     <div className='barraNavAdmi'>
       <nav className="navbar navbar-expand-lg">
@@ -63,12 +62,15 @@ const NarbarUsuario = () => {
           </button>
           <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarNav">
             <ul className="navbar-nav mx-auto">
+            <li className="nav-item">
+              <NavLink className="nav-link" to='/Usuario/Inicio/HomeDos'>Inicio</NavLink> 
+            </li>
               <div className="dropdown-container" ref={dropdownRef2}>
                   <button className="nav-link dropdown-toggle" onClick={toggleDropdown2} style={{ cursor: 'pointer' }}>Solicitar</button>
                   {showDropdown2 && (
                       <div className="menu">
-                              <button className="opciones" onClick={handleSolicitar}>Individual</button>
-                              <NavLink className="opciones" to='/Usuario/Usu/SolicitarCon1' activeclassname="active">Conjunta</NavLink>
+                          <NavLink className="opciones" to='/Usuario/Usu/Solicitar' activeclassname="active">Indivudual</NavLink>
+                          <NavLink className="opciones" to='/Usuario/Usu/SolicitarCon1' activeclassname="active">Conjunta</NavLink>
                       </div>              
                   )}              
               </div>             

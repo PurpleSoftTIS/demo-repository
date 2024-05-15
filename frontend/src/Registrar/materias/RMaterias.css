@@ -172,10 +172,10 @@
     animation: 1s ease 0s 1 normal forwards slide-in-top;
   }
   .contact-14 {
-    width: 100%;
+    min-width: 100%;
+    min-height: 78.4vh;
     position: relative;
     background-color: #fff;
-    height: 863px;
     align-items: center;
     justify-content: center;
     padding: 48px 80px;
@@ -263,5 +263,33 @@
       box-sizing: border-box;
     }
   }
+  .backon-button {
+    position:absolute;
+    top: 20px;
+    background-color: #050259; /* Color de fondo similar al botón de registrar */
+    color: #F2f2f2; /* Color de texto similar al botón de registrar */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    z-index: 9999;
+}
+
+@media (min-width: 451px) {
+  .backon-button {
+      right: 35px;
+       /* Ajusta el valor para pantallas normales */
+  }.backon-button::before {
+    content: "Atrás"; 
+  }
+}
+
+/* Estilos para pantalla de celular */
+@media (max-width: 450px) {
+  .backon-button {
+      right: 25px;
+  }.backon-button::before {
+    content: "<"; 
+  }
+}
   
   

@@ -1,19 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import './Navbar.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import logo from '../assets/LogoDefinitivo.jpeg';
 import userLogo from '../assets/IcoAdmi.png';
 import { FaBars } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { UserContext } from '../Context/UserContext';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showDropdown2, setShowDropdown2] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-
+  const navigate = useNavigate();
   const dropdownRef2 = useRef(null);
   const dropdownRef = useRef(null);
-
+  const { setUrole } = useContext(UserContext);
   const [showSesion, setShwoSesion] = useState(false);
   const sesionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(true);
@@ -68,6 +69,12 @@ const Navbar = () => {
 
   };
   
+  const handleLogout = () => {
+    sessionStorage.removeItem('role'); // Eliminar el item 'role' del sessionStorage
+    setUrole(null);
+    navigate("/");
+  };
+
   return (
     <div className='barraNavAdmi'>
       <nav className="navbar navbar-expand-lg">
@@ -88,7 +95,7 @@ const Navbar = () => {
               <button className='Rol'onClick={toggleSesion}>
                 {showSesion && (
                       <div className="sesion">
-                          <NavLink className="opciones" to='/' activeclassname="active">Cerrar sesion</NavLink>                          
+                          <button className="opciones" onClick={handleLogout}>Cerrar sesión</button>                          
                       </div>
                   )}
               </button>
@@ -131,7 +138,7 @@ const Navbar = () => {
               <button className='Rol'onClick={toggleSesion}>Administrador
                 {showSesion && (
                       <div className="sesion">
-                          <NavLink className="opciones" to='/' activeclassname="active">Cerrar sesion</NavLink>                          
+                          <button className="opciones" onClick={handleLogout}>Cerrar sesión</button>
                       </div>
                   )}
               </button>

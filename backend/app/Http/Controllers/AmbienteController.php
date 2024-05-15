@@ -52,13 +52,30 @@ class AmbienteController extends Controller
             $diashabiles ->id_ambiente =$idambiente ;
             $diashabiles -> save(); 
             foreach($horas as $horario) {
-                $hora =new Hora();
                 $hor = explode('-', $horario);
                 $horaInicio = trim($hor[0]);
                 $horaFin = trim($hor[1]);
-                $hora ->hora_inicio=$horaInicio;
-                $hora ->hora_fin =$horaFin;
-                $hora-> save();
+                $hora = Hora::where('hora_inicio', $horaInicio)
+                            ->where('hora_fin', $horaFin)
+                            ->first();
+
+                if (!$hora) {
+                    
+                    $hora = new Hora();
+                    $hora->hora_inicio = $horaInicio;
+                    $hora->hora_fin = $horaFin;
+                    $hora->save();
+                    $id_hora = $hora->id_hora;           
+
+                }
+               else {
+
+                 $id_hora=$hora->id_hora;
+
+
+
+               }
+              
                 $horarios=new Horario;
                 $idhora = $hora->id_hora; 
                 $horarios -> id_hora = $idhora;
@@ -127,26 +144,21 @@ public function ambientesDi($capacidad)
         $edificio = Ubicacion::where('id_ubicacion', $ambiente->id_ubicacion)->value('edificio');
 
         $diasHabiles = Diashabiles::where('id_ambiente', $ambiente->id_ambiente)->get();
-        info('Días hábiles obtenidos para el ambiente ' . $ambiente->id_ambiente . ':');
 
         foreach ($diasHabiles as $diaHabil) {
             $nombreDia = Dia::find($diaHabil->id_dia)->nombre;
-            info('Días hábiles obtenidos para ' . $nombreDia. ':');
 
             $horas = [];
 
             $horarios = Horario::where('id_dia', $diaHabil->id_dia)->get();
-            info('Días hábiles obtenidos para el ambiente ' .$horarios . ':');
 
             foreach ($horarios as $horario) {
                 
                 // Obtener las horas de inicio y fin para este horario
                 $horaInicio = Hora::find($horario->id_hora)->hora_inicio;
-                info('Días hábiles obtenidos para el ambiente ' .$horaInicio . ':');
                 $horaInicioSinCeros = substr($horaInicio, 0, -3); // Obtiene los primeros cinco caracteres (HH:mm) de la cadena
 
                 $horaFin = Hora::find($horario->id_hora)->hora_fin;
-                info('Días hábiles obtenidos para el ambiente ' .$horaFin . ':');
                 $horaFinSinCeros = substr($horaFin, 0, -3); // Obtiene los primeros cinco caracteres (HH:mm) de la cadena
 
                 $horas[] = "$horaInicioSinCeros-$horaFinSinCeros";
@@ -176,7 +188,6 @@ public function ambientesDi($capacidad)
 
 
 public function actualizarAmb (Request $request, $id_ambiente){
-    info('Datos recibidos:', $request->all());
    $ambiente =Ambiente::find($id_ambiente); 
    $ambiente ->capacidad= $request ->input ('capacidadEstudiantes');
    $ambiente ->tipo_ambiente= $request -> input ('Tipo');
@@ -327,7 +338,7 @@ public function MateriasObtener($Correo)
     $usuario = Usuario::where('correo_electronico', $correo_docente)->first();
 
     if ($usuario) {
-        // Obtener el ID del usuario
+        
         $idUsuario = $usuario->id_usuario;
 
         // Buscar el docente asociado al usuario
@@ -340,7 +351,7 @@ public function MateriasObtener($Correo)
 
             // Obtener las materias asociadas al docente
             $materiasDelDocente = DB::table('materia')
-                ->select('materia.id_materia', 'materia.nombre_materia','materia.grupo')
+                ->select('materia.*')
                 ->join('materia_docente', 'materia.id_materia', '=', 'materia_docente.id_materia')
                 ->where('materia_docente.id_docente', $idDocente)
                 ->get();

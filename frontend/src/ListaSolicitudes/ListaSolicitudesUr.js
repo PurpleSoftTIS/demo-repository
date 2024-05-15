@@ -16,7 +16,8 @@ const ListaSolicitudesUr = () => {
         setSolicitudes(data);
         console.log(data);
       })
-      .catch((error) => console.error('Error al obtener los datos:', error));
+      .catch((error) => console.error('Error al obtener los datos:', error)); 
+
   }, []);
 
   return (
@@ -48,10 +49,10 @@ const ListaSolicitudesUr = () => {
           </tr>
         </thead>
         <tbody>
-        {Array.isArray(solicitudes) && solicitudes.map((solicitud, index) => (
-           <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{solicitud.apellido_paterno}</td>
+        {solicitudes.map((solicitud) => (
+           <tr key={solicitud.id_solicitud}>
+              <td>{solicitud.id_solicitud}</td>
+              <td>{solicitud.nombre}</td>
               <td>{solicitud.nombre_materia}</td>
               <td>{solicitud.motivo}</td>
               <td>{solicitud.fecha_solicitud}</td>
@@ -61,7 +62,7 @@ const ListaSolicitudesUr = () => {
                 <button className="btn btn-danger">Rechazar</button>
               </td>
             </tr>
-          ))}
+        ))}
         </tbody>
       </table>
     </div>

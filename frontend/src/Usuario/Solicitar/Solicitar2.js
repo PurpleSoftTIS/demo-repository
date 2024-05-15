@@ -18,7 +18,7 @@ const Solicitar3 = () => {
   const { state: datosRecibidos } = useLocation();
   const correo = emailC;
   console.log("es el email",correo);
-  const aula =datosRecibidos.aulaSeleccionada.id_ambiente;
+  const aula =datosRecibidos.aulaSeleccionada;
   const horaFin=datosRecibidos.horaFin;
   const horaInicio=datosRecibidos.horaInicio;
   const numeroEstudiantes=datosRecibidos.numeroEstudiantes;

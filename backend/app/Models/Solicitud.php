@@ -11,11 +11,12 @@ class Solicitud extends Model
     protected $table = 'solicitud';
     protected $primaryKey = 'id_solicitud';
     protected $fillable = [
-        "id_docente",
         "id_hora",
         "numero_estudiantes",
         "fecha_solicitud",
         "motivo",
+        "tipo_solicitud",
         "estado_solicitud"
+       
     ];
 }

@@ -122,9 +122,22 @@ class DocenteController extends Controller
         
     }
     
-      
-    
-    
+    public function restablecerPasswd(Request $request)
+    {
+        try {
+            $usuario = Usuario::findOrFail($request->id);
 
+            // Encriptar la nueva contraseña
+            $nuevaPass = $this->encriptar($request->nuevopwd);
 
+            $usuario->contraseña = $nuevaPass;
+            $usuario->save();
+
+            return response()->json(['message' => 'Contraseña restablecida correctamente'], 200);
+        } catch (\Exception $e) {
+            \Log::error('Error al intentar restablecer la contraseña: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al restablecer la contraseña'], 500);
+        }
+    } 
+    
 }

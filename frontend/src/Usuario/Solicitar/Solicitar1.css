@@ -7,7 +7,13 @@
     height: 74vh;
     margin-top: 20px;
   }
-  
+  .sugerencias
+ {
+  margin-top: 20px;
+
+
+
+  }
   .contenedorsito {
     width: 80%;
     max-width: 600px; /* Ajusta este valor según tus necesidades */

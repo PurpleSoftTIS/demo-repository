@@ -355,3 +355,56 @@ body {
     justify-content: center;
   }
 }
+
+.button2,.button1{
+  color: white;
+  border: none;
+  background-color: #050259;
+
+}
+.button2,.button1:hover{
+  border: 1px solid #010a26;
+  box-sizing: border-box;
+}
+.button1{
+  position: relative;
+  top: -15px;
+  text-decoration: none;
+
+}
+.button2{
+  position: relative;
+  top: -80px;
+  color: white;
+  text-decoration: none;
+
+}
+.backone-button {
+  position:absolute;
+  top: 20px;
+  background-color: #050259; /* Color de fondo similar al botón de registrar */
+  color: #F2f2f2; /* Color de texto similar al botón de registrar */
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  z-index: 9999;
+  text-transform: none;
+  font-size: 15px; 
+}
+@media (min-width: 451px) {
+  .backone-button {
+      right: 35px;
+       /* Ajusta el valor para pantallas normales */
+  }.backone-button::before {
+    content: "Atrás"; 
+  }
+}
+
+/* Estilos para pantalla de celular */
+@media (max-width: 450px) {
+  .backone-button {
+      right: 25px;
+  }.backone-button::before {
+    content: "<"; 
+  }
+}

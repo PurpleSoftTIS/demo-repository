@@ -1,11 +1,14 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-
+use Illuminate\Http\Request;
 use DB;
-class SolicitudUrgencia extends Controller{
-    public function urgencias(){
+
+class RerservasUsuario extends Controller
+{
+    public function reservasDocentes($correo){
         try{
             $datosSolicitudes = DB::table('solicitud')
                 ->join('solicitudes','solicitudes.id_solicitud','=', 'solicitud.id_solicitud')
@@ -14,9 +17,9 @@ class SolicitudUrgencia extends Controller{
                 ->join('ubicacion', 'ubicacion.id_ubicacion', '=', 'ambiente.id_ubicacion')
                 ->join('solicitudes_docentes', 'solicitudes_docentes.id_solicitud', '=', 'solicitud.id_solicitud')
                 ->join('docente', 'docente.id_docente', '=', 'solicitudes_docentes.id_docente')
+                ->join('materia_docente', 'materia_docente.id_docente', '=', 'docente.id_docente')
+                ->join('materia', 'materia.id_materia', '=', 'materia_docente.id_materia')
                 ->join('usuario', 'usuario.id_usuario', '=', 'docente.id_usuario')
-                ->join('solicitudes_materias', 'solicitudes_materias.id_solicitud', '=', 'solicitud.id_solicitud')
-                ->join('materia', 'materia.id_materia', '=', 'solicitudes_materias.id_materia')
                 ->select(
                     'hora.*',
                     'ambiente.*',
@@ -24,15 +27,13 @@ class SolicitudUrgencia extends Controller{
                     'solicitud.*', 
                     'materia.*'
                 )
-                ->selectRaw('CONCAT(usuario.nombre, " ", usuario.apellido_paterno, " ", usuario.apellido_materno) as nombre')
+                ->where('usuario.correo_electronico', $correo)
                 ->get();
-            
             return response()->json($datosSolicitudes, 200);
     
         }catch (\Exception $e) {
             \Log::error('Error al intentar obtener una solicitud: ' . $e->getMessage());
             return response()->json(['error' => 'Error al obtener la solicitud'], 500);
         }
-    }
-
+}
 }

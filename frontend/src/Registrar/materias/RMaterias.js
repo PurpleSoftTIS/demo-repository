@@ -216,6 +216,7 @@ const RegistrarMateria = () => {
       <div className="line2" />
       <form onSubmit={handleSubmit}>
       <div className="billing-info2" data-animate-on-scroll>
+        <button className="backon-button" type="button" onClick={() => navigate(-1)}></button>
         <div className="checkout-frame">
           <div className="checkout4">Registro de Materia</div>
         </div>
@@ -324,6 +325,7 @@ const RegistrarMateria = () => {
             <h2>Agregar carrera</h2>
             <input type="text" value={nuevaCarreraNombre} onChange={(e) => setNuevaCarreraNombre(e.target.value)} />
             <button onClick={handleAddCarrera}>Agregar</button>
+            
           </div>
         </div>
       )}

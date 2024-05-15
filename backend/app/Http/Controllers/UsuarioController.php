@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Restablecer;
+
 class UsuarioController extends Controller
 {
     public function index()
@@ -33,11 +34,13 @@ class UsuarioController extends Controller
             return response()->json(['error' => 'Error al obtener el nombre del usuario'], 500);
         }
     }
-    public function restablecerContrasenia(Request $request)
+    public function restablecerContrasenia()
     {
+        $data = [
+            'title' => 'Correo para restablecer su contraseña en el sistema SIRA-FCYT'
+        ];        
         try {
-            Mail::to("gabo2cabero@gmail.com")->send(new Restablecer());
-            return "Correo enviado exitosamente";
+            Mail::to("gabo2cabero@gmail.com")->send(new Restablecer($data));
         } catch (\Exception $e) {
             \Log::error('Error al enviar el correo electrónico de restablecimiento: ' . $e->getMessage());
             return "Error al enviar el correo electrónico de restablecimiento";

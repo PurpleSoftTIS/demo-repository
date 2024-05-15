@@ -52,7 +52,6 @@ IMPORTANTE
 Servidor de prueba para ejecutar el bakcned:
 php -S 127.0.0.1:8000 -t public
 
-
 Como crear un controlador:
 php artisan make:controller_nombre
 
@@ -74,5 +73,7 @@ php artisan cache:clear
 php artisan optimize
 
 Para dejar de depender de los paquetes de composer
-
 composer install --ignore-platform-reqs
+
+Como volver a un estado anterior del commit 
+git checkout 641d5f45897e7c26883b54591aaf8c95dfaa8bef   

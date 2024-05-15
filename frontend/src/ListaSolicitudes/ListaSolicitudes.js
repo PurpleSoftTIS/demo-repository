@@ -8,12 +8,18 @@ const ListaSolicitudes = () => {
   const [solicitudes, setSolicitudes] = useState([]);
   const [solicitudesTodas, setSolicitudesTodas] = useState([]);
   const [solicitudesPendientes, setSolicitudesPendientes] = useState([]);
-
+  const [buscar, setBuscar] = useState("");
+  const [mostrarFormularioCon, setMostrarFormularioCon] = useState(false);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [mostrarSolicitudesTodass, setMostrarSolicitudesTodas] = useState(false);
   const [show, setShow] = useState(false);
   const [motivo, setMotivo] = useState('');
-  const [fecha, setFecha] = useState('')
+  const [selectedOption, setSelectedOption] = useState(""); 
+  const handleSelectChange = (e) => {
+    setSelectedOption(e.target.value);
+  };
+  const [docente, setDocente] = useState("");
+  const [aulas, setAulas] = useState(""); 
   const [formularioData, setFormData] = useState({
     Docente: "",
     Materia: "",
@@ -88,6 +94,7 @@ const ListaSolicitudes = () => {
         })
         .catch(error => console.error('Error al obtener los datos:', error));
   }, []);
+
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/obtenerTodasSolicitudes', {
       method: 'GET',
@@ -108,18 +115,41 @@ const ListaSolicitudes = () => {
   const [mostrarOpciones, setMostrarOpciones] = useState(false); // Estado para controlar la aparición de los botones "Todas" y "Pendientes"
 
   const mostrarFormularioParaSolicitud = (solicitud) => {
-      setFormData({
-        docente: solicitud.nombre,
-        materia: solicitud.nombre_materia,
-        grupo: solicitud.grupo,
-        aula: solicitud.nombre_ambiente,
-        capacidad: solicitud.numero_estudiantes,
-        tipo_de_solicitud: solicitud.tipo_solicitud,
-        fecha: solicitud.fecha_solicitud,
-        hora: solicitud.hora_inicio,
-        motivo: solicitud.motivo
-      });
-      setMostrarFormulario(true);
+      if(solicitud.tipo_solicitud ==="individual"){
+        setFormData({
+          docente: solicitud.nombre,
+          materia: solicitud.nombre_materia,
+          grupo: solicitud.grupo,
+          aula: solicitud.nombre_ambiente,
+          capacidad: solicitud.numero_estudiantes,
+          tipo_de_solicitud: solicitud.tipo_solicitud,
+          fecha: solicitud.fecha_solicitud,
+          hora: solicitud.hora_inicio,
+          motivo: solicitud.motivo
+        });
+        setMostrarFormulario(true);
+        setMostrarFormularioCon(false);
+
+      }else{
+        setFormData({
+          docente: solicitud.nombre,
+          materia: solicitud.nombre_materia,
+          grupo: solicitud.grupo,
+          aula: solicitud.nombre_ambiente,
+          capacidad: solicitud.numero_estudiantes,
+          tipo_de_solicitud: solicitud.tipo_solicitud,
+          fecha: solicitud.fecha_solicitud,
+          hora: solicitud.hora_inicio,
+          motivo: solicitud.motivo
+        });
+        setMostrarFormulario(true);
+        setMostrarFormularioCon(false);
+
+        setDocente(solicitud.nombre); 
+        setAulas(solicitud.nombre_ambiente); 
+      
+      }
+      
   };
 
   const cerrarFormulario = () => {
@@ -146,16 +176,12 @@ const ListaSolicitudes = () => {
     setSolicitudes(solicitudesFiltradas); // Actualizar el estado de solicitudes
     handleClose();
   };
-  
-  
- 
   const mostrarSolicitudesPendientes = () => {
       setMostrarSolicitudesTodas(false);
     
   
     setSolicitudes(solicitudesPendientes);
-  };
-  
+  };  
   const mostrarSolicitudesTodas = () => {
     setMostrarSolicitudesTodas(true); 
 
@@ -165,10 +191,7 @@ const ListaSolicitudes = () => {
     });
 
     setSolicitudes(solicitudesMostrables);
-};
-
-
-
+  };
   const handleChange = (e) => {
       const { name, value } = e.target;
       setFormData(prevState => ({
@@ -176,6 +199,25 @@ const ListaSolicitudes = () => {
         [name]: value
       }));
   };
+  const buscardor = (e) => {
+    setBuscar(e.target.value);
+    console.log(e.target.value);
+  }
+  let resultado = [];
+  if(!buscar){
+    resultado = solicitudes;
+  }else{
+      resultado = solicitudes.filter((solicitud) =>
+        solicitud.nombre.toString().toLowerCase().includes(buscar.toLowerCase())||
+        solicitud.nombre_materia.toString().toLowerCase().includes(buscar.toLowerCase())||
+        solicitud.motivo.toString().toLowerCase().includes(buscar.toLowerCase())||
+        solicitud.fecha_solicitud.toString().toLowerCase().includes(buscar.toLowerCase())||
+        solicitud.hora_inicio.toString().toLowerCase().includes(buscar.toLowerCase())||
+        solicitud.hora_fin.toString().toLowerCase().includes(buscar.toLowerCase())    
+    );
+    
+  }
+ 
 
 return (
     <div className="container" style={{ minHeight: '78.7vh' }}>
@@ -189,23 +231,26 @@ return (
       >
         <h2 style={{ margin: 0 }}>Solicitudes:</h2>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <input type="text" placeholder="Buscar Reserva" style={{ marginRight: '10px' }} />
+
+        <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador'/>
+
           <button className="butn butn-filtro" onClick={() => setMostrarOpciones(!mostrarOpciones)}>Solicitudes</button>
-          {mostrarOpciones && (
+            {mostrarOpciones && (
             <div className="opciones-solicitudes">
               <button className="butn butn-filtro" onClick={() => { setMostrarOpciones(false);
-              mostrarSolicitudesTodas();
-              }}>Todas</button>
+                mostrarSolicitudesTodas();
+                }}>Todas
+              </button>
             <button className="butn butn-filtro" onClick={() => {
-    setMostrarOpciones(false);
-   mostrarSolicitudesPendientes();
-  }}>Pendientes</button>
+              setMostrarOpciones(false);
+              mostrarSolicitudesPendientes();
+              }}>Pendientes</button>
 
             </div>
           )}
- <button className="butn butn-filtro" onClick={handleShow}>Filtros</button>
-        </div>
-      </div>
+    <button className="butn butn-filtro" onClick={handleShow}>Filtros</button>
+                </div>
+              </div>
 
       <table className="table table-hover">
         <thead className="thead">
@@ -221,13 +266,13 @@ return (
           </tr>
         </thead>
         <tbody>
-          {Array.isArray(solicitudes) && solicitudes.map((solicitud, index) => (
-            <tr key={index}
+        {resultado.map((solicitud) => (
+            <tr key={solicitud.id_solicitud}
               className="fila-lista"
               onClick={() => mostrarFormularioParaSolicitud(solicitud)}
             >
-              <td>{index + 1}</td>
-              <td>{`${solicitud.nombre} ${solicitud.apellido_paterno} ${solicitud.apellido_materno}`}</td>
+              <td>{solicitud.id_solicitud}</td>
+              <td>{solicitud.nombre}</td>
               <td>{solicitud.nombre_materia}</td>
               <td>{solicitud.motivo}</td>
               <td>{solicitud.fecha_solicitud}</td>
@@ -299,6 +344,77 @@ return (
             </div>
           </div>
         </div>
+      )}
+        
+      {mostrarFormularioCon && (
+         <div className="overlay" onClick={cerrarFormulario}>
+         <div className="formulario-emergente" onClick={(e) => e.stopPropagation()}>
+           <div className="contact-form-container">
+             <section className="contenedor">
+               <div className="contact-form-sub-heading-cta">
+                 <b className="contact-form-enter-details">Detalles de Solicitud</b>
+                 <div className="contact-form-phone-parent">
+                   <div className="contact-form-phone">Docentes que reservaron:</div>
+                      <select id="concat-form-rectangle" value={selectedOption} onChange={handleSelectChange} className="select" >
+                        {docente.map((docente, index) => (
+                          <option key={index} value={docente.id} >
+                          {docente.nombre}
+                          </option>
+                        ))}
+                    </select>
+                 </div>
+                 <div className="contact-form-phone-parent">
+                   <div className="contact-form-phone">Materia</div>
+                   <label className="contact-form-rectangle" type="text"/>
+                 </div>
+                 
+                 <div className="input-group">
+                   <div className="input2">
+                     <div className="label-here">Aula</div>
+                     <select id="menu" value={selectedOption} onChange={handleSelectChange} className="select" >
+                        {aulas.map((aula, index) => (
+                          <option key={index} value={aula.id} >
+                            {aula.nombre}
+                          </option>
+                        ))}
+                      </select>
+                   </div>
+                   <div className="input2">
+                     <div className="label-here">Grupo</div>
+                     <label className="contact-form-rectangle" type="text"  />
+                   
+                   </div>
+                   <div className="input2">
+                     <div className="label-here">Capacidad</div>
+                       <label className="contact-form-rectangle" type="text" />
+                   </div>  
+                 </div>
+                 <div className="contact-form-phone-parent">
+                   <div className="contact-form-phone">Tipo de Solicitud</div>
+                   <label className="contact-form-rectangle" type="text"/>
+                 </div>
+                 <div className="input-group">
+                   <div className="input2">
+                     <div className="label-here">Fecha</div>
+                     <label className="contact-form-rectangle"  type="text"/>
+         
+                   </div>
+                   <div className="input2">
+                     <div className="label-here">Hora</div>
+                     <label className="contact-form-rectangle"  type="text"  />
+                   
+                   </div>
+                 </div>
+                 <div className="contact-form-phone-parent">
+                   <div className="contact-form-phone">Motivo</div>
+                   <label className="contact-form-rectangle" type="text"  />
+                 </div>
+                 
+               </div>
+             </section>
+           </div>
+         </div>
+       </div>
       )}
     </div>
 );

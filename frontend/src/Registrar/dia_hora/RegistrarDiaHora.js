@@ -181,16 +181,17 @@ const RegistrarDiaHora = () => {
                   <button className={`day-btn ${selectedDay === "Miércoles" && "selected"}`} onClick={() => handleDayClick("Miércoles")}>Miércoles</button>
                   <button className={`day-btn ${selectedDay === "Jueves" && "selected"}`} onClick={() => handleDayClick("Jueves")}>Jueves</button>
                   <button className={`day-btn ${selectedDay === "Viernes" && "selected"}`} onClick={() => handleDayClick("Viernes")}>Viernes</button>
-               
+                  <button className={`day-btn ${selectedDay === "Sabado" && "selected"}`} onClick={() => handleDayClick("Sabado")}>Sabado</button>
                 </div>
               </div>
               {showHours()}
             </div>
           </div>
-        </div>
-        <div className="square3 mx-auto d-flex justify-content-center align-items-center">
-            <NavLink className="btn btn-primary custom-btn" to={exitoso ? "/Admin/Mensaje/RegistroExitoso" : "/Admin/Mensaje/RegistroError" } onClick={handleRegistrarAmbiente}>Registrar Ambiente</NavLink>
-        </div>
+          <div className="square3 mx-auto d-flex justify-content-center align-items-center">
+            <NavLink className="btn btn-primary custom-btn  " to='/Admin/Listas/ListaAmbientes' activeclassname="active">Cancelar</NavLink>        
+            <NavLink className="btn btn-primary custom-btn " to={exitoso ? "/Admin/Mensaje/RegistroExitoso" : "/Admin/Mensaje/RegistroError" } onClick={handleRegistrarAmbiente}>Registrar Ambiente</NavLink>
+          </div>
+        </div> 
       </div>
     );
 }
