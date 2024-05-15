@@ -17,7 +17,7 @@ class CreateSolicitudTable extends Migration
             $table->id("id_solicitud");
             $table->foreignId("id_hora")->constrained("hora", "id_hora");
             $table->integer("numero_estudiantes");
-            $table->dateTime("fecha_solicitud");
+            $table->date("fecha_solicitud");
             $table->string("motivo");
             $table->string("tipo_solicitud");
             $table->string("estado_solicitud", 8);

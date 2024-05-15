@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./Docentes.css";
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Docentes = () => {
-  var exitoso = true;
   const [nombres, setNombres] = useState("");
   const [apellidoPaterno, setApellidoPaterno] = useState("");
   const [apellidoMaterno, setApellidoMaterno] = useState("");
@@ -18,8 +17,10 @@ const Docentes = () => {
   const [errorInconpleto, setErrorIncompleto] = useState("");
   const [errorCodigo, setErrorCodigo] = useState("");
   const [errorCorreo, setErrorCorreo] = useState("");
+  const navigate = useNavigate();
 
   const handleRegistroDocente = (e) => {
+    
     e.preventDefault();
     // Obtener los valores de los campos del formulario
     const nombres = document.querySelector(".input11").value.trim();
@@ -138,12 +139,12 @@ const Docentes = () => {
         setCorreo("");
         setCodigoDocente("");
 
-          exitoso= true;
+          navigate("/Admin/Mensaje/RegistroExitoso");
         // Aquí puedes mostrar un mensaje de éxito o redirigir a otra página
       })
       .catch(error => {
         console.error("Error al registrar el ambiente:", error);
-        exitoso = false;
+        navigate("/Admin/Mensaje/RegistroError")
         // Aquí puedes mostrar un mensaje de error al usuario
       });
 
@@ -194,6 +195,7 @@ const Docentes = () => {
      
       <div className="line" />
       <form className="billing-info" data-animate-on-scroll>
+      <button className="backon-button" type="button" onClick={() => navigate(-1)}></button>
         <div className="checkout-wrapper">
           <div className="checkout">Registro de Docentes</div>
         </div>
@@ -256,8 +258,8 @@ const Docentes = () => {
         {errorInconpleto && <p className="error">{errorInconpleto}</p>}
       </form>
       <div className="checkout1" data-animate-on-scroll>
-        <button className="button" onClick={handleRegistroDocente}>
-        <NavLink className="button-cta" to={exitoso ? "/Admin/Mensaje/RegistroExitoso" : "/Admin/Mensaje/RegistroError"}>Registrar Docente</NavLink>
+        <button className="button22" onClick={handleRegistroDocente}>
+        <div className="button-cta">Registrar Docente</div>
         </button>
       </div>
     </div>

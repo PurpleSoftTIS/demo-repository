@@ -123,17 +123,18 @@ input[type="text"] {
   transform: translateY(-2px);
 }
 
-.Advertencia{
-background: #050259;
-color: rgb(255, 255, 255);
-position: relative;
-align-items: center;
-padding: 15px;
-width:450px;
-top: -200;
-left: 450px;
-z-index: 9999;
-border-radius: 5px 5px 5px 5px ; 
+.Advertencia {
+  background: #050259;
+  color: rgb(255, 255, 255);
+  position: fixed; 
+  align-items: center;
+  padding: 15px;
+  width: 450px;
+  top: 50%; 
+  left: 50%; 
+  z-index: 9999;
+  border-radius: 5px;
+  transform: translate(-50%, -50%);
 }
 
 .overlay {
@@ -174,17 +175,19 @@ margin-left: 140px;
 width: 400px;
 }
 .til2{
-margin-left: 60px;
+margin-left: 40px;
 width: 350px;
+text-align: center;
 }
 .importaciones{
-position: fixed;
+position: relative;
 align-content: center;
+
 margin-top: -30px; 
 width: 200px;
 height: 100px;
-right: 600px;
-top: 220px;  
+left: -200px;
+top: 10px;  
 }
 .btnIm {
 position: relative;
@@ -201,9 +204,4 @@ border-radius: 5px;
 background-color: #1f8036;
 border-color: #1f8036;
 transform: translateY(-2px);
-}
-.Advertencia{
-  position: relative;
-  top: 40%;
-  left: 40%;
 }

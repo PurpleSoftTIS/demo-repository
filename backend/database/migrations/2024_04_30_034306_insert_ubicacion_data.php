@@ -28,8 +28,7 @@ class InsertUbicacionData extends Migration
             ['edificio' => 'Edificio Laboratorios Basicos'],
             ['edificio' => 'Edificio Academico 2'],
             ['edificio' => 'Edficio MEMI'],
-            ['edificio' => 'Aulas INFLAB']
-            
+            ['edificio' => 'Aulas INFLAB']           
             
         ];
 

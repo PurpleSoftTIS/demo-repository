@@ -10,9 +10,8 @@ class Horario extends Model
     use HasFactory;
     
   protected $table = 'horario';
- 
-  public $timestamps = false;
-  public $incrementing = false;
+  protected $primaryKey = 'id_horario';
+
   protected $fillable = [
     "id_dia",
     "id_hora"       

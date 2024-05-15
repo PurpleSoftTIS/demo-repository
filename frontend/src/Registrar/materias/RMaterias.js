@@ -1,6 +1,6 @@
 import React, { useEffect, useState  } from 'react'
 import "./RMaterias.css";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const RegistrarMateria = () => {
   const [docentes, setDocentes] = useState([]);
@@ -10,6 +10,7 @@ const RegistrarMateria = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [carreras, setCarreras] = useState([]);
   const { id } = useParams();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nombre_materia: '',
     codigo_materia: '',
@@ -82,11 +83,14 @@ const RegistrarMateria = () => {
           grupo: '',
           id_carrera: '',
         });
+        navigate("/Admin/Mensaje/RegistroExitoso");
       } else {
         console.error(`Error al ${id ? 'actualizar' : 'registrar'} materia`);
+        navigate("/Admin/Mensaje/RegistroError");
       }
     } catch (error) {
       console.error(`Error al ${id ? 'actualizar' : 'registrar'} materia:`, error);
+      navigate("/Admin/Mensaje/RegistroError");
     } finally {
       setIsSubmitting(false);
     }
@@ -212,6 +216,7 @@ const RegistrarMateria = () => {
       <div className="line2" />
       <form onSubmit={handleSubmit}>
       <div className="billing-info2" data-animate-on-scroll>
+        <button className="backon-button" type="button" onClick={() => navigate(-1)}></button>
         <div className="checkout-frame">
           <div className="checkout4">Registro de Materia</div>
         </div>
@@ -320,6 +325,7 @@ const RegistrarMateria = () => {
             <h2>Agregar carrera</h2>
             <input type="text" value={nuevaCarreraNombre} onChange={(e) => setNuevaCarreraNombre(e.target.value)} />
             <button onClick={handleAddCarrera}>Agregar</button>
+            
           </div>
         </div>
       )}

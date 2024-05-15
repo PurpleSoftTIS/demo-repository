@@ -4,10 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Materia;
-use App\Models\MateriaDocente;
-use App\Models\Docente;
-use App\Models\Usuario;
-use App\Models\Carrera;
 use App\Imports\MateriaImport;
 use Maatwebsite\Excel\Facades\Excel;
 use DB;
@@ -86,6 +82,7 @@ class MateriaController extends Controller
 
             // Eliminar todas las filas de la tabla materias
             Materia::truncate();
+            DB::statement('ALTER TABLE materia AUTO_INCREMENT = 1');
 
             // Volver a activar restricciones de clave externa
             DB::statement('SET FOREIGN_KEY_CHECKS=1');
@@ -107,5 +104,21 @@ class MateriaController extends Controller
             \Log::error('Error al importar: ' . $e->getMessage());
             return response()->json(['error' => 'Error al importar'], 500);
         }
+    }
+
+    public function docentesPorMateria($nombre_materia, $correo_usuario)
+    {
+        $docentesPorMateria = Materia::select(
+                'usuario.id_usuario',
+                DB::raw("CONCAT(usuario.nombre, '  ', usuario.apellido_paterno, '  ', usuario.apellido_materno) AS nombre_completo_docente")
+            )
+            ->join('materia_docente', 'materia.id_materia', '=', 'materia_docente.id_materia')
+            ->join('docente', 'materia_docente.id_docente', '=', 'docente.id_docente')
+            ->join('usuario', 'docente.id_usuario', '=', 'usuario.id_usuario')
+            ->where('materia.nombre_materia', $nombre_materia)
+            ->where('usuario.correo_electronico', '!=', $correo_usuario) // Excluir al usuario que realiza la solicitud
+            ->get();
+
+        return response()->json($docentesPorMateria, 200);
     }
 }

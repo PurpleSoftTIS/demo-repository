@@ -13,13 +13,12 @@ function ListaAulas() {
   const [aulas, setAulas] = useState([]);
   const [importar, setImportar] = useState(false);
   const [ambienteToDelete, setAmibienteToDelete] = useState("");
-
-
+  const [buscar, setBuscar] = useState("");
   const navigate = useNavigate();
   const importaciones = () => {
-    setImportar(true);     
-  };
-  
+      setImportar(!importar);
+      
+  };  
   const cancelarBorrar = () => {
     setAdvertencia(false); 
   };
@@ -33,8 +32,6 @@ function ListaAulas() {
   const cancelar = () => {
     setAdvertencia2(false); 
   };
-  
- 
   const borrarTodos = () => {
     fetch(`http://127.0.0.1:8000/api/borrarTodo`, {
       method: 'DELETE',
@@ -95,8 +92,12 @@ function ListaAulas() {
   
           if (response.ok) {
             console.log('Datos enviados al servidor exitosamente.');
+            navigate("/Admin/Mensaje/CargaMasiva");
           } else {
+            navigate("/Admin/Mensaje/ErrorCargaMasiva");
+
             throw new Error('Error al enviar datos al servidor.');
+
           }
         } catch (error) {
           console.error('Error:', error);
@@ -129,8 +130,12 @@ function ListaAulas() {
   
           if (response.ok) {
             console.log('Datos enviados al servidor exitosamente.');
+            navigate("/Admin/Mensaje/CargaMasiva");
+
           } else {
+            navigate("/Admin/Mensaje/ErrorCargaMasiva");
             throw new Error('Error al enviar datos al servidor.');
+
           }
         } catch (error) {
           console.error('Error:', error);
@@ -187,14 +192,33 @@ function ListaAulas() {
     return idAmniente;
 
   };
-  
+  const buscardor = (e) => {
+    setBuscar(e.target.value);
+    console.log(e.target.value);
+  }
+  let resultado = [];
+  if(!buscar){
+    resultado = aulas;
+  }else{
+    resultado = aulas.filter((aula) =>
+      aula.id_ambiente.toString().toLowerCase().includes(buscar.toLowerCase())||
+      aula.nombre_ambiente.toString().toLowerCase().includes(buscar.toLowerCase())||
+      aula.edificio.toString().toLowerCase().includes(buscar.toLowerCase())||
+      aula.tipo_ambiente.toString().toLowerCase().includes(buscar.toLowerCase())||
+      aula.numero_piso.toString().toLowerCase().includes(buscar.toLowerCase())||
+      aula.capacidad.toString().toLowerCase().includes(buscar.toLowerCase())    
+    );
+    
+  }
   return (
     <div className="container" style={{ minHeight: '78.7vh' }}>
       <div style={{ height: '4vh' }}></div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ margin: 0 }}>Ambientes Registrados:</h2>
         <div>
-          <input type="text" placeholder="Buscar" />
+
+          <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador' />
+          
           <button className="butn butn-filtro">Filtros</button>
           <NavLink to="/Admin/Registro/Ambientes" className="butn butn-nuevo">
               Nuevo Ambiente<FaPlus className="icon" />
@@ -229,7 +253,6 @@ function ListaAulas() {
                   style={{ display: 'none' }}
                   onChange={handleArchivoDiasHorasSeleccionado} // Asociado a la importación de días y horas
                 />
-
               </div>
             )}
         
@@ -252,7 +275,7 @@ function ListaAulas() {
           </tr>
         </thead>
         <tbody>
-          {aulas.map((aula) => (
+          {resultado.map((aula) => (
             <tr key={aula.id_ambiente} className="fila-lista">
               <td>{aula.id_ambiente}</td>
               <td>{aula.nombre_ambiente}</td>
@@ -271,7 +294,6 @@ function ListaAulas() {
                 <button className="btn btn-editar mr-2" onClick={() => handleEditar(aula.id_ambiente)}>
                   Editar
                 </button>
-
                 <button className="btn btn-eliminar" onClick={() => {borrar(aula.id_ambiente); }}>
                   Eliminar
                 </button>

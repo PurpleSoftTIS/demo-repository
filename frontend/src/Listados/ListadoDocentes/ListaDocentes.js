@@ -14,6 +14,7 @@ const ListaDocentes = () => {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [showDeleteDocente, setShowDeleteDocente] = useState(false);
   const [docenteToDelete, setDocenteToDelete] = useState([]);
+  const [buscar, setBuscar] = useState("");
 
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/docentes', {
@@ -91,7 +92,7 @@ const ListaDocentes = () => {
   const cancelarBorrarTodo = () => {
     setShowDeleteConfirmation(false);
   }; 
-  const handleArchivoSeleccionado = (event) => {
+  const cargaMasiva = (event) => {
     const files = event.target.files;
     if (files.length) {
       const file = files[0];
@@ -113,7 +114,11 @@ const ListaDocentes = () => {
         .then(response => {
           if (response.ok) {
             console.log('Datos enviados al servidor exitosamente.');
+            navigate("/Admin/Mensaje/CargaMasiva");
+
           } else {
+            navigate("/Admin/Mensaje/ErrorCargaMasiva");
+
             throw new Error('Error al enviar datos al servidor.');
           }
         })
@@ -138,6 +143,27 @@ const ListaDocentes = () => {
     };
     navigate('/Admin/Registro/DocentesActualizar', { state: datos });
   };
+
+  const buscardor = (e) => {
+    setBuscar(e.target.value);
+    console.log(e.target.value);
+  }
+  let resultado = [];
+  if(!buscar){
+    resultado = docentes;
+  }else{
+    resultado = docentes.filter((docente) =>
+      docente.id_docente.toString().toLowerCase().includes(buscar.toLowerCase())||
+      docente.nombre.toString().toLowerCase().includes(buscar.toLowerCase())||
+    docente.apellido_paterno.toString().toLowerCase().includes(buscar.toLowerCase())||
+    docente.apellido_materno.toString().toLowerCase().includes(buscar.toLowerCase())||
+    docente.codigo_docente.toString().toLowerCase().includes(buscar.toLowerCase())||
+    docente.correo_electronico.toString().toLowerCase().includes(buscar.toLowerCase())||
+    docente.tipo_docente.toString().toLowerCase().includes(buscar.toLowerCase())    
+    
+    );
+    
+  }
   return (
     
     <div className="container" style={{ minHeight: '78.7vh' }}>
@@ -145,7 +171,7 @@ const ListaDocentes = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ margin: 0 }}>Docentes Registrados:</h2>
         <div>
-          <input type="text" placeholder="Buscar" className="input-text" />
+        <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador' />
           <button className="butn butn-filtro">Filtros</button>
           <NavLink to="/Admin/Registro/Docentes" className="butn butn-nuevo">
             Nuevo Docente<FaPlus className="icon" />
@@ -162,7 +188,7 @@ const ListaDocentes = () => {
                 type="file"
                 accept=".csv"
                 style={{ display: 'none' }}
-                onChange={handleArchivoSeleccionado} // Asociado a la importación de ambientes
+                onChange={cargaMasiva} // Asociado a la importación de ambientes
           />          
           <button className="butn butn-borrar" onClick={borrarTodo}>
             Borrar Todo<FaTrash className="icon"/>
@@ -184,8 +210,8 @@ const ListaDocentes = () => {
           </tr>
         </thead>
         <tbody>
-          {docentes.map(docente => (
-            <tr key={docente.id} className="fila-lista">
+          {resultado.map(docente => (
+            <tr key={docente.id_docente} className="fila-lista">
               <td>{docente.id_docente}</td>
               <td>{docente.nombre}</td>
               <td>{docente.apellido_paterno}</td>
