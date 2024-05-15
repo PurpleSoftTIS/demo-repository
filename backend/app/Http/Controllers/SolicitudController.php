@@ -78,8 +78,6 @@ class SolicitudController extends Controller
             $solicitud->numero_estudiantes=$numero_estudiantes;
             $fecha = Carbon::createFromFormat('d/m/Y', $datosReserva['fecha'])->format('Y-m-d');
             $solicitud->fecha_solicitud = $fecha;
-           
-           
             $motivo=$datosReserva['motivo'];
             $solicitud->motivo=$motivo;
             $estado_solicitud='espera';
@@ -136,11 +134,11 @@ class SolicitudController extends Controller
             $numero_estudiantes=$datosReserva['numeroEstudiantes'];
             $solicitud->numero_estudiantes=$numero_estudiantes;
             $fecha = $datosReserva['fecha'];
-            // Convertir la fecha al formato adecuado (año-mes-día)
-            $fechaFormateada = date('Y-m-d', strtotime($fecha));
+            
+          //  $fechaFormateada = date('Y-m-d', strtotime($fecha));
         
-            // Asignar la fecha formateada al objeto de solicitud
-            $solicitud->fecha_solicitud = $fechaFormateada;
+            
+            $solicitud->fecha_solicitud = $fecha;
             $motivo=$datosReserva['motivo'];
             $solicitud->motivo=$motivo;
             $estado_solicitud='espera';
@@ -241,7 +239,7 @@ class SolicitudController extends Controller
             ->join('horario', 'diashabiles.id_dia', '=', 'horario.id_dia')
             ->join('hora', 'horario.id_hora', '=', 'hora.id_hora')
             ->join('ubicacion', 'ambiente.id_ubicacion', '=', 'ubicacion.id_ubicacion')
-            ->select('ambiente.*', 'ubicacion.edificio as nombre_edificio', 'ambiente.numero_piso') // Cambio aquí
+            ->select('ambiente.*', 'ubicacion.edificio as nombre_edificio', 'ambiente.numero_piso')
             ->where('dia.nombre', $dia)
             ->where('hora.hora_inicio', '<=', $hora_inicio)
             ->where('hora.hora_fin', '>=', $hora_fin)
@@ -255,19 +253,29 @@ class SolicitudController extends Controller
         $combinacionesValidas = [];
         foreach ($aulasPorEdificioYPiso as $edificio => $aulasEnEdificio) {
             foreach ($aulasEnEdificio as $numero_piso => $aulasEnPiso) {
-                $totalAulas = count($aulasEnPiso);
-                for ($i = 0; $i < $totalAulas - 1; $i++) {
-                    for ($j = $i + 1; $j < $totalAulas; $j++) {
-                        $capacidadTotal = $aulasEnPiso[$i]->capacidad + $aulasEnPiso[$j]->capacidad;
-                        if ($capacidadTotal >= $capacidad) {
-                            $combinacionesValidas[] = [$aulasEnPiso[$i], $aulasEnPiso[$j]];
-                        }
-                    }
-                }
+                $combinacionesValidas = array_merge($combinacionesValidas, $this->generarCombinaciones($aulasEnPiso, $capacidad));
             }
         }
     
         return response()->json($combinacionesValidas, 200);
     }
-
+    
+    private function generarCombinaciones($aulas, $capacidad) {
+        $combinacionesValidas = [];
+        $totalAulas = count($aulas);
+        for ($i = 0; $i < $totalAulas - 1; $i++) {
+            $capacidadTotal = $aulas[$i]->capacidad;
+            $combinacion = [$aulas[$i]];
+            for ($j = $i + 1; $j < $totalAulas; $j++) {
+                $capacidadTotal += $aulas[$j]->capacidad;
+                $combinacion[] = $aulas[$j];
+                if ($capacidadTotal >= $capacidad) {
+                    $combinacionesValidas[] = $combinacion;
+                    break; 
+                }
+            }
+        }
+        return $combinacionesValidas;
+    }
+    
 }

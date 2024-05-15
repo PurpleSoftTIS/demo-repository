@@ -66,8 +66,8 @@ const RegistrarDiaHora = () => {
       <div className="col">
         <ul className="list-unstyled">
           <li className="form-check">
-                        <input className="form-check-input" type="checkbox" id="6:15-8:15" checked={selectedHours[selectedDay]['6:15-8:15']} onChange={handleHourChange} />
-                        <label className="form-check-label" htmlFor="6:15-8:15">6:45-8:15</label>
+                        <input className="form-check-input" type="checkbox" id="6:45-8:15" checked={selectedHours[selectedDay]['6:45-8:15']} onChange={handleHourChange} />
+                        <label className="form-check-label" htmlFor="6:45-8:15">6:45-8:15</label>
                       </li>
                       <li className="form-check">
                         <input className="form-check-input" type="checkbox" id="8:15-9:45" checked={selectedHours[selectedDay]['8:15-9:45']} onChange={handleHourChange} />

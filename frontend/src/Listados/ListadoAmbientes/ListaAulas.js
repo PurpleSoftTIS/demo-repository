@@ -293,7 +293,7 @@ function ListaAulas() {
                   Editar
                 </button>
 
-                <button className="btn btn-eliminar" onClick={() => {borrar(aula.id_ambiente); }}>
+                <button className="btn btn-eliminar" onClick={() => borrar(aula.id_ambiente)}>
                   Eliminar
                 </button>
               </td>
@@ -323,7 +323,8 @@ function ListaAulas() {
              <p className="til2">¿Estás seguro de eliminar este docente?</p>
            </div>
            <div className="botones">
-             <button className="conf" onClick={borrarAmbiente(obtenerId)}>Sí</button>
+           <button className="conf" onClick={() => borrarAmbiente(ambienteToDelete)}>Sí</button>
+
              <button className="ref" onClick={cancelar}>No</button>
            </div>
          </div>

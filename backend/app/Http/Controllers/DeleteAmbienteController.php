@@ -24,9 +24,7 @@ class DeleteAmbienteController extends Controller
             Ambiente::truncate();
             Ubicacion::truncate();
            
-            DB::statement('ALTER TABLE dia AUTO_INCREMENT = 1');
-            DB::statement('ALTER TABLE ambiente AUTO_INCREMENT = 1');
-            DB::statement('ALTER TABLE ubicacion AUTO_INCREMENT = 1');           
+                     
             return response()->json(['message' => 'Todos los datos han sido eliminados correctamente'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Hubo un error al intentar borrar los datos'], 500);

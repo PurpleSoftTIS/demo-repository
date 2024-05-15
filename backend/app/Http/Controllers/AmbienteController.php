@@ -213,6 +213,7 @@ public function actualizarAmb (Request $request, $id_ambiente){
   $idambiente  =$request ->input ('id') ;
 
   foreach ($diasHoras as $day=> $horas) {
+    
     $dia= new Dia();
     $dia->nombre = $day ;
     $dia -> save();
@@ -226,11 +227,27 @@ public function actualizarAmb (Request $request, $id_ambiente){
         $hor = explode('-', $horario);
         $horaInicio = trim($hor[0]);
         $horaFin = trim($hor[1]);
-        $hora ->hora_inicio=$horaInicio;
-        $hora ->hora_fin =$horaFin;
-        $hora-> save();
+        $hora = Hora::where('hora_inicio', $horaInicio)
+                            ->where('hora_fin', $horaFin)
+                            ->first();
+        if (!$hora) {
+                    
+            $hora = new Hora();
+            $hora->hora_inicio = $horaInicio;
+            $hora->hora_fin = $horaFin;
+            $hora->save();
+            $idhora = $hora->id_hora;           
+
+        }
+       else {
+
+         $idhora=$hora->id_hora;
+
+
+
+       }
         $horarios=new Horario;
-        $idhora = $hora->id_hora; 
+        
         $horarios -> id_hora = $idhora;
         $horarios -> id_dia =  $iddia;
         $horarios -> save ();
@@ -292,34 +309,45 @@ public function CargaMasivaDias(Request $request)
     foreach ($datos as $dato) {
         $nombreAmbiente = $dato[0];
 
-        // Buscar el ambiente por su nombre
         $ambiente = Ambiente::where('nombre_ambiente', $nombreAmbiente)->first();
 
-        // Verificar si el ambiente existe
+       
         if ($ambiente) {
-            // Obtener el ID del ambiente
+            
             $idambiente = $ambiente->id_ambiente;
-
-            // Crear un nuevo día
             $dia = new Dia();
             $dia->nombre = $dato[1];
             $dia->save();
             $iddia = $dia->id_dia;
 
-            // Asociar el día al ambiente como día hábil
+           
             $diashabiles = new Diashabiles();
             $diashabiles->id_dia = $iddia;
             $diashabiles->id_ambiente = $idambiente;
             $diashabiles->save();
+            $horaInicio = $dato[2];
+            $horaFin = $dato[3];
+            $hora = Hora::where('hora_inicio', $horaInicio)
+                            ->where('hora_fin', $horaFin)
+                            ->first();
 
-            // Crear un nuevo horario
-            $hora = new Hora();
-            $hora->hora_inicio = $dato[2];
-            $hora->hora_fin = $dato[3];
-            $hora->save();
-            $idhora = $hora->id_hora;
+                if (!$hora) {
+                    
+                    $hora = new Hora();
+                    $hora->hora_inicio = $horaInicio;
+                    $hora->hora_fin = $horaFin;
+                    $hora->save();
+                    $idhora = $hora->id_hora;           
+              }
+               else {
+                 $idhora=$hora->id_hora;
+ }
 
-            // Asociar el horario al día
+            
+           
+           
+
+            
             $horarios = new Horario;
             $horarios->id_hora = $idhora;
             $horarios->id_dia = $iddia;
@@ -341,12 +369,10 @@ public function MateriasObtener($Correo)
         
         $idUsuario = $usuario->id_usuario;
 
-        // Buscar el docente asociado al usuario
         $docente = Docente::where('id_usuario', $idUsuario)->first();
 
-        // Verificar si se encontró un docente
         if ($docente) {
-            // Obtener el ID del docente
+            //  el ID del docente
             $idDocente = $docente->id_docente;
 
             // Obtener las materias asociadas al docente

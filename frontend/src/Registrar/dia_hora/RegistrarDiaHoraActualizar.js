@@ -65,7 +65,7 @@ const RegistrarDiaHoras = () => {
       
       if (selectedDay) {
         const allPossibleHours = [
-          "06:15-08:15",
+          "06:45-08:15",
           "08:15-09:45",
           "09:45-11:15",
           "11:15-12:45",
