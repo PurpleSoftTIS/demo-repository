@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import FotoInicio from '../assets/FotoInicio.JPG';
 import logo_fcyt from '../assets/logo_fcyt.png';
 import './HomeUno.css';

@@ -36,11 +36,13 @@ import MensajeDatError from './Registrar/mensajes/MensajeDatError';
 import SolicitarCon1 from './Usuario/SolicitudesConjuntas/SolicitarCon1';
 import SolicitarCon2 from './Usuario/SolicitudesConjuntas/SolicitarCon2';
 import SolicitarCon3 from './Usuario/SolicitudesConjuntas/SolicitarCon3';
+import PasswordResetForm from './Login/PasswordResetForm';
+import MensajeNoEncontrado from './Usuario/MensajesUsuario/MensajeNoEncontrado';
 export {
   React,Router,Routes,Route,HomeUno,Ambientes,Docentes,Navbar,RegistrarMateria,
   LoginForm,RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Reservar, Solicitar,
   Ayuda, ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,AmbientesActualizar,
   Footer,ListaMaterias,Solicitar3,Solicitar1,MensajeExitosoU,MensajeErrorU,MensajeActExito,MensajeActError
   ,DocentesActualizar,MensajeDatExito,MensajeDatError,SolicitarCon1,SolicitarCon2,SolicitarCon3,
-  ListaSolicitudesUr,Navigate
+  ListaSolicitudesUr,Navigate,PasswordResetForm,MensajeNoEncontrado
 };

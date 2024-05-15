@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./Docentes.css"
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
 const DocentesActualizar = () => {
-  var exitoso = true;
 
   const { state: datos } = useLocation();
   const id_docente = datos ? datos.id_docente:null;
@@ -22,6 +21,7 @@ const DocentesActualizar = () => {
   const [errorInconpleto, setErrorIncompleto] = useState("");
   const [errorCodigo, setErrorCodigo] = useState("");
   const [errorCorreo, setErrorCorreo] = useState("");
+  const navigate = useNavigate();
 
   const handleActualizacionDocente = (e) => {
     e.preventDefault();
@@ -127,14 +127,15 @@ const DocentesActualizar = () => {
         .then(response => {
           if (response.ok) {
             console.log('Datos actualizados correctamente');
-            // Aquí puedes manejar cualquier acción después de una actualización exitosa
+            navigate("/Admin/Mensaje/ActualizacionExitosa");
           } else {
             console.error('Error al actualizar los datos del docente');
-            // Aquí puedes manejar el caso en que la actualización falla
+            navigate("/Admin/Mensaje/ErrorActualizacion")
           }
         })
         .catch(error => {
           console.error('Error al enviar la solicitud PUT:', error);
+          navigate("/Admin/Mensaje/ErrorActualizacion")
           // Aquí puedes manejar cualquier error que ocurra al enviar la solicitud
         });
   };
@@ -183,6 +184,7 @@ const DocentesActualizar = () => {
     <div className="contact-6" style={{ height: '94.4vh' }}>
       <div className="line" />
         <form className="billing-info" data-animate-on-scroll>
+        <button className="backon-button" type="button" onClick={() => navigate(-1)}></button>
           <div className="checkout-wrapper">
             <div className="checkout">Registro de Docentes</div>
           </div>
@@ -246,7 +248,7 @@ const DocentesActualizar = () => {
         </form>
         <div className="checkout1" data-animate-on-scroll>
           <button className="button" onClick={handleActualizacionDocente}>
-          <NavLink className="button-cta" to={exitoso ? "/Admin/Mensaje/ActualizacionExitosa" : "/Admin/Mensaje/ErrorActualizacion"}>Actualizar Docente</NavLink>
+          <div className="button-cta">Actualizar Docente</div>
           </button>
         </div>
       </div>

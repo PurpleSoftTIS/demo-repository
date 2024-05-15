@@ -5,7 +5,7 @@ import { React, Router, Routes, Route, Navigate, HomeUno, Ambientes, Docentes, N
         ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,ListaSolicitudesUr,
         AmbientesActualizar,Footer,ListaMaterias,Solicitar3,Solicitar1,MensajeExitosoU,
         MensajeErrorU,MensajeActExito,MensajeActError,DocentesActualizar,MensajeDatExito,MensajeDatError
-      ,SolicitarCon1,SolicitarCon2,SolicitarCon3} from './importaciones';
+      ,SolicitarCon1,SolicitarCon2,SolicitarCon3,PasswordResetForm,MensajeNoEncontrado} from './importaciones';
        
 function PrivateAdminRoute({ element }) {
   const { urole } = useContext(UserContext);
@@ -23,6 +23,12 @@ function PrivateGestRoute({ element }) {
   const { urole } = useContext(UserContext);
   console.log (urole);
   return urole === 'gest' ? element : <Navigate to="/" replace/>;
+}
+
+function PrivateRestRoute({ element }) {
+  const { urole } = useContext(UserContext);
+  console.log (urole);
+  return urole === 'rest' ? element : <Navigate to="/" replace/>;
 }
 
 function AdminRoutes() {
@@ -49,7 +55,8 @@ function AdminRoutes() {
       <Route path='/Mensaje/ActualizacionExitosa' element={<MensajeActExito/>}/>
       <Route path='/Mensaje/ErrorActualizacion' element={<MensajeActError/>}/>
       <Route path='/Mensaje/CargaMasiva' element={<MensajeDatExito/>}/> 
-      <Route path='/Mensaje/ErrorCargaMasiva' element={<MensajeDatError/>}/> 
+      <Route path='Mensaje/ErrorCargaMasiva' element={<MensajeDatError/>}/> 
+
     </Routes>
     <Footer/>
   </div>
@@ -72,6 +79,8 @@ function UserRoutes() {
       <Route path='/Usu/SolicitarCon1' element={<SolicitarCon1/>} />
       <Route path='/Usu/SolicitarCon2' element={<SolicitarCon2/>} />
       <Route path='/Usu/SolicitarCon3' element={<SolicitarCon3/>} />
+      <Route path='/Mensaje/NoEncontrado' element={<MensajeNoEncontrado/>} />
+
     </Routes>
     <Footer/>
   </div>        
@@ -82,7 +91,17 @@ function GestRoutes() {
   return (
     <div>
       <Routes>
-        <Route path='/Ayuda' element={<h1>Ayuda</h1>} />
+        <Route path='/Ayuda' element={<h1>Ayuda</h1>}/>
+      </Routes>
+    </div>
+  );
+}
+
+function RestRoutes() {
+  return (
+    <div>
+      <Routes>
+        <Route path='/password' element={<PasswordResetForm />} />
       </Routes>
     </div>
   );
@@ -107,6 +126,7 @@ function getHomeElement(urole) {
         </div>
       );
     case 'gest':
+    case 'rest':
       return <LoginForm />;
     default:
       return <Navigate to="/" replace />;
@@ -124,7 +144,8 @@ function App() {
           <Route path='/' element={getHomeElement(urole)} />
           <Route path="/Admin/*" element={<PrivateAdminRoute element={<AdminRoutes />} />} />
           <Route path="/Usuario/*" element={<PrivateUserRoute element={<UserRoutes />} />} />
-          <Route path='/Gest/*' element={<PrivateGestRoute element={<GestRoutes />} />} />     
+          <Route path='/Gest/*' element={<PrivateGestRoute element={<GestRoutes />} />} />
+          <Route path='/Rest/*' element={<PrivateRestRoute element={<RestRoutes />} />} />     
         </Routes>
       )}
     </Router>

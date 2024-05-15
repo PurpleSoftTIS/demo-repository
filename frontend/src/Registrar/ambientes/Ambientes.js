@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 
 import "./Ambientes.css";
@@ -149,9 +148,10 @@ const Ambientes = () => {
   }, []);
  
   return (
-    <div className="contact-4" style={{ height: '76.1vh' }}>
+    <div className="contact-4" style={{ minHeight: '76.1vh' }}>
       <form className="billing-info1" data-animate-on-scroll>
         <div className="checkout-container">
+        <button className="backone-button" type="button" onClick={() => navigate(-1)}></button>
           <h3 className="checkout2">Registro de Ambientes</h3>
         </div>
         <div className="frame-div">
@@ -193,21 +193,14 @@ const Ambientes = () => {
             <input className="input-ta" placeholder="Aula comun, Laboratorio" type="text" value={Tipo}
                 onChange={(e) => setTiPo(e.target.value)}/>
             {errorTipoAmbiente && <p className="error">{errorTipoAmbiente}</p>}
-
             {errorInconpleto && <p className="error">{errorInconpleto}</p>}
-
           </div>
         </div>
       </form>
-      <div className="line1" />
       <div className="checkout3" data-animate-on-scroll>
-      
-        <button className="button1" onClick={handleRegistroAmbiente}>
-          <div>Siguiente Paso</div>
+        <button className="button22" onClick={handleRegistroAmbiente}>
+          <div className="button-cta22">Siguiente Paso</div>
         </button>       
-        <button className='button2'>
-          <NavLink  to='/Admin/Listas/ListaAmbientes' activeclassname="active">Cancelar</NavLink>        
-        </button>
       </div>
     </div>
   );

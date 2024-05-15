@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import ico1 from '../assets/iconCss.png';
 import ico2 from '../assets/iconHtml.png';
 import ico3 from '../assets/iconJavascript.png';
@@ -8,7 +8,6 @@ import ico6 from '../assets/iconReact.png';
 import ico7 from '../assets/iconHome.png';
 import ico8 from '../assets/iconReload.png';
 import './Footer.css'
-import { UserContext } from '../Context/UserContext';
 import {useNavigate } from 'react-router-dom';
 
 export const Footer = () => {
@@ -17,15 +16,10 @@ export const Footer = () => {
   const reloadPage = () => {
     window.location.reload();
   };
-  const { emailC } = useContext(UserContext);
 
 
 const homePage = () => {
-    if(emailC === "purpleSoft@gmail.com"){
-     navigate("/Admin/Inicio/HomeUno"); 
-    }else{
-      navigate("/Usuario/Inicio/HomeDos");
-    }
+     navigate("/"); 
   };
   return (
     <footer className='mainfooter'>
