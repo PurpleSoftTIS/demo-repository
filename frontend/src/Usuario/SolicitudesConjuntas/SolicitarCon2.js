@@ -9,7 +9,7 @@ import './SolicitarCon2.css';
 const SolicitarCon2 = () => {
   const { state: formData } = useLocation();
   const materia = formData ? formData.nombre_materia : null;
-  const carrera = formData ? formData.motivo : null;
+  const motivo = formData ? formData.motivo : null;
   const docente = formData ? formData.id_docente : null;
   const docente1 = formData ? formData.id_docente2 : null;
   const docente2 = formData ? formData.id_docente3 : null;
@@ -17,11 +17,11 @@ const SolicitarCon2 = () => {
   const { setFromDataContext } = useContext(FormContext);
 
     setFromDataContext({
-      nombre_materia: '',
-      docente1: '',
-      docente2: '',
-      docente: '',
-      motivo: '',
+      nombre_materia: materia,
+      motivo: motivo,
+      docente2: docente,
+      docente: docente1,
+      docente2: docente2
     });
  
 
