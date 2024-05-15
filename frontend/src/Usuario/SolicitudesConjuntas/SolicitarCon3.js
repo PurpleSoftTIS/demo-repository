@@ -24,7 +24,7 @@ const SolicitarCon3 = () => {
                 console.error('Error al cargar los ambientes disponibles:', error);
             });
         }       
-    }, []); 
+    }, [numeroEstudiantes,diaSeleccionado,horaSeleccionada]); 
   
 
   const agregarMore = (ambiente) => { 

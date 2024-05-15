@@ -189,16 +189,13 @@ const Docentes = () => {
       setCodigoDocenteDisabled(false);
     }
   };
-  const backPage = () => {
-    navigate ('/Admin/Listas/ListaDocentes');
-  };
-
 
   return (
     <div className="contact-6" style={{ height: '94.4vh' }}>
      
       <div className="line" />
       <form className="billing-info" data-animate-on-scroll>
+      <button className="backon-button" type="button" onClick={() => navigate(-1)}></button>
         <div className="checkout-wrapper">
           <div className="checkout">Registro de Docentes</div>
         </div>
@@ -261,11 +258,8 @@ const Docentes = () => {
         {errorInconpleto && <p className="error">{errorInconpleto}</p>}
       </form>
       <div className="checkout1" data-animate-on-scroll>
-        <button className="button1" onClick={handleRegistroDocente}>
+        <button className="button22" onClick={handleRegistroDocente}>
         <div className="button-cta">Registrar Docente</div>
-        </button>
-        <button className="button1" onClick={backPage}>
-          <div className="button-cta1" >Cancelar</div>
         </button>
       </div>
     </div>

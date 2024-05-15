@@ -6,22 +6,22 @@ import { UserContext } from '../../Context/UserContext';
 const Solicitar3 = () => {
   const navigate = useNavigate();   
   const location = useLocation();
-  console.log("datos enviado",location.state);
   const { emailC } = useContext(UserContext);
   const [grupo, setGrupo] = useState('');
   const [motivo, setMotivo] = useState('');
-  const [materia, setMateria] = useState([]);
+  const [materias, setMaterias] = useState([]);
+  const [materia, setMateria] = useState('');
+  const [nomateria, setNomateria] = useState('');
   const [grupoSeleccionado, setGrupoSeleccionado] = useState(false);
   const { state: datosRecibidos } = useLocation();
   const correo = emailC;
-  const aula =datosRecibidos.aulaSeleccionada.id_ambiente;
+  const aula =datosRecibidos.aulaSeleccionada;
   const horaFin=datosRecibidos.horaFin;
   const horaInicio=datosRecibidos.horaInicio;
   const numeroEstudiantes=datosRecibidos.numeroEstudiantes;
   const fecha=datosRecibidos.fechaSeleccionada;
   
 
- console.log(correo);
   useEffect(() => { 
     fetch(`http://127.0.0.1:8000/api/obtenerMara/${correo}`)
       .then(response => {
@@ -31,7 +31,7 @@ const Solicitar3 = () => {
         return response.json();
       })
       .then(data => {
-        setMateria(data);
+        setMaterias(data);
       })
       .catch(error => {
         console.error('Error en la solicitud:', error);
@@ -46,10 +46,12 @@ const Solicitar3 = () => {
      horaFin,
      fecha,
      aula,
-     motivo
-  };
-  return json;
-}
+     motivo,
+     materia,
+    };
+    console.log("datos recividos",location.state);
+    return json;
+  }
   const EnviarSolicitud = () => {
     const json = createJSON();
     console.log("Datos a enviar:", json); 
@@ -76,13 +78,19 @@ const Solicitar3 = () => {
     });
   };
 
-
   const handleMateriaChange = (e) => {
-    const materiaSeleccionada = e.target.value;
-    const materiaData = materia.find(item => item.nombre_materia === materiaSeleccionada);
-    if (materiaData) {
-      setGrupo(materiaData.grupo);
-      setGrupoSeleccionado(true);
+    const nuevaMateria = e.target.value;
+    setNomateria(nuevaMateria)
+    if (nuevaMateria === "") {
+        setGrupo(''); // Si la nueva materia es "", establece el grupo en vacío
+        setGrupoSeleccionado(false); // También puedes querer deseleccionar el grupo
+    } else {
+        const materiaData = materias.find(item => item.nombre_materia === nuevaMateria);
+        if (materiaData) {
+            setMateria(materiaData.id_materia);
+            setGrupo(materiaData.grupo);
+            setGrupoSeleccionado(true);
+        }
     }
   };
 
@@ -97,10 +105,11 @@ const Solicitar3 = () => {
             <div className="contact-form-phone">Materia</div>
             <select
               className="input24"
-              value={materia}
+              value={nomateria}
               onChange={handleMateriaChange}
             >
-              {materia.map((item, index) => (
+              <option value="">Seleccione una materia</option> 
+              {materias.map((item, index) => (
                 <option key={index} value={item.nombre_materia}>
                   {item.nombre_materia}
                 </option>

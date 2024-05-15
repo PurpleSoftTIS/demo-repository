@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { FaBars,FaAt, FaLock, FaEye, FaEyeSlash } from "react-icons/fa"; 
+import { FaBars,FaAt, FaLock, FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa"; 
 import { Collapse, Row,Col,Container } from "react-bootstrap";
 import logo from "../assets/logoSIS.png";
 import logop from "../assets/logosol-1@2x.png";
@@ -25,32 +25,36 @@ const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const correoElectronico = email;
-  const [login0, setIsVisible] = useState(false);
-  const [logRecuperacion, setInvisible] = useState(true);
+  const [codigov, setCodigov ] = useState("");
   const [mostrarIniciar , setIniciar] = useState(true);
   const [mostrarRestablecer, setMostrarRestablecer] = useState(false);
-
+  const [correoEnviado, setCorreoEnviado] = useState(false);
   const [errorCorreo, setErrorCorreo] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
   const [errorInconpleto, setErrorIncompleto] = useState("");
   const [errorEmailValido, setErrorEmailValido] = useState("");
   const [errorContraseñaValido, setErrorContraseñaValido] = useState("");
+  const [errorCorreoVacio, setErrorCorreoVacio] = useState("");
+  const [errorCorreoNoExiste, setErrorCorreoNoExiste] = useState("");
+  const [errorCodigoVacio, setErrorCodigoVacio] = useState("");
+  const [errorCodigoNoExiste, setErrorCodigoNoExiste] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const toggleVisibility = () => {
-    setIsVisible(!login0); 
-    setInvisible(!logRecuperacion);
     setIniciar(!mostrarIniciar);
     setMostrarRestablecer(!mostrarRestablecer);
   };
   const toggleVisibility2 = () =>{
-    setIsVisible(!login0); 
-    setInvisible(!logRecuperacion);
     setIniciar(!mostrarIniciar);
     setMostrarRestablecer(!mostrarRestablecer);
   }
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
-};
+  };
+  const toggleVisibility3 = () =>{
+    setCorreoEnviado(false);
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!email || !password ) {
@@ -156,6 +160,14 @@ const [showPassword, setShowPassword] = useState(false);
     };
     const handleSubmitRestablecer = async (e) => {
         e.preventDefault();
+        setErrorCorreoVacio("");
+        setErrorCorreoNoExiste("");
+
+        if (!email) {
+            setErrorCorreoVacio("Por favor, ingrese su correo electrónico");
+            return;
+        }
+        setLoading(true);
         try {
             const response = await fetch("http://127.0.0.1:8000/api/enviarcorreo", {
                 method: "POST",
@@ -166,11 +178,57 @@ const [showPassword, setShowPassword] = useState(false);
             });
             if (response.ok) {
                 console.log("Correo electrónico enviado correctamente", email);
+                setCorreoEnviado(true);
+                setLoading(false);
             } else {
-                throw new Error("Error al enviar el correo");
+                const responseData = await response.json();
+                if (responseData && responseData.message === "Usuario no encontrado") {
+                    setErrorCorreoNoExiste("Correo electrónico no Registrado ");
+                } else {
+                    throw new Error("Error al enviar el correo");
+                }
             }
         } catch (error) {
             console.error("Error al enviar el correo:", error);
+            setLoading(false);
+            alert('No se pudo establecer conexión SMTP. Por favor, inténtalo de nuevo más tarde.');
+        }
+    };
+
+    const handleSubmitCodigo = async (e) => {
+        e.preventDefault();
+        setErrorCodigoVacio("");
+        setErrorCodigoNoExiste("");
+        if (!codigov) {
+            setErrorCodigoVacio("Por favor, ingrese el código");
+            return;
+        }
+        try {
+            const response = await fetch("http://127.0.0.1:8000/api/verificarCodigo", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ codigo: codigov }), 
+            });
+    
+            if (!response.ok) {
+                throw new Error("La solicitud al servidor falló");
+            }
+    
+            const data = await response.json();
+    
+            if (data && data.id_usuario) {
+                // Actualizar el contexto con el id_usuario y el role
+                setUrole('rest');
+                setEmailC(data.id_usuario);
+                console.log("Id_usuario:", data.id_usuario);
+                navigate("/Rest/password");
+            } else {
+                setErrorCodigoNoExiste("Código inválido");
+            }
+        } catch (error) {
+            setErrorCodigoNoExiste("Código inválido");
         }
     };
 
@@ -221,10 +279,10 @@ const [showPassword, setShowPassword] = useState(false);
                             <Col xs={12} sm={10} md={8} lg={6}> {/* Define el ancho del formulario en diferentes tamaños de pantalla */}
                                 <div className="login-box">
                                     <div className="section">
-                                    {mostrarIniciar && (
+                                    {mostrarIniciar && !correoEnviado && (
                                     <div className="contenidoo">
                                         <h6 className="mb-0 pb-3 text-center" id="Iniciar">Iniciar sesión</h6>
-                                        <form className="login0" onSubmit={handleSubmit} style={{ display: logRecuperacion ? 'block' : 'none' }}>
+                                        <form className="login0" onSubmit={handleSubmit}>
                                             <div className="form-group">
                                                 <span className="input-icon"><FaAt /></span>
                                                 <input 
@@ -266,10 +324,10 @@ const [showPassword, setShowPassword] = useState(false);
                                             <button  onClick={toggleVisibility} className="olvidar">¿Olvidaste tu Contraseña?</button>
                                         </p>   
                                     </div>)}
-                                    {mostrarRestablecer && (
+                                    {mostrarRestablecer && !correoEnviado && (
                                         <div className="contenidoo">
-                                            <h6 className="mb-0 pb-3 text-center" id="Reestablecer">Restablecer Contraseña</h6>
-                                            <form className="logRecuperacion" style={{ display: login0 ? 'block' : 'none' }} >
+                                            <h6 className="mb-0 pb-3 text-center" id="Reestablecer">Reestablecer Contraseña</h6>
+                                            <form className="logRecuperacion">
                                                         <div className="form-group">
                                                             <span className="input-icon"><FaAt /></span>
                                                             <input 
@@ -282,13 +340,48 @@ const [showPassword, setShowPassword] = useState(false);
                                                                 value={email}
                                                                 onChange={(e) => setEmail(e.target.value)}
                                                             />
+                                                            {errorCorreoVacio && <p className="error2">{errorCorreoVacio}</p>}
+                                                            {errorCorreoNoExiste && <p className="error2">{errorCorreoNoExiste}</p>}
                                                         </div>
                                                         <div className="mb-0 pb-3 text-center">
-                                                            <button className="btn-block"  onClick={handleSubmitRestablecer}>Enviar Codigo</button>
+                                                        <button className="btn-block" onClick={handleSubmitRestablecer} disabled={loading}>
+                                                            {loading ? <FaSpinner className="spinner-icon" /> : 'Enviar Código'}
+                                                        </button>
                                                         </div>                                    
                                             </form>   
                                             <p className="mt-3 text-center">
                                                 <button  onClick={toggleVisibility2} className="olvidar">Iniciar sesión</button>
+                                            </p>
+                                        </div>)}
+                                        {correoEnviado && (
+                                        <div className="contenidoo">
+                                            <h6 className="mb-0 pb-3 text-center" id="Codigo">Codigo enviado</h6>
+                                            <form className="logRecuperacion">
+                                                    <div className="form-group">
+                                                        <span className="input-icon"><FaLock /></span>
+                                                        <input
+                                                            type={showPassword ? 'text' : 'password'}
+                                                            name="logpass"
+                                                            className="form-control"
+                                                            placeholder="Ingrese el codigo"
+                                                            value={codigov}
+                                                            onChange={(e) => setCodigov(e.target.value)}
+                                                            style={{ paddingRight: '40px' }}
+                                                            autoComplete="new-password"
+                                                        />
+                                                        {errorCodigoVacio && <p className="error2">{errorCodigoVacio}</p>}
+                                                        {errorCodigoNoExiste && <p className="error2">{errorCodigoNoExiste}</p>}
+                                                        {/* Botón para alternar la visibilidad de la contraseña */}
+                                                        <button className="toggle-password" type="button" onClick={togglePasswordVisibility}>
+                                                            {showPassword ? <FaEye /> : <FaEyeSlash />}
+                                                        </button>
+                                                    </div>
+                                                    <div className="mb-0 pb-3 text-center">
+                                                        <button className="btn-block"  onClick={handleSubmitCodigo}>Reestablecer</button>
+                                                    </div>                                    
+                                            </form>   
+                                            <p className="mt-3 text-center">
+                                                <button  onClick={toggleVisibility3} className="olvidar">Volver Atrás</button>
                                             </p>
                                         </div>)}                                             
                                     </div>
