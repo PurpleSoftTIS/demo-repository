@@ -16,48 +16,73 @@ use DB;
 class AmbienteController extends Controller
 {
     public function guardarAmbiente(Request $request)
-{
-    info('Datos recibidos:', $request->all());
-    try {
-        info('Se está intentando guardar la ubicación.');    
-        $datosAmbiente = $request->input('datosAmbiente');
-        $nombreAula = $datosAmbiente['nombreAula'];
-        $capacidadEstudiantes = $datosAmbiente['capacidadEstudiantes'];
-        $edificio = $datosAmbiente['edificio'];
-        $piso = $datosAmbiente['piso'];
-        $tipo = $datosAmbiente['Tipo'];  
-        $ubicacion = new Ubicacion();        
-        $ubicacion->edificio = $edificio;
-        $ubicacion->save();        
-        $idUbicacion = $ubicacion->id_ubicacion;           
-        $ambiente = new Ambiente();
-        $ambiente->id_ubicacion = $idUbicacion;
-        $ambiente->numero_piso = $piso;
-        $ambiente->nombre_ambiente = $nombreAula;
-        $ambiente->capacidad = $capacidadEstudiantes;
-        $ambiente->estado_ambiente = "activo";
-        $ambiente->tipo_ambiente =$tipo;
-        $ambiente->save();
-        $idambiente=$ambiente->id_ambiente;
-        info('Se ha guardado correctamente el ambiente.');
-        $diasHoras =$request -> input ('diasHoras');
-        info('Horarios seleccionados:', $diasHoras);
-        foreach ($diasHoras as $day=> $horas) {
-            $dia= new Dia();
-            $dia->nombre = $day ;
-            $dia -> save();
-            $iddia=$dia->id_dia;
-            $diashabiles=new Diashabiles();
-            $diashabiles ->id_dia=$iddia;
-            $diashabiles ->id_ambiente =$idambiente ;
-            $diashabiles -> save();            
-        }        
-    return response()->json(['message' => 'Ubicación y ambiente guardados correctamente']);
-    } catch (\Exception $e) {
-        \Log::error('Error al intentar guardar la ubicación y el ambiente: ' . $e->getMessage());        
-        return response()->json(['error' => 'Error al guardar la ubicación y el ambiente'], 500);
+    {
+        info('Datos recibidos:', $request->all());
+        try {
+            info('Se está intentando guardar la ubicación.');    
+            $datosAmbiente = $request->input('datosAmbiente');
+            $nombreAula = $datosAmbiente['nombreAula'];
+            $capacidadEstudiantes = $datosAmbiente['capacidadEstudiantes'];
+            $edificio = $datosAmbiente['edificio'];
+            $piso = $datosAmbiente['piso'];
+            $tipo = $datosAmbiente['Tipo'];  
+            $ubicacion = new Ubicacion();        
+            $ubicacion->edificio = $edificio;
+            $ubicacion->save();        
+            $idUbicacion = $ubicacion->id_ubicacion;           
+            $ambiente = new Ambiente();
+            $ambiente->id_ubicacion = $idUbicacion;
+            $ambiente->numero_piso = $piso;
+            $ambiente->nombre_ambiente = $nombreAula;
+            $ambiente->capacidad = $capacidadEstudiantes;
+            $ambiente->estado_ambiente = "activo";
+            $ambiente->tipo_ambiente =$tipo;
+            $ambiente->save();
+            $idambiente=$ambiente->id_ambiente;
+            info('Se ha guardado correctamente el ambiente.');
+            $diasHoras =$request -> input ('diasHoras');
+            info('Horarios seleccionados:', $diasHoras);
+            foreach ($diasHoras as $day=> $horas) {
+                $dia= new Dia();
+                $dia->nombre = $day ;
+                $dia -> save();
+                $iddia=$dia->id_dia;
+                $diashabiles=new Diashabiles();
+                $diashabiles ->id_dia=$iddia;
+                $diashabiles ->id_ambiente =$idambiente ;
+                $diashabiles -> save(); 
+                foreach($horas as $horario) {
+                    $hor = explode('-', $horario);
+                    $horaInicio = trim($hor[0]);
+                    $horaFin = trim($hor[1]);
+                    $hora = Hora::where('hora_inicio', $horaInicio)
+                                ->where('hora_fin', $horaFin)
+                                ->first();
+    
+                    if (!$hora) {                        
+                        $hora = new Hora();
+                        $hora->hora_inicio = $horaInicio;
+                        $hora->hora_fin = $horaFin;
+                        $hora->save();
+                        $id_hora = $hora->id_hora;     
+                    }
+                   else {    
+                     $id_hora=$hora->id_hora;    
+                   }
+                  
+                    $horarios=new Horario;
+                    $idhora = $hora->id_hora; 
+                    $horarios -> id_hora = $idhora;
+                    $horarios -> id_dia =  $iddia;
+                    $horarios -> save ();
+                }
+            }
+        return response()->json(['message' => 'Ubicación y ambiente guardados correctamente']);
+        } catch (\Exception $e) {
+            \Log::error('Error al intentar guardar la ubicación y el ambiente: ' . $e->getMessage());        
+            return response()->json(['error' => 'Error al guardar la ubicación y el ambiente'], 500);
+        }
     }
-}
 public function index()
 {   
     $ambientes = DB::table('ambiente')
@@ -116,20 +141,14 @@ public function ambientesDi($capacidad)
 
         foreach ($diasHabiles as $diaHabil) {
             $nombreDia = Dia::find($diaHabil->id_dia)->nombre;
-
             $horas = [];
-
             $horarios = Horario::where('id_dia', $diaHabil->id_dia)->get();
-
-            foreach ($horarios as $horario) {
-                
+            foreach ($horarios as $horario) {                
                 // Obtener las horas de inicio y fin para este horario
                 $horaInicio = Hora::find($horario->id_hora)->hora_inicio;
                 $horaInicioSinCeros = substr($horaInicio, 0, -3); // Obtiene los primeros cinco caracteres (HH:mm) de la cadena
-
                 $horaFin = Hora::find($horario->id_hora)->hora_fin;
                 $horaFinSinCeros = substr($horaFin, 0, -3); // Obtiene los primeros cinco caracteres (HH:mm) de la cadena
-
                 $horas[] = "$horaInicioSinCeros-$horaFinSinCeros";
             }
 
@@ -157,56 +176,73 @@ public function ambientesDi($capacidad)
 
 
 public function actualizarAmb (Request $request, $id_ambiente){
-   $ambiente =Ambiente::find($id_ambiente); 
-   $ambiente ->capacidad= $request ->input ('capacidadEstudiantes');
-   $ambiente ->tipo_ambiente= $request -> input ('Tipo');
-   $ambiente ->numero_piso= $request ->input ('piso') ;
-   $idambiente=$ambiente->id_ambiente;
-   $ambiente -> save();
-   $edificio = Ubicacion::where('id_ubicacion', $ambiente->id_ubicacion)->value('edificio');
-   $diasHabiles = Diashabiles::where('id_ambiente', $ambiente->id_ambiente)->get();
-   foreach ($diasHabiles as $diaHabil) {
-       $nombreDia = Dia::find($diaHabil->id_dia)->nombre;
-       $horarios = Horario::where('id_dia', $diaHabil->id_dia)->get();
-   foreach ($horarios as $horario) {
-        $id_hora = $horario->id_hora;
-        $horario->where('id_hora', $id_hora)->delete();
-        Hora::where('id_hora', $id_hora)->delete();
-      }
-      $id_dia=$diaHabil->id_dia;
-      $diaHabil->where('id_dia',$id_dia)->delete();
-      Dia::where('id_dia', $id_dia)->delete();
-}
-
-  $diasHoras =$request -> input ('diasHoras');
-  $idambiente  =$request ->input ('id') ;
-
-  foreach ($diasHoras as $day=> $horas) {
-    $dia= new Dia();
-    $dia->nombre = $day ;
-    $dia -> save();
-    $iddia=$dia->id_dia;
-    $diashabiles=new Diashabiles();
-    $diashabiles ->id_dia=$iddia;
-    $diashabiles ->id_ambiente=$idambiente ;
-    $diashabiles -> save(); 
-    foreach($horas as $horario) {
-        $hora =new Hora();
-        $hor = explode('-', $horario);
-        $horaInicio = trim($hor[0]);
-        $horaFin = trim($hor[1]);
-        $hora ->hora_inicio=$horaInicio;
-        $hora ->hora_fin =$horaFin;
-        $hora-> save();
-        $horarios=new Horario;
-        $idhora = $hora->id_hora; 
-        $horarios -> id_hora = $idhora;
-        $horarios -> id_dia =  $iddia;
-        $horarios -> save ();
-    }  
-}
-
-}
+    $ambiente =Ambiente::find($id_ambiente); 
+    $ambiente ->capacidad= $request ->input ('capacidadEstudiantes');
+    $ambiente ->tipo_ambiente= $request -> input ('Tipo');
+    $ambiente ->numero_piso= $request ->input ('piso') ;
+    $idambiente=$ambiente->id_ambiente;
+    $ambiente -> save();
+    $edificio = Ubicacion::where('id_ubicacion', $ambiente->id_ubicacion)->value('edificio');
+    $diasHabiles = Diashabiles::where('id_ambiente', $ambiente->id_ambiente)->get();
+    foreach ($diasHabiles as $diaHabil) {
+        $nombreDia = Dia::find($diaHabil->id_dia)->nombre;
+        $horarios = Horario::where('id_dia', $diaHabil->id_dia)->get();
+    foreach ($horarios as $horario) {
+         $id_hora = $horario->id_hora;
+         $horario->where('id_hora', $id_hora)->delete();
+         Hora::where('id_hora', $id_hora)->delete();
+       }
+       $id_dia=$diaHabil->id_dia;
+       $diaHabil->where('id_dia',$id_dia)->delete();
+       Dia::where('id_dia', $id_dia)->delete();
+ }
+ 
+   $diasHoras =$request -> input ('diasHoras');
+   $idambiente  =$request ->input ('id') ;
+ 
+   foreach ($diasHoras as $day=> $horas) {
+     
+     $dia= new Dia();
+     $dia->nombre = $day ;
+     $dia -> save();
+     $iddia=$dia->id_dia;
+     $diashabiles=new Diashabiles();
+     $diashabiles ->id_dia=$iddia;
+     $diashabiles ->id_ambiente=$idambiente ;
+     $diashabiles -> save(); 
+     foreach($horas as $horario) {
+         $hora =new Hora();
+         $hor = explode('-', $horario);
+         $horaInicio = trim($hor[0]);
+         $horaFin = trim($hor[1]);
+         $hora = Hora::where('hora_inicio', $horaInicio)
+                             ->where('hora_fin', $horaFin)
+                             ->first();
+         if (!$hora) {
+                     
+             $hora = new Hora();
+             $hora->hora_inicio = $horaInicio;
+             $hora->hora_fin = $horaFin;
+             $hora->save();
+             $idhora = $hora->id_hora;           
+ 
+         }
+        else {
+ 
+          $idhora=$hora->id_hora;
+ 
+ 
+ 
+        }
+         $horarios=new Horario;
+         
+         $horarios -> id_hora = $idhora;
+         $horarios -> id_dia =  $iddia;
+         $horarios -> save ();
+     }  
+ }
+ 
+ }
 public function CargaMasiva(Request $request){
  
     $datos = $request->all();
@@ -237,30 +273,48 @@ public function CargaMasivaDias(Request $request)
     foreach ($datos as $dato) {
         $nombreAmbiente = $dato[0];
 
-        // Buscar el ambiente por su nombre
         $ambiente = Ambiente::where('nombre_ambiente', $nombreAmbiente)->first();
 
+       
         if ($ambiente) {
-            // Obtener el ID del ambiente
-            $idambiente = $ambiente->id_ambiente;
             
-            $diaNombre=$dato[1];
-            $dia_id = Dia::where('nombre', $diaNombre->id_dia)->get();
+            $idambiente = $ambiente->id_ambiente;
+            $dia = new Dia();
+            $dia->nombre = $dato[1];
+            $dia->save();
+            $iddia = $dia->id_dia;
 
+           
             $diashabiles = new Diashabiles();
-            $diashabiles->id_dia = $dia_id;
+            $diashabiles->id_dia = $iddia;
             $diashabiles->id_ambiente = $idambiente;
             $diashabiles->save();
+            $horaInicio = $dato[2];
+            $horaFin = $dato[3];
+            $hora = Hora::where('hora_inicio', $horaInicio)
+                            ->where('hora_fin', $horaFin)
+                            ->first();
 
-            $hora = new Hora();
-            $hora->hora_inicio = $dato[2];
-            $hora->hora_fin = $dato[3];
-            $hora->save();
-            $idhora = $hora->id_hora;
+                if (!$hora) {
+                    
+                    $hora = new Hora();
+                    $hora->hora_inicio = $horaInicio;
+                    $hora->hora_fin = $horaFin;
+                    $hora->save();
+                    $idhora = $hora->id_hora;           
+              }
+               else {
+                 $idhora=$hora->id_hora;
+ }
 
+            
+           
+           
+
+            
             $horarios = new Horario;
             $horarios->id_hora = $idhora;
-            $horarios->id_dia = $dia_id;
+            $horarios->id_dia = $iddia;
             $horarios->save();
         } else {
             // Ambiente no encontrado, registrar un error

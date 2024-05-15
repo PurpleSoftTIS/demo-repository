@@ -83,14 +83,15 @@ class SolicitudController extends Controller
             $solicitud->estado_solicitud=$estado_solicitud;
             $solicitud->tipo_solicitud = 'individual'; 
             $solicitud->save();
-   
-            $solicitudes=new Solicitudes ();
-            $id_ambiente=$datosReserva['aula'];
-            $solicitudes->id_ambiente=$id_ambiente;
             $id_solicitud= $solicitud->id_solicitud;
-            $solicitudes->id_solicitud=$id_solicitud;
-            $solicitudes->save ();
-             
+
+            $aulas = $datosReserva['aula'];
+        foreach ($aulas as $aula) {
+             $solicitudes = new Solicitudes();
+            $solicitudes->id_ambiente = $aula['id_ambiente'];
+            $solicitudes->id_solicitud = $id_solicitud;
+            $solicitudes->save();
+        }
             $solicitudesDo=new Solicitudes_docentes ();
             $solicitudesDo->id_docente = $idDocente;
             $solicitudesDo->id_solicitud = $id_solicitud;
@@ -100,8 +101,8 @@ class SolicitudController extends Controller
             $idmateria=$datosReserva['materia'];
             $solicitudMateria->id_materia=$idmateria;
             $solicitudMateria->id_solicitud=$id_solicitud;
-            $solicitudMateria->save();  
-             
+            $solicitudMateria->save(); 
+           
         } catch (\Exception $e) {
             \Log::error('Error al registrar la solicitud: ' . $e->getMessage());
             return response()->json(['error' => 'Error al registrar la solicitud'], 500);
@@ -226,5 +227,51 @@ class SolicitudController extends Controller
             \Log::error('Error al obtener los datos de los ambientes por solicitud: ' . $e->getMessage());
             return response()->json(['error' => 'Error al obtener los datos de los ambientes por solicitud'], 500);
         }
+    }
+    public function ambientesContiguos($capacidad, $dia, $hora_inicio, $hora_fin)
+    {
+        $aulasDisponibles = DB::table('ambiente')
+            ->join('diashabiles', 'ambiente.id_ambiente', '=', 'diashabiles.id_ambiente')
+            ->join('dia', 'diashabiles.id_dia', '=', 'dia.id_dia')
+            ->join('horario', 'diashabiles.id_dia', '=', 'horario.id_dia')
+            ->join('hora', 'horario.id_hora', '=', 'hora.id_hora')
+            ->join('ubicacion', 'ambiente.id_ubicacion', '=', 'ubicacion.id_ubicacion')
+            ->select('ambiente.*', 'ubicacion.edificio as nombre_edificio', 'ambiente.numero_piso')
+            ->where('dia.nombre', $dia)
+            ->where('hora.hora_inicio', '<=', $hora_inicio)
+            ->where('hora.hora_fin', '>=', $hora_fin)
+            ->get();
+    
+        $aulasPorEdificioYPiso = [];
+        foreach ($aulasDisponibles as $aula) {
+            $aulasPorEdificioYPiso[$aula->nombre_edificio][$aula->numero_piso][] = $aula;
+        }
+    
+        $combinacionesValidas = [];
+        foreach ($aulasPorEdificioYPiso as $edificio => $aulasEnEdificio) {
+            foreach ($aulasEnEdificio as $numero_piso => $aulasEnPiso) {
+                $combinacionesValidas = array_merge($combinacionesValidas, $this->generarCombinaciones($aulasEnPiso, $capacidad));
+            }
+        }
+    
+        return response()->json($combinacionesValidas, 200);
+    }
+    
+    private function generarCombinaciones($aulas, $capacidad) {
+        $combinacionesValidas = [];
+        $totalAulas = count($aulas);
+        for ($i = 0; $i < $totalAulas - 1; $i++) {
+            $capacidadTotal = $aulas[$i]->capacidad;
+            $combinacion = [$aulas[$i]];
+            for ($j = $i + 1; $j < $totalAulas; $j++) {
+                $capacidadTotal += $aulas[$j]->capacidad;
+                $combinacion[] = $aulas[$j];
+                if ($capacidadTotal >= $capacidad) {
+                    $combinacionesValidas[] = $combinacion;
+                    break; 
+                }
+            }
+        }
+        return $combinacionesValidas;
     }
 }

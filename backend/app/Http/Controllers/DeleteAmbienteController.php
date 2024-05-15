@@ -17,14 +17,18 @@ class DeleteAmbienteController extends Controller
 
         try {
             DB::statement('SET FOREIGN_KEY_CHECKS=0');
-
+            Horario::truncate();
             Diashabiles::truncate();
+            Hora::truncate();
+            Dia::truncate();
             Ambiente::truncate();
             Ubicacion::truncate();
             DB::statement('ALTER TABLE hora AUTO_INCREMENT = 1');
             DB::statement('ALTER TABLE dia AUTO_INCREMENT = 1');
             DB::statement('ALTER TABLE ambiente AUTO_INCREMENT = 1');
-            DB::statement('ALTER TABLE ubicacion AUTO_INCREMENT = 1');           
+            DB::statement('ALTER TABLE ubicacion AUTO_INCREMENT = 1');   
+           
+        
             return response()->json(['message' => 'Todos los datos han sido eliminados correctamente'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Hubo un error al intentar borrar los datos'], 500);

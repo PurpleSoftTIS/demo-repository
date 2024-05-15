@@ -15,7 +15,7 @@ const Solicitar3 = () => {
   const [grupoSeleccionado, setGrupoSeleccionado] = useState(false);
   const { state: datosRecibidos } = useLocation();
   const correo = emailC;
-  const aula =datosRecibidos.aulaSeleccionada.id_ambiente;
+  const aula =datosRecibidos.aulaSeleccionada;
   const horaFin=datosRecibidos.horaFin;
   const horaInicio=datosRecibidos.horaInicio;
   const numeroEstudiantes=datosRecibidos.numeroEstudiantes;

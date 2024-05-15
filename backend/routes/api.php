@@ -39,6 +39,7 @@ Route::get('/obtenerSol', [SolicitudController::class, 'obtenerSolicitud']);
 Route::get('/SolicitudUrgencias', [SolicitudUrgencia::class, 'urgencias']);
 Route::get('/ReservasDocentes/{setEmailC}', [RerservasUsuario::class, 'reservasDocentes']);
 Route::get('/obtenerMara/{Correo}', [AmbienteController::class, 'MateriasObtener']);
+Route::get('/ambientesContiguos/{capacidad}/{dia}/{hora_inicio}/{hora_fin}', [SolicitudController::class, 'ambientesContiguos']);
 
 //Registrar Datos
 Route::post('/docentesRegistrar', [DocenteRegistrarController::class, 'registrar']);

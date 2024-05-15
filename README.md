@@ -47,7 +47,7 @@ IMPORTANTE
 - Asegurece de estar en la rama correcta 
 - Antes de subir cambios, siempre ejecute git pull origin nombre_de_rama, este en caso de estar trabanjando con otra perosna en una misma rama
 - No olvide no puede subir cambios a la main si antes entrar en concenso con el resto de colaboradores 
-- Actulizar constatemente su proceso con git status, add . y commit 
+- Actulizar constatemente su progreso con git status, add . y commit 
 
 Servidor de prueba para ejecutar el bakcned:
 php -S 127.0.0.1:8000 -t public
@@ -77,3 +77,9 @@ composer install --ignore-platform-reqs
 
 Como volver a un estado anterior del commit 
 git checkout 641d5f45897e7c26883b54591aaf8c95dfaa8bef   
+
+Deshacer una migration utilize el siguiente comando:
+php artisan migrate:rollback --step=0
+
+Para crear tu .evn ejecute:
+cp .env.example .env

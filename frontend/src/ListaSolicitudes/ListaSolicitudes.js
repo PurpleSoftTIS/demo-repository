@@ -18,6 +18,33 @@ const ListaSolicitudes = () => {
   const handleSelectChange = (e) => {
     setSelectedOption(e.target.value);
   };
+
+
+
+
+  const [showD, setShowD] = useState(false);
+  const [motivoRechazo, setMotivoRechazo] = useState('');
+
+  const handleCloseDelete = () => setShowD(false);
+  const handleShowDelete = () => setShowD(true);
+
+  const handleMotivoChangeDelete = (event) => {
+    setMotivoRechazo(event.target.value);
+  };
+
+  const handleEnviarClick = () => {
+    console.log('Motivo de rechazo:', motivoRechazo);
+    handleCloseDelete();
+  };
+
+
+
+
+
+
+  const handleMotivoChange = (event) => {
+    setMotivoRechazo(event.target.value);
+  };
   const [docente, setDocente] = useState("");
   const [aulas, setAulas] = useState(""); 
   const [formularioData, setFormData] = useState({
@@ -279,13 +306,38 @@ return (
               {!mostrarSolicitudesTodass && (
                 <td>
                   <button className="btn btn-editar mr-2" onClick={() => aceptarsolicitud(solicitud.id_solicitud)}>Aceptar</button>
-                  <button className="btn btn-eliminar" onClick={() => rechazarsolicitud(solicitud.id_solicitud)}>Rechazar</button>
+                  <button className="btn btn-eliminar" onClick={(handleShowDelete)}>Rechazar</button>
                 </td>
               )}
             </tr>
           ))}
         </tbody>
       </table>
+      <Modal show={showD} onHide={handleCloseDelete}>
+        <Modal.Header closeButton>
+          <Modal.Title>Rechazar Solicitud</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form.Group controlId="motivoRechazo">
+            <Form.Label>Motivo de rechazo:</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Escribe aquí el motivo"
+              value={motivoRechazo}
+              onChange={handleMotivoChangeDelete}
+            />
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseDelete}>
+            Cancelar
+          </Button>
+          <Button variant="primary" onClick={handleEnviarClick}>
+            Enviar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Filtros</Modal.Title>
@@ -306,8 +358,8 @@ return (
         <option value="Elecciones">Elecciones</option>
         <option value="Congreso">Congreso</option>
 
-      </Form.Control>
-      
+
+      </Form.Control>     
     
         </Modal.Body>
         <Modal.Footer>
@@ -420,3 +472,65 @@ return (
 };
 
 export default ListaSolicitudes;
+
+
+/*
+import React, { useState, useEffect } from 'react';
+import './ListaSolicitudes.css';
+import { Modal, Button, Form } from 'react-bootstrap';
+
+const ListaSolicitudes = () => {
+  const [show, setShow] = useState(false);
+  const [motivoRechazo, setMotivoRechazo] = useState('');
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const handleMotivoChange = (event) => {
+    setMotivoRechazo(event.target.value);
+  };
+
+  const handleEnviarClick = () => {
+    // Aquí puedes enviar el motivo al servidor o realizar otras acciones necesarias
+    console.log('Motivo de rechazo:', motivoRechazo);
+    handleClose();
+  };
+
+  return (
+    <div className="container" style={{ height: '100vh' }}>
+      {/* ... (resto de tu código) }
+      <button className="btn btn-eliminar" onClick={handleShow}>
+        Rechazar
+      </button>
+      {/* ... (resto de tu código) }
+      
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Rechazar Solicitud</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form.Group controlId="motivoRechazo">
+            <Form.Label>Motivo de rechazo:</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Escribe aquí el motivo"
+              value={motivoRechazo}
+              onChange={handleMotivoChange}
+            />
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cancelar
+          </Button>
+          <Button variant="primary" onClick={handleEnviarClick}>
+            Enviar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
+  );
+};
+
+export default ListaSolicitudes;
+ * ***/

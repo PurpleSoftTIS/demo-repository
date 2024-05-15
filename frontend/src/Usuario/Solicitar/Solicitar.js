@@ -30,6 +30,11 @@ const Solicitar = () => {
           return response.json();
         })
         .then(data => {
+          data.sort((a, b) => {
+            const horaInicioA = parseInt(a.hora_inicio.split(':')[0]);
+            const horaInicioB = parseInt(b.hora_inicio.split(':')[0]);
+            return horaInicioA - horaInicioB;
+          });
           setHorariosDisponibles(data);
           console.log(data);
         })

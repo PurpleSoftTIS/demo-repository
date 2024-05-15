@@ -294,7 +294,6 @@ function ListaAulas() {
                 <button className="btn btn-editar mr-2" onClick={() => handleEditar(aula.id_ambiente)}>
                   Editar
                 </button>
-
                 <button className="btn btn-eliminar" onClick={() => {borrar(aula.id_ambiente); }}>
                   Eliminar
                 </button>

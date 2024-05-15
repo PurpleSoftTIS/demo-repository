@@ -27,4 +27,4 @@ const MensajeNoEncontrado = () => {
     );
 }
 
-export default MensajeNoEncontrado
+export default MensajeNoEncontrado;
