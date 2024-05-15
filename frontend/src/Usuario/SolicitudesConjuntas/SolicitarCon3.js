@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import './SolicitarCon3.css'; // Ajusta la importación del CSS según la ubicación real del archivo CSS
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const SolicitarCon3 = () => {
   const navigate = useNavigate();
   const { state: datos2 } = useLocation();
   const { materia, carrera, docente, numeroEstudiantes, diaSeleccionado, horaSeleccionada } = datos2 || {};
   const [ambientesDisponibles, setAmbientesDisponibles] = useState([]);
+  const [aulasContiguas, setAulasContiguas] = useState([]);
 
   useEffect(() => {
-    if (ambientesDisponibles) {
+    if (ambientesDisponibles.length === 0) {
       fetch(`http://127.0.0.1:8000/api/ambienteDispoDos/${numeroEstudiantes}`)
         .then(response => {
           if (!response.ok) {
@@ -24,9 +25,9 @@ const SolicitarCon3 = () => {
           console.error('Error al cargar los ambientes disponibles:', error);
         });
     }
-  }, [numeroEstudiantes,ambientesDisponibles]);
+  }, [numeroEstudiantes, ambientesDisponibles]);
 
-  const handleNextStep = (ambiente) => {
+  const handleNextStep = ambiente => {
     const datos3 = {
       materia,
       carrera,
@@ -36,9 +37,21 @@ const SolicitarCon3 = () => {
       horaSeleccionada,
       edificio: ambiente.edificio,
       numero_piso: ambiente.numero_piso,
-      nombre_ambiente: ambiente.nombre_ambiente
+      nombre_ambiente: ambiente.nombre_ambiente,
     };
     navigate('/Usuario/Usu/SolicitarCon4', { state: datos3 });
+  };
+
+  const handleSugerencias = () => {
+    // Logica para obtener las sugerencias de ambientes contiguos
+    const aulasContiguas = [];
+    ambientesDisponibles.forEach((ambiente, index) => {
+      if (index < ambientesDisponibles.length - 1 && ambiente.edificio === ambientesDisponibles[index + 1].edificio) {
+        aulasContiguas.push(ambiente.nombre_ambiente);
+        aulasContiguas.push(ambientesDisponibles[index + 1].nombre_ambiente);
+      }
+    });
+    setAulasContiguas(aulasContiguas);
   };
 
   return (
@@ -69,6 +82,17 @@ const SolicitarCon3 = () => {
           ))}
         </tbody>
       </table>
+      <button className="btn btn-sugerencias mt-3" onClick={handleSugerencias} style={{ position: 'fixed', top: '100px', left: '100px' }}>Sugerencias</button>
+      {aulasContiguas.length > 0 && (
+        <div>
+          <h3>Aulas contiguas disponibles:</h3>
+          <ul>
+            {aulasContiguas.map((aula, index) => (
+              <li key={index}>{aula}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

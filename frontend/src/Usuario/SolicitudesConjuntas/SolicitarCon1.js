@@ -23,6 +23,19 @@ const SolicitarCon1 = () => {
     });
   };
 
+  const [motivo, setMotivo] = useState('');
+  const opcionesMotivo = [
+    'Examen 1°Parcial',
+    'Examen 2°Parcial',
+    'Examen Final',
+    'Examen 2°Instancia',
+    'Examen Mesa',
+    'Reemplazo de Clases',
+    'Elecciones',
+    'Examen de ingreso'
+  ];
+  
+
   useEffect(() => {
     if (correo) {
       // Realiza la solicitud al backend solo si el correo está disponible
@@ -69,7 +82,7 @@ const SolicitarCon1 = () => {
     <div className="contact-form-container" style={{ minHeight: '78.7vh' }}>
       <section className="contenedora">
         <div className="titulo">
-          <b className="reserva">Reservas</b>
+          <b className="reserva">Reservar</b>
           <div className="contact-form-phone-parent">
             <div className="subtitulo">Materia</div>
             <select
@@ -98,7 +111,23 @@ const SolicitarCon1 = () => {
               ))}
             </select>
           </div>
-          
+
+          <div className="contact-form-phone-parent">
+          <div className="subtitulo">Motivo</div>
+             <select
+             className="input24" 
+             value={motivo}
+             name="motivo"
+             onChange={(e) => setMotivo(e.target.value)}
+            >
+            <option value="">Seleccione un motivo</option>
+            {opcionesMotivo.map((opcion, index) => (
+              //opciones?
+            <option key={index} value={opcion}>{opcion}</option>
+            ))}
+            </select>
+          </div>
+
           <button className="buton" onClick={handleRegistroSolicitud}>
             <div className="buttton">Siguiente</div>
           </button>
