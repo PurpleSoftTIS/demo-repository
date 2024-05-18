@@ -68,7 +68,6 @@ const SolicitarCon2 = () => {
   const handleNextStep = () => {
     const datos2 = {
       materia,
-      carrera,
       docente,
       numeroEstudiantes: inputValue,
       diaSeleccionado: selectedDay,

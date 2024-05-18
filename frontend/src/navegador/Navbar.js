@@ -15,8 +15,9 @@ const Navbar = () => {
   const dropdownRef2 = useRef(null);
   const dropdownRef = useRef(null);
   const { setUrole } = useContext(UserContext);
-  const [showSesion, setShwoSesion] = useState(false);
+  const [showSesion, setShowSesion] = useState(false);
   const sesionRef = useRef(null);
+  const sesionRef2 = useRef(null);
   const [isVisible, setIsVisible] = useState(true);
   
   const checkVisibility = () => {
@@ -34,8 +35,15 @@ const Navbar = () => {
         setShowDropdown(false); 
       }
       if (sesionRef.current && !sesionRef.current.contains(event.target)) {
-        setShwoSesion(false);
+        setShowSesion(false);
       }
+      if (dropdownRef2.current && !dropdownRef2.current.contains(event.target)) {
+        setShowDropdown2(false); 
+      }
+      if (sesionRef2.current && !sesionRef2.current.contains(event.target)) {
+        setShowSesion(false);
+      }
+      
     };
 
     document.body.addEventListener('click', handleClickOutside);
@@ -65,7 +73,7 @@ const Navbar = () => {
     setShowDropdown2(!showDropdown2);
   };
   const toggleSesion = ()=>{
-    setShwoSesion(!showSesion);
+    setShowSesion(!showSesion);
 
   };
   

@@ -3,7 +3,6 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import './ListaSolicitudes.css';
-import { Modal, Button, Form } from 'react-bootstrap';
 
 const ListaSolicitudes = () => {
   const [solicitudes, setSolicitudes] = useState([]);
@@ -261,16 +260,23 @@ return (
 
         <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador'/>
 
-          <button className="butn butn-filtro" onClick={() => setMostrarOpciones(!mostrarOpciones)}>Solicitudes</button>
+          <button 
+            className="butn butn-filtro" 
+            onClick={() => setMostrarOpciones(!mostrarOpciones)}>Solicitudes</button>
             {mostrarOpciones && (
             <div className="opciones-solicitudes">
-              <button className="butn butn-filtro" onClick={() => { setMostrarOpciones(false);
-                mostrarSolicitudesTodas();
+              <button 
+                className="butn butn-filtro" 
+                onClick={() => {
+                  setMostrarOpciones(false);
+                  mostrarSolicitudesTodas();
                 }}>Todas
               </button>
-            <button className="butn butn-filtro" onClick={() => {
-              setMostrarOpciones(false);
-              mostrarSolicitudesPendientes();
+              <button 
+                className="butn butn-filtro" 
+                onClick={() => {
+                 setMostrarOpciones(false);
+                 mostrarSolicitudesPendientes();
               }}>Pendientes</button>
 
             </div>
@@ -474,64 +480,3 @@ return (
 
 export default ListaSolicitudes;
 
-
-/*
-import React, { useState, useEffect } from 'react';
-import './ListaSolicitudes.css';
-import { Modal, Button, Form } from 'react-bootstrap';
-
-const ListaSolicitudes = () => {
-  const [show, setShow] = useState(false);
-  const [motivoRechazo, setMotivoRechazo] = useState('');
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  const handleMotivoChange = (event) => {
-    setMotivoRechazo(event.target.value);
-  };
-
-  const handleEnviarClick = () => {
-    // Aquí puedes enviar el motivo al servidor o realizar otras acciones necesarias
-    console.log('Motivo de rechazo:', motivoRechazo);
-    handleClose();
-  };
-
-  return (
-    <div className="container" style={{ height: '100vh' }}>
-      {/* ... (resto de tu código) }
-      <button className="btn btn-eliminar" onClick={handleShow}>
-        Rechazar
-      </button>
-      {/* ... (resto de tu código) }
-      
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Rechazar Solicitud</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form.Group controlId="motivoRechazo">
-            <Form.Label>Motivo de rechazo:</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Escribe aquí el motivo"
-              value={motivoRechazo}
-              onChange={handleMotivoChange}
-            />
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Cancelar
-          </Button>
-          <Button variant="primary" onClick={handleEnviarClick}>
-            Enviar
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </div>
-  );
-};
-
-export default ListaSolicitudes;
- * ***/
