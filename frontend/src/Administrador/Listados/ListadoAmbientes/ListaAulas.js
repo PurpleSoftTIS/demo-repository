@@ -3,8 +3,8 @@ import './ListaAulas.css';
 import { FaPlus, FaFileCsv, FaTrash } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import Ico1 from '../../assets/IcoGood.png';
-import Ico2 from '../../assets/IcoState.png';
+import Ico1 from '../../../assets/IcoGood.png';
+import Ico2 from '../../../assets/IcoState.png';
 import { read, utils } from 'xlsx';
 
 function ListaAulas() {

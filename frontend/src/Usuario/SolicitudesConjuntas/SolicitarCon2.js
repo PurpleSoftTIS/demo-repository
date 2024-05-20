@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
 import { useNavigate, useLocation } from 'react-router-dom'; // Importing useNavigate and useLocation from react-router-dom
 import { FormContext } from '../../Context/FormContext';
 
@@ -19,13 +18,11 @@ const SolicitarCon2 = () => {
     setFromDataContext({
       nombre_materia: materia,
       motivo: motivo,
-      docente2: docente,
-      docente: docente1,
+      docente: docente,
+      docente1: docente1,
       docente2: docente2
     });
- 
-
-  const navigate = useNavigate();
+   const navigate = useNavigate();
 
   const [inputValue, setInputValue] = useState('');
   const [date, setDate] = useState(new Date());
@@ -48,7 +45,7 @@ const SolicitarCon2 = () => {
         .catch(error => {
           console.error('Error al cargar las horas disponibles:', error);
         });
-    }
+  }
   }, [date]);
 
   const handleDateChange = newDate => {
@@ -68,7 +65,6 @@ const SolicitarCon2 = () => {
   const handleNextStep = () => {
     const datos2 = {
       materia,
-      carrera,
       docente,
       numeroEstudiantes: inputValue,
       diaSeleccionado: selectedDay,

@@ -126,7 +126,6 @@ const Solicitar1 = () => {
                                     <td>{group[0].numero_piso}</td>
                                     <td>
                                         <button className="btn btn-editar mr-2" onClick={() => handleReservar(group)}>Reservar</button>               
-                                        <NavLink className="button-cta1" to='/Usuario/Usu/DetallesSolitud' activeClassName="active">Atras</NavLink>        
                                     </td>
                                 </tr>
                             ))}

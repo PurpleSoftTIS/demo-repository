@@ -33,12 +33,8 @@ const correo = emailC;
     <div className="container" style={{ height: '100vh.' }}>
       <div style={{ height: '4vh' }}></div>  
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2 style={{ margin: 0 }}>Mis Reservas:</h2>
-        <div>
-          <NavLink to="/Usuario/Usu/Solicitar" className="butn butn-nuevo">
-            Nuevo Solicitud<FaPlus className="icon" />
-          </NavLink>
-        </div>
+        <h2 style={{ margin: 0 }}>Mis Solicitudes:</h2>
+        
       </div>
       <div style={{ display: 'flex', justifyContent: 'Right', alignItems: 'center', marginTop: '15px' }}>
         <div>           

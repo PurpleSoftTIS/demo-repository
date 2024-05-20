@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
 import { useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 
@@ -141,7 +140,7 @@ const Solicitar = () => {
           </select>
           {showErrorMessage && selectedOption === '' && <p className="solo-numero">Este campo es obligatorio</p>}
           {errorInconpleto && <p className="error">{errorInconpleto}</p>}
-          <button className="boton-siguiente" onClick={handleNextStep}>Siguiente paso</button>
+          <button className="boton-siguiente" onClick={handleNextStep}>Enviar</button>
         </div>
       </div>
     </div>

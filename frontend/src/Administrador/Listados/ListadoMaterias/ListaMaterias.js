@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import '../ListadoAmbientes/ListaAulas.css'
 import { FaPlus, FaFileCsv, FaTrash } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom'; 
-import Ico1 from "../../assets/IcoGood.png";
-import Ico2 from "../../assets/IcoState.png";
+import Ico1 from "../../../assets/IcoGood.png";
+import Ico2 from "../../../assets/IcoState.png";
 import { useNavigate } from "react-router-dom";
 
 const ListaMaterias = () => {

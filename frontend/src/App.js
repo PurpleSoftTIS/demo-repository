@@ -3,9 +3,9 @@ import { UserContext } from './Context/UserContext';
 import { React, Router, Routes, Route, Navigate, HomeUno, Ambientes, Docentes, Navbar, RegistrarMateria,
         LoginForm, RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Reservar, Solicitar, Ayuda,
         ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,ListaSolicitudesUr,
-        AmbientesActualizar,Footer,ListaMaterias,Solicitar3,Solicitar1,MensajeExitosoU,
+        AmbientesActualizar,Footer,ListaMaterias,MensajeExitosoU,
         MensajeErrorU,MensajeActExito,MensajeActError,DocentesActualizar,MensajeDatExito,MensajeDatError
-      ,SolicitarCon1,SolicitarCon2,SolicitarCon3,PasswordResetForm,MensajeNoEncontrado} from './importaciones';
+      ,PasswordResetForm,MensajeNoEncontrado,AmbientesDis,AmbientesSol} from './importaciones';
        
 function PrivateAdminRoute({ element }) {
   const { urole } = useContext(UserContext);
@@ -55,7 +55,9 @@ function AdminRoutes() {
       <Route path='/Mensaje/ActualizacionExitosa' element={<MensajeActExito/>}/>
       <Route path='/Mensaje/ErrorActualizacion' element={<MensajeActError/>}/>
       <Route path='/Mensaje/CargaMasiva' element={<MensajeDatExito/>}/> 
-      <Route path='Mensaje/ErrorCargaMasiva' element={<MensajeDatError/>}/> 
+      <Route path='/Mensaje/ErrorCargaMasiva' element={<MensajeDatError/>}/> 
+      <Route path='/Ambientes/AmbientesSol' element={<AmbientesSol/>}/> 
+
 
     </Routes>
     <Footer/>
@@ -70,16 +72,13 @@ function UserRoutes() {
     <Routes>
       <Route path='/Inicio/HomeDos' element={<HomeDos/>}/>  
       <Route path='/Usu/Solicitar' element={<Solicitar />} />
-      <Route path='/Usu/Solicitar1' element={<Solicitar1 />} />
       <Route path='/Usu/Reservas' element={<Reservar />} />
       <Route path='/Usu/Ayuda' element={<Ayuda />} /> 
-      <Route path='Usu/DetallesSol' element={<Solicitar3/>}/>
       <Route path='/Mensaje/Exitoso' element={<MensajeExitosoU/>}/>
       <Route path='/Mensaje/Error' element={<MensajeErrorU/>}/>
-      <Route path='/Usu/SolicitarCon1' element={<SolicitarCon1/>} />
-      <Route path='/Usu/SolicitarCon2' element={<SolicitarCon2/>} />
-      <Route path='/Usu/SolicitarCon3' element={<SolicitarCon3/>} />
       <Route path='/Mensaje/NoEncontrado' element={<MensajeNoEncontrado/>} />
+      <Route path='/Usu/AmbientesDis' element={<AmbientesDis/>} />
+
 
     </Routes>
     <Footer/>
