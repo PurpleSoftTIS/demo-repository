@@ -18,6 +18,33 @@ const ListaSolicitudes = () => {
   const handleSelectChange = (e) => {
     setSelectedOption(e.target.value);
   };
+
+
+
+
+  const [showD, setShowD] = useState(false);
+  const [motivoRechazo, setMotivoRechazo] = useState('');
+
+  const handleCloseDelete = () => setShowD(false);
+  const handleShowDelete = () => setShowD(true);
+
+  const handleMotivoChangeDelete = (event) => {
+    setMotivoRechazo(event.target.value);
+  };
+
+  const handleEnviarClick = () => {
+    console.log('Motivo de rechazo:', motivoRechazo);
+    handleCloseDelete();
+  };
+
+
+
+
+
+
+  const handleMotivoChange = (event) => {
+    setMotivoRechazo(event.target.value);
+  };
   const [docente, setDocente] = useState("");
   const [aulas, setAulas] = useState(""); 
   const [formularioData, setFormData] = useState({
@@ -31,63 +58,67 @@ const ListaSolicitudes = () => {
     Motivo: "",
     Tipo_de_solicitud: ""
   });
- 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const aceptarsolicitud = (id_solicitud) => {
-    fetch(`http://127.0.0.1:8000/api/aceptarsolicitud/${id_solicitud}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Error al cambiar el estado de la solicitud');
-        }
-        console.log('Solicitud actualizada:', response);
-        return response.json();
+      fetch(`http://127.0.0.1:8000/api/aceptarsolicitud/${id_solicitud}`, {
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json',
+          },
       })
-      .then((data) => {
-        console.log('Datos de la solicitud actualizada:', data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+          .then((response) => {
+              if (!response.ok) {
+                  throw new Error('Error al cambiar el estado de la solicitud');
+              }
+              console.log('Solicitud actualizada:', response);
+              return response.json();
+          })
+          .then((data) => {
+              console.log('Datos de la solicitud actualizada:', data);
+          })
+          .catch((error) => {
+              console.error(error);
+          });
   };
 
-  const rechazarsolicitud = (id_solicitud) => {
+  const rechazarsolicitud= (id_solicitud) => {
     fetch(`http://127.0.0.1:8000/api/rechazarsolicitud/${id_solicitud}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Error al cambiar el estado de la solicitud');
-        }
-        console.log('Solicitud actualizada:', response);
-        return response.json();
-      })
-      .then((data) => {
-        console.log('Datos de la solicitud actualizada:', data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Error al cambiar el estado de la solicitud');
+            }
+            console.log('Solicitud actualizada:', response);
+            return response.json();
+        })
+        .then((data) => {
+            console.log('Datos de la solicitud actualizada:', data);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
   };
+
 
   useEffect(() => {
-      fetch('http://127.0.0.1:8000/api/obtenerSol', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
+    fetch('http://127.0.0.1:8000/api/obtenerSol', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        setSolicitudes(data);
+        setSolicitudesPendientes(data);
+        console.log("datos", data);
       })
-        .then(response => response.json())
-        .then(data => {
-          setSolicitudes(data);
-        })
-        .catch(error => console.error('Error al obtener los datos:', error));
+      .catch(error => console.error('Error al obtener los datos:', error));
   }, []);
 
   useEffect(() => {
@@ -110,22 +141,45 @@ const ListaSolicitudes = () => {
   const [mostrarOpciones, setMostrarOpciones] = useState(false); // Estado para controlar la aparición de los botones "Todas" y "Pendientes"
 
   const mostrarFormularioParaSolicitud = (solicitud) => {
-      setFormData({
-        docente: solicitud.nombre,
-        materia: solicitud.nombre_materia,
-        grupo: solicitud.grupo,
-        aula: solicitud.nombre_ambiente,
-        capacidad: solicitud.numero_estudiantes,
-        tipo_de_solicitud: solicitud.tipo_solicitud,
-        fecha: solicitud.fecha_solicitud,
-        hora: solicitud.hora_inicio,
-        motivo: solicitud.motivo
-      });
-      setMostrarFormulario(true);
+      if(solicitud.tipo_solicitud ==="individual"){
+        setFormData({
+          docente: solicitud.nombre,
+          materia: solicitud.nombre_materia,
+          grupo: solicitud.grupo,
+          aula: solicitud.nombre_ambiente,
+          capacidad: solicitud.numero_estudiantes,
+          tipo_de_solicitud: solicitud.tipo_solicitud,
+          fecha: solicitud.fecha_solicitud,
+          hora: solicitud.hora_inicio,
+          motivo: solicitud.motivo
+        });
+        setMostrarFormulario(true);
+        setMostrarFormularioCon(false);
+
+      }else{
+        setFormData({
+          docente: solicitud.nombre,
+          materia: solicitud.nombre_materia,
+          grupo: solicitud.grupo,
+          aula: solicitud.nombre_ambiente,
+          capacidad: solicitud.numero_estudiantes,
+          tipo_de_solicitud: solicitud.tipo_solicitud,
+          fecha: solicitud.fecha_solicitud,
+          hora: solicitud.hora_inicio,
+          motivo: solicitud.motivo
+        });
+        setMostrarFormulario(true);
+        setMostrarFormularioCon(false);
+
+        setDocente(solicitud.nombre); 
+        setAulas(solicitud.nombre_ambiente); 
+      
+      }
+      
   };
 
   const cerrarFormulario = () => {
-    setMostrarFormulario(false);
+      setMostrarFormulario(false);
   };
   const filtrarSolicitudes = () => {
     let solicitudesFiltradas = solicitudesPendientes; // Filtrar las solicitudes pendientes
@@ -165,11 +219,11 @@ const ListaSolicitudes = () => {
     setSolicitudes(solicitudesMostrables);
   };
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+      const { name, value } = e.target;
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: value
+      }));
   };
   const buscardor = (e) => {
     setBuscar(e.target.value);
@@ -188,19 +242,9 @@ const ListaSolicitudes = () => {
         solicitud.hora_fin.toString().toLowerCase().includes(buscar.toLowerCase())    
     );
     
-  }
- 
+  } 
 
-  const filtrarSolicitudes = Array.isArray(solicitudes)
-    ? solicitudes.filter(
-        (solicitud) =>
-          solicitud.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-          solicitud.nombre_materia.toLowerCase().includes(busqueda.toLowerCase()) ||
-          solicitud.motivo.toLowerCase().includes(busqueda.toLowerCase())
-      )
-    : [];
-
-  return (
+return (
     <div className="container" style={{ minHeight: '78.7vh' }}>
       <div style={{ height: '4vh' }}></div>
       <div
@@ -210,12 +254,28 @@ const ListaSolicitudes = () => {
           alignItems: 'center',
         }}
       >
-        <h2 style={{ margin: 0 }}>Solicitudes Todas:</h2>
-        <div>
-          <input type="text" placeholder="Buscar Reserva" />
-          <button className="butn butn-filtro">Filtros</button>
-        </div>
-      </div>
+        <h2 style={{ margin: 0 }}>Solicitudes:</h2>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+
+        <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador'/>
+
+          <button className="butn butn-filtro" onClick={() => setMostrarOpciones(!mostrarOpciones)}>Solicitudes</button>
+            {mostrarOpciones && (
+            <div className="opciones-solicitudes">
+              <button className="butn butn-filtro" onClick={() => { setMostrarOpciones(false);
+                mostrarSolicitudesTodas();
+                }}>Todas
+              </button>
+            <button className="butn butn-filtro" onClick={() => {
+              setMostrarOpciones(false);
+              mostrarSolicitudesPendientes();
+              }}>Pendientes</button>
+
+            </div>
+          )}
+    <button className="butn butn-filtro" onClick={handleShow}>Filtros</button>
+                </div>
+              </div>
 
       <table className="table table-hover">
         <thead className="thead">
@@ -231,8 +291,8 @@ const ListaSolicitudes = () => {
           </tr>
         </thead>
         <tbody>
-          {Array.isArray(solicitudes) && solicitudes.map((solicitud, index) => (
-            <tr key={index}
+        {resultado.map((solicitud) => (
+            <tr key={solicitud.id_solicitud}
               className="fila-lista"
               onClick={() => mostrarFormularioParaSolicitud(solicitud)}
             >
@@ -242,19 +302,74 @@ const ListaSolicitudes = () => {
               <td>{solicitud.motivo}</td>
               <td>{solicitud.fecha_solicitud}</td>
               <td>{solicitud.hora_inicio+" "+solicitud.hora_fin}</td>
-              <td>
-                <button className="btn btn-editar mr-2" onClick={() => aceptarsolicitud(solicitud.id_solicitud)}>
-                  Aceptar
-                </button>
-
-                <button className="btn btn-eliminar"  onClick={() => rechazarsolicitud(solicitud.id_solicitud)} >
-                  Rechazar
-                </button>
-              </td>
+              {!mostrarSolicitudesTodass && (
+                <td>
+                  <button className="btn btn-editar mr-2" onClick={() => aceptarsolicitud(solicitud.id_solicitud)}>Aceptar</button>
+                  <button className="btn btn-eliminar" onClick={(handleShowDelete)}>Rechazar</button>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>
       </table>
+      <Modal show={showD} onHide={handleCloseDelete}>
+        <Modal.Header closeButton>
+          <Modal.Title>Rechazar Solicitud</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form.Group controlId="motivoRechazo">
+            <Form.Label>Motivo de rechazo:</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Escribe aquí el motivo"
+              value={motivoRechazo}
+              onChange={handleMotivoChangeDelete}
+            />
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseDelete}>
+            Cancelar
+          </Button>
+          <Button variant="primary" onClick={handleEnviarClick}>
+            Enviar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Filtros</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <Form.Control 
+        as="select" 
+        value={motivo} 
+        onChange={(e) => setMotivo(e.target.value)}
+        style={{ backgroundColor: 'white', color: 'black' }}
+      >
+        <option value="">Selecciona un motivo</option>
+        <option value="Examen de Mesa">Examen de Mesa</option>
+        <option value="Examen Primer Parcial">Examen Primer Parcial</option>
+        <option value="Examen Segundo Parcial">Examen Segundo Parcial</option>
+        <option value="Examen Final">Examen Final</option>
+        <option value="Examen Segunda Instancia">Examen Segunda Instancia</option>
+        <option value="Elecciones">Elecciones</option>
+        <option value="Congreso">Congreso</option>
+
+
+      </Form.Control>     
+    
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cerrar
+          </Button>
+          <Button variant="primary" onClick={aplicarFiltros}>
+            Aplicar Filtros
+          </Button>
+        </Modal.Footer>
+      </Modal>
       {mostrarFormulario && (
         <div className="overlay" onClick={cerrarFormulario}>
           <div className="formulario-emergente" onClick={(e) => e.stopPropagation()}>
@@ -351,40 +466,64 @@ const ListaSolicitudes = () => {
          </div>
        </div>
       )}
+    </div>
+);
+};
 
+export default ListaSolicitudes;
+
+
+/*
+import React, { useState, useEffect } from 'react';
+import './ListaSolicitudes.css';
+import { Modal, Button, Form } from 'react-bootstrap';
+
+const ListaSolicitudes = () => {
+  const [show, setShow] = useState(false);
+  const [motivoRechazo, setMotivoRechazo] = useState('');
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const handleMotivoChange = (event) => {
+    setMotivoRechazo(event.target.value);
+  };
+
+  const handleEnviarClick = () => {
+    // Aquí puedes enviar el motivo al servidor o realizar otras acciones necesarias
+    console.log('Motivo de rechazo:', motivoRechazo);
+    handleClose();
+  };
+
+  return (
+    <div className="container" style={{ height: '100vh' }}>
+      {/* ... (resto de tu código) }
+      <button className="btn btn-eliminar" onClick={handleShow}>
+        Rechazar
+      </button>
+      {/* ... (resto de tu código) }
+      
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Filtros</Modal.Title>
+          <Modal.Title>Rechazar Solicitud</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <Form.Control 
-        as="select" 
-        value={motivo} 
-        onChange={(e) => setMotivo(e.target.value)}
-        style={{ backgroundColor: 'white', color: 'black' }}
-      >
-        <option value="">Selecciona un motivo</option>
-        <option value="motivo1">Examen</option>
-        <option value="motivo2">Examen de Mesa</option>
-        <option value="motivo3">Examen primer parcial</option>
-        <option value="motivo4">Examen segundo parcial</option>
-        {/* Agrega aquí más opciones si es necesario */}
-      </Form.Control>
-      
-      <Form.Control 
-        type="date" 
-        value={fecha} 
-        onChange={(e) => setFecha(e.target.value)}
-        style={{ backgroundColor: 'white', color: 'black' }}
-      />
-      
+          <Form.Group controlId="motivoRechazo">
+            <Form.Label>Motivo de rechazo:</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Escribe aquí el motivo"
+              value={motivoRechazo}
+              onChange={handleMotivoChange}
+            />
+          </Form.Group>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Cerrar
+            Cancelar
           </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Aplicar Filtros
+          <Button variant="primary" onClick={handleEnviarClick}>
+            Enviar
           </Button>
         </Modal.Footer>
       </Modal>
@@ -393,3 +532,4 @@ const ListaSolicitudes = () => {
 };
 
 export default ListaSolicitudes;
+ * ***/
