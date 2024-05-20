@@ -75,7 +75,7 @@ const NarbarUsuario = () => {
                   )}              
               </div>             
               <li className="nav-item">
-                <NavLink className="nav-link" to='/Usuario/Usu/Reservas'>Reservas</NavLink>
+                <NavLink className="nav-link" to='/Usuario/Usu/Reservas'>Mis Solicitudes</NavLink>
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to='/Usuario/Usu/Ayuda'>Ayuda</NavLink>
