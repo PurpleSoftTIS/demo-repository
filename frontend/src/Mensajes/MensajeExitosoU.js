@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'; // Importa el icono faCheckCircle
 //import { Link } from 'react-router-dom';
-import "./MensajeUsuario.css";
+import "./Mensaje.css";
 
 
 const MensajeExitosoU = () => {

@@ -251,9 +251,19 @@ align-items: center;
 }
 
 .formulario-emergente {
+  position: relative;
+  width: 800px;
 background-color: #fff;
 padding: 10px;
 border-radius: 8px;
 box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Sombra alrededor del formulario */
+}
+
+.tituloForm{
+  color: white;
+  font-size: 20px;
+}
+.dimensionForm,.textoForm{
+  color: white;
 }
 

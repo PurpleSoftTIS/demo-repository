@@ -52,7 +52,6 @@ Route::post('/RegistrarSol', [RegistrarSolicitud::class, 'registrar']);
 Route::post('/masivoDocentes', [CargaDocente::class, 'cargaDocentes']);
 Route::post('/importMaterias', [MateriaController::class, 'import']);
 Route::post('/registrarSolicitud',[SolicitudController::class,'registrarSolicitud']);
-Route::post('/registrarSolicitudCon',[SolicitudController::class,'registrarSolicitudesConjuntas']);
 Route::post('/enviarcorreo', [CorreoController::class, 'enviarCorreo']);
 Route::post('/verificarCodigo', [CorreoController::class, 'verificarCodigo']);
 Route::post('/restablecercontrasena', [DocenteController::class, 'restablecerPasswd']);
