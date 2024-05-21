@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import { AiOutlineCalendar } from 'react-icons/ai';
 import { useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 
@@ -11,13 +13,19 @@ const Solicitar = () => {
 
   const [inputValue, setInputValue] = useState('');
   const [date, setDate] = useState(new Date());
+  const [showCalendar, setShowCalendar] = useState(false);
   const [horariosDisponibles, setHorariosDisponibles] = useState([]);
   const [selectedDay, setSelectedDay] = useState(''); 
   const [selectedOption, setSelectedOption] = useState('');
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [errorInconpleto, setErrorIncompleto] = useState("");
+  const [selectedMateria, setSelectedMateria] = useState(''); 
   const correo = correoElectronico;
 
+  const disabledDates = [
+    new Date(2024, 0, 1), // Example specific date (January 1, 2024)
+    new Date(2024, 11, 25), // Example specific date (December 25, 2024)
+  ];
 
   useEffect(() => {
     if (date) {
@@ -49,6 +57,7 @@ const Solicitar = () => {
 
     setDate(newDate);
     setSelectedDay(capitalizedDayOfWeek);
+    setShowCalendar(false);
   };
 
   const handleInputChange = (event) => {
@@ -59,17 +68,21 @@ const Solicitar = () => {
     setSelectedOption(event.target.value);
   };
 
+  const handleMateriaChange = (event) => {
+    setSelectedMateria(event.target.value);
+  };
+
   const handleNextStep = () => {
     const tipoNumero = /^\d+$/;
     const dataToSend = {
       numeroEstudiantes: inputValue,
       diaSeleccionado: selectedDay,
-      correo:correo,
+      correo: correo,
       fechaSeleccionada: date.toLocaleDateString(), 
-
+      materiaSeleccionada: selectedMateria, 
     };
-  
-    if (!inputValue) {
+
+    if (!inputValue || !selectedMateria) {
       setErrorIncompleto("Por favor, complete todos los campos del formulario");
       return;
     } else {
@@ -97,22 +110,47 @@ const Solicitar = () => {
       }
     }
   };
-  
-  
+
+  const toggleCalendar = () => {
+    setShowCalendar(!showCalendar);
+  };
+
+  const tileDisabled = ({ date }) => {
+    const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+    const isDisabledDate = disabledDates.some(disabledDate => 
+      date.getFullYear() === disabledDate.getFullYear() &&
+      date.getMonth() === disabledDate.getMonth() &&
+      date.getDate() === disabledDate.getDate()
+    );
+    return isWeekend || isDisabledDate;
+  };
+
   return (
-    <div className='contenedorGeneral'>
+    <div className='contenedorGeneral' style={{minHeight: '100vh'}}>
       <div className="contenedorsito">
         <div>
           <h4>Selecciona una fecha:</h4>
-          <div className='calendario-container'>
-            <Calendar
-              onChange={handleDateChange}
-              value={date}
-              minDate={new Date()} 
-              maxDate={new Date(2026, 11, 31)} 
+          <div className='calendar-input-container'>
+            <input
+              type="text"
+              value={date.toLocaleDateString()}
+              readOnly
+              onClick={toggleCalendar}
+              className="calendar-input"
             />
+            <AiOutlineCalendar className="calendar-icon" onClick={toggleCalendar} />
+            {showCalendar && (
+              <div className='calendar-popup'>
+                <Calendar
+                  onChange={handleDateChange}
+                  value={date}
+                  minDate={new Date()}
+                  maxDate={new Date(2026, 11, 31)}
+                  tileDisabled={tileDisabled}
+                />
+              </div>
+            )}
           </div>
-          <p className='fecha'> Fecha seleccionada: {date.toLocaleDateString()}</p>
         </div>
 
         <div className='capacidad'>
@@ -123,17 +161,63 @@ const Solicitar = () => {
             name="campo"
             value={inputValue}
             onChange={handleInputChange}
-            placeholder='Ingrese la capacidad es estudiantes'
+            placeholder='Ingrese la capacidad de estudiantes'
             className="input"
           />
           {showErrorMessage && <p className="error">{showErrorMessage}</p>}
         </div>
-
+        <div className='tipo_ambiente'>
+          <label htmlFor="campo1" className="label">Tipo de Ambiente:</label>
+          <input
+            type="text"
+            id="campo1"
+            name="campo1"
+            placeholder='Aula Comun, Laboratorio'
+            className="input"
+          />
+          {showErrorMessage && <p className="error">{showErrorMessage}</p>}
+        </div>
+        <div className='materia'>
+          <label htmlFor="menuMateria" className="label">Materia:</label>
+          <select id="menuMateria" value={selectedMateria} onChange={handleMateriaChange} className="select">
+            <option value="">Selecciona una materia</option>
+            <option value="Materia 1">Materia 1</option>
+            <option value="Materia 2">Materia 2</option>
+          </select>
+          {showErrorMessage && selectedMateria === '' && <p className="solo-numero">Este campo es obligatorio</p>}
+        </div>
+        <div className='motivo'>
+          <label htmlFor="menuMotivo" className="label">Grupo:</label>
+          <select id="menuMotivo" value={selectedMateria} onChange={handleMateriaChange} className="select">
+            <option value="">Seleccione el Grupo</option>
+            <option value="Materia 1">Materia 1</option>
+            <option value="Materia 2">Materia 2</option>
+          </select>
+          {showErrorMessage && selectedMateria === '' && <p className="solo-numero">Este campo es obligatorio</p>}
+        </div>
+        <div className='motivo'>
+          <label htmlFor="menuMotivo" className="label">Motivo:</label>
+          <select id="menuMotivo" value={selectedMateria} onChange={handleMateriaChange} className="select">
+            <option value="">Seleccione el Motivo</option>
+            <option value="Materia 1">Materia 1</option>
+            <option value="Materia 2">Materia 2</option>
+          </select>
+          {showErrorMessage && selectedMateria === '' && <p className="solo-numero">Este campo es obligatorio</p>}
+        </div>
+        <div className='motivo'>
+          <label htmlFor="menuMotivo" className="label">Seleccione la cantidad de periodos:</label>
+          <select id="menuMotivo" value={selectedMateria} onChange={handleMateriaChange} className="select">
+            <option value="">Periodos</option>
+            <option value="Materia 1">Materia 1</option>
+            <option value="Materia 2">Materia 2</option>
+          </select>
+          {showErrorMessage && selectedMateria === '' && <p className="solo-numero">Este campo es obligatorio</p>}
+        </div>
         <div className='horarios'>
           <label htmlFor="menu" className="label">Selecciona una opción:</label>
-          <select id="menu" value={selectedOption} onChange={handleSelectChange} className="select" >
+          <select id="menu" value={selectedOption} onChange={handleSelectChange} className="select">
             {horariosDisponibles.map((hora, index) => (
-              <option key={index} value={hora.id_hora} >
+              <option key={index} value={hora.id_hora}>
                 {hora.hora_inicio} - {hora.hora_fin}
               </option>
             ))}
