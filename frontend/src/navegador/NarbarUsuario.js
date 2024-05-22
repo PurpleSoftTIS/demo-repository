@@ -69,7 +69,7 @@ const NarbarUsuario = () => {
                   <button className="nav-link dropdown-toggle" onClick={toggleDropdown2} style={{ cursor: 'pointer' }}>Solicitar</button>
                   {showDropdown2 && (
                       <div className="menu">
-                          <NavLink className="opciones" to='/Usuario/Usu/Solicitar' activeclassname="active">Indivudual</NavLink>
+                          <NavLink className="opciones" to='/Usuario/Usu/Solicitar' activeclassname="active">Individual</NavLink>
                           <NavLink className="opciones" to='/Usuario/Usu/SolicitarCon1' activeclassname="active">Conjunta</NavLink>
                       </div>              
                   )}              

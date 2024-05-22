@@ -4,6 +4,7 @@ import 'react-calendar/dist/Calendar.css';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import { useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
+import Ico1 from '../../assets/IcoMore.png';
 
 import "./Solicitar.css";
 
@@ -20,12 +21,63 @@ const Solicitar = () => {
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [errorInconpleto, setErrorIncompleto] = useState("");
   const [selectedMateria, setSelectedMateria] = useState(''); 
+  const [aux, setAux] = useState(0); // Definir aux con useState
+  const [formData, setFormData] = useState({ id_docente: '' }); // Definir formData con useState
+  const [docentes, setDocentes] = useState([]); // Definir docentes con useState
   const correo = correoElectronico;
 
   const disabledDates = [
-    new Date(2024, 0, 1), // Example specific date (January 1, 2024)
-    new Date(2024, 11, 25), // Example specific date (December 25, 2024)
+    { month: 4, day: 30 },
+    { month: 7, day: 6 },
+    { month: 8, day: 14 }, 
+    { month: 10, day: 2 },
   ];
+
+  const highlightedDates = [
+    { month: 5, day: 10 },   
+    { month: 5, day: 11 },   
+    { month: 5, day: 12 },   
+    { month: 5, day: 13 },  
+    { month: 5, day: 14 },  
+    { month: 5, day: 15 },   
+    { month: 5, day: 16 },   
+    { month: 5, day: 17 },   
+    { month: 5, day: 18 },   
+    { month: 5, day: 19 },   
+    { month: 5, day: 20 },   
+    { month: 5, day: 21 },   
+    { month: 5, day: 22 },  
+    { month: 5, day: 24 },
+    { month: 5, day: 25 },
+    { month: 5, day: 26 },
+    { month: 5, day: 27 },
+    { month: 5, day: 28 },
+    { month: 5, day: 29 },
+    { month: 6, day: 1 },
+    { month: 6, day: 2 },
+    { month: 6, day: 3 },
+    { month: 6, day: 4 },
+    { month: 6, day: 5 },
+  ];
+
+  const [MoreDocente, setMoreDocente] = useState(false);
+  const [MoreDocenteDos, setMoreDocenteDos] = useState(false);
+  const [additionalDocentes, setAdditionalDocentes] = useState([]);
+
+  const handleAdditionalDocenteChange = (index, value) => {
+    const newAdditionalDocentes = [...additionalDocentes];
+    newAdditionalDocentes[index] = value;
+    setAdditionalDocentes(newAdditionalDocentes);
+  };
+
+  const masDocente = () => {
+    if (aux === 1) {
+      setMoreDocente(true); 
+    } else {
+      setMoreDocenteDos(true); 
+    }
+    setAux(aux + 1);
+  };
 
   useEffect(() => {
     if (date) {
@@ -88,7 +140,7 @@ const Solicitar = () => {
     } else {
       setShowErrorMessage("");
       if (!tipoNumero.test(inputValue)) {
-        setShowErrorMessage("Ingrese solo numeros");
+        setShowErrorMessage("Ingrese solo números");
       } else {
         setShowErrorMessage("");
         if (!selectedOption) {
@@ -116,17 +168,27 @@ const Solicitar = () => {
   };
 
   const tileDisabled = ({ date }) => {
-    const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+    const isSunday = date.getDay() === 0;
     const isDisabledDate = disabledDates.some(disabledDate => 
-      date.getFullYear() === disabledDate.getFullYear() &&
-      date.getMonth() === disabledDate.getMonth() &&
-      date.getDate() === disabledDate.getDate()
+      date.getMonth() === disabledDate.month &&
+      date.getDate() === disabledDate.day
     );
-    return isWeekend || isDisabledDate;
+    return isSunday || isDisabledDate;
+  };
+
+  const tileClassName = ({ date, view }) => {
+    if (view === 'month') {
+      const isHighlighted = highlightedDates.some(highlightedDate => 
+        date.getMonth() === highlightedDate.month &&
+        date.getDate() === highlightedDate.day
+      );
+      return isHighlighted ? 'highlighted-date' : null;
+    }
+    return null;
   };
 
   return (
-    <div className='contenedorGeneral' style={{minHeight: '100vh'}}>
+    <div className='contenedorGeneral' style={{ minHeight: '100vh' }}>
       <div className="contenedorsito">
         <div>
           <h4>Selecciona una fecha:</h4>
@@ -147,6 +209,7 @@ const Solicitar = () => {
                   minDate={new Date()}
                   maxDate={new Date(2026, 11, 31)}
                   tileDisabled={tileDisabled}
+                  tileClassName={tileClassName}
                 />
               </div>
             )}
@@ -214,16 +277,53 @@ const Solicitar = () => {
           {showErrorMessage && selectedMateria === '' && <p className="solo-numero">Este campo es obligatorio</p>}
         </div>
         <div className='horarios'>
-          <label htmlFor="menu" className="label">Selecciona una opción:</label>
-          <select id="menu" value={selectedOption} onChange={handleSelectChange} className="select">
-            {horariosDisponibles.map((hora, index) => (
-              <option key={index} value={hora.id_hora}>
-                {hora.hora_inicio} - {hora.hora_fin}
-              </option>
-            ))}
-          </select>
           {showErrorMessage && selectedOption === '' && <p className="solo-numero">Este campo es obligatorio</p>}
           {errorInconpleto && <p className="error">{errorInconpleto}</p>}
+        </div>
+        <div className="contact-form-phone-parent">
+          <div className="subtitulo">Docente
+            <img className="iconos2" src={Ico1} alt="Activo" width="25px" height="25px" onClick={masDocente} />
+          </div>
+          <select 
+            className="input24" 
+            value={formData.id_docente}
+            name="id_docente"
+            onChange={(e) => setFormData({ ...formData, id_docente: e.target.value })}
+          >
+            <option value="">Seleccione un Docente</option>
+            {docentes.map((docente, index) => (
+              <option key={index} value={docente.id_docente}>{docente.nombre_completo_docente}</option>
+            ))}
+          </select>
+              
+          {MoreDocente && (
+            <select 
+              className="input24" 
+              value={additionalDocentes[0]}
+              onChange={e => handleAdditionalDocenteChange(0, e.target.value)}
+            >
+              <option value="">Seleccione un Docente</option>
+              {docentes.map((docente, index) => (
+                <option key={index} value={docente.id_docente}>{docente.nombre_completo_docente}</option>
+              ))}
+            </select>
+          )}
+
+          {MoreDocenteDos && (
+            <select 
+              className="input24" 
+              value={additionalDocentes[1]}
+              onChange={e => handleAdditionalDocenteChange(1, e.target.value)}
+            >
+              <option value="">Seleccione un Docente</option>
+              {docentes.map((docente, index) => (
+                <option key={index} value={docente.id_docente}>{docente.nombre_completo_docente}</option>
+              ))}
+            </select>
+          )}
+
+        </div>
+        <div>
           <button className="boton-siguiente" onClick={handleNextStep}>Enviar</button>
         </div>
       </div>
