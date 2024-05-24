@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSolicitudeMateriasTable extends Migration
+class CreateSolicitudesMateriasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -27,6 +27,6 @@ class CreateSolicitudeMateriasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('solicitude_materias');
+        Schema::dropIfExists('solicitudes_materias');
     }
 }

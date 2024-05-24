@@ -87,7 +87,7 @@ const ListaMaterias = () => {
           })
           .catch(error => console.error('Error al obtener las Materias:', error));
         console.log('Importación exitosa');
-        navigate("/Admin//Mensaje/CargaMasiva");
+        navigate("/Admin/Mensaje/CargaMasiva");
 
     } catch (error) {
       navigate("/Admin/Mensaje/ErrorCargaMasiva");

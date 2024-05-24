@@ -15,11 +15,10 @@ function ListaAulas() {
   const [importar, setImportar] = useState(false);
   const [ambienteToDelete, setAmibienteToDelete] = useState("");
   const [buscar, setBuscar] = useState("");
-
-
   const navigate = useNavigate();
   const importaciones = () => {
-    setImportar(true);     
+      setImportar(!importar);
+      
   };  
   const cancelarBorrar = () => {
     setAdvertencia(false); 
@@ -132,8 +131,12 @@ function ListaAulas() {
   
           if (response.ok) {
             console.log('Datos enviados al servidor exitosamente.');
+            navigate("/Admin/Mensaje/CargaMasiva");
+
           } else {
+            navigate("/Admin/Mensaje/ErrorCargaMasiva");
             throw new Error('Error al enviar datos al servidor.');
+
           }
         } catch (error) {
           console.error('Error:', error);
@@ -268,7 +271,6 @@ function ListaAulas() {
                   style={{ display: 'none' }}
                   onChange={handleArchivoDiasHorasSeleccionado} // Asociado a la importación de días y horas
                 />
-
               </div>
             )}
         
@@ -310,7 +312,6 @@ function ListaAulas() {
                 <button className="btn btn-editar mr-2" onClick={() => handleEditar(aula.id_ambiente)}>
                   Editar
                 </button>
-
                 <button className="btn btn-eliminar" onClick={() => {borrar(aula.id_ambiente); }}>
                   Eliminar
                 </button>

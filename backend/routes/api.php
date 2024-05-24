@@ -39,6 +39,7 @@ Route::get('/obtenerSol', [SolicitudController::class, 'obtenerSolicitud']);
 Route::get('/SolicitudUrgencias', [SolicitudUrgencia::class, 'urgencias']);
 Route::get('/ReservasDocentes/{setEmailC}', [RerservasUsuario::class, 'reservasDocentes']);
 Route::get('/obtenerMara/{Correo}', [AmbienteController::class, 'MateriasObtener']);
+Route::get('/ambientesContiguos/{capacidad}/{dia}/{hora_inicio}/{hora_fin}', [SolicitudController::class, 'ambientesContiguos']);
 
 //Registrar Datos
 Route::post('/docentesRegistrar', [DocenteRegistrarController::class, 'registrar']);
@@ -57,7 +58,7 @@ Route::post('/verificarCodigo', [CorreoController::class, 'verificarCodigo']);
 Route::post('/restablecercontrasena', [DocenteController::class, 'restablecerPasswd']);
 //Elimnar datos
 Route::delete('/docentes/{id_docente}', [DocenteController::class, 'eliminar']);
-Route::delete('/borrar/{id_ambiente}', [AmbienteController::class, 'borrarAmbiente']);
+Route::delete('/borrar/{id_ambiente}', [DeleteAmbienteController::class, 'borrarAmbiente']);
 Route::delete('/materias/{id}', [MateriaController::class, 'destroy']);
 Route::delete('/materias', [MateriaController::class, 'eliminarTodo']);
 Route::delete('/borrarTodo',  [DeleteAmbienteController::class,'Borrartodo']);

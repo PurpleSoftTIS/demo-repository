@@ -201,11 +201,15 @@ input[type="text"] {
   margin-left: 140px;
   width: 400px;
 }
+.importaciones{
+position: relative;
+align-content: center;
 
-.til2 {
-  margin-left: 40px;
-  width: 350px;
-  text-align: center;
+margin-top: -30px; 
+width: 200px;
+height: 100px;
+left: -200px;
+top: 10px;  
 }
 
 .importaciones {
