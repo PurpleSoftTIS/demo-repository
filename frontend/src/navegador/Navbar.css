@@ -126,6 +126,11 @@
         calc(32px/2) calc(32px/1.4),
       conic-gradient(from -30deg at 50% 66%,#0000,#ffffff .5deg 60deg,#ffffff 60.5deg);
     background-size: 32px calc(32px/1.154);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
 }
 .InicioSesion{
     display: flex;
