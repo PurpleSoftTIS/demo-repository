@@ -13,6 +13,7 @@ use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\CarreraController;
 use App\Http\Controllers\DeleteAmbienteController;
 use App\Http\Controllers\CorreoController;
+use App\Http\Controllers\AmbienteObtenerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;   
 
@@ -29,6 +30,7 @@ Route::get('/materias', [MateriaController::class, 'index']);
 Route::get('/listaAmbiente', [AmbienteController::class, 'index']);
 Route::get('/ambientesDispo/{capacidad}/{dia}/{hora_inicio}/{hora_fin}', [AmbienteController::class, 'ambientesDis']);
 Route::get('/ambientesContiguos/{capacidad}/{dia}/{hora_inicio}/{hora_fin}', [SolicitudController::class, 'ambientesContiguos']);
+Route::get('/ambientesDisponibles/{capacidad}/{dia}/{horarios}', [AmbienteObtenerController::class, 'ambientesDisponibles']);
 
 Route::get('/ambientesDispoDos/{capacidad}', [AmbienteController::class, 'ambientesDi']);
 Route::get('/docentespormateria/{nombre_materia}/{correo_usuario}', [MateriaController::class,'docentesPorMateria']);

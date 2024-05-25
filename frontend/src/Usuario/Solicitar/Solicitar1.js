@@ -55,11 +55,7 @@ const Solicitar1 = () => {
             });
         }
     };
-    const reservaContiguos= (ambientes) => {
-        console.log("datos send", datosSend);
-        const datosConAmbientes = { ...datosSend, ambientes };
-        navigate('/Usuario/Usu/DetallesSol', { state: datosConAmbientes });
-    };
+  
 
     const handleReservar = (aulaSeleccionada) => {
         console.log("datos send",datosSend);

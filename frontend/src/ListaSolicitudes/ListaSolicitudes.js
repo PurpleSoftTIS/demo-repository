@@ -76,7 +76,34 @@ const ListaSolicitudes = () => {
             console.error(error);
         });
   };
+  useEffect(() => {
+    const capacidad = 200;
+    const dia = 'Lunes'; 
+    const horarios = [
+        { hora_inicio: '8:15', hora_fin: '9:45' },
+       
+    ];
+    const horariosJSON = JSON.stringify(horarios);
 
+    
+    fetch(`http://127.0.0.1:8000/api/ambientesDisponibles/${capacidad}/${dia}/${horariosJSON}`)
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error('Error al obtener los ambientes disponibles');
+        }
+        return response.json();
+    })
+    .then((data) => {
+        console.log('Ambientes disponibles:', data);
+    })
+    .catch((error) => {
+        console.error('Error al obtener los ambientes disponibles:', error);
+    });
+    
+  
+  
+  
+  }, []);
 
   useEffect(() => {
       fetch('http://127.0.0.1:8000/api/obtenerSol', {
@@ -95,21 +122,7 @@ const ListaSolicitudes = () => {
         .catch(error => console.error('Error al obtener los datos:', error));
   }, []);
 
-  useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/obtenerTodasSolicitudes', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => response.json())
-      .then(data => {
-        setSolicitudesTodas(data);
-        
-        console.log("datos",data);
-      })
-      .catch(error => console.error('Error al obtener los datos:', error));
-}, []);
+  
 
 
   const [mostrarOpciones, setMostrarOpciones] = useState(false); // Estado para controlar la aparición de los botones "Todas" y "Pendientes"
