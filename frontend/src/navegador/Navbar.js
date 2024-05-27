@@ -128,6 +128,9 @@ const Navbar = () => {
                       </div>              
                   )}              
               </div>
+              <li className="nav-item">
+                <NavLink className="nav-link" to='/Admin/AyudaAdmin'>Ayuda</NavLink> 
+              </li>
             </ul>
           </div>          
           {isVisible &&(
@@ -139,6 +142,10 @@ const Navbar = () => {
                 {showSesion && (
                       <div className="sesion">
                           <button className="opciones" onClick={handleLogout}>Cerrar sesión</button>
+                          <NavLink className="opciones" to='/Admin/Configuraciones' >Configuracion</NavLink>
+
+
+                      
                       </div>
                   )}
               </button>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import logo from '../assets/LogoDefinitivo.jpeg';
+import logoNoti from '../assets/IcoNoti.png';
+
 import userLogo from '../assets/IcoUser.png';
 import { FaBars } from 'react-icons/fa';
 import { UserContext } from '../Context/UserContext';
@@ -13,6 +15,8 @@ const NarbarUsuario = () => {
   const [showSesion, setShowSesion] = useState(false);
   const dropdownRef2 = useRef(null);
   const { setUserC, setEmailC, setUrole,  userC } = useContext(UserContext);
+  const [showDropdown2, setShowDropdown2] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,6 +44,9 @@ const NarbarUsuario = () => {
   const toggleSesion = () => {
     setShowSesion(!showSesion);
   };
+  const toggleDropdown2 = () => {
+    setShowDropdown2(!showDropdown2);
+  };
 
 
   return (
@@ -63,7 +70,13 @@ const NarbarUsuario = () => {
               <NavLink className="nav-link" to='/Usuario/Inicio/HomeDos'>Inicio</NavLink> 
             </li>
               <div className="dropdown-container" ref={dropdownRef2}>
-                <NavLink className="nav-link" to='/Usuario/Usu/Solicitar' activeclassname="active">Solicitar</NavLink>                              
+              <button className="nav-link dropdown-toggle" onClick={toggleDropdown2} style={{ cursor: 'pointer' }}>Solicitar</button>
+                  {showDropdown2 && (
+                      <div className="menu">
+                          <NavLink className="opciones" to='/Usuario/Usu/Solicitar' activeclassname="active">Individual</NavLink>
+                          <NavLink className="opciones" to='/Usuario/Usu/SolicitarCon' activeclassname="active">Conjunta</NavLink>
+                      </div>              
+                  )}      
               </div>             
               <li className="nav-item">
                 <NavLink className="nav-link" to='/Usuario/Usu/Reservas'>Mis solicitudes</NavLink>
@@ -90,7 +103,9 @@ const NarbarUsuario = () => {
             </button>
           </div>          
         </div>
-      </nav>     
+      </nav> 
+      <img className="Noti" src={logoNoti} alt="logo" width='45px' height='45px' />
+    
     </div>
   )
 }
