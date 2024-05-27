@@ -132,11 +132,10 @@
     font-size: 14px;
   }
 }
-
 /* CustomCalendar.css */
 
 .react-calendar {
-  width: 100%; /* Para ocupar todo el ancho disponible */
+  width: 250px;
   max-width: 100%;
   background: white;
   border: 1px solid #a0a096;
@@ -159,36 +158,4 @@
 
 .react-calendar__tile--now {
   background: #ffff76;
-}
-
-.highlighted-date {
-  background-color: rgb(163, 194, 127); 
-  color: black;
-}
-
-.error-message {
-  color: red;
-  font-size: 12px;
-  margin-bottom: 10px;
-}
-
-/* Añadido: Estilo para el botón de agregar docente */
-.boton-mas {
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-}
-
-.boton-mas img {
-  width: 20px;
-  height: 20px;
-  transition: transform 0.3s;
-}
-
-.boton-mas:hover img {
-  transform: rotate(90deg);
 }
