@@ -14,7 +14,8 @@ class CreateConfiguracionTable extends Migration
     public function up()
     {
         Schema::create('configuracion', function (Blueprint $table) {
-            $table->id();
+            $table->string("valor");
+            $table->date("fecha");
             $table->timestamps();
         });
     }
