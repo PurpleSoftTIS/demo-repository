@@ -96,7 +96,7 @@
 .sesion {
     position: fixed;
     top: calc(100% + 0px); 
-    height: 50px; 
+    height: 150px; 
     width: 140px; 
     text-align: center;
     background: rgb(11, 11, 119);
@@ -211,3 +211,11 @@
     }
   }
   
+.Noti{
+    position: fixed;
+    left: 50px;
+    margin-top: 40px;
+}
+.Noti:hover{
+    background-color: #9c99eb;
+}

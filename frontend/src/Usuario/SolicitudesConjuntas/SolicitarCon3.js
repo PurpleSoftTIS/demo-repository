@@ -44,7 +44,7 @@ const SolicitarCon3 = () => {
       numeroEstudiantes,
       diaSeleccionado,
       horaSeleccionada,
-      ambientes: json  // Agrega el estado json al objeto de datos a enviar
+      ambientes: json  
     };
     console.log("Datos a enviar:", data); 
     fetch("http://127.0.0.1:8000/api/registrarSolicitud", {
