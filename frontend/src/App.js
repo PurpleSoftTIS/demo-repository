@@ -5,7 +5,7 @@ import { React, Router, Routes, Route, Navigate, HomeUno, Ambientes, Docentes, N
         ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,ListaSolicitudesUr,
         AmbientesActualizar,Footer,ListaMaterias,Solicitar2,Solicitar1,MensajeExitosoU,
         MensajeErrorU,MensajeActExito,MensajeActError,DocentesActualizar,MensajeDatExito,MensajeDatError
-      ,SolicitarCon1,SolicitarCon2,SolicitarCon3,PasswordResetForm} from './importaciones';
+       ,Ambientesdisponibles ,SolicitarCon1,SolicitarCon2,SolicitarCon3,PasswordResetForm,MensajeNoEncontrado} from './importaciones';
        
 function PrivateAdminRoute({ element }) {
   const { urole } = useContext(UserContext);
@@ -48,6 +48,7 @@ function AdminRoutes() {
       <Route path='/Registro/AmbientesActualizar' element={<AmbientesActualizar />} /> 
       <Route path='/Registro/Diahorasactualizar' element={<RegistrarDiaHoras />} /> 
       <Route path='/Listas/ListaAmbientes' element={<ListaAulas/>} />
+      <Route path='/Listas/Ambientesdisponibles' element={<Ambientesdisponibles/>} />
       <Route path='/Listas/ListaDocentes' element={<ListaDocentes/>} />
       <Route path='/Mensaje/RegistroExitoso' element={<MensajeExitoso/>}/>
       <Route path='/Mensaje/RegistroError' element={<MensajeError/>}/>            
@@ -55,7 +56,8 @@ function AdminRoutes() {
       <Route path='/Mensaje/ActualizacionExitosa' element={<MensajeActExito/>}/>
       <Route path='/Mensaje/ErrorActualizacion' element={<MensajeActError/>}/>
       <Route path='/Mensaje/CargaMasiva' element={<MensajeDatExito/>}/> 
-      <Route path='/Mensaje/ErrorCargaMasiva' element={<MensajeDatError/>}/> 
+      <Route path='Mensaje/ErrorCargaMasiva' element={<MensajeDatError/>}/> 
+  
     </Routes>
     <Footer/>
   </div>
@@ -78,6 +80,8 @@ function UserRoutes() {
       <Route path='/Usu/SolicitarCon1' element={<SolicitarCon1/>} />
       <Route path='/Usu/SolicitarCon2' element={<SolicitarCon2/>} />
       <Route path='/Usu/SolicitarCon3' element={<SolicitarCon3/>} />
+      <Route path='/Mensaje/NoEncontrado' element={<MensajeNoEncontrado/>} />
+
     </Routes>
     <Footer/>
   </div>        

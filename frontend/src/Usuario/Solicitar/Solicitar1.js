@@ -55,7 +55,11 @@ const Solicitar1 = () => {
             });
         }
     };
-  
+    const reservaContiguos= (ambientes) => {
+        console.log("datos send", datosSend);
+        const datosConAmbientes = { ...datosSend, ambientes };
+        navigate('/Usuario/Usu/DetallesSol', { state: datosConAmbientes });
+    };
 
     const handleReservar = (aulaSeleccionada) => {
         console.log("datos send",datosSend);
@@ -93,7 +97,7 @@ const Solicitar1 = () => {
                                 <td>{dato.numero_piso}</td>             
                                 <td>
                                     <button className="btn btn-editar mr-2" onClick={() => handleReservar([dato])}>Reservar</button>               
-                                    <NavLink className="button-cta1" to='/Usuario/Usu/DetallesSolitud' activeClassName="active">Atras</NavLink>        
+                                    <NavLink className="btn btn-editar mr-2" to='/Usuario/Usu/DetallesSolitud' activeClassName="active">Atras</NavLink>        
                                 </td>
                             </tr>
                         ))}

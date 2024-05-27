@@ -11,9 +11,14 @@
  {
   margin-top: 20px;
 
+ }
+ .atras
+ {
+  margin-left: 1100px;
+  margin-top: -40px;
 
 
-  }
+ }
   .contenedorsito {
     width: 80%;
     max-width: 600px; /* Ajusta este valor según tus necesidades */

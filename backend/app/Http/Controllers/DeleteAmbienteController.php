@@ -13,44 +13,25 @@ use DB;
 
 class DeleteAmbienteController extends Controller
 {
-    public function Borrartodo(){
+    public function Borrartodo()
+{
+    try {
+        DB::statement('TRUNCATE TABLE horario RESTART IDENTITY CASCADE');
+        DB::statement('TRUNCATE TABLE diashabiles RESTART IDENTITY CASCADE');
+        DB::statement('TRUNCATE TABLE dia RESTART IDENTITY CASCADE');
+        DB::statement('TRUNCATE TABLE ambiente RESTART IDENTITY CASCADE');
+        DB::statement('TRUNCATE TABLE ubicacion RESTART IDENTITY CASCADE');
 
-        try {
-
-            Horario::truncate();
-            Diashabiles::truncate();
-            Hora::truncate();
-            Dia::truncate();
-            Ambiente::truncate();
-            Ubicacion::truncate();
-           
-                     
-            return response()->json(['message' => 'Todos los datos han sido eliminados correctamente'], 200);
-        } catch (\Exception $e) {
-            return response()->json(['message' => 'Hubo un error al intentar borrar los datos'], 500);
-        }
+        return response()->json(['message' => 'Todos los datos han sido eliminados correctamente'], 200);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'Hubo un error al intentar borrar los datos'], 500);
     }
+}
+
     public function borrarAmbiente ($id_ambiente){
 
         $ambiente =Ambiente::find($id_ambiente); 
-        $diasHabiles = Diashabiles::where('id_ambiente', $id_ambiente)->get();
-        foreach ($diasHabiles as $diaHabil) {
-            $nombreDia = Dia::find($diaHabil->id_dia)->nombre;
-            $horarios = Horario::where('id_dia', $diaHabil->id_dia)->get();
-        foreach ($horarios as $horario) {
-             $id_hora = $horario->id_hora;
-             $horario->where('id_hora', $id_hora)->delete();
-             Hora::where('id_hora', $id_hora)->delete();
-           }
-           $id_dia=$diaHabil->id_dia;
-           $diaHabil->where('id_dia',$id_dia)->delete();
-           Dia::where('id_dia', $id_dia)->delete();
-           
-     
-        }
-    
-        Ambiente::where('id_ambiente',$id_ambiente)->delete();
-    
-    
+        Diashabiles::where('id_ambiente', $ambiente)->delete();        
+        Ambiente::where('id_ambiente',$id_ambiente)->delete();    
     }
 }

@@ -6,82 +6,52 @@ import { UserContext } from '../../Context/UserContext';
 const Solicitar3 = () => {
   const navigate = useNavigate();   
   const location = useLocation();
-  console.log("datos enviado", location.state);
   const { emailC } = useContext(UserContext);
   const [grupo, setGrupo] = useState('');
   const [motivo, setMotivo] = useState('');
-  const [materia, setMateria] = useState([]);
-  console.log(materia);
-  const [materiaSeleccionada, setMateriaSeleccionada] = useState('');
-  const [grupoSeleccionado, setGrupoSeleccionado] = useState('');
-  
+  const [materias, setMaterias] = useState([]);
+  const [materia, setMateria] = useState('');
+  const [nomateria, setNomateria] = useState('');
+  const [grupoSeleccionado, setGrupoSeleccionado] = useState(false);
   const { state: datosRecibidos } = useLocation();
   const correo = emailC;
-  console.log("es el email",correo);
   const aula =datosRecibidos.aulaSeleccionada;
   const horaFin=datosRecibidos.horaFin;
   const horaInicio=datosRecibidos.horaInicio;
   const numeroEstudiantes=datosRecibidos.numeroEstudiantes;
   const fecha=datosRecibidos.fechaSeleccionada;
+  
 
-  console.log(correo);
-  console.log(aula);
-  useEffect(() => {
-    const codificarPunto = (cadena) => {
-      if (typeof cadena === 'string') {
-        return cadena.replace(/\./g, '%');
-      } else {
-        
-        return ''; 
-      }
-    };
-
-      const obtenerMaterias = async () => {
-        try {
-          const correoCodificado = codificarPunto(emailC);
-          const response = await fetch(`http://127.0.0.1:8000/api/obtenerMara/${correoCodificado}`);
-          if (!response.ok) {
-            throw new Error('Error en la solicitud a ' + response.url + ': ' + response.statusText);
-          }
-          const data = await response.json();
-          setMateria(data);
-        } catch (error) {
-          console.error('Error en la solicitud:', error);
+  useEffect(() => { 
+    fetch(`http://127.0.0.1:8000/api/obtenerMara/${correo}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error en la solicitud a ' + response.url + ': ' + response.statusText);
         }
-      };
-    
-      obtenerMaterias(); // Llamada inicial para obtener materias
-    }, [emailC]);
+        return response.json();
+      })
+      .then(data => {
+        setMaterias(data);
+      })
+      .catch(error => {
+        console.error('Error en la solicitud:', error);
+      });
+  }, [correo]);
 
-  useEffect(() => {
-    // Guardar datos en el almacenamiento local
-    localStorage.setItem('datosRecibidos', JSON.stringify(datosRecibidos));
-  }, [datosRecibidos]);
-
-  // Obtener datos del almacenamiento local al cargar la página
-  useEffect(() => {
-    const datosGuardados = localStorage.getItem('datosRecibidos');
-    if (datosGuardados) {
-      const datos = JSON.parse(datosGuardados);
-      // Restaurar datos recibidos
-      // Coloca la lógica para establecer los estados según los datos recibidos
-    }
-  }, []);
-
-  const createJSON = () => {
-    const json = {
-      correo,
-      numeroEstudiantes,
-      horaInicio,
-      horaFin,
-      fecha,
-      aula,
-      motivo,
-      materia: materiaSeleccionada
+  const createJSON = () =>{
+    const json ={
+     correo,
+     numeroEstudiantes,
+     horaInicio,
+     horaFin,
+     fecha,
+     aula,
+     motivo,
+     materia,
     };
+    console.log("datos recividos",location.state);
     return json;
   }
-
   const EnviarSolicitud = () => {
     const json = createJSON();
     console.log("Datos a enviar:", json); 
@@ -95,8 +65,10 @@ const Solicitar3 = () => {
     })
     .then(response => {
       if (response.ok) {
+
         console.log("Registro exitoso");
-        navigate('/Usuario/Usu/Reservas');
+            navigate('/Usuario/Usu/Reservas');
+
       } else {
         console.error("Error en el registro");
       }
@@ -104,6 +76,22 @@ const Solicitar3 = () => {
     .catch(error => {
       console.error("Error en la solicitud:", error);
     });
+  };
+
+  const handleMateriaChange = (e) => {
+    const nuevaMateria = e.target.value;
+    setNomateria(nuevaMateria)
+    if (nuevaMateria === "") {
+        setGrupo(''); // Si la nueva materia es "", establece el grupo en vacío
+        setGrupoSeleccionado(false); // También puedes querer deseleccionar el grupo
+    } else {
+        const materiaData = materias.find(item => item.nombre_materia === nuevaMateria);
+        if (materiaData) {
+            setMateria(materiaData.id_materia);
+            setGrupo(materiaData.grupo);
+            setGrupoSeleccionado(true);
+        }
+    }
   };
 
   return (
@@ -117,18 +105,11 @@ const Solicitar3 = () => {
             <div className="contact-form-phone">Materia</div>
             <select
               className="input24"
-              value={materiaSeleccionada}
-              onChange={(e) => {
-                const materiaSeleccionada = e.target.value;
-                const materiaData = materia.find(item => item.nombre_materia === materiaSeleccionada);
-                if (materiaData) {
-                  setMateriaSeleccionada(materiaSeleccionada);
-                  setGrupoSeleccionado(materiaData.grupo);
-                }
-              }}
+              value={nomateria}
+              onChange={handleMateriaChange}
             >
-              <option value="">Seleccione una materia</option>
-              {materia.map((item, index) => (
+              <option value="">Seleccione una materia</option> 
+              {materias.map((item, index) => (
                 <option key={index} value={item.nombre_materia}>
                   {item.nombre_materia}
                 </option>
@@ -143,9 +124,10 @@ const Solicitar3 = () => {
               <input 
                 className="contact-form-rectangle1" 
                 type="text"
-                value={grupoSeleccionado}
-                placeholder="Grupo"
-                disabled
+                value={grupo}
+                onChange={(e) => setGrupo(e.target.value)}
+                placeholder="Ingrese el grupo"
+                disabled={grupoSeleccionado} // Deshabilita la edición si se seleccionó una materia
               />
             </div>
           </div>

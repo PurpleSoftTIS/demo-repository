@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
+
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import './ListaSolicitudes.css';
 
+
 const ListaSolicitudes = () => {
+  const navigate = useNavigate();
   const [solicitudes, setSolicitudes] = useState([]);
   const [solicitudesTodas, setSolicitudesTodas] = useState([]);
   const [solicitudesPendientes, setSolicitudesPendientes] = useState([]);
@@ -17,6 +21,33 @@ const ListaSolicitudes = () => {
   const [selectedOption, setSelectedOption] = useState(""); 
   const handleSelectChange = (e) => {
     setSelectedOption(e.target.value);
+  };
+
+
+
+
+  const [showD, setShowD] = useState(false);
+  const [motivoRechazo, setMotivoRechazo] = useState('');
+
+  const handleCloseDelete = () => setShowD(false);
+  const handleShowDelete = () => setShowD(true);
+
+  const handleMotivoChangeDelete = (event) => {
+    setMotivoRechazo(event.target.value);
+  };
+
+  const handleEnviarClick = () => {
+    console.log('Motivo de rechazo:', motivoRechazo);
+    handleCloseDelete();
+  };
+
+
+
+
+
+
+  const handleMotivoChange = (event) => {
+    setMotivoRechazo(event.target.value);
   };
   const [docente, setDocente] = useState("");
   const [aulas, setAulas] = useState(""); 
@@ -33,26 +64,10 @@ const ListaSolicitudes = () => {
   });
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const aceptarsolicitud = (id_solicitud) => {
-      fetch(`http://127.0.0.1:8000/api/aceptarsolicitud/${id_solicitud}`, {
-          method: 'PUT',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-      })
-          .then((response) => {
-              if (!response.ok) {
-                  throw new Error('Error al cambiar el estado de la solicitud');
-              }
-              console.log('Solicitud actualizada:', response);
-              return response.json();
-          })
-          .then((data) => {
-              console.log('Datos de la solicitud actualizada:', data);
-          })
-          .catch((error) => {
-              console.error(error);
-          });
+  const aceptarsolicitud = (solicitud) => {
+    navigate("/Admin/Listas/Ambientesdisponibles", { state: solicitud });
+   
+      console.log(solicitud);
   };
 
   const rechazarsolicitud= (id_solicitud) => {
@@ -76,34 +91,7 @@ const ListaSolicitudes = () => {
             console.error(error);
         });
   };
-  useEffect(() => {
-    const capacidad = 200;
-    const dia = 'Lunes'; 
-    const horarios = [
-        { hora_inicio: '8:15', hora_fin: '9:45' },
-       
-    ];
-    const horariosJSON = JSON.stringify(horarios);
 
-    
-    fetch(`http://127.0.0.1:8000/api/ambientesDisponibles/${capacidad}/${dia}/${horariosJSON}`)
-    .then((response) => {
-        if (!response.ok) {
-            throw new Error('Error al obtener los ambientes disponibles');
-        }
-        return response.json();
-    })
-    .then((data) => {
-        console.log('Ambientes disponibles:', data);
-    })
-    .catch((error) => {
-        console.error('Error al obtener los ambientes disponibles:', error);
-    });
-    
-  
-  
-  
-  }, []);
 
   useEffect(() => {
       fetch('http://127.0.0.1:8000/api/obtenerSol', {
@@ -122,7 +110,21 @@ const ListaSolicitudes = () => {
         .catch(error => console.error('Error al obtener los datos:', error));
   }, []);
 
-  
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/obtenerTodasSolicitudes', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        setSolicitudesTodas(data);
+        
+        console.log("datos todo",data);
+      })
+      .catch(error => console.error('Error al obtener los datos:', error));
+}, []);
 
 
   const [mostrarOpciones, setMostrarOpciones] = useState(false); // Estado para controlar la aparición de los botones "Todas" y "Pendientes"
@@ -229,8 +231,7 @@ const ListaSolicitudes = () => {
         solicitud.hora_fin.toString().toLowerCase().includes(buscar.toLowerCase())    
     );
     
-  }
- 
+  } 
 
 return (
     <div className="container" style={{ minHeight: '78.7vh' }}>
@@ -247,16 +248,23 @@ return (
 
         <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador'/>
 
-          <button className="butn butn-filtro" onClick={() => setMostrarOpciones(!mostrarOpciones)}>Solicitudes</button>
+          <button 
+            className="butn butn-filtro" 
+            onClick={() => setMostrarOpciones(!mostrarOpciones)}>Solicitudes</button>
             {mostrarOpciones && (
             <div className="opciones-solicitudes">
-              <button className="butn butn-filtro" onClick={() => { setMostrarOpciones(false);
-                mostrarSolicitudesTodas();
+              <button 
+                className="butn butn-filtro" 
+                onClick={() => {
+                  setMostrarOpciones(false);
+                  mostrarSolicitudesTodas();
                 }}>Todas
               </button>
-            <button className="butn butn-filtro" onClick={() => {
-              setMostrarOpciones(false);
-              mostrarSolicitudesPendientes();
+              <button 
+                className="butn butn-filtro" 
+                onClick={() => {
+                 setMostrarOpciones(false);
+                 mostrarSolicitudesPendientes();
               }}>Pendientes</button>
 
             </div>
@@ -270,6 +278,7 @@ return (
           <tr>
             <th>Nro.</th>
             <th>Docente</th>
+            
             <th>Materia</th>
             <th>Motivo</th>
             <th>Fecha</th>
@@ -289,17 +298,42 @@ return (
               <td>{solicitud.nombre_materia}</td>
               <td>{solicitud.motivo}</td>
               <td>{solicitud.fecha_solicitud}</td>
-              <td>{solicitud.hora_inicio+" "+solicitud.hora_fin}</td>
+              <td>{solicitud.horas}</td>
               {!mostrarSolicitudesTodass && (
                 <td>
-                  <button className="btn btn-editar mr-2" onClick={() => aceptarsolicitud(solicitud.id_solicitud)}>Aceptar</button>
-                  <button className="btn btn-eliminar" onClick={() => rechazarsolicitud(solicitud.id_solicitud)}>Rechazar</button>
+                  <button className="btn btn-editar mr-2" onClick={() => aceptarsolicitud(solicitud)}>Asignar</button>
+                  <button className="btn btn-eliminar" onClick={(handleShowDelete)}>Rechazar</button>
                 </td>
               )}
             </tr>
           ))}
         </tbody>
       </table>
+      <Modal show={showD} onHide={handleCloseDelete}>
+        <Modal.Header closeButton>
+          <Modal.Title>Rechazar Solicitud</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form.Group controlId="motivoRechazo">
+            <Form.Label>Motivo de rechazo:</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Escribe aquí el motivo"
+              value={motivoRechazo}
+              onChange={handleMotivoChangeDelete}
+            />
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseDelete}>
+            Cancelar
+          </Button>
+          <Button variant="primary" onClick={handleEnviarClick}>
+            Enviar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Filtros</Modal.Title>
@@ -320,8 +354,8 @@ return (
         <option value="Elecciones">Elecciones</option>
         <option value="Congreso">Congreso</option>
 
-      </Form.Control>
-      
+
+      </Form.Control>     
     
         </Modal.Body>
         <Modal.Footer>

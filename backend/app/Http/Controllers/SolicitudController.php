@@ -18,35 +18,25 @@ use DB;
 class SolicitudController extends Controller
 {
     public function obtenerSolicitud() {
-        try{
+        try {
             $datosSolicitudes = DB::table('solicitud')
-            ->join('solicitudes','solicitudes.id_solicitud','=', 'solicitud.id_solicitud')
-            ->join('hora', 'hora.id_hora', '=', 'solicitud.id_hora')
-            ->join('ambiente', 'ambiente.id_ambiente', '=', 'solicitudes.id_ambiente')
-            ->join('ubicacion', 'ubicacion.id_ubicacion', '=', 'ambiente.id_ubicacion')
-            ->join('solicitudes_docentes', 'solicitudes_docentes.id_solicitud', '=', 'solicitud.id_solicitud')
-            ->join('docente', 'docente.id_docente', '=', 'solicitudes_docentes.id_docente')
-            ->join('materia_docente', 'materia_docente.id_docente', '=', 'docente.id_docente')
-            ->join('materia', 'materia.id_materia', '=', 'materia_docente.id_materia')
-            ->join('usuario', 'usuario.id_usuario', '=', 'docente.id_usuario')
-            ->select(
-                'hora.*',
-                'ambiente.*',
-                'ubicacion.*',
-                'solicitud.*', 
-                'materia.*'
-            )
-            ->selectRaw('CONCAT_WS(\' \', usuario.nombre, usuario.apellido_paterno, usuario.apellido_materno) as nombre_completo')
-
-            ->get();
+                ->join('solicitudes_horario', 'solicitudes_horario.id_solicitud', '=', 'solicitud.id_solicitud')
+                ->join('hora', 'hora.id_hora', '=', 'solicitudes_horario.id_hora')
+                ->select(
+                    'solicitud.*',
+                    DB::raw("STRING_AGG(CONCAT(hora.hora_inicio, ' - ', hora.hora_fin), ', ') as horas")
+                )
+                ->groupBy('solicitud.id_solicitud')
+                ->get();
+    
             return response()->json($datosSolicitudes, 200);
     
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             \Log::error('Error al intentar obtener una solicitud: ' . $e->getMessage());
             return response()->json(['error' => 'Error al obtener la solicitud'], 500);
         }
-
     }
+    
     public function obtenerHora() {
         $datosSolicitados = DB::table('hora')
         ->select(
@@ -104,7 +94,7 @@ class SolicitudController extends Controller
             $idmateria=$materia->id_materia;
             $solicitudMateria->id_materia=$idmateria;
             $solicitudMateria->id_solicitud=$id_solicitud;
-            $solicitudMateria->save();
+            $solicitudMateria->save(); 
            
         } catch (\Exception $e) {
             \Log::error('Error al registrar la solicitud: ' . $e->getMessage());
@@ -202,7 +192,7 @@ class SolicitudController extends Controller
     }
     public function obtenerDocentesPorSolicitud($idSolicitud) {
         try {
-            // Obtener los docentes asociados a la solicitud mediante su ID
+            
             $docentes = DB::table('solicitud')
                 ->join('solicitudes_docentes', 'solicitudes_docentes.id_solicitud', '=', 'solicitud.id_solicitud')
                 ->join('docente', 'solicitudes_docentes.id_docente', '=', 'docente.id_docente')
@@ -231,19 +221,34 @@ class SolicitudController extends Controller
             return response()->json(['error' => 'Error al obtener los datos de los ambientes por solicitud'], 500);
         }
     }
-    public function ambientesContiguos($capacidad, $dia, $hora_inicio, $hora_fin)
+    public function ambientesContiguos($capacidad, $dia, $horarios)
     {
+        \Illuminate\Support\Facades\Log::info('Capacidad: ' . $capacidad);
+        \Illuminate\Support\Facades\Log::info('Día: ' . $dia);
+        \Illuminate\Support\Facades\Log::info('Horarios: ' . print_r($horarios, true));
+    
+        $horarios = json_decode($horarios, true);
+    
         $aulasDisponibles = DB::table('ambiente')
-            ->join('diashabiles', 'ambiente.id_ambiente', '=', 'diashabiles.id_ambiente')
-            ->join('dia', 'diashabiles.id_dia', '=', 'dia.id_dia')
-            ->join('horario', 'diashabiles.id_dia', '=', 'horario.id_dia')
-            ->join('hora', 'horario.id_hora', '=', 'hora.id_hora')
             ->join('ubicacion', 'ambiente.id_ubicacion', '=', 'ubicacion.id_ubicacion')
             ->select('ambiente.*', 'ubicacion.edificio as nombre_edificio', 'ambiente.numero_piso')
-            ->where('dia.nombre', $dia)
-            ->where('hora.hora_inicio', '<=', $hora_inicio)
-            ->where('hora.hora_fin', '>=', $hora_fin)
-            ->get();
+            ->where('ambiente.capacidad', '>=', $capacidad);
+    
+        foreach ($horarios as $horario) {
+            $aulasDisponibles->whereExists(function ($query) use ($dia, $horario) {
+                $query->select(DB::raw(1))
+                    ->from('diashabiles')
+                    ->join('dia', 'diashabiles.id_dia', '=', 'dia.id_dia')
+                    ->join('horario', 'diashabiles.id_dia', '=', 'horario.id_dia')
+                    ->join('hora', 'horario.id_hora', '=', 'hora.id_hora')
+                    ->whereColumn('ambiente.id_ambiente', 'diashabiles.id_ambiente')
+                    ->where('dia.nombre', $dia)
+                    ->where('hora.hora_inicio', $horario['hora_inicio'])
+                    ->where('hora.hora_fin', $horario['hora_fin']);
+            });
+        }
+    
+        $aulasDisponibles = $aulasDisponibles->get();
     
         $aulasPorEdificioYPiso = [];
         foreach ($aulasDisponibles as $aula) {

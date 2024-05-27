@@ -27,7 +27,7 @@ class MateriaImport implements ToModel, WithHeadingRow, WithBatchInserts, WithCh
     private function obtenerIdDocente($nombreCompletoDocente)
     {
         $docente = Docente::whereHas('usuario', function ($query) use ($nombreCompletoDocente) {
-            $query->whereRaw("CONCAT(nombre, ' ', apellido_paterno, ' ', apellido_materno) = ?", [$nombreCompletoDocente]);
+            $query->whereRaw("CONCAT(apellido_paterno, ' ', apellido_materno, ' ', nombre) = ?", [$nombreCompletoDocente]);
         })->first();
 
         return $docente ? $docente->id_docente : null;

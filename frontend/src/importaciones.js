@@ -25,6 +25,7 @@ import ListaMaterias from './Listados/ListadoMaterias/ListaMaterias';
 import ListaDocentes from './Listados/ListadoDocentes/ListaDocentes';
 import { Footer } from './navegador/Footer';
 import Solicitar2 from './Usuario/Solicitar/Solicitar2';
+
 import Solicitar1 from './Usuario/Solicitar/Solicitar1';
 import MensajeExitosoU from './Usuario/MensajesUsuario/MensajeExitosoU';
 import MensajeErrorU from './Usuario/MensajesUsuario/MensajeErrorU';
@@ -37,11 +38,13 @@ import SolicitarCon1 from './Usuario/SolicitudesConjuntas/SolicitarCon1';
 import SolicitarCon2 from './Usuario/SolicitudesConjuntas/SolicitarCon2';
 import SolicitarCon3 from './Usuario/SolicitudesConjuntas/SolicitarCon3';
 import PasswordResetForm from './Login/PasswordResetForm';
+import MensajeNoEncontrado from './Usuario/MensajesUsuario/MensajeNoEncontrado';
+import Ambientesdisponibles from './ListaSolicitudes/ambientesdisponibles';
 export {
   React,Router,Routes,Route,HomeUno,Ambientes,Docentes,Navbar,RegistrarMateria,
   LoginForm,RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Reservar, Solicitar,
   Ayuda, ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,AmbientesActualizar,
-  Footer,ListaMaterias,Solicitar2,Solicitar1,MensajeExitosoU,MensajeErrorU,MensajeActExito,MensajeActError
+  Footer,ListaMaterias,Solicitar1,MensajeExitosoU,MensajeErrorU,MensajeActExito,MensajeActError
   ,DocentesActualizar,MensajeDatExito,MensajeDatError,SolicitarCon1,SolicitarCon2,SolicitarCon3,
-  ListaSolicitudesUr,Navigate,PasswordResetForm
+  ListaSolicitudesUr,Navigate,PasswordResetForm,MensajeNoEncontrado,Ambientesdisponibles,Solicitar2
 };
