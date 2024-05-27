@@ -20,6 +20,7 @@ class CreateUsuarioTable extends Migration
             $table->string('apellido_materno',20);
             $table->string('correo_electronico',30)->unique();
             $table->string('contraseña', 100);
+            $table->integer('contador_administrador');
             $table->timestamps();
         
         });

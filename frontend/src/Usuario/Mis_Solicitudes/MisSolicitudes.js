@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import "./Reservar.css"
-import { FaPlus } from 'react-icons/fa';
-import { NavLink } from 'react-router-dom'; 
+import "./MisSolicitudes.css"
 import Ico1 from '../../assets/IcoGood.png';
 import Ico2 from '../../assets/IcoState.png';
 import { UserContext } from '../../Context/UserContext';
-
-
-const Reservar = () => {
+const MisSolicitudes = () => {
+  
 const [reservas, setReservas] = useState([]);
 const { emailC } = useContext(UserContext);
   
@@ -33,8 +30,7 @@ const correo = emailC;
     <div className="container" style={{ height: '100vh.' }}>
       <div style={{ height: '4vh' }}></div>  
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h2 style={{ margin: 0 }}>Mis Solicitudes:</h2>
-        
+        <h2 style={{ margin: 0 }}>Mis Solicitudes:</h2>        
       </div>
       <div style={{ display: 'flex', justifyContent: 'Right', alignItems: 'center', marginTop: '15px' }}>
         <div>           
@@ -81,5 +77,6 @@ const correo = emailC;
       </table>
     </div>
   );
-};
-export default Reservar;
+}
+
+export default MisSolicitudes

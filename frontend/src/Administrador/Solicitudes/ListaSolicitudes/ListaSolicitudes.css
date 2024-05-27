@@ -124,6 +124,21 @@ input[type="text"] {
   background-color: rgba(220, 53, 69, 0.1); 
   transform: translateY(-2px);
 }
+.btn-sugerencia{
+  color: #610de8; 
+  border-width: 2px;
+  border-color: #610de8; 
+  background-color: transparent;
+  font-weight: 2px;
+}
+.btn-sugerencia:hover{
+  color: #610de8; 
+  border-color: #610de8; 
+  background-color: rgba(220, 53, 69, 0.1); 
+  transform: translateY(-2px);
+}
+
+
 .iconos2{
 position: relative;
 top: -28px;

@@ -29,11 +29,10 @@ class RerservasUsuario extends Controller
                 )
                 ->where('usuario.correo_electronico', $correo)
                 ->get();
-            return response()->json($datosSolicitudes, 200);
-    
+            return response()->json($datosSolicitudes, 200);    
         }catch (\Exception $e) {
             \Log::error('Error al intentar obtener una solicitud: ' . $e->getMessage());
             return response()->json(['error' => 'Error al obtener la solicitud'], 500);
         }
-}
+    }
 }

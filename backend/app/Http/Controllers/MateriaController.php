@@ -121,4 +121,17 @@ class MateriaController extends Controller
 
         return response()->json($docentesPorMateria, 200);
     }
+    public function GruposObtener($materia)
+    {
+        $gruposDeLaMateria = DB::table('materia')
+            ->select('materia.*')
+            ->where('nombre_materia', $materia)
+            ->get();
+    
+        if ($gruposDeLaMateria->isEmpty()) {
+            return response()->json(['error' => 'Materia no encontrada o sin grupos asignados'], 404);
+        }    
+        return response()->json($gruposDeLaMateria, 200);
+    }
+    
 }

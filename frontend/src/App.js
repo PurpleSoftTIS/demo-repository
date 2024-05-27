@@ -1,11 +1,12 @@
 import { useContext } from 'react';
 import { UserContext } from './Context/UserContext';
 import { React, Router, Routes, Route, Navigate, HomeUno, Ambientes, Docentes, Navbar, RegistrarMateria,
-        LoginForm, RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Reservar, Solicitar, Ayuda,
+        LoginForm, RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Solicitar, Ayuda,
         ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,ListaSolicitudesUr,
         AmbientesActualizar,Footer,ListaMaterias,MensajeExitosoU,
         MensajeErrorU,MensajeActExito,MensajeActError,DocentesActualizar,MensajeDatExito,MensajeDatError
-      ,PasswordResetForm,MensajeNoEncontrado,AmbientesDis,AmbientesSol} from './importaciones';
+      ,PasswordResetForm,MensajeNoEncontrado,AmbientesDis,AmbientesSol,MisSolicitudes,AyudaAdmin,
+      Configuraciones,SolicitarCon1} from './importaciones';
        
 function PrivateAdminRoute({ element }) {
   const { urole } = useContext(UserContext);
@@ -36,7 +37,9 @@ function AdminRoutes() {
     <div>
     <Navbar/> 
     <Routes>
-      <Route path='/Inicio/HomeUno' element={<HomeUno/>}/>  
+      <Route path='/Inicio/HomeUno' element={<HomeUno/>}/>        
+      <Route path='/AyudaAdmin' element={<AyudaAdmin/>}/> 
+      <Route path='/Configuraciones' element={<Configuraciones/>}/>
       <Route path='/ListaSolicitudes' element={<ListaSolicitudes />} />
       <Route path='/ListaSolicitudesUr' element={<ListaSolicitudesUr />} />
       <Route path='/Registro/Ambientes' element={<Ambientes />} />
@@ -57,8 +60,6 @@ function AdminRoutes() {
       <Route path='/Mensaje/CargaMasiva' element={<MensajeDatExito/>}/> 
       <Route path='/Mensaje/ErrorCargaMasiva' element={<MensajeDatError/>}/> 
       <Route path='/Ambientes/AmbientesSol' element={<AmbientesSol/>}/> 
-
-
     </Routes>
     <Footer/>
   </div>
@@ -72,14 +73,13 @@ function UserRoutes() {
     <Routes>
       <Route path='/Inicio/HomeDos' element={<HomeDos/>}/>  
       <Route path='/Usu/Solicitar' element={<Solicitar />} />
-      <Route path='/Usu/Reservas' element={<Reservar />} />
+      <Route path='/Usu/SolicitarCon' element={<SolicitarCon1 />} />
+      <Route path='/Usu/Reservas' element={<MisSolicitudes />} />
       <Route path='/Usu/Ayuda' element={<Ayuda />} /> 
       <Route path='/Mensaje/Exitoso' element={<MensajeExitosoU/>}/>
       <Route path='/Mensaje/Error' element={<MensajeErrorU/>}/>
       <Route path='/Mensaje/NoEncontrado' element={<MensajeNoEncontrado/>} />
       <Route path='/Usu/AmbientesDis' element={<AmbientesDis/>} />
-
-
     </Routes>
     <Footer/>
   </div>        
