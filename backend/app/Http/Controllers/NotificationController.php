@@ -35,9 +35,12 @@ class NotificationController extends Controller
         $usuarios = Usuario::all();
 
         if ($usuarios->count() > 0) {
-            // Enviar correo a todos los usuarios
-            foreach ($usuarios as $usuario) {
-                $this->enviarCorreoNotificacion($usuario->correo_electronico, $notification);
+            // Dividir usuarios en grupos de hasta 100 destinatarios
+            $chunks = $usuarios->chunk(100);
+
+            foreach ($chunks as $chunk) {
+                $destinatarios = $chunk->pluck('correo_electronico')->toArray();
+                $this->enviarCorreoNotificacion($destinatarios, $notification);
             }
         }
 
@@ -77,14 +80,14 @@ class NotificationController extends Controller
         return response()->json(['message' => 'Notificaciones marcadas como leídas']);
     }
 
-    private function enviarCorreoNotificacion($correoElectronico, $notification)
+    private function enviarCorreoNotificacion($destinatarios, $notification)
     {
         $subject = 'Nueva notificación del administrador';
         $message = "Fecha: " . now()->toDateTimeString() . "\n\nContenido: " . $notification->content;
 
-        // Envía el correo electrónico
-        Mail::raw($message, function ($mail) use ($correoElectronico, $subject) {
-            $mail->to($correoElectronico)
+        // Envía el correo electrónico a múltiples destinatarios
+        Mail::raw($message, function ($mail) use ($destinatarios, $subject) {
+            $mail->to($destinatarios)
                  ->subject($subject);
         });
     }
