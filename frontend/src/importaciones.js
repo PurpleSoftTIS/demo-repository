@@ -38,6 +38,8 @@ import MisSolicitudes from './Usuario/Mis_Solicitudes/MisSolicitudes';
 import AyudaAdmin from './Administrador/Ayuda/AyudaAdmin';
 import Configuraciones from './Administrador/Configuraciones/Configuraciones';
 import SolicitarCon1 from './Usuario/SolicitudesConjuntas/SolicitarCon1';
+import MensajeConfExitoso from './Mensajes/MensajeConfExitoso';
+import MensajeConfError from './Mensajes/MensajeConfError';
 
 export {
   React,Router,Routes,Route,HomeUno,Ambientes,Docentes,Navbar,RegistrarMateria,
@@ -45,5 +47,6 @@ export {
   Ayuda, ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,AmbientesActualizar,
   Footer,ListaMaterias,MensajeExitosoU,MensajeErrorU,MensajeActExito,MensajeActError
   ,DocentesActualizar,MensajeDatExito,MensajeDatError,ListaSolicitudesUr,Navigate,PasswordResetForm,
-  MensajeNoEncontrado,AmbientesDis,AmbientesSol,MisSolicitudes,AyudaAdmin,Configuraciones,SolicitarCon1
+  MensajeNoEncontrado,AmbientesDis,AmbientesSol,MisSolicitudes,AyudaAdmin,Configuraciones,SolicitarCon1,
+  MensajeConfExitoso,MensajeConfError
 };

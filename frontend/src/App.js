@@ -6,7 +6,7 @@ import { React, Router, Routes, Route, Navigate, HomeUno, Ambientes, Docentes, N
         AmbientesActualizar,Footer,ListaMaterias,MensajeExitosoU,
         MensajeErrorU,MensajeActExito,MensajeActError,DocentesActualizar,MensajeDatExito,MensajeDatError
       ,PasswordResetForm,MensajeNoEncontrado,AmbientesDis,AmbientesSol,MisSolicitudes,AyudaAdmin,
-      Configuraciones,SolicitarCon1} from './importaciones';
+      Configuraciones,SolicitarCon1,MensajeConfExitoso,MensajeConfError} from './importaciones';
        
 function PrivateAdminRoute({ element }) {
   const { urole } = useContext(UserContext);
@@ -60,6 +60,9 @@ function AdminRoutes() {
       <Route path='/Mensaje/CargaMasiva' element={<MensajeDatExito/>}/> 
       <Route path='/Mensaje/ErrorCargaMasiva' element={<MensajeDatError/>}/> 
       <Route path='/Ambientes/AmbientesSol' element={<AmbientesSol/>}/> 
+      <Route path='/Mensaje/ConfiguracionExitosa' element={<MensajeConfExitoso/>}/> 
+      <Route path='/Mensaje/ConfiguracionError' element={<MensajeConfError/>}/> 
+
     </Routes>
     <Footer/>
   </div>

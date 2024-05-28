@@ -13,12 +13,13 @@ const Solicitar = () => {
   const { emailC } = useContext(UserContext);
   const correo = emailC;
   const [cantidad, setCantidad] = useState('');
+  const [cantidadPeriodos,setCantidadPeriodos] = useState(0); 
   const [selecionMateria, setSelecionMateria] = useState('');
   const [valor, setValor] = useState('');
+  const [materia, setmateria] = useState('');
   const [date, setDate] = useState(new Date());
   const [materias, setMaterias] = useState([]); 
   const [horariosDisponibles, setHorariosDisponibles] = useState([]);
-  const [grupos, setGrupos] = useState([]); 
   const [formData, setFormData] = useState([]); 
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedDay, setSelectedDay] = useState(''); 
@@ -26,13 +27,31 @@ const Solicitar = () => {
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [errorInconpleto, setErrorIncompleto] = useState("");
   const [selectedMateria, setSelectedMateria] = useState(''); 
-  const [docentes, setDocentes] = useState([]); 
-  const [aux, setAux] = useState(0); 
+  const [tipoAmbientes, setTipoAmbientes] = useState([]); // Nuevo estado para almacenar los tipos de ambientes
+  const [selectedAmbiente, setSelectedAmbiente] = useState('');
+  const [selectedMotivo, setSelectedMotivo] = useState(''); // Estado para almacenar el motivo seleccionado
+  const [gruposPorMateria, setGruposPorMateria] = useState({}); // Estado para almacenar los grupos por materia
+  const [selectedGrupos, setSelectedGrupos] = useState([]); // Estado para almacenar los grupos seleccionados
 
-  
-  
-    const [additionalDocentes, setAdditionalDocentes] = useState([]);
-  useEffect(() => {
+  const BusquedaAmbiente = (event) => {
+    const selectedAmbiente = event.target.value;
+    setSelectedAmbiente(selectedAmbiente); 
+    const ambienteSeleccionado = tipoAmbientes.find(ambiente => ambiente["Tipo Ambiente"] === selectedAmbiente);
+    if (ambienteSeleccionado) {
+      console.log(ambienteSeleccionado);
+      setCantidadPeriodos(ambienteSeleccionado.catidad_periodos);
+    }
+  };
+  console.log(cantidadPeriodos);
+  const codificarPunto = (cadena) => {
+    if (typeof cadena === 'string') {
+      return cadena.replace(/\./g, '%');
+    } else {
+      
+      return ''; 
+    }
+  };
+    useEffect(() => {
     if (date) {
       fetch(`http://127.0.0.1:8000/api/obtenerHoras`)
         .then(response => {
@@ -55,16 +74,13 @@ const Solicitar = () => {
         });
     }
   }, [date]);  
-  useEffect(() => {
-    if (selectedMateria) {
-      cargarGrupos(selectedMateria);
-    }
-    
-  }, [selectedMateria]);
- 
+
+  
   useEffect(() => {
     if (correo) {
-      fetch(`http://127.0.0.1:8000/api/obtenerMara/${correo}`)
+      const correoCodificado = codificarPunto(correo);
+
+      fetch(`http://127.0.0.1:8000/api/obtenerMara/${correoCodificado}`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Error en la solicitud a ' + response.url + ': ' + response.statusText);
@@ -72,54 +88,63 @@ const Solicitar = () => {
           return response.json();
         })
         .then(data => {
-          setMaterias(data); 
+          const uniqueMaterias = Array.from(new Set(data.map(materia => materia.nombre_materia)));
+
+          const gruposPorMateria = uniqueMaterias.reduce((grupos, materia) => {
+            grupos[materia] = data.filter(item => item.nombre_materia === materia).map(item => item.grupo);
+            return grupos;
+          }, {});
+
+          const materiasToShow = uniqueMaterias.map(materia => {
+            return { nombre_materia: materia };
+          });
+
+          setMaterias(materiasToShow);
+          setGruposPorMateria(gruposPorMateria);
         })
         .catch(error => {
           console.error('Error en la solicitud:', error);
         });
     }
   }, [correo]);
+  function generarPeriodos(horaInicio, cantidadPeriodos, duracionPeriodo) {
+    const periodos = [];
+    const fechaInicio = new Date(`01/01/2000 ${horaInicio}`);
+    
+    for (let i = 0; i < cantidadPeriodos; i++) {
+        const nuevaFechaInicio = new Date(fechaInicio);
+        const nuevaFechaFin = new Date(nuevaFechaInicio.getTime() + duracionPeriodo * 60000);
+        periodos.push({
+            horaInicio: nuevaFechaInicio.toTimeString().split(' ')[0], // Formato HH:mm:ss
+            horaFin: nuevaFechaFin.toTimeString().split(' ')[0], // Formato HH:mm:ss
+        });
+        fechaInicio.setMinutes(fechaInicio.getMinutes() + duracionPeriodo);
+    }
+    
+    return periodos;
+}
 
-  const cargarGrupos = (materia) => {
-    fetch(`http://127.0.0.1:8000/api/obtenerGrupos/${materia}`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Error en la solicitud a ' + response.url + ': ' + response.statusText);
-      }
-      return response.json();
-    })
-    .then(data => {
-      setGrupos(data); 
-    })
-    .catch(error => {
-      console.error('Error en la solicitud:', error);
-    });
-  }
+
+
+
   
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/configuraciones')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error al obtener los tipos de ambientes');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setTipoAmbientes(data);
+        console.log(data);
+      })
+      .catch(error => {
+        console.error('Error al obtener los tipos de ambientes:', error);
+      });
+  }, []);
   
-   
-  useEffect(() => {    
-      fetch(`http://127.0.0.1:8000/api/docentespormateria/${selecionMateria}/${correo}`)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Error en la solicitud a ' + response.url + ': ' + response.statusText);
-          }
-          return response.json();
-        })
-        .then(data => {
-          setDocentes(data); 
-        })
-        .catch(error => {
-          console.error('Error en la solicitud:', error);
-        });    
-  }, [selecionMateria, correo]); 
-  
-  
-  const handleAdditionalDocenteChange = (index, value) => {
-    const newAdditionalDocentes = [...additionalDocentes];
-    newAdditionalDocentes[index] = value;
-    setAdditionalDocentes(newAdditionalDocentes);
-  };
   const handleDateChange = (newDate) => {
     const dayOfWeek = newDate.toLocaleDateString('es-ES', { weekday: 'long' });
     const capitalizedDayOfWeek = dayOfWeek.charAt(0).toUpperCase() + dayOfWeek.slice(1);
@@ -129,8 +154,26 @@ const Solicitar = () => {
     setShowCalendar(false);
   };
   const handleInputChange = (event) => {
-    setSelecionMateria(event.target.value);
+    const materiaSeleccionada = event.target.value;
+    setSelecionMateria(materiaSeleccionada);
+
+    if (materiaSeleccionada !== selecionMateria) {
+      setSelectedMateria('');
+    }
   };
+  const handleGrupoChange = (event) => {
+    const grupoSeleccionado = event.target.value;
+    const isChecked = event.target.checked;
+  
+    if (isChecked) {
+      setSelectedGrupos([...selectedGrupos, grupoSeleccionado]);
+    } else {
+      const updatedGrupos = selectedGrupos.filter((grupo) => grupo !== grupoSeleccionado);
+      setSelectedGrupos(updatedGrupos);
+    }
+  };
+  
+  
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
   };
@@ -171,49 +214,64 @@ const Solicitar = () => {
       }
     }
   };
+  useEffect(() => {
+    setSelectedGrupos([]);
+  }, [selecionMateria]);
+
   const toggleCalendar = () => {
     setShowCalendar(!showCalendar);
   };
-  const enviarDatos = () => {
-    const formData = {
-      numeroEstudiantes: selecionMateria,
-      diaSeleccionado: selectedDay,
-      correo: correo,
-      fechaSeleccionada: date.toLocaleDateString(), 
-      materiaSeleccionada: selectedMateria,
-      horaSeleccionada: selectedOption,
-    };
-    navigate('/Admin/Ambientes/AmbientesSol', { state: formData });
-    navigate('/Admin/Ambientes/AmbientesSol', { state: formData });
-
+  const seleccionmotivo = (event) => {
+    setSelectedMotivo(event.target.value);
   };
-  const EnviarSolicitud = () => {
-    const data = {
-      materias,
-      correo,
-      cantidad,
-      diaSeleccionado: selectedDay,
-      horaSeleccionada: selectedOption,
-    };
-    console.log("Datos a enviar:", data); 
-    fetch("http://127.0.0.1:8000/api/registrarSolicitud", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data) 
-    })
-    .then(response => {
-      if (response.ok) {
-        console.log("Registro exitoso");
-        navigate('/Usuario/Usu/Reservas');
-      } else {
-        console.error("Error en el registro");
-      }
-    })
-    .catch(error => {
-      console.error("Error en la solicitud:", error);
-    });
+  const EnviarDatos = () => {
+ 
+
+    const horaSeleccionadaObj = horariosDisponibles.find(hora => hora.id_hora.toString() === selectedOption.toString());
+
+    if (horaSeleccionadaObj) {
+      const horaInicio = horaSeleccionadaObj.hora_inicio;
+      const periodosGenerados = generarPeriodos(horaInicio, parseInt(valor), 90); 
+
+      const dataToSend = {
+        correo: correo,
+        fechaSeleccionada: date.toLocaleDateString(),
+        diaSeleccionado: selectedDay,
+        materiaSeleccionada: selecionMateria,
+        grupo: materia,
+        cantidadEstudiantes: cantidad,
+        tipoAmbiente: selectedAmbiente,
+        cantidadPeriodos: valor,
+        periodos: periodosGenerados,
+        motivo: selectedMotivo,
+        grupos:selectedGrupos
+
+
+      };
+
+      console.log("Datos a enviar:", dataToSend);
+
+      fetch("http://127.0.0.1:8000/api/registrarSolicitud", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(dataToSend)
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log("Registro exitoso");
+          navigate('/Usuario/Usu/Reservas');
+        } else {
+          console.error("Error en el registro");
+        }
+      })
+      .catch(error => {
+        console.error("Error en la solicitud:", error);
+      });
+    } else {
+      setShowErrorMessage("La hora seleccionada no es válida");
+    }
   };
   
   return (
@@ -227,7 +285,7 @@ const Solicitar = () => {
               value={date.toLocaleDateString()}
               readOnly
               onClick={toggleCalendar}
-              className="calendar-input"
+              className="inputcalendario"
             />
             <AiOutlineCalendar className="calendar-icon" onClick={toggleCalendar} />
             {showCalendar && (
@@ -243,70 +301,101 @@ const Solicitar = () => {
             )}
           </div>
         </div>
-        <div className='capacidad'>
-          <label htmlFor="campo" className="label">Nro de Estudiantes:</label>
-          <input
-            type="text"
-            id="campo"
-            name="campo"
-            value={cantidad}
-            onChange={handleInputChange}
-            placeholder='Ingrese la capacidad de estudiantes'
-            className="input"
-          />
+        <div className='materia'>
+          <label htmlFor="menuMateria" className="label">Materia:</label>
+          <select className="input" value={selecionMateria} name="nombre_materia" onChange={handleInputChange}>
+            <option value="">Seleccione una materia</option>
+            {materias.map((materia, index) => (
+              <option key={index} value={materia.nombre_materia}>{materia.nombre_materia}</option>
+            ))}
+          </select>
+          {showErrorMessage && selectedMateria === '' && <p className="solo-numero">Este campo es obligatorio</p>}
+        </div>
+<div className='Grupo'>
+  <label htmlFor="menuMotivo" className="label">Grupo:</label>
+  <div className="input">
+    {gruposPorMateria[selecionMateria] && gruposPorMateria[selecionMateria].map((grupo, index) => (
+      <div key={index} className="grupo-checkbox-item">
+        <input
+          type="checkbox"
+          id={grupo}
+          value={grupo}
+          onChange={handleGrupoChange}
+          checked={selectedGrupos.includes(grupo)} // Marcar el checkbox si el grupo está seleccionado
+        />
+        <label htmlFor={grupo}>{grupo}</label>
+      </div>
+    ))}
+  </div>
+  {showErrorMessage && selectedMateria === '' && <p className="solo-numero">Este campo es obligatorio</p>}
+</div>
+
+  <div className='capacidad'>
+        <label htmlFor="campo" className="label">Nro de Estudiantes:</label>
+    <input
+    type="number" 
+    id="campo"
+    name="campo"
+    value={cantidad}
+    onChange={(e) => setCantidad(e.target.value)} // Directamente actualizando el estado `cantidad`
+    placeholder='Ingrese la capacidad de estudiantes'
+    className="input"
+  />
           {showErrorMessage && <p className="error">{showErrorMessage}</p>}
         </div>
         <div className='tipo_ambiente'>
           <label htmlFor="campo1" className="label">Tipo de Ambiente:</label>
-          <input
-            type="text"
+          <select
             id="campo1"
             name="campo1"
-            placeholder='Aula Comun, Laboratorio'
+            value={selectedAmbiente}
+            onChange={BusquedaAmbiente}
             className="input"
-          />
+          >
+            <option value="">Seleccione un tipo de ambiente</option>
+            {tipoAmbientes.map((ambiente, index) => (
+              <option key={index} value={ambiente["Tipo Ambiente"]}>
+                {ambiente["Tipo Ambiente"]}
+              </option>
+            ))}
+          </select>
           {showErrorMessage && <p className="error">{showErrorMessage}</p>}
         </div>
-        <div className='materia'>
-          <label htmlFor="menuMateria" className="label">Materia:</label>
-          <select className="input24" value={selecionMateria} name="nombre_materia" onChange={handleInputChange}>
-              <option value="">Seleccione una materia</option>
-              {materias.map((materia, index) => (
-                <option key={index} value={materia.nombre_materia}>{materia.nombre_materia}</option>
-              ))}
-            </select>
-          {showErrorMessage && selectedMateria === '' && <p className="solo-numero">Este campo es obligatorio</p>}
-        </div>
-        <div className='motivo'>
-          <label htmlFor="menuMotivo" className="label">Grupo:</label>
-          <select className="input24" value={valor} name="nombre_grupo" onChange={(e) => setValor(e.target.value)}>
-              <option value="">Seleccione el Grupo</option>
-              {grupos.map((grupo, index) => (
-                <option key={index} value={grupo.grupo}>{grupo.grupo}</option>
-              ))}
-            </select>
-          {showErrorMessage && selectedMateria === '' && <p className="solo-numero">Este campo es obligatorio</p>}
-        </div>
-        <div className='motivo'>
-          <label htmlFor="menuMotivo" className="label">Motivo:</label>
-          <select 
-              className="input24" 
-              name="id_docente"
-              onChange={handleMateriaChange}
-              value={selectedMateria}
-            >
-                <option value="">Seleccione un Motivo</option>              
-                  <option >Examen Primer Parcial</option>
-                  <option >Examen Segundo Parcial</option>
-                  <option >Examen Final</option>
-                  <option >Examen Segunda instancia</option>
-                  <option >Reemplazo de  clases</option>
-                  <option >Elecciones</option>
-                  <option >Asamblea de estudiantes</option>
-                <option >Reunión a charla </option>                
-            </select>
-          {showErrorMessage && selectedMateria === '' && <p className="solo-numero">Este campo es obligatorio</p>}
-        </div>
+        <select 
+  id="menuMotivo" 
+  value={valor} 
+  onChange={(e) => setValor(e.target.value)} 
+  className="input"
+>   <label htmlFor="menuMotivo" className="label">Seleccione la cantidad de periodos:</label>
+
+  <option value="">Seleccione la cantidad de periodos</option>
+  
+  {Array.from({ length: cantidadPeriodos }, (_, i) => i + 1).map((periodo) => (
+    <option key={periodo} value={periodo}>{periodo}</option>
+  ))}
+</select>
+
+        
+<div className='motivo'>
+  <label htmlFor="menuMotivo" className="label">Motivo:</label>
+  <select 
+      className="input" 
+      name="motivo"
+      onChange={seleccionmotivo}
+      value={selectedMotivo} 
+    >
+      <option value="">Seleccione un Motivo</option>
+      <option>Examen Primer Parcial</option>
+      <option>Examen Segundo Parcial</option>
+      <option>Examen Final</option>
+      <option>Examen Segunda instancia</option>
+      <option>Reemplazo de  clases</option>
+      <option>Elecciones</option>
+      <option>Asamblea de estudiantes</option>
+      <option>Reunión a charla</option>                
+  </select>
+  {showErrorMessage && selectedMotivo === '' && <p className="solo-numero">Este campo es obligatorio</p>}
+</div>
         <div className='motivo'>
           <label htmlFor="menuMotivo" className="label">Seleccione la hora inicio:</label>
           <select id="menu" value={selectedOption} onChange={handleSelectChange} className="select">
@@ -318,18 +407,8 @@ const Solicitar = () => {
           </select>
           {showErrorMessage && selectedMateria === '' && <p className="solo-numero">Este campo es obligatorio</p>}
         </div>
-        <div className='motivo'>
-          <label htmlFor="menuMotivo" className="label">Seleccione la cantidad de periodos:</label>
-          <input
-            type="text"
-            id="campo1"
-            name="campo1"
-            placeholder='Aula Comun, Laboratorio'
-            className="input"
-          />
-          {showErrorMessage && selectedMateria === '' && <p className="solo-numero">Este campo es obligatorio</p>}
-        </div>
-        <button className="boton-siguiente" onClick={handleNextStep}>Enviar</button>       
+       
+        <button className="boton-siguiente" onClick={EnviarDatos}>Enviar</button>       
       </div>
     </div>
   );

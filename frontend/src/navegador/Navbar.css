@@ -1,6 +1,11 @@
+.barraNavAdmi{
+    width: 100%;
+    
+}
 .navbar {
     background-color: #050259;
   }
+
 .navbar-nav .nav-link,
 .navbar-nav .dropdown-toggle {
      color: white;

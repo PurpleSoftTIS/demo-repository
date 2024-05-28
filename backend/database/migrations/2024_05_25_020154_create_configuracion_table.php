@@ -14,8 +14,11 @@ class CreateConfiguracionTable extends Migration
     public function up()
     {
         Schema::create('configuracion', function (Blueprint $table) {
-            $table->string("valor");
-            $table->date("fecha");
+            $table->date("aulas_Comunes");
+            $table->date("laboratorios");
+            $table->string("mensajes_Masivos");
+            $table->date("inicio");
+            $table->date("fin");
             $table->timestamps();
         });
     }

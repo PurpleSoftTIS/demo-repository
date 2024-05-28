@@ -18,4 +18,5 @@ class Usuario extends Model
         "correo_electronico",
         "contraseña",
         "contador_notificacion"
-    ];}
+    ];
+}

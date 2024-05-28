@@ -23,9 +23,6 @@ const ListaSolicitudes = () => {
     setSelectedOption(e.target.value);
   };
 
-
-
-
   const [showD, setShowD] = useState(false);
   const [motivoRechazo, setMotivoRechazo] = useState('');
 
@@ -125,7 +122,7 @@ const ListaSolicitudes = () => {
         })
         .catch(error => console.error('Error al obtener los datos:', error));
   }, []);
-
+/*
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/obtenerTodasSolicitudes', {
       method: 'GET',
@@ -141,7 +138,7 @@ const ListaSolicitudes = () => {
       })
       .catch(error => console.error('Error al obtener los datos:', error));
 }, []);
-
+*/
 
   const [mostrarOpciones, setMostrarOpciones] = useState(false); 
 
@@ -300,7 +297,7 @@ return (
           </tr>
         </thead>
         <tbody>
-        {resultado.map((solicitud) => (
+        {solicitudes.map((solicitud) => (
             <tr key={solicitud.id_solicitud}
               className="fila-lista"
               onClick={() => mostrarFormularioParaSolicitud(solicitud)}
@@ -482,64 +479,3 @@ return (
 
 export default ListaSolicitudes;
 
-
-/*
-import React, { useState, useEffect } from 'react';
-import './ListaSolicitudes.css';
-import { Modal, Button, Form } from 'react-bootstrap';
-
-const ListaSolicitudes = () => {
-  const [show, setShow] = useState(false);
-  const [motivoRechazo, setMotivoRechazo] = useState('');
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  const handleMotivoChange = (event) => {
-    setMotivoRechazo(event.target.value);
-  };
-
-  const handleEnviarClick = () => {
-    // Aquí puedes enviar el motivo al servidor o realizar otras acciones necesarias
-    console.log('Motivo de rechazo:', motivoRechazo);
-    handleClose();
-  };
-
-  return (
-    <div className="container" style={{ height: '100vh' }}>
-      {/* ... (resto de tu código) }
-      <button className="btn btn-eliminar" onClick={handleShow}>
-        Rechazar
-      </button>
-      {/* ... (resto de tu código) }
-      
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Rechazar Solicitud</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form.Group controlId="motivoRechazo">
-            <Form.Label>Motivo de rechazo:</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Escribe aquí el motivo"
-              value={motivoRechazo}
-              onChange={handleMotivoChange}
-            />
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Cancelar
-          </Button>
-          <Button variant="primary" onClick={handleEnviarClick}>
-            Enviar
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </div>
-  );
-};
-
-export default ListaSolicitudes;
- * ***/
