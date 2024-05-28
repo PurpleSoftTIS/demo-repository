@@ -48,9 +48,28 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
-  
+
   .config-form button:hover {
     background-color: #4372a1;
     color: #011640;
+  }
+  .error {
+    color: red;
+    font-size: 0.875em;
+  }
+  
+  .add-icon {
+    margin-left: 10px;
+    cursor: pointer;
+    color: #2ddc45; 
+    font-size: 1.5em;
+    vertical-align: middle; 
+  }
+  
+  .feriado-input {
+    width: 100%;
+    padding: 10px; 
+    margin-top: 10px; 
+    font-size: 1em;
   }
   
