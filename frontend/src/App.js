@@ -1,11 +1,12 @@
 import { useContext } from 'react';
 import { UserContext } from './Context/UserContext';
 import { React, Router, Routes, Route, Navigate, HomeUno, Ambientes, Docentes, Navbar, RegistrarMateria,
-        LoginForm, RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Reservar, Solicitar, Ayuda,
+        LoginForm, RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Solicitar, Ayuda,
         ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,ListaSolicitudesUr,
-        AmbientesActualizar,Footer,ListaMaterias,Solicitar2,Solicitar1,MensajeExitosoU,
+        AmbientesActualizar,Footer,ListaMaterias,MensajeExitosoU,
         MensajeErrorU,MensajeActExito,MensajeActError,DocentesActualizar,MensajeDatExito,MensajeDatError
-       ,Ambientesdisponibles ,SolicitarCon1,SolicitarCon2,SolicitarCon3,PasswordResetForm,MensajeNoEncontrado} from './importaciones';
+      ,PasswordResetForm,MensajeNoEncontrado,AmbientesDis,AmbientesSol,MisSolicitudes,AyudaAdmin,
+      Configuraciones,SolicitarCon1,AsignarAmbiente} from './importaciones';
        
 function PrivateAdminRoute({ element }) {
   const { urole } = useContext(UserContext);
@@ -36,7 +37,10 @@ function AdminRoutes() {
     <div>
     <Navbar/> 
     <Routes>
-      <Route path='/Inicio/HomeUno' element={<HomeUno/>}/>  
+      <Route path='/Inicio/HomeUno' element={<HomeUno/>}/>        
+      <Route path='/AyudaAdmin' element={<AyudaAdmin/>}/> 
+      <Route path='/Configuraciones' element={<Configuraciones/>}/>
+      <Route path='/AsignarAmbientes' element={<AsignarAmbiente />} />
       <Route path='/ListaSolicitudes' element={<ListaSolicitudes />} />
       <Route path='/ListaSolicitudesUr' element={<ListaSolicitudesUr />} />
       <Route path='/Registro/Ambientes' element={<Ambientes />} />
@@ -48,7 +52,6 @@ function AdminRoutes() {
       <Route path='/Registro/AmbientesActualizar' element={<AmbientesActualizar />} /> 
       <Route path='/Registro/Diahorasactualizar' element={<RegistrarDiaHoras />} /> 
       <Route path='/Listas/ListaAmbientes' element={<ListaAulas/>} />
-      <Route path='/Listas/Ambientesdisponibles' element={<Ambientesdisponibles/>} />
       <Route path='/Listas/ListaDocentes' element={<ListaDocentes/>} />
       <Route path='/Mensaje/RegistroExitoso' element={<MensajeExitoso/>}/>
       <Route path='/Mensaje/RegistroError' element={<MensajeError/>}/>            
@@ -56,8 +59,8 @@ function AdminRoutes() {
       <Route path='/Mensaje/ActualizacionExitosa' element={<MensajeActExito/>}/>
       <Route path='/Mensaje/ErrorActualizacion' element={<MensajeActError/>}/>
       <Route path='/Mensaje/CargaMasiva' element={<MensajeDatExito/>}/> 
-      <Route path='Mensaje/ErrorCargaMasiva' element={<MensajeDatError/>}/> 
-  
+      <Route path='/Mensaje/ErrorCargaMasiva' element={<MensajeDatError/>}/> 
+      <Route path='/Ambientes/AmbientesSol' element={<AmbientesSol/>}/> 
     </Routes>
     <Footer/>
   </div>
@@ -71,17 +74,13 @@ function UserRoutes() {
     <Routes>
       <Route path='/Inicio/HomeDos' element={<HomeDos/>}/>  
       <Route path='/Usu/Solicitar' element={<Solicitar />} />
-      <Route path='/Usu/Solicitar1' element={<Solicitar1 />} />
-      <Route path='/Usu/Reservas' element={<Reservar />} />
+      <Route path='/Usu/SolicitarCon' element={<SolicitarCon1 />} />
+      <Route path='/Usu/Reservas' element={<MisSolicitudes />} />
       <Route path='/Usu/Ayuda' element={<Ayuda />} /> 
-      <Route path='Usu/DetallesSol' element={<Solicitar2/>}/>
       <Route path='/Mensaje/Exitoso' element={<MensajeExitosoU/>}/>
       <Route path='/Mensaje/Error' element={<MensajeErrorU/>}/>
-      <Route path='/Usu/SolicitarCon1' element={<SolicitarCon1/>} />
-      <Route path='/Usu/SolicitarCon2' element={<SolicitarCon2/>} />
-      <Route path='/Usu/SolicitarCon3' element={<SolicitarCon3/>} />
       <Route path='/Mensaje/NoEncontrado' element={<MensajeNoEncontrado/>} />
-
+      <Route path='/Usu/AmbientesDis' element={<AmbientesDis/>} />
     </Routes>
     <Footer/>
   </div>        

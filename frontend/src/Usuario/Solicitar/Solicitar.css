@@ -28,6 +28,28 @@
   display: block;
   margin-bottom: 5px;
 }
+.inputcalendario,
+.select {
+  width: 95%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+.grupo-checkbox-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.grupo-checkbox-item {
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.grupo-checkbox-item input[type="checkbox"] {
+  margin-right: 5px;
+}
 
 .input,
 .select {
@@ -112,4 +134,31 @@
   .container button {
     font-size: 14px;
   }
+}
+/* CustomCalendar.css */
+
+.react-calendar {
+  width: 250px;
+  max-width: 100%;
+  background: white;
+  border: 1px solid #a0a096;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.react-calendar__tile {
+  height: 30px; /* Ajusta la altura de las celdas */
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: #d10000;
+}
+
+.react-calendar__tile--active {
+  background: #006edc;
+  color: white;
+}
+
+.react-calendar__tile--now {
+  background: #ffff76;
 }

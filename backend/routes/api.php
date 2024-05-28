@@ -14,6 +14,8 @@ use App\Http\Controllers\CarreraController;
 use App\Http\Controllers\DeleteAmbienteController;
 use App\Http\Controllers\CorreoController;
 use App\Http\Controllers\AmbienteObtenerController;
+use App\Http\Controllers\ConfiguracionController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;   
 
@@ -29,7 +31,6 @@ Route::get('/usuarios', [UsuarioController::class, 'index']);
 Route::get('/materias', [MateriaController::class, 'index']);
 Route::get('/listaAmbiente', [AmbienteController::class, 'index']);
 Route::get('/ambientesDispo/{capacidad}/{dia}/{hora_inicio}/{hora_fin}', [AmbienteController::class, 'ambientesDis']);
-Route::get('/ambientesContiguos/{capacidad}/{dia}/{hora_inicio}/{hora_fin}', [SolicitudController::class, 'ambientesContiguos']);
 Route::get('/ambientesDisponibles/{capacidad}/{dia}/{horarios}', [AmbienteObtenerController::class, 'ambientesDisponibles']);
 
 Route::get('/ambientesDispoDos/{capacidad}', [AmbienteController::class, 'ambientesDi']);
@@ -43,6 +44,7 @@ Route::get('/SolicitudUrgencias', [SolicitudUrgencia::class, 'urgencias']);
 Route::get('/ReservasDocentes/{setEmailC}', [RerservasUsuario::class, 'reservasDocentes']);
 Route::get('/obtenerMara/{Correo}', [AmbienteController::class, 'MateriasObtener']);
 Route::get('/ambientesContiguos/{capacidad}/{dia}/{horas}', [SolicitudController::class, 'ambientesContiguos']);
+Route::get('/configuraciones', [ConfiguracionController::class, 'obtenerconf']);
 
 //Registrar Datos
 Route::post('/docentesRegistrar', [DocenteRegistrarController::class, 'registrar']);
@@ -59,7 +61,8 @@ Route::post('/registrarSolicitudCon',[SolicitudController::class,'registrarSolic
 Route::post('/enviarcorreo', [CorreoController::class, 'enviarCorreo']);
 Route::post('/verificarCodigo', [CorreoController::class, 'verificarCodigo']);
 Route::post('/restablecercontrasena', [DocenteController::class, 'restablecerPasswd']);
-//Elimnar datos
+Route::post('/asignarAula', [SolicitudController::class, 'asignarAula']);
+
 Route::delete('/docentes/{id_docente}', [DocenteController::class, 'eliminar']);
 Route::delete('/borrar/{id_ambiente}', [DeleteAmbienteController::class, 'borrarAmbiente']);
 Route::delete('/materias/{id}', [MateriaController::class, 'destroy']);

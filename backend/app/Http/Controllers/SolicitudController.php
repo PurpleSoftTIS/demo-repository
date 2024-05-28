@@ -11,6 +11,8 @@ use App\Models\Solicitudes;
 use App\Models\Solicitudes_docentes;
 use App\Models\Materia;
 use App\Models\Solicitudes_materia;
+use App\Models\Solicitudes_horario;
+
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
@@ -54,53 +56,72 @@ class SolicitudController extends Controller
             $id_usuario=$usuario->id_usuario;
             $docente=Docente::where('id_usuario',$id_usuario)->first();
             $idDocente=$docente->id_docente;  
-            $id_ambiente=$datosReserva['aula'];
    
             $solicitud = new Solicitud(); 
-            $horaInicio = $datosReserva['horaInicio'];
-            $horaFin = $datosReserva['horaFin'];
+            $horaInicio = '8:15:00';
+            $horaFin = '9:45:00';
             $horaCoincidente = Hora::where('hora_inicio', $horaInicio)
                                       ->where('hora_fin', $horaFin)
                                       ->first();
             $id_hora=$horaCoincidente->id_hora;
             $solicitud->id_hora=$id_hora;
-            $numero_estudiantes=$datosReserva['numeroEstudiantes'];
+            $numero_estudiantes=$datosReserva['cantidadEstudiantes'];
             $solicitud->numero_estudiantes=$numero_estudiantes;
-            $fecha = Carbon::createFromFormat('d/m/Y', $datosReserva['fecha'])->format('Y-m-d');
+            $fecha = Carbon::createFromFormat('d/m/Y', $datosReserva['fechaSeleccionada'])->format('Y-m-d');
             $solicitud->fecha_solicitud = $fecha;
             $motivo=$datosReserva['motivo'];
             $solicitud->motivo=$motivo;
-            $estado_solicitud='espera';
+            $estado_solicitud='Pendiente';
             $solicitud->estado_solicitud=$estado_solicitud;
             $solicitud->tipo_solicitud = 'individual'; 
             $solicitud->save();
             $id_solicitud= $solicitud->id_solicitud;
+            $periodos= $datosReserva['periodos'];
+        foreach($periodos as $periodo){
+            $horaInicio = $periodo['horaInicio'];
+            $horaFin = $periodo['horaFin'];
+            $horaCoincidente = Hora::where('hora_inicio', $horaInicio)
+            ->where('hora_fin', $horaFin)
+            ->first();
+            $id_hora = $horaCoincidente->id_hora;
 
-            $aulas = $datosReserva['aula'];
-        foreach ($aulas as $aula) {
-             $solicitudes = new Solicitudes();
-            $solicitudes->id_ambiente = $aula['id_ambiente'];
-            $solicitudes->id_solicitud = $id_solicitud;
-            $solicitudes->save();
+            $solicitudHora=new Solicitudes_horario ();
+            $solicitudHora->id_solicitud = $id_solicitud;
+            $solicitudHora->id_hora = $id_hora;
+            $solicitudHora->save();
+
+
+
+
         }
+            
             $solicitudesDo=new Solicitudes_docentes ();
             $solicitudesDo->id_docente = $idDocente;
             $solicitudesDo->id_solicitud = $id_solicitud;
             $solicitudesDo->save ();
-
+            $grupos = $datosReserva['grupos'];
+            foreach($grupos as $grupo) {
             $solicitudMateria=new Solicitudes_materia();
-            $nombremateria=$datosReserva['materia'];
-            $materia=Materia::where('nombre_materia',$nombremateria)->first();
+            $materianombre=$datosReserva['materiaSeleccionada'];
+            $materia = Materia::where('nombre_materia', $materianombre)
+            ->where('grupo', $grupo)
+            ->first();
             $idmateria=$materia->id_materia;
             $solicitudMateria->id_materia=$idmateria;
             $solicitudMateria->id_solicitud=$id_solicitud;
             $solicitudMateria->save(); 
+            }
+            
+            
+            
            
+                
         } catch (\Exception $e) {
             \Log::error('Error al registrar la solicitud: ' . $e->getMessage());
             return response()->json(['error' => 'Error al registrar la solicitud'], 500);
         }
     }
+      
     
     public function registrarSolicitudesConjuntas(Request $datos){
         try {
@@ -125,7 +146,6 @@ class SolicitudController extends Controller
             $solicitud->numero_estudiantes=$numero_estudiantes;
             $fecha = $datosReserva['fecha'];
             
-          //  $fechaFormateada = date('Y-m-d', strtotime($fecha));
         
             
             $solicitud->fecha_solicitud = $fecha;
@@ -208,7 +228,6 @@ class SolicitudController extends Controller
     }    
     public function obtenerAmbientesPorSolicitud($idSolicitud) {
         try {
-            // Obtener los ambientes asociados a la solicitud mediante su ID
             $ambientes = DB::table('solicitud')
                 ->join('ambiente', 'ambiente.id_ambiente', '=', 'solicitud.id_ambiente')
                 ->select('ambiente.*')
@@ -283,4 +302,21 @@ class SolicitudController extends Controller
         return $combinacionesValidas;
     }
     
+    public function asignarAula(Request $request)
+    {
+        $id_ambiente = $request->input('id_ambiente');
+        $id_solicitud = $request->input('id_solicitud');
+        $solicitud = Solicitud::where('id_solicitud', $id_solicitud)->first();
+        $estado = "aceptado";
+        $solicitud->estado_solicitud = $estado;
+        $solicitud->save();
+        $solicitudes = new Solicitudes();
+        $solicitudes->id_ambiente = $id_ambiente;
+        $solicitudes->id_solicitud = $id_solicitud;  
+        $solicitudes->save();
+    
+        return response()->json(['message' => 'El aula se asignó correctamente'], 200);
+    }
+    
+
 }

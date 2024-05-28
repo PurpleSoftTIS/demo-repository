@@ -17,6 +17,7 @@ class DocenteRegistrarController extends Controller
            $usuario->apellido_paterno = $request->input('apellidoPaterno');
            $usuario->apellido_materno = $request->input('apellidoMaterno');
            $usuario->correo_electronico = $request->input('correo');
+           $usuario->contador_administrador=0;
            // Generar contraseña
            $apellido_materno = strtolower($request->input('apellidoMaterno'));
            $apellido_paterno = strtolower($request->input('apellidoPaterno'));

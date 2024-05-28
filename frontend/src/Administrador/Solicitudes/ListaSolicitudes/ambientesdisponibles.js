@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import './ambiente.css';
 
 const AmbientesDisponibles = () => {
     const navigate = useNavigate();
@@ -9,7 +10,7 @@ const AmbientesDisponibles = () => {
     const solicitud = location.state;
     const [mostrarAmbientesDisponibles, setMostrarAmbientesDisponibles] = useState(true);
     const [contiguous, setContiguous] = useState([]);
-
+    
     const obtenerDiaDeFecha = (fecha) => {
         const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
         const fechaObj = new Date(fecha);
@@ -24,7 +25,7 @@ const AmbientesDisponibles = () => {
 
 
     useEffect(() => {
-        const capacidad = 20;
+        const capacidad = solicitud.numero_estudiantes;
         const fechaSolicitud = solicitud.fecha_solicitud; 
         const dia = 'Lunes';
         const horarios = horasSeparadas;
@@ -49,7 +50,33 @@ const AmbientesDisponibles = () => {
             });
 
     }, []);
-
+    const AsignarAula = (ambientes) => {
+        const aula = ambientes[0];
+        const dataToSend = {
+            id_ambiente: aula.id_ambiente,
+            id_solicitud: solicitud.id_solicitud,
+        };
+        console.log(dataToSend);
+        fetch('http://127.0.0.1:8000/api/asignarAula', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dataToSend),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error al asignar el aula');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Aula asignada:', data);
+        })
+        .catch(error => {
+            console.error('Error al asignar el aula:', error);
+        });
+    };
     const handleMostrarContiguos = () => {
         const capacidad = 20;
         const fechaSolicitud = solicitud.fecha_solicitud;
@@ -74,10 +101,7 @@ const AmbientesDisponibles = () => {
             });
     };
 
-    const AsignarAula = (ambientes) => {
-        console.log('Reservando ambientes:', ambientes);
-    };
-
+   
     return (
         <div className="container" style={{ minHeight: '78.7vh' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -114,6 +138,7 @@ const AmbientesDisponibles = () => {
                                     <td>{dato.numero_piso}</td>             
                                     <td>
                                         <button className="btn btn-editar mr-2" onClick={() => AsignarAula([dato])}>Asignar</button>               
+
                                     </td>
                                 </tr>
                             ))}

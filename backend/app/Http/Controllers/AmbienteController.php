@@ -118,6 +118,25 @@ public function ambientesDis($capacidad, $dia, $hora_inicio, $hora_fin)
 }
 
 
+public function ambientesAll()
+{
+    $ambientes = DB::table('ambiente')
+        ->select(
+            'ambiente.*',
+            'ubicacion.*',
+            'dia.*',
+            'hora.*',            
+        )
+        ->join('ubicacion', 'ambiente.id_ubicacion', '=', 'ubicacion.id_ubicacion')
+        ->join('diashabiles', 'ambiente.id_ambiente', '=', 'diashabiles.id_ambiente')
+        ->join('horario', 'diashabiles.id_horario', '=', 'horario.id_horario')
+        ->join('dia', 'horario.id_dia', '=', 'dia.id_dia')
+        ->join('hora', 'horario.id_hora', '=', 'hora.id_hora')
+        ->get();
+
+    return response()->json($ambientes, 200);
+}
+
 public function ambientesDi($capacidad)
 {
     $ambientes = DB::table('ambiente')
@@ -305,10 +324,7 @@ public function CargaMasivaDias(Request $request)
               }
                else {
                  $idhora=$hora->id_hora;
- }
-
-            
-           
+        }      
            
 
             

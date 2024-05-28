@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 import './ListaSolicitudes.css';
 
 
+
 const ListaSolicitudes = () => {
   const navigate = useNavigate();
   const [solicitudes, setSolicitudes] = useState([]);
@@ -65,7 +66,7 @@ const ListaSolicitudes = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const aceptarsolicitud = (solicitud) => {
-    navigate("/Admin/Listas/Ambientesdisponibles", { state: solicitud });
+    navigate("/Admin/AsignarAmbientes", { state: solicitud });
    
       console.log(solicitud);
   };
@@ -127,7 +128,7 @@ const ListaSolicitudes = () => {
 }, []);
 
 
-  const [mostrarOpciones, setMostrarOpciones] = useState(false); // Estado para controlar la aparición de los botones "Todas" y "Pendientes"
+  const [mostrarOpciones, setMostrarOpciones] = useState(false); 
 
   const mostrarFormularioParaSolicitud = (solicitud) => {
       if(solicitud.tipo_solicitud ==="individual"){
@@ -232,6 +233,10 @@ const ListaSolicitudes = () => {
     );
     
   } 
+  const sugerencias = () => {
+    navigate("/Admin/Ambientes/AmbientesSol");
+
+};
 
 return (
     <div className="container" style={{ minHeight: '78.7vh' }}>
@@ -302,7 +307,7 @@ return (
               {!mostrarSolicitudesTodass && (
                 <td>
                   <button className="btn btn-editar mr-2" onClick={() => aceptarsolicitud(solicitud)}>Asignar</button>
-                  <button className="btn btn-eliminar" onClick={(handleShowDelete)}>Rechazar</button>
+
                 </td>
               )}
             </tr>
@@ -370,23 +375,22 @@ return (
       {mostrarFormulario && (
         <div className="overlay" onClick={cerrarFormulario}>
           <div className="formulario-emergente" onClick={(e) => e.stopPropagation()}>
-            <div className="contact-form-container">
+            <div className="contedorForm">
               <section className="contenedor">
-                <div className="contact-form-sub-heading-cta">
-                  <b className="contact-form-enter-details">Detalles de Solicitud</b>
+                  <b className="tituloForm">Detalles de Solicitud</b>
                   {Object.entries(formularioData).map(([key, value]) => (
-                    <div key={key} className="contact-form-phone-parent">
-                      <div className="contact-form-phone">{key.replace(/_/g, ' ')}</div>
+                    <div key={key} className="dimensionForm">
+                    <div className="contenido">{key.replace(/_/g, ' ').charAt(0).toUpperCase() + key.replace(/_/g, ' ').slice(1)}</div>
                       <input
-                        className="contact-form-rectangle"
-                        type="text"
+                        className="textoForm"
+                        disabled type="text"
                         name={key}
                         value={value}
-                        onChange={handleChange}
+                        onChange={handleChange}                        
                       />
                     </div>
                   ))}
-                </div>
+                
               </section>
             </div>
           </div>
