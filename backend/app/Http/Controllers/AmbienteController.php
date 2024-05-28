@@ -117,7 +117,6 @@ public function ambientesDis($capacidad, $dia, $hora_inicio, $hora_fin)
     return response()->json($ambientes, 200);
 }
 
-
 public function ambientesAll()
 {
     $ambientes = DB::table('ambiente')

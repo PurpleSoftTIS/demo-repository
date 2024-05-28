@@ -198,35 +198,33 @@ class SolicitudController extends Controller
             return response()->json(['error' => 'Error al obtener los datos de los ambientes por solicitud'], 500);
         }
     }
-    public function ambientesContiguos($capacidad, $dia, $hora_inicio, $hora_fin)
+    public function ambientesContiguos($capacidad, $dia, $horarios)
     {
+        \Illuminate\Support\Facades\Log::info('Capacidad: ' . $capacidad);
+        \Illuminate\Support\Facades\Log::info('Día: ' . $dia);
+        \Illuminate\Support\Facades\Log::info('Horarios: ' . print_r($horarios, true));
+    
+        $horarios = json_decode($horarios, true);
+    
         $aulasDisponibles = DB::table('ambiente')
-            ->join('diashabiles', 'ambiente.id_ambiente', '=', 'diashabiles.id_ambiente')
-            ->join('dia', 'diashabiles.id_dia', '=', 'dia.id_dia')
-            ->join('horario', 'diashabiles.id_dia', '=', 'horario.id_dia')
-            ->join('hora', 'horario.id_hora', '=', 'hora.id_hora')
             ->join('ubicacion', 'ambiente.id_ubicacion', '=', 'ubicacion.id_ubicacion')
             ->select('ambiente.*', 'ubicacion.edificio as nombre_edificio', 'ambiente.numero_piso')
-            ->where('dia.nombre', $dia)
-            ->where('hora.hora_inicio', '<=', $hora_inicio)
-            ->where('hora.hora_fin', '>=', $hora_fin)
-            ->get();
+            ->where('ambiente.capacidad', '>=', $capacidad);
     
-        $aulasPorEdificioYPiso = [];
-        foreach ($aulasDisponibles as $aula) {
-            $aulasPorEdificioYPiso[$aula->nombre_edificio][$aula->numero_piso][] = $aula;
+        foreach ($horarios as $horario) {
+            $aulasDisponibles->whereExists(function ($query) use ($dia, $horario) {
+                $query->select(DB::raw(1))
+                    ->from('diashabiles')
+                    ->join('dia', 'diashabiles.id_dia', '=', 'dia.id_dia')
+                    ->join('horario', 'diashabiles.id_dia', '=', 'horario.id_dia')
+                    ->join('hora', 'horario.id_hora', '=', 'hora.id_hora')
+                    ->whereColumn('ambiente.id_ambiente', 'diashabiles.id_ambiente')
+                    ->where('dia.nombre', $dia)
+                    ->where('hora.hora_inicio', $horario['hora_inicio'])
+                    ->where('hora.hora_fin', $horario['hora_fin']);
+            });
         }
-    
-        $combinacionesValidas = [];
-        foreach ($aulasPorEdificioYPiso as $edificio => $aulasEnEdificio) {
-            foreach ($aulasEnEdificio as $numero_piso => $aulasEnPiso) {
-                $combinacionesValidas = array_merge($combinacionesValidas, $this->generarCombinaciones($aulasEnPiso, $capacidad));
-            }
-        }
-    
-        return response()->json($combinacionesValidas, 200);
     }
-    
     private function generarCombinaciones($aulas, $capacidad) {
         $combinacionesValidas = [];
         $totalAulas = count($aulas);

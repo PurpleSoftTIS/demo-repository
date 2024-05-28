@@ -53,7 +53,7 @@ Servidor de prueba para ejecutar el bakcned:
 php -S 127.0.0.1:8000 -t public
 
 Como crear un controlador:
-php artisan make:controller_nombre
+php artisan make:controller nombre
 
 Como crear una migracion:
 php artisan make:migration agregar_columna_contraseña_a_tabla
