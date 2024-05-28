@@ -76,7 +76,12 @@ const Navbar = () => {
     setShowSesion(!showSesion);
 
   };
-  
+  const handleOptionClick = () => {
+    setShowDropdown(false); 
+  };
+  const handleOptionClick2 = () => {
+    setShowDropdown2(false); 
+  };
   const handleLogout = () => {
     sessionStorage.removeItem('role'); // Eliminar el item 'role' del sessionStorage
     setUrole(null);
@@ -121,18 +126,18 @@ const Navbar = () => {
                   <button className="nav-link dropdown-toggle" onClick={toggleDropdown2} style={{ cursor: 'pointer' }}>Solicitudes</button>
                   {showDropdown2 && (
                       <div className="menu">
-                          <NavLink className="opciones" to='/Admin/ListaSolicitudes' activeclassname="active">Todas</NavLink>
-                          <NavLink className="opciones" to='/Admin/ListaSolicitudesUr' activeclassname="active">Urgentes</NavLink>
+                          <NavLink className="opciones" to='/Admin/ListaSolicitudes' activeclassname="active" onClick={handleOptionClick2}>Todas</NavLink>
+                          <NavLink className="opciones" to='/Admin/ListaSolicitudesUr' activeclassname="active" onClick={handleOptionClick2}>Urgentes</NavLink>
                       </div>              
                   )}              
               </div>
               <div className="dropdown-container" ref={dropdownRef}>
-                  <button className="nav-link dropdown-toggle" onClick={toggleDropdown} style={{ cursor: 'pointer' }}>Registrar</button>
+                  <button className="nav-link dropdown-toggle" onClick={toggleDropdown} style={{ cursor: 'pointer ' }}>Registrar</button>
                   {showDropdown && (
                       <div className="menu">
-                          <NavLink className="opciones" to='/Admin/Listas/ListaAmbientes' activeclassname="active">Ambiente</NavLink>
-                          <NavLink className="opciones" to='/Admin/Listas/ListaDocentes' activeclassname="active">Docente</NavLink>
-                          <NavLink className="opciones" to='/Admin/Listas/ListaMaterias' activeclassname="active">Materia</NavLink>
+                          <NavLink className="opciones" to='/Admin/Listas/ListaAmbientes' activeclassname="active" onClick={handleOptionClick}>Ambiente</NavLink>
+                          <NavLink className="opciones" to='/Admin/Listas/ListaDocentes' activeclassname="active" onClick={handleOptionClick}>Docente</NavLink>
+                          <NavLink className="opciones" to='/Admin/Listas/ListaMaterias' activeclassname="active" onClick={handleOptionClick}>Materia</NavLink>
                       </div>              
                   )}              
               </div>
