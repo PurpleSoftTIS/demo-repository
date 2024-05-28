@@ -3,10 +3,10 @@ import React, { createContext, useState } from "react";
 const FormContext = createContext();
 
 const FormProvider = ({ children }) => {
-  const [fromDataContext, setFromDataContext] = useState([]);
+  const [formDataC, setFormDataC] = useState([]);
    
   return (
-    <FormContext.Provider value={{ fromDataContext, setFromDataContext}}>
+    <FormContext.Provider value={{ formDataC, setFormDataC}}>
       {children}
     </FormContext.Provider>
   );

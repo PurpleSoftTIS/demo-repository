@@ -17,6 +17,6 @@ class Usuario extends Model
         "apellido_materno",
         "correo_electronico",
         "contraseña",
-        "contador_notificacion"
+        "notification_count"
     ];
 }

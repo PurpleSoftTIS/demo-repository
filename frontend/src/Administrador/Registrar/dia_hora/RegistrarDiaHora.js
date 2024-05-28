@@ -38,14 +38,14 @@ const RegistrarDiaHora = () => {
           ...prevState,
           [selectedDay]: {
               ...prevState[selectedDay],
-              '6:15-8:15': true,
+              '6:45-8:15': true,
               '8:15-9:45': true,
               '9:45-11:15': true,
               '11:15-12:45': true,
               '12:45-14:15': true,
               '14:15-15:45': true,
               '15:45-17:15': true,
-              '17:45-18:45': true,
+              '17:15-18:45': true,
               '18:45-20:15': true,
               '20:15-21:45': true
           }
@@ -66,8 +66,8 @@ const RegistrarDiaHora = () => {
       <div className="col">
         <ul className="list-unstyled">
           <li className="form-check">
-                        <input className="form-check-input" type="checkbox" id="6:15-8:15" checked={selectedHours[selectedDay]['6:15-8:15']} onChange={handleHourChange} />
-                        <label className="form-check-label" htmlFor="6:15-8:15">6:45-8:15</label>
+                        <input className="form-check-input" type="checkbox" id="6:45-8:15" checked={selectedHours[selectedDay]['6:45-8:15']} onChange={handleHourChange} />
+                        <label className="form-check-label" htmlFor="6:45-8:15">6:45-8:15</label>
                       </li>
                       <li className="form-check">
                         <input className="form-check-input" type="checkbox" id="8:15-9:45" checked={selectedHours[selectedDay]['8:15-9:45']} onChange={handleHourChange} />
@@ -99,8 +99,8 @@ const RegistrarDiaHora = () => {
                         <label className="form-check-label" htmlFor="15:45-17:15">15:45-17:15</label>
                       </li>
                       <li className="form-check">
-                        <input className="form-check-input" type="checkbox" id="17:45-18:45" checked={selectedHours[selectedDay]['17:45-18:45']} onChange={handleHourChange} />
-                        <label className="form-check-label" htmlFor="17:45-18:45">17:45-18:45</label>
+                        <input className="form-check-input" type="checkbox" id="17:15-18:45" checked={selectedHours[selectedDay]['17:15-18:45']} onChange={handleHourChange} />
+                        <label className="form-check-label" htmlFor="17:15-18:45">17:15-18:45</label>
                       </li>
                       <li className="form-check">
                         <input className="form-check-input" type="checkbox" id="18:45-20:15" checked={selectedHours[selectedDay]['18:45-20:15']} onChange={handleHourChange} />

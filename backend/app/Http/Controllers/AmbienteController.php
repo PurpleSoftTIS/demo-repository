@@ -192,75 +192,70 @@ public function ambientesDi($capacidad)
     }
 }
 
+public function actualizarAmb(Request $request, $id_ambiente)
+{
+    try {
+        // Encontrar el ambiente existente
+        $ambiente = Ambiente::findOrFail($id_ambiente);
+        $ambiente->capacidad = $request->input('capacidadEstudiantes');
+        $ambiente->tipo_ambiente = $request->input('Tipo');
+        $ambiente->numero_piso = $request->input('piso');
+        $ambiente->save();
 
-public function actualizarAmb (Request $request, $id_ambiente){
-    $ambiente =Ambiente::find($id_ambiente); 
-    $ambiente ->capacidad= $request ->input ('capacidadEstudiantes');
-    $ambiente ->tipo_ambiente= $request -> input ('Tipo');
-    $ambiente ->numero_piso= $request ->input ('piso') ;
-    $idambiente=$ambiente->id_ambiente;
-    $ambiente -> save();
-    $edificio = Ubicacion::where('id_ubicacion', $ambiente->id_ubicacion)->value('edificio');
-    $diasHabiles = Diashabiles::where('id_ambiente', $ambiente->id_ambiente)->get();
-    foreach ($diasHabiles as $diaHabil) {
-        $nombreDia = Dia::find($diaHabil->id_dia)->nombre;
-        $horarios = Horario::where('id_dia', $diaHabil->id_dia)->get();
-    foreach ($horarios as $horario) {
-         $id_hora = $horario->id_hora;
-         $horario->where('id_hora', $id_hora)->delete();
-         Hora::where('id_hora', $id_hora)->delete();
-       }
-       $id_dia=$diaHabil->id_dia;
-       $diaHabil->where('id_dia',$id_dia)->delete();
-       Dia::where('id_dia', $id_dia)->delete();
- }
- 
-   $diasHoras =$request -> input ('diasHoras');
-   $idambiente  =$request ->input ('id') ;
- 
-   foreach ($diasHoras as $day=> $horas) {
-     
-     $dia= new Dia();
-     $dia->nombre = $day ;
-     $dia -> save();
-     $iddia=$dia->id_dia;
-     $diashabiles=new Diashabiles();
-     $diashabiles ->id_dia=$iddia;
-     $diashabiles ->id_ambiente=$idambiente ;
-     $diashabiles -> save(); 
-     foreach($horas as $horario) {
-         $hora =new Hora();
-         $hor = explode('-', $horario);
-         $horaInicio = trim($hor[0]);
-         $horaFin = trim($hor[1]);
-         $hora = Hora::where('hora_inicio', $horaInicio)
-                             ->where('hora_fin', $horaFin)
-                             ->first();
-         if (!$hora) {
-                     
-             $hora = new Hora();
-             $hora->hora_inicio = $horaInicio;
-             $hora->hora_fin = $horaFin;
-             $hora->save();
-             $idhora = $hora->id_hora;           
- 
-         }
-        else {
- 
-          $idhora=$hora->id_hora;
- 
- 
- 
+        // Obtener las relaciones existentes de diasHabiles
+        $diasHabiles = Diashabiles::where('id_ambiente', $id_ambiente)->get();
+        foreach ($diasHabiles as $diaHabil) {
+            // Eliminar los horarios asociados al día
+            Horario::where('id_dia', $diaHabil->id_dia)->delete();
+            // Eliminar las entradas en Diashabiles
+            Diashabiles::where('id_dia', $diaHabil->id_dia)->where('id_ambiente', $id_ambiente)->delete();
+            // Finalmente, eliminar la entrada en Dia
+            Dia::where('id_dia', $diaHabil->id_dia)->delete();
         }
-         $horarios=new Horario;
-         
-         $horarios -> id_hora = $idhora;
-         $horarios -> id_dia =  $iddia;
-         $horarios -> save ();
-     }  
- }
- 
- }
+
+        // Procesar las nuevas relaciones de días y horarios
+        $diasHoras = $request->input('diasHoras');
+        foreach ($diasHoras as $day => $horas) {
+            $dia = new Dia();
+            $dia->nombre = $day;
+            $dia->save();
+
+            $iddia = $dia->id_dia;
+            $diashabiles = new Diashabiles();
+            $diashabiles->id_dia = $iddia;
+            $diashabiles->id_ambiente = $id_ambiente;
+            $diashabiles->save();
+
+            foreach ($horas as $horario) {
+                $hor = explode('-', $horario);
+                $horaInicio = trim($hor[0]);
+                $horaFin = trim($hor[1]);
+
+                $hora = Hora::where('hora_inicio', $horaInicio)
+                            ->where('hora_fin', $horaFin)
+                            ->first();
+
+                if (!$hora) {
+                    $hora = new Hora();
+                    $hora->hora_inicio = $horaInicio;
+                    $hora->hora_fin = $horaFin;
+                    $hora->save();
+                }
+
+                $horarios = new Horario();
+                $horarios->id_hora = $hora->id_hora;
+                $horarios->id_dia = $iddia;
+                $horarios->save();
+            }
+        }
+
+        return response()->json(['message' => 'Ambiente actualizado correctamente']);
+    } catch (\Exception $e) {
+        \Log::error('Error al intentar actualizar el ambiente: ' . $e->getMessage());
+        return response()->json(['error' => 'Error al actualizar el ambiente'], 500);
+    }
+}
+
 public function CargaMasiva(Request $request){
  
     $datos = $request->all();
