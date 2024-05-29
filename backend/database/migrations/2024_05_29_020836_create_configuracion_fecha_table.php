@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateConfiguracionTable extends Migration
+class CreateConfiguracionFechaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateConfiguracionTable extends Migration
      */
     public function up()
     {
-        Schema::create('configuracion', function (Blueprint $table) {
-            $table->string("configuracion");
-            $table->string("valor");           
+        Schema::create('configuracion_fecha', function (Blueprint $table) {
+            $table->date("inicio");
+            $table->date("fin");
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateConfiguracionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('configuracion');
+        Schema::dropIfExists('configuracion_fecha');
     }
 }

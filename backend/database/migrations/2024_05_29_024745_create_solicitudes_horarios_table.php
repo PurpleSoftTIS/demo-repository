@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateConfiguracionTable extends Migration
+class CreateSolicitudesHorariosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateConfiguracionTable extends Migration
      */
     public function up()
     {
-        Schema::create('configuracion', function (Blueprint $table) {
-            $table->string("configuracion");
-            $table->string("valor");           
+        Schema::create('solicitudes_horario', function (Blueprint $table) {
+            $table->foreignId("id_hora")->constrained("hora", "id_hora");
+            $table->foreignId("id_solicitud")->constrained("solicitud", "id_solicitud");
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateConfiguracionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('configuracion');
+        Schema::dropIfExists('solicitudes_horarios');
     }
 }

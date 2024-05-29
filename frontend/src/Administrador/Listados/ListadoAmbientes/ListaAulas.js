@@ -12,7 +12,7 @@ function ListaAulas() {
   const [Advertencia2, setAdvertencia2] = useState(false);
   const [aulas, setAulas] = useState([]);
   const [importar, setImportar] = useState(false);
-  const [ambienteToDelete, setAmibienteToDelete] = useState("");
+  const [ambienteToDelete, setAmbienteToDelete] = useState(null); 
   const [buscar, setBuscar] = useState("");
   const navigate = useNavigate();
   const importaciones = () => {
@@ -26,10 +26,11 @@ function ListaAulas() {
     setAdvertencia(true); 
   };
   const borrar = (id_ambiente) => {
-    setAmibienteToDelete(id_ambiente)
+    setAmbienteToDelete(id_ambiente);
     setAdvertencia2(true); 
   }
   const cancelar = () => {
+    setAmbienteToDelete(null);
     setAdvertencia2(false); 
   };
   const borrarTodos = () => {
@@ -48,27 +49,24 @@ function ListaAulas() {
      });
   };
   const borrarAmbiente = () => {
-    const {id_ambiente} = ambienteToDelete;
-
-    setAdvertencia2(true); 
-    fetch(`http://127.0.0.1:8000/api/borrar/${id_ambiente}`, {
+    fetch(`http://127.0.0.1:8000/api/borrar/${ambienteToDelete}`, {  // Uso de ambienteToDelete
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
     })
-      .then((response) => {
-        if (response.ok) {
-          window.location.reload();
-
-        } else {
-          throw new Error('No se pudo actualizar el ambiente.');
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    .then((response) => {
+      if (response.ok) {
+        window.location.reload();
+      } else {
+        throw new Error('No se pudo actualizar el ambiente.');
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   };
+
   const handleArchivoSeleccionado = async (event) => {
     const files = event.target.files;
     if (files.length) {
@@ -187,11 +185,6 @@ function ListaAulas() {
       });
   }, []);
 
-  const obtenerId = (aula) => {
-    const idAmniente= aula.id_ambiente;
-    return idAmniente;
-
-  };
   const buscardor = (e) => {
     setBuscar(e.target.value);
     console.log(e.target.value);
@@ -324,7 +317,7 @@ function ListaAulas() {
              <p className="til2">¿Estás seguro de eliminar este docente?</p>
            </div>
            <div className="botones">
-             <button className="conf" onClick={borrarAmbiente(obtenerId)}>Sí</button>
+             <button className="conf" onClick={borrarAmbiente}>Sí</button>
              <button className="ref" onClick={cancelar}>No</button>
            </div>
          </div>

@@ -11,11 +11,8 @@ class Configuracion extends Model
     protected $table = 'configuracion';
 
     protected $fillable =[
-        "aulas_Comunes",
-        "laboratorios",
-        "mensajes_Masivos" ,
-        "inicio",
-        "fin"       
+        "configuracion",
+        "valor"              
     ];
 }
 

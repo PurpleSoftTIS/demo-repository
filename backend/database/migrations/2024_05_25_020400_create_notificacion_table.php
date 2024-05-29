@@ -13,9 +13,9 @@ class CreateNotificacionTable extends Migration
      */
     public function up()
     {
-        Schema::create('notificacion', function (Blueprint $table) {
-            $table->string("contenido");
-            $table->date("fecha");
+        Schema::create('notifications', function (Blueprint $table) {
+            $table->id();
+            $table->text('content');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateNotificacionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notificacion');
+        Schema::dropIfExists('notifications');
     }
 }

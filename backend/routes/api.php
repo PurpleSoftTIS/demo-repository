@@ -15,6 +15,7 @@ use App\Http\Controllers\DeleteAmbienteController;
 use App\Http\Controllers\CorreoController;
 use App\Http\Controllers\Configuraciones;
 use App\Http\Controllers\AmbienteObtenerController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;   
 
@@ -52,6 +53,9 @@ Route::get('/ambientesDispo/{capacidad}/{dia}/{hora_inicio}/{hora_fin}', [Ambien
 Route::get('/ambientesDisponibles/{capacidad}/{dia}/{horarios}', [AmbienteObtenerController::class, 'ambientesDisponibles']);
 Route::get('/obtenerTodasSolicitudes', [SolicitudController::class, 'obtenerSolicitudTodas']);
 Route::get('/ambientesContiguos/{capacidad}/{dia}/{horas}', [SolicitudController::class, 'ambientesContiguos']);
+Route::get('/notifications', [NotificationController::class, 'index']);
+Route::get('/notifications/count/{userMail}', [NotificationController::class, 'getNotificationCount']);
+Route::get('/ambientesDisponibless/{capacidad}/{dia}/{horarios}/{fecha}', [Configuraciones::class, 'ambientesfechas']);
 
 //Registrar Datos
 Route::post('/docentesRegistrar', [DocenteRegistrarController::class, 'registrar']);
@@ -68,6 +72,10 @@ Route::post('/enviarcorreo', [CorreoController::class, 'enviarCorreo']);
 Route::post('/verificarCodigo', [CorreoController::class, 'verificarCodigo']);
 Route::post('/restablecercontrasena', [DocenteController::class, 'restablecerPasswd']);
 Route::post('/subirConfiguraciones', [Configuraciones::class, 'registrar']);
+Route::post('/notifications', [NotificationController::class, 'store']);
+Route::post('/notificationsMail', [NotificationController::class, 'storeMail']);
+Route::post('/notifications/mark-as-read/{userMail}', [NotificationController::class, 'markAsRead']);
+Route::post('/asignarAula', [SolicitudController::class, 'asignarAula']);
 
 //Elimnar datos
 Route::delete('/docentes/{id_docente}', [DocenteController::class, 'eliminar']);
@@ -76,7 +84,7 @@ Route::delete('/materias/{id}', [MateriaController::class, 'destroy']);
 Route::delete('/materias', [MateriaController::class, 'eliminarTodo']);
 Route::delete('/borrarTodo',  [DeleteAmbienteController::class,'Borrartodo']);
 Route::delete('/borrarTodoDocente',  [DocenteController::class,'eliminarAll']);
-
+Route::delete('/notifications/{id}', [NotificationController::class, 'destroy']);
 //Actualizar datos
 Route::put('/ambiente/{id_ambiente}', [AmbienteController::class, 'actualizarAmbiente']);
 Route::put ('/actualizar/{id_ambiente}',[AmbienteController::class,'actualizarAmb']);
@@ -84,3 +92,4 @@ Route::put('/materias/{id}', [MateriaRegistrarController::class, 'update']);
 Route::put('/actualizarDocente/{id_docente}', [DocenteController::class, 'editarDocentes']);
 Route::put('/aceptarsolicitud/{id}', [SolicitudController::class, 'aceptarSolicitud']);
 Route::put('/rechazarsolicitud/{id}', [SolicitudController::class, 'rechazarsolicitud']);
+Route::put('/notifications/{id}', [NotificationController::class, 'update']);
