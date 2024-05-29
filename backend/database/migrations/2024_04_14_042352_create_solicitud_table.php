@@ -15,12 +15,11 @@ class CreateSolicitudTable extends Migration
     {
         Schema::create('solicitud', function (Blueprint $table) {
             $table->id("id_solicitud");
-            $table->foreignId("id_hora")->constrained("hora", "id_hora");
             $table->integer("numero_estudiantes");
             $table->date("fecha_solicitud");
             $table->string("motivo");
             $table->string("tipo_solicitud");
-            $table->string("estado_solicitud", 8);
+            $table->string("estado_solicitud", 20);
             $table->timestamps();           
         });
     }

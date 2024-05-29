@@ -55,6 +55,8 @@ Route::get('/obtenerTodasSolicitudes', [SolicitudController::class, 'obtenerSoli
 Route::get('/ambientesContiguos/{capacidad}/{dia}/{horas}', [SolicitudController::class, 'ambientesContiguos']);
 Route::get('/notifications', [NotificationController::class, 'index']);
 Route::get('/notifications/count/{userMail}', [NotificationController::class, 'getNotificationCount']);
+Route::get('/ambientesDisponibless/{capacidad}/{dia}/{horarios}/{fecha}', [Configuraciones::class, 'ambientesfechas']);
+
 //Registrar Datos
 Route::post('/docentesRegistrar', [DocenteRegistrarController::class, 'registrar']);
 Route::post('/materiaRegistrar', [MateriaRegistrarController::class, 'registrarMateria']);
@@ -73,6 +75,8 @@ Route::post('/subirConfiguraciones', [Configuraciones::class, 'registrar']);
 Route::post('/notifications', [NotificationController::class, 'store']);
 Route::post('/notificationsMail', [NotificationController::class, 'storeMail']);
 Route::post('/notifications/mark-as-read/{userMail}', [NotificationController::class, 'markAsRead']);
+Route::post('/asignarAula', [SolicitudController::class, 'asignarAula']);
+
 //Elimnar datos
 Route::delete('/docentes/{id_docente}', [DocenteController::class, 'eliminar']);
 Route::delete('/borrar/{id_ambiente}', [DeleteAmbienteController::class, 'borrarAmbiente']);

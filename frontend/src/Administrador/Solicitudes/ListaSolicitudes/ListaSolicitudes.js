@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
+
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import './ListaSolicitudes.css';
-import { useNavigate } from "react-router-dom";
+
 
 
 const ListaSolicitudes = () => {
   const navigate = useNavigate();
-
   const [solicitudes, setSolicitudes] = useState([]);
   const [solicitudesTodas, setSolicitudesTodas] = useState([]);
   const [solicitudesPendientes, setSolicitudesPendientes] = useState([]);
@@ -22,6 +23,9 @@ const ListaSolicitudes = () => {
   const handleSelectChange = (e) => {
     setSelectedOption(e.target.value);
   };
+
+
+
 
   const [showD, setShowD] = useState(false);
   const [motivoRechazo, setMotivoRechazo] = useState('');
@@ -61,26 +65,10 @@ const ListaSolicitudes = () => {
   });
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const aceptarsolicitud = (id_solicitud) => {
-      fetch(`http://127.0.0.1:8000/api/aceptarsolicitud/${id_solicitud}`, {
-          method: 'PUT',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-      })
-          .then((response) => {
-              if (!response.ok) {
-                  throw new Error('Error al cambiar el estado de la solicitud');
-              }
-              console.log('Solicitud actualizada:', response);
-              return response.json();
-          })
-          .then((data) => {
-              console.log('Datos de la solicitud actualizada:', data);
-          })
-          .catch((error) => {
-              console.error(error);
-          });
+  const aceptarsolicitud = (solicitud) => {
+    navigate("/Admin/AsignarAmbiente", { state: solicitud });
+   
+      console.log(solicitud);
   };
 
   const rechazarsolicitud= (id_solicitud) => {
@@ -122,23 +110,8 @@ const ListaSolicitudes = () => {
         })
         .catch(error => console.error('Error al obtener los datos:', error));
   }, []);
-/*
-  useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/obtenerTodasSolicitudes', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => response.json())
-      .then(data => {
-        setSolicitudesTodas(data);
-        
-        console.log("datos",data);
-      })
-      .catch(error => console.error('Error al obtener los datos:', error));
-}, []);
-*/
+
+
 
   const [mostrarOpciones, setMostrarOpciones] = useState(false); 
 
@@ -265,16 +238,23 @@ return (
 
         <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador'/>
 
-          <button className="butn butn-filtro" onClick={() => setMostrarOpciones(!mostrarOpciones)}>Solicitudes</button>
+          <button 
+            className="butn butn-filtro" 
+            onClick={() => setMostrarOpciones(!mostrarOpciones)}>Solicitudes</button>
             {mostrarOpciones && (
             <div className="opciones-solicitudes">
-              <button className="butn butn-filtro" onClick={() => { setMostrarOpciones(false);
-                mostrarSolicitudesTodas();
+              <button 
+                className="butn butn-filtro" 
+                onClick={() => {
+                  setMostrarOpciones(false);
+                  mostrarSolicitudesTodas();
                 }}>Todas
               </button>
-            <button className="butn butn-filtro" onClick={() => {
-              setMostrarOpciones(false);
-              mostrarSolicitudesPendientes();
+              <button 
+                className="butn butn-filtro" 
+                onClick={() => {
+                 setMostrarOpciones(false);
+                 mostrarSolicitudesPendientes();
               }}>Pendientes</button>
 
             </div>
@@ -288,6 +268,7 @@ return (
           <tr>
             <th>Nro.</th>
             <th>Docente</th>
+            
             <th>Materia</th>
             <th>Motivo</th>
             <th>Fecha</th>
@@ -297,22 +278,21 @@ return (
           </tr>
         </thead>
         <tbody>
-        {solicitudes.map((solicitud) => (
+        {resultado.map((solicitud) => (
             <tr key={solicitud.id_solicitud}
               className="fila-lista"
               onClick={() => mostrarFormularioParaSolicitud(solicitud)}
             >
               <td>{solicitud.id_solicitud}</td>
-              <td>{solicitud.nombre}</td>
+              <td>{`${solicitud.nombre} ${solicitud.apellido_paterno} ${solicitud.apellido_materno}`}</td>
+
               <td>{solicitud.nombre_materia}</td>
               <td>{solicitud.motivo}</td>
               <td>{solicitud.fecha_solicitud}</td>
-              <td>{solicitud.hora_inicio+" "+solicitud.hora_fin}</td>
+              <td>{`${solicitud.horas.split(',')[0].split(' - ')[0]} - ${solicitud.horas.split(',')[solicitud.horas.split(',').length - 1].split(' - ')[1]}`}</td>
               {!mostrarSolicitudesTodass && (
                 <td>
-                  <button className="btn btn-editar mr-2" onClick={() => aceptarsolicitud(solicitud.id_solicitud)}>Aceptar</button>
-                  <button className="btn btn-eliminar" onClick={(handleShowDelete)}>Rechazar</button>
-                  <button className="btn btn-sugerencia mr-2" onClick={(sugerencias)}>Sugerencia</button>
+                  <button className="btn btn-editar mr-2" onClick={() => aceptarsolicitud(solicitud)}>Asignar</button>
 
                 </td>
               )}
@@ -478,4 +458,3 @@ return (
 };
 
 export default ListaSolicitudes;
-

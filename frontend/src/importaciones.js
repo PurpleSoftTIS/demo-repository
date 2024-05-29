@@ -40,7 +40,7 @@ import Configuraciones from './Administrador/Configuraciones/Configuraciones';
 import SolicitarCon1 from './Usuario/SolicitudesConjuntas/SolicitarCon1';
 import MensajeConfExitoso from './Mensajes/MensajeConfExitoso';
 import MensajeConfError from './Mensajes/MensajeConfError';
-
+import Asignar_ambiente from './Administrador/Solicitudes/Asignar_Ambientes/Asignar_ambiente';
 export {
   React,Router,Routes,Route,HomeUno,Ambientes,Docentes,Navbar,RegistrarMateria,
   LoginForm,RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Solicitar,
@@ -48,5 +48,5 @@ export {
   Footer,ListaMaterias,MensajeExitosoU,MensajeErrorU,MensajeActExito,MensajeActError
   ,DocentesActualizar,MensajeDatExito,MensajeDatError,ListaSolicitudesUr,Navigate,PasswordResetForm,
   MensajeNoEncontrado,AmbientesDis,AmbientesSol,MisSolicitudes,AyudaAdmin,Configuraciones,SolicitarCon1,
-  MensajeConfExitoso,MensajeConfError
+  MensajeConfExitoso,MensajeConfError,Asignar_ambiente
 };

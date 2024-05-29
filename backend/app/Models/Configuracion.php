@@ -12,8 +12,7 @@ class Configuracion extends Model
 
     protected $fillable =[
         "configuracion",
-        "valor",
-              
+        "valor"              
     ];
 }
 
