@@ -4,36 +4,40 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Configuracion;
+use App\Models\Configuracion_Fecha;
 use App\Models\Feriado;
 
 class Configuraciones extends Controller
 {
     public function registrar(Request $request)
     {
-        try {
-            $request->validate([
-                'periodosAulaComun' => 'required|string',
-                'periodosLaboratorio' => 'required|string',
-                'fechaInicio' => 'required|date',
-                'fechaFin' => 'required|date',
-                'feriados' => 'required|array',
-                'mensajesMasivos' => 'required|string'
-            ]);
+        $request->validate([
+            'periodosAulaComun' => 'required|string',
+            'periodosLaboratorio' => 'required|string',
+            'fechaInicio' => 'required|date',
+            'fechaFin' => 'required|date',
+            'feriados' => 'required|array',
+            'mensajesMasivos' => 'required|string'
+        ]);
 
-            //Guardar la configuración principal
+        try {
+            // Guardar la configuración principal
             $configuracion = new Configuracion();
-            $configuracion->aulas_Comunes = $request->input('periodosAulaComun');
-            $configuracion->laboratorios = $request->input('periodosLaboratorio');
-            $configuracion->mensajes_Masivos = $request->input('mensajesMasivos');     
-            $configuracion->inicio = $request->input('fechaInicio');
-            $configuracion->fin = $request->input('fechaFin');
+            $configuracion->valor = $request->input('periodosAulaComun');
+            $configuracion->configuracion = $request->input('periodosLaboratorio');            
             $configuracion->save();
 
 
-            //Guardar los feriados
+            $configuracion_fecha = new Configuracion_Fecha();           
+            $configuracion_fecha->inicio = $request->input('fechaInicio');
+            $configuracion_fecha->fin = $request->input('fechaFin');
+            $configuracion_fecha->save();
+
+            // Guardar los feriados
             foreach ($request->input('feriados') as $fechaFeriado) {
                 $feriado = new Feriado();
                 $feriado->fecha = $fechaFeriado;
+                $feriado->configuracion_id = $configuracion->id; // Establecer la relación
                 $feriado->save();
             }
 
