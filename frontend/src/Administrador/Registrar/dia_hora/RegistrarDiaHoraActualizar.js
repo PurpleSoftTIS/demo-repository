@@ -58,6 +58,25 @@ const RegistrarDiaHoras = () => {
             }
         }));
     };
+
+    const handleSelectAll = () => {
+      setSelectedHours(prevState => ({
+          ...prevState,
+          [selectedDay]: {
+              ...prevState[selectedDay],
+              '06:45-08:15': true,
+              '08:15-09:45': true,
+              '09:45-11:15': true,
+              '11:15-12:45': true,
+              '12:45-14:15': true,
+              '14:15-15:45': true,
+              '15:45-17:15': true,
+              '17:15-18:45': true,
+              '18:45-20:15': true,
+              '20:15-21:45': true
+          }
+      }));
+  };
   
     const showHours = () => {
       console.log("selectedDay:", selectedDay);
@@ -65,14 +84,14 @@ const RegistrarDiaHoras = () => {
       
       if (selectedDay) {
         const allPossibleHours = [
-          "06:15-08:15",
+          "06:45-08:15",
           "08:15-09:45",
           "09:45-11:15",
           "11:15-12:45",
           "12:45-14:15",
           "14:15-15:45",
           "15:45-17:15",
-          "17:45-18:45",
+          "17:15-18:45",
           "18:45-20:15",
           "20:15-21:45"
         ];
@@ -119,6 +138,7 @@ const RegistrarDiaHoras = () => {
                       ))}
                     </ul>
                   </div>
+                  <button className="boton-seleccion" onClick={handleSelectAll}>Seleccionar todos</button>
                 </div>
               </div>
             </div>
@@ -195,7 +215,7 @@ const RegistrarDiaHoras = () => {
                   <button className={`day-btn ${selectedDay === "Miércoles" && "selected"}`} onClick={() => handleDayClick("Miércoles")}>Miércoles</button>
                   <button className={`day-btn ${selectedDay === "Jueves" && "selected"}`} onClick={() => handleDayClick("Jueves")}>Jueves</button>
                   <button className={`day-btn ${selectedDay === "Viernes" && "selected"}`} onClick={() => handleDayClick("Viernes")}>Viernes</button>
-               
+                  <button className={`day-btn ${selectedDay === "Sabado" && "selected"}`} onClick={() => handleDayClick("Sabado")}>Sabado</button>
                 </div>
               </div>
               {showHours()}
@@ -210,4 +230,4 @@ const RegistrarDiaHoras = () => {
     );
 }
 
-export default RegistrarDiaHoras
+export default RegistrarDiaHoras;
