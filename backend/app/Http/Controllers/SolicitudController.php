@@ -24,11 +24,18 @@ class SolicitudController extends Controller
             $datosSolicitudes = DB::table('solicitud')
                 ->join('solicitudes_horario', 'solicitudes_horario.id_solicitud', '=', 'solicitud.id_solicitud')
                 ->join('hora', 'hora.id_hora', '=', 'solicitudes_horario.id_hora')
+                ->join('solicitudes_docentes', 'solicitudes_docentes.id_solicitud', '=', 'solicitud.id_solicitud')
+                ->join('docente', 'docente.id_docente', '=', 'solicitudes_docentes.id_docente')
+                ->join('usuario', 'usuario.id_usuario', '=', 'docente.id_usuario')
+                ->join('solicitudes_materia','solicitudes_materia.id_solicitud','=','solicitud.id_solicitud')
+                ->join('materia','materia.id_materia','=','solicitudes_materia.id_materia')
                 ->select(
                     'solicitud.*',
-                    DB::raw("STRING_AGG(CONCAT(hora.hora_inicio, ' - ', hora.hora_fin), ', ') as horas")
+                    DB::raw("STRING_AGG(CONCAT(hora.hora_inicio, ' - ', hora.hora_fin), ', ') as horas"),
+                    'usuario.*',
+                    'materia.*'
                 )
-                ->groupBy('solicitud.id_solicitud')
+                ->groupBy('solicitud.id_solicitud', 'usuario.id_usuario','materia.id_materia')
                 ->get();
     
             return response()->json($datosSolicitudes, 200);
@@ -38,6 +45,7 @@ class SolicitudController extends Controller
             return response()->json(['error' => 'Error al obtener la solicitud'], 500);
         }
     }
+    
     
     public function obtenerHora() {
         $datosSolicitados = DB::table('hora')

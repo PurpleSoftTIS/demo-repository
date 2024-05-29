@@ -111,21 +111,6 @@ const ListaSolicitudes = () => {
         .catch(error => console.error('Error al obtener los datos:', error));
   }, []);
 
-  useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/obtenerTodasSolicitudes', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => response.json())
-      .then(data => {
-        setSolicitudesTodas(data);
-        
-        console.log("datos todo",data);
-      })
-      .catch(error => console.error('Error al obtener los datos:', error));
-}, []);
 
 
   const [mostrarOpciones, setMostrarOpciones] = useState(false); 
@@ -299,11 +284,12 @@ return (
               onClick={() => mostrarFormularioParaSolicitud(solicitud)}
             >
               <td>{solicitud.id_solicitud}</td>
-              <td>{solicitud.nombre}</td>
+              <td>{`${solicitud.nombre} ${solicitud.apellido_paterno} ${solicitud.apellido_materno}`}</td>
+
               <td>{solicitud.nombre_materia}</td>
               <td>{solicitud.motivo}</td>
               <td>{solicitud.fecha_solicitud}</td>
-              <td>{solicitud.horas}</td>
+              <td>{`${solicitud.horas.split(',')[0].split(' - ')[0]} - ${solicitud.horas.split(',')[solicitud.horas.split(',').length - 1].split(' - ')[1]}`}</td>
               {!mostrarSolicitudesTodass && (
                 <td>
                   <button className="btn btn-editar mr-2" onClick={() => aceptarsolicitud(solicitud)}>Asignar</button>

@@ -15,6 +15,7 @@ use DB;
 
 class AmbienteController extends Controller
 {
+    
     public function guardarAmbiente(Request $request)
     {
         info('Datos recibidos:', $request->all());
@@ -374,7 +375,6 @@ public function MateriasObtener($Correo)
 }
 public function ambientesDisponibles($capacidad, $dia, $horarios)
 {
-    \Illuminate\Support\Facades\Log::info('Capacidad: ' . $capacidad);
     \Illuminate\Support\Facades\Log::info('Día: ' . $dia);
     \Illuminate\Support\Facades\Log::info('Horarios: ' . print_r($horarios, true));
 
@@ -407,5 +407,6 @@ public function ambientesDisponibles($capacidad, $dia, $horarios)
 
     return response()->json($ambientes, 200);
 }
+
 
 }

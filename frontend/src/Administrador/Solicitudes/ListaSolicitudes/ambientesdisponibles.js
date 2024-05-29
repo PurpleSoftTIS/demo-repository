@@ -33,7 +33,7 @@ const AmbientesDisponibles = () => {
         console.log(dia);
         console.log(horariosJSON);
 
-        fetch(`http://127.0.0.1:8000/api/ambientesDisponibles/${capacidad}/${dia}/${horariosJSON}`)
+        fetch(`http://127.0.0.1:8000/api/ambientesDisponibless/${capacidad}/${dia}/${horariosJSON}/${fechaSolicitud}`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Error al obtener los ambientes disponibles');
