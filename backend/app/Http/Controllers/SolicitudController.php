@@ -125,6 +125,74 @@ class SolicitudController extends Controller
             return response()->json(['error' => 'Error al registrar la solicitud'], 500);
         }
     }
+    public function registrarSolicitudCojunta(Request $datos){
+        try {
+            \Log::info('Datos recibidos del frontend: ' . json_encode($datos->all()));
+            $datosReserva=$datos->all();
+            $correo = $datosReserva['correo'];
+            $usuario=Usuario::where('correo_electronico',$correo)->first();
+            $id_usuario=$usuario->id_usuario;
+            $docente=Docente::where('id_usuario',$id_usuario)->first();
+            $idDocente=$docente->id_docente;  
+   
+            $solicitud = new Solicitud();           
+            
+            $numero_estudiantes=$datosReserva['cantidadEstudiantes'];
+            $solicitud->numero_estudiantes=$numero_estudiantes;
+            $fecha = Carbon::createFromFormat('d/m/Y', $datosReserva['fechaSeleccionada'])->format('Y-m-d');
+            $solicitud->fecha_solicitud = $fecha;
+            $motivo=$datosReserva['motivo'];
+            $solicitud->motivo=$motivo;
+            $estado_solicitud='pendi';
+            $solicitud->estado_solicitud=$estado_solicitud;
+            $solicitud->tipo_solicitud = 'individual'; 
+            $solicitud->save();
+            $id_solicitud= $solicitud->id_solicitud;
+            $periodos= $datosReserva['periodos'];
+            foreach($periodos as $periodo){
+                $horaInicio = $periodo['horaInicio'];
+                $horaFin = $periodo['horaFin'];
+                $horaCoincidente = Hora::where('hora_inicio', $horaInicio)
+                ->where('hora_fin', $horaFin)
+                ->first();
+                $id_hora = $horaCoincidente->id_hora;
+
+                $solicitudHora=new Solicitudes_horario ();
+                $solicitudHora->id_solicitud = $id_solicitud;
+                $solicitudHora->id_hora = $id_hora;
+                $solicitudHora->save();
+
+
+
+
+        }
+            
+            $solicitudesDo=new Solicitudes_docentes ();
+            $solicitudesDo->id_docente = $idDocente;
+            $solicitudesDo->id_solicitud = $id_solicitud;
+            $solicitudesDo->save ();
+            $grupos = $datosReserva['grupos'];
+            foreach($grupos as $grupo) {
+            $solicitudMateria=new Solicitudes_materia();
+            $materianombre=$datosReserva['materiaSeleccionada'];
+            $materia = Materia::where('nombre_materia', $materianombre)
+            ->where('grupo', $grupo)
+            ->first();
+            $idmateria=$materia->id_materia;
+            $solicitudMateria->id_materia=$idmateria;
+            $solicitudMateria->id_solicitud=$id_solicitud;
+            $solicitudMateria->save(); 
+            }
+            
+            
+            
+           
+                
+        } catch (\Exception $e) {
+            \Log::error('Error al registrar la solicitud: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al registrar la solicitud'], 500);
+        }
+    }
       
     public function aceptarSolicitud(Request $request, $id) {
         try {
@@ -269,4 +337,35 @@ class SolicitudController extends Controller
     
         return response()->json(['message' => 'El aula se asignó correctamente'], 200);
     }
+    public function docentesPorMateria($materia)
+    {
+        try {
+            $materias = DB::table('materia')->where('nombre_materia', $materia)->get();
+    
+            $resultados = [];
+    
+            foreach ($materias as $materia) {
+                $docentesMateria = DB::table('materia_docente')
+                    ->where('id_materia', $materia->id_materia)
+                    ->join('docente', 'materia_docente.id_docente', '=', 'docente.id_docente')
+                    ->join('usuario', 'docente.id_usuario', '=', 'usuario.id_usuario')
+                    ->select('docente.*', 'usuario.*')
+                    ->get();
+    
+                    foreach ($docentesMateria as $docente) {
+                        $resultados[] = [
+                            'materia' => $materia,
+                            'docente' => $docente,
+                        ];
+                    }
+            }
+    
+            return response()->json($resultados, 200);
+        } catch (\Exception $e) {
+            \Log::error('Error al intentar obtener los docentes por materia: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al obtener los docentes por materia'], 500);
+        }
+    }
+
+
 }

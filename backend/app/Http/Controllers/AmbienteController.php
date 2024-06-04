@@ -334,18 +334,19 @@ public function CargaMasivaDias(Request $request)
 }
 public function MateriasObtener($Correo)
 {   
-    $usuario = Usuario::where('correo_electronico', $Correo)->first();
+
+     $correo_docente= str_replace("%", ".", $Correo);
+
+    $usuario = Usuario::where('correo_electronico', $correo_docente)->first();
 
     if ($usuario) {
-        // Obtener el ID del usuario
+        
         $idUsuario = $usuario->id_usuario;
 
-        // Buscar el docente asociado al usuario
         $docente = Docente::where('id_usuario', $idUsuario)->first();
 
-        // Verificar si se encontró un docente
         if ($docente) {
-            // Obtener el ID del docente
+            //  el ID del docente
             $idDocente = $docente->id_docente;
 
             // Obtener las materias asociadas al docente

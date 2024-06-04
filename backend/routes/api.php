@@ -48,6 +48,7 @@ Route::get('/configuraciones', [Configuraciones::class, 'obtenerconf']);
 Route::get('/docentes', [DocenteController::class, 'index']);
 Route::get('/usuarios', [UsuarioController::class, 'index']);
 Route::get('/materias', [MateriaController::class, 'index']);
+Route::get('/docentesPorMateria/{Materia}',[SolicitudController::class,'docentesPorMateria']);
 Route::get('/listaAmbiente', [AmbienteController::class, 'index']);
 Route::get('/ambientesDispo/{capacidad}/{dia}/{hora_inicio}/{hora_fin}', [AmbienteController::class, 'ambientesDis']);
 Route::get('/ambientesDisponibles/{capacidad}/{dia}/{horarios}', [AmbienteObtenerController::class, 'ambientesDisponibles']);
@@ -68,6 +69,8 @@ Route::post('/RegistrarSol', [RegistrarSolicitud::class, 'registrar']);
 Route::post('/masivoDocentes', [CargaDocente::class, 'cargaDocentes']);
 Route::post('/importMaterias', [MateriaController::class, 'import']);
 Route::post('/registrarSolicitud',[SolicitudController::class,'registrarSolicitud']);
+Route::post('/registrarSolicitudConjunta',[SolicitudController::class,'registrarSolicitudConjunta']);
+
 Route::post('/enviarcorreo', [CorreoController::class, 'enviarCorreo']);
 Route::post('/verificarCodigo', [CorreoController::class, 'verificarCodigo']);
 Route::post('/restablecercontrasena', [DocenteController::class, 'restablecerPasswd']);

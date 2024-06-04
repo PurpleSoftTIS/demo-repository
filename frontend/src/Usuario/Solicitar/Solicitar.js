@@ -43,7 +43,14 @@ const Solicitar = () => {
     }
   };
   console.log(cantidadPeriodos);
- 
+  const codificarPunto = (cadena) => {
+    if (typeof cadena === 'string') {
+      return cadena.replace(/\./g, '%');
+    } else {
+      
+      return ''; 
+    }
+  };
     useEffect(() => {
     if (date) {
       fetch(`http://127.0.0.1:8000/api/obtenerHoras`)
@@ -71,8 +78,9 @@ const Solicitar = () => {
   
   useEffect(() => {
     if (correo) {
+      const correoCodificado = codificarPunto(correo);
 
-      fetch(`http://127.0.0.1:8000/api/obtenerMara/${correo}`)
+      fetch(`http://127.0.0.1:8000/api/obtenerMara/${correoCodificado}`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Error en la solicitud a ' + response.url + ': ' + response.statusText);
@@ -354,18 +362,18 @@ const Solicitar = () => {
           {showErrorMessage && <p className="error">{showErrorMessage}</p>}
         </div>
         <select 
-            id="menuMotivo" 
-            value={valor} 
-            onChange={(e) => setValor(e.target.value)} 
-            className="input"
-          >   <label htmlFor="menuMotivo" className="label">Seleccione la cantidad de periodos:</label>
+  id="menuMotivo" 
+  value={valor} 
+  onChange={(e) => setValor(e.target.value)} 
+  className="input"
+>   <label htmlFor="menuMotivo" className="label">Seleccione la cantidad de periodos:</label>
 
-          <option value="">Seleccione la cantidad de periodos</option>
-          
-          {Array.from({ length: cantidadPeriodos }, (_, i) => i + 1).map((periodo) => (
-            <option key={periodo} value={periodo}>{periodo}</option>
-          ))}
-        </select>
+  <option value="">Seleccione la cantidad de periodos</option>
+  
+  {Array.from({ length: cantidadPeriodos }, (_, i) => i + 1).map((periodo) => (
+    <option key={periodo} value={periodo}>{periodo}</option>
+  ))}
+</select>
 
         
 <div className='motivo'>
