@@ -114,8 +114,8 @@ const SolicitarCon1 = () => {
         const nuevaFechaInicio = new Date(fechaInicio);
         const nuevaFechaFin = new Date(nuevaFechaInicio.getTime() + duracionPeriodo * 60000);
         periodos.push({
-            horaInicio: nuevaFechaInicio.toTimeString().split(' ')[0], // Formato HH:mm:ss
-            horaFin: nuevaFechaFin.toTimeString().split(' ')[0], // Formato HH:mm:ss
+            horaInicio: nuevaFechaInicio.toTimeString().split(' ')[0], 
+            horaFin: nuevaFechaFin.toTimeString().split(' ')[0], 
         });
         fechaInicio.setMinutes(fechaInicio.getMinutes() + duracionPeriodo);
     }
@@ -368,7 +368,7 @@ const SolicitarCon1 = () => {
   {docentesPorMateria.map((docente, index) => (
     <label key={index} className="docente-wrapper">
       <label htmlFor={`docente-${index}`} className="docente-label">
-        {docente.nombre}
+        {docente.nombreCompleto}
       </label>
       <label className="grupos">
         grupos

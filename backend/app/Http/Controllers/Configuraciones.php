@@ -77,18 +77,37 @@ class Configuraciones extends Controller
        
            $ambientesDisponibles = [];
            foreach ($ambientes as $ambiente) {
-               $solicitudes = DB::table('solicitudes')
-                   ->join('solicitud', 'solicitudes.id_solicitud', '=', 'solicitud.id_solicitud')
-                   ->where('solicitud.fecha_solicitud', $fecha)
-                   ->where('solicitudes.id_ambiente', $ambiente->id_ambiente)
-                   ->pluck('solicitud.id_solicitud')
-                   ->toArray();
-       
-               if (empty($solicitudes)) {
-                   $ambientesDisponibles[] = $ambiente;
-               }
-           }
-       
-           return response()->json($ambientesDisponibles, 200);
-       }
+            $solicitudes = DB::table('solicitudes')
+                ->join('solicitud', 'solicitudes.id_solicitud', '=', 'solicitud.id_solicitud')
+                ->where('solicitud.fecha_solicitud', $fecha)
+                ->where('solicitudes.id_ambiente', $ambiente->id_ambiente)
+                ->pluck('solicitud.id_solicitud')
+                ->toArray();
+        
+            $ambienteDisponible = true;
+            foreach ($solicitudes as $solicitudId) {
+                $horariosSolicitud = DB::table('solicitudes_horario')
+                    ->join('hora', 'solicitudes_horario.id_hora', '=', 'hora.id_hora')
+                    ->where('solicitudes_horario.id_solicitud', $solicitudId)
+                    ->get(['hora.hora_inicio', 'hora.hora_fin'])
+                    ->toArray();
+        
+                 foreach ($horariosSolicitud as $horarioSolicitud) {
+                    foreach ($horarios as $horario) {
+                        if ($horarioSolicitud->hora_inicio == $horario['hora_inicio'] && $horarioSolicitud->hora_fin == $horario['hora_fin']) {
+                            $ambienteDisponible = false;
+                            break 3; 
+                        }
+                    }
+                }
+            }
+        
+            if ($ambienteDisponible) {
+                $ambientesDisponibles[] = $ambiente;
+            }
+        }
+        
+        return response()->json($ambientesDisponibles, 200);
+        
+}
 }

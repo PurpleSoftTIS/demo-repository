@@ -17,37 +17,38 @@ use Carbon\Carbon;
 use DB;
 
 class SolicitudController extends Controller
-{
-    public function obtenerSolicitud() {
-        try {
-            $datosSolicitudes = DB::table('solicitud')
-                ->join('solicitudes_horario', 'solicitudes_horario.id_solicitud', '=', 'solicitud.id_solicitud')
-                ->join('hora', 'hora.id_hora', '=', 'solicitudes_horario.id_hora')
-                ->join('solicitudes_docentes', 'solicitudes_docentes.id_solicitud', '=', 'solicitud.id_solicitud')
-                ->join('docente', 'docente.id_docente', '=', 'solicitudes_docentes.id_docente')
-                ->join('usuario', 'usuario.id_usuario', '=', 'docente.id_usuario')
-                ->join('solicitudes_materias', 'solicitudes_materias.id_solicitud', '=', 'solicitud.id_solicitud')
-                ->join('materia', 'materia.id_materia', '=', 'solicitudes_materias.id_materia')
-                ->select(
-                    'solicitud.fecha_solicitud','solicitud.estado_solicitud','solicitud.fecha_solicitud','solicitud.motivo',
-                    DB::raw("GROUP_CONCAT(CONCAT(hora.hora_inicio, ' - ', hora.hora_fin) SEPARATOR ', ') as horas"),
-                    'usuario.nombre','usuario.apellido_paterno','usuario.apellido_materno',
-                    'materia.nombre_materia', 'solicitud.id_solicitud'
-                )
-                ->groupBy('usuario.nombre','usuario.apellido_paterno','usuario.apellido_materno',
-                'materia.nombre_materia', 'solicitud.fecha_solicitud','solicitud.estado_solicitud',
-                'solicitud.fecha_solicitud','solicitud.motivo','solicitud.id_solicitud')
-                 
-                ->get();
-    
-            return response()->json($datosSolicitudes, 200);
-    
-        } catch (\Exception $e) {
-            \Log::error('Error al intentar obtener una solicitud: ' . $e->getMessage());
-            return response()->json(['error' => 'Error al obtener la solicitud'], 500);
-        }
+{public function obtenerSolicitud() {
+    try {
+        $datosSolicitudes = DB::table('solicitud')
+            ->join('solicitudes_horario', 'solicitudes_horario.id_solicitud', '=', 'solicitud.id_solicitud')
+            ->join('hora', 'hora.id_hora', '=', 'solicitudes_horario.id_hora')
+            ->join('solicitudes_docentes', 'solicitudes_docentes.id_solicitud', '=', 'solicitud.id_solicitud')
+            ->join('docente', 'docente.id_docente', '=', 'solicitudes_docentes.id_docente')
+            ->join('usuario', 'usuario.id_usuario', '=', 'docente.id_usuario')
+            ->join('solicitudes_materias', 'solicitudes_materias.id_solicitud', '=', 'solicitud.id_solicitud')
+            ->join('materia', 'materia.id_materia', '=', 'solicitudes_materias.id_materia')
+            ->select(
+                'solicitud.fecha_solicitud', 'solicitud.estado_solicitud', 'solicitud.fecha_solicitud', 'solicitud.motivo',
+                DB::raw("GROUP_CONCAT(CONCAT(hora.hora_inicio, ' - ', hora.hora_fin) SEPARATOR ', ') as horas"),
+                'usuario.nombre', 'usuario.apellido_paterno', 'usuario.apellido_materno',
+                'materia.nombre_materia', 'solicitud.id_solicitud', 'solicitud.numero_estudiantes'
+            )
+            ->where('solicitud.estado_solicitud', 'pendi') 
+            ->groupBy(
+                'usuario.nombre', 'usuario.apellido_paterno', 'usuario.apellido_materno',
+                'materia.nombre_materia', 'solicitud.fecha_solicitud', 'solicitud.estado_solicitud',
+                'solicitud.fecha_solicitud', 'solicitud.motivo', 'solicitud.id_solicitud', 'solicitud.numero_estudiantes'
+            )
+            ->get();
+
+        return response()->json($datosSolicitudes, 200);
+
+    } catch (\Exception $e) {
+        \Log::error('Error al intentar obtener una solicitud: ' . $e->getMessage());
+        return response()->json(['error' => 'Error al obtener la solicitud'], 500);
     }
-    
+}
+
     
     public function obtenerHora() {
         $datosSolicitados = DB::table('hora')
@@ -125,7 +126,7 @@ class SolicitudController extends Controller
             return response()->json(['error' => 'Error al registrar la solicitud'], 500);
         }
     }
-    public function registrarSolicitudCojunta(Request $datos){
+    public function registrarSolicitudConjunta(Request $datos){
         try {
             \Log::info('Datos recibidos del frontend: ' . json_encode($datos->all()));
             $datosReserva=$datos->all();
@@ -145,7 +146,7 @@ class SolicitudController extends Controller
             $solicitud->motivo=$motivo;
             $estado_solicitud='pendi';
             $solicitud->estado_solicitud=$estado_solicitud;
-            $solicitud->tipo_solicitud = 'individual'; 
+            $solicitud->tipo_solicitud = 'Cojunta'; 
             $solicitud->save();
             $id_solicitud= $solicitud->id_solicitud;
             $periodos= $datosReserva['periodos'];
@@ -167,26 +168,47 @@ class SolicitudController extends Controller
 
         }
             
-            $solicitudesDo=new Solicitudes_docentes ();
-            $solicitudesDo->id_docente = $idDocente;
-            $solicitudesDo->id_solicitud = $id_solicitud;
-            $solicitudesDo->save ();
-            $grupos = $datosReserva['grupos'];
-            foreach($grupos as $grupo) {
-            $solicitudMateria=new Solicitudes_materia();
-            $materianombre=$datosReserva['materiaSeleccionada'];
-            $materia = Materia::where('nombre_materia', $materianombre)
-            ->where('grupo', $grupo)
-            ->first();
-            $idmateria=$materia->id_materia;
-            $solicitudMateria->id_materia=$idmateria;
-            $solicitudMateria->id_solicitud=$id_solicitud;
-            $solicitudMateria->save(); 
+         $docentesSeleccionados = $datosReserva['docentesSeleccionados'];
+            foreach ($docentesSeleccionados as $docenteSeleccionado) {
+                $nombreCompleto = explode(' ', $docenteSeleccionado['nombre']);
+                $nombre = $nombreCompleto[0];
+                $apellido_paterno = $nombreCompleto[count($nombreCompleto) - 2];
+                $apellido_materno = $nombreCompleto[count($nombreCompleto) - 1];
+                $nombre = implode(' ', array_slice($nombreCompleto, 0, count($nombreCompleto) - 2));
+    
+                $usuario = Usuario::where('nombre', $nombre)
+                    ->where('apellido_paterno', $apellido_paterno)
+                    ->where('apellido_materno', $apellido_materno)
+                    ->first();
+    
+                if ($usuario) {
+                    $id_usuario = $usuario->id_usuario;
+                    $docente = Docente::where('id_usuario', $id_usuario)->first();
+                    
+                    if ($docente) {
+                        $idDocente = $docente->id_docente;
+                        $solicitudesDo = new Solicitudes_docentes();
+                        $solicitudesDo->id_docente = $idDocente;
+                        $solicitudesDo->id_solicitud = $id_solicitud;
+                        $solicitudesDo->save();
+    
+                        $gruposDocente = $docenteSeleccionado['grupos'];
+                        foreach ($gruposDocente as $grupo) {
+                            $solicitudMateria = new Solicitudes_materia();
+                            $materianombre = $datosReserva['materiaSeleccionada'];
+                            $materia = Materia::where('nombre_materia', $materianombre)
+                                ->where('grupo', $grupo)
+                                ->first();
+    
+                            if ($materia) {
+                                $solicitudMateria->id_materia = $materia->id_materia;
+                                $solicitudMateria->id_solicitud = $id_solicitud;
+                                $solicitudMateria->save();
+                            }
+                        }
+                    }
+                }
             }
-            
-            
-            
-           
                 
         } catch (\Exception $e) {
             \Log::error('Error al registrar la solicitud: ' . $e->getMessage());

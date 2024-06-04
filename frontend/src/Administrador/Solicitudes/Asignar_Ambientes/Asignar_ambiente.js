@@ -12,7 +12,7 @@ const Asignar_ambiente = () => {
     const [contiguous, setContiguous] = useState([]);
     
     const obtenerDiaDeFecha = (fecha) => {
-        const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+        const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado'];
         const fechaObj = new Date(fecha);
         return diasSemana[fechaObj.getDay()];
     };
@@ -27,7 +27,7 @@ const Asignar_ambiente = () => {
     useEffect(() => {
         const capacidad = solicitud.numero_estudiantes;
         const fechaSolicitud = solicitud.fecha_solicitud; 
-        const dia = 'Lunes';
+        const dia = obtenerDiaDeFecha(fechaSolicitud);
         const horarios = horasSeparadas;
         const horariosJSON = JSON.stringify(horarios);
         console.log(dia);
@@ -72,6 +72,8 @@ const Asignar_ambiente = () => {
         })
         .then(data => {
             console.log('Aula asignada:', data);
+            navigate('/Admin/ListaSolicitudes');
+
         })
         .catch(error => {
             console.error('Error al asignar el aula:', error);
@@ -100,7 +102,29 @@ const Asignar_ambiente = () => {
                 console.error('Error al cargar los ambientes contiguos:', error);
             });
     };
+    const rechazarsolicitud= () => {
+       const id_solicitud=solicitud.id_solicitud;
 
+        fetch(`http://127.0.0.1:8000/api/rechazarsolicitud/${id_solicitud}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Error al cambiar el estado de la solicitud');
+                }
+                console.log('Solicitud actualizada:', response);
+                return response.json();
+            })
+            .then((data) => {
+                navigate('/Admin/ListaSolicitudes');
+            }) 
+            .catch((error) => {
+                console.error(error);
+            });
+      };
    
     return (
         <div className="container" style={{ minHeight: '78.7vh' }}>
@@ -109,7 +133,9 @@ const Asignar_ambiente = () => {
             </div>
             <div className='sugerencias'>
                 <button className="btn btn-editar mr-2" onClick={handleMostrarContiguos}>Sugerencias</button>               
-            </div>
+                <button className="btn btn-editar mr-2" onClick={rechazarsolicitud}>Rechazar</button>               
+
+           </div>
             <div className='atras'>
             <NavLink className="btn btn-editar mr-2" to='/Usuario/Usu/DetallesSolitud' activeClassName="active">Atras</NavLink>        
 
@@ -166,7 +192,9 @@ const Asignar_ambiente = () => {
                                     <td>{group.map(room => room.capacidad).reduce((total, capacity) => total + capacity, 0)}</td>
                                     <td>{group[0].numero_piso}</td>
                                     <td>
-                                        <button className="btn btn-editar mr-2" onClick={() => AsignarAula(group)}>Sugerir</button>               
+                                        <button className="btn btn-editar mr-2" onClick={() => AsignarAula(group)}>Sugerir</button> 
+                                                                                <button className="btn btn-editar mr-2" onClick={() => AsignarAula(group)}>Sugerir</button>               
+              
                                     </td>
                                 </tr>
                             ))}
