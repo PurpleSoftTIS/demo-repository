@@ -1,0 +1,36 @@
+.calendar-container {
+  display: flex;
+}
+
+.aside {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-right: 1px solid #dee2e6;
+  height: 100vh;
+}
+
+.toolbar-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.month-title {
+  text-align: center; /* Centrar el texto del título del mes */
+  margin-bottom: 20px; /* Añadir un margen inferior para espaciarlo de los botones */
+}
+
+.toolbar-button {
+  margin-bottom: 5px;
+  background-color: #011640;
+  color: white; /* Asegurar que el texto sea blanco */
+}
+
+.toolbar-button:hover {
+  background-color: #6d87bb;
+  color: #011640;
+}
+
+.small-button {
+  width: 80%; /* Ajusta este valor según el tamaño deseado */
+  align-self: center; /* Centrar los botones dentro del contenedor */
+}

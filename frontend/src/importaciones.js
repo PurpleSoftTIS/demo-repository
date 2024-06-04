@@ -38,12 +38,12 @@ import MisSolicitudes from './Usuario/Mis_Solicitudes/MisSolicitudes';
 import AyudaAdmin from './Administrador/Ayuda/AyudaAdmin';
 import Configuraciones from './Administrador/Configuraciones/Configuraciones';
 import SolicitarCon1 from './Usuario/SolicitudesConjuntas/SolicitarCon1';
-
+import Agenda from './Agenda/Agenda'
 export {
   React,Router,Routes,Route,HomeUno,Ambientes,Docentes,Navbar,RegistrarMateria,
   LoginForm,RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Solicitar,
   Ayuda, ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,AmbientesActualizar,
   Footer,ListaMaterias,MensajeExitosoU,MensajeErrorU,MensajeActExito,MensajeActError
   ,DocentesActualizar,MensajeDatExito,MensajeDatError,ListaSolicitudesUr,Navigate,PasswordResetForm,
-  MensajeNoEncontrado,AmbientesDis,AmbientesSol,MisSolicitudes,AyudaAdmin,Configuraciones,SolicitarCon1
+  MensajeNoEncontrado,AmbientesDis,AmbientesSol,MisSolicitudes,AyudaAdmin,Configuraciones,SolicitarCon1,Agenda
 };
