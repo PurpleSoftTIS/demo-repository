@@ -17,40 +17,44 @@ class DeleteAmbienteController extends Controller
 
         try {
             DB::statement('SET FOREIGN_KEY_CHECKS=0');
-
+            Horario::truncate();
             Diashabiles::truncate();
+            Dia::truncate();
             Ambiente::truncate();
             Ubicacion::truncate();
-            DB::statement('ALTER TABLE hora AUTO_INCREMENT = 1');
             DB::statement('ALTER TABLE dia AUTO_INCREMENT = 1');
             DB::statement('ALTER TABLE ambiente AUTO_INCREMENT = 1');
-            DB::statement('ALTER TABLE ubicacion AUTO_INCREMENT = 1');           
+            DB::statement('ALTER TABLE ubicacion AUTO_INCREMENT = 1');   
+           
+        
             return response()->json(['message' => 'Todos los datos han sido eliminados correctamente'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Hubo un error al intentar borrar los datos'], 500);
         }
     }
     public function borrarAmbiente ($id_ambiente){
-
-        $ambiente =Ambiente::find($id_ambiente); 
-        $diasHabiles = Diashabiles::where('id_ambiente', $id_ambiente)->get();
-        foreach ($diasHabiles as $diaHabil) {
-            $nombreDia = Dia::find($diaHabil->id_dia)->nombre;
-            $horarios = Horario::where('id_dia', $diaHabil->id_dia)->get();
-        foreach ($horarios as $horario) {
-             $id_hora = $horario->id_hora;
-             $horario->where('id_hora', $id_hora)->delete();
-             Hora::where('id_hora', $id_hora)->delete();
-           }
-           $id_dia=$diaHabil->id_dia;
-           $diaHabil->where('id_dia',$id_dia)->delete();
-           Dia::where('id_dia', $id_dia)->delete();
-           
-     
+        try {
+            $ambiente = Ambiente::findOrFail($id_ambiente);
+            $diasHabiles = Diashabiles::where('id_ambiente', $id_ambiente)->get();
+            // Eliminar registros en el orden correcto
+            foreach ($diasHabiles as $diaHabil) {
+                Horario::where('id_dia', $diaHabil->id_dia)->delete();
+                Diashabiles::where('id_dia', $diaHabil->id_dia)->where('id_ambiente', $id_ambiente)->delete();
+                Dia::where('id_dia', $diaHabil->id_dia)->delete();
+            }
+            $ambiente->delete();
+            // Eliminar la ubicación asociada al ambiente si no está siendo usada por otro ambiente
+            $ubicacion = Ubicacion::find($ambiente->id_ubicacion);
+            if ($ubicacion) {
+                $countAmbientes = Ambiente::where('id_ubicacion', $ubicacion->id_ubicacion)->count();
+                if ($countAmbientes === 0) {
+                    $ubicacion->delete();
+                }
+            }
+            return response()->json(['message' => 'Ambiente y todos sus registros asociados han sido eliminados correctamente']);
+        } catch (\Exception $e) {
+            \Log::error('Error al intentar eliminar el ambiente: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al eliminar el ambiente'], 500);
         }
-    
-        Ambiente::where('id_ambiente',$id_ambiente)->delete();
-    
-    
     }
 }

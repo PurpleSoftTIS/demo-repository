@@ -16,5 +16,7 @@ class Usuario extends Model
         "apellido_paterno",
         "apellido_materno",
         "correo_electronico",
-        "contraseña"
-    ];}
+        "contraseña",
+        "notification_count"
+    ];
+}
