@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Models\Configuracion;
 use App\Models\Configuracion_Fecha;
@@ -11,22 +9,43 @@ class Configuraciones extends Controller
 {
     public function registrar(Request $request)
     {
+        Configuracion::truncate();
+        Configuracion_Fecha::truncate();
+        Feriado::truncate();
         $request->validate([
             'periodosAulaComun' => 'required|string',
             'periodosLaboratorio' => 'required|string',
+            'periodosAuditorio' => 'required|string',
             'fechaInicio' => 'required|date',
             'fechaFin' => 'required|date',
             'feriados' => 'required|array',
             'mensajesMasivos' => 'required|string'
         ]);
-
         try {
-            // Guardar la configuración principal
-            $configuracion = new Configuracion();
-            $configuracion->valor = $request->input('periodosAulaComun');
-            $configuracion->configuracion = $request->input('periodosLaboratorio');            
-            $configuracion->save();
+            $configuracion1 = new Configuracion();
+            $configuracion1->valor = $request->input('periodosAulaComun');
+            $configuracion1->configuracion = "Aula Comun";            
+            $configuracion1->save();
 
+            $configuracion2 = new Configuracion();
+            $configuracion2->valor = $request->input('periodosLaboratorio');
+            $configuracion2->configuracion = "Laboratorios";            
+            $configuracion2->save();
+
+            $configuracion3 = new Configuracion();
+            $configuracion3->valor = $request->input('periodosAuditorio');
+            $configuracion3->configuracion = "Auditorio";            
+            $configuracion3->save();
+
+            $configuracion4 = new Configuracion();
+            $configuracion4->valor = $request->input('periodosUsuaro');
+            $configuracion4->configuracion = "Tiempo de respuesta Usuario";            
+            $configuracion4->save();
+
+            $configuracion5 = new Configuracion();
+            $configuracion5->valor = $request->input('mensajesMasivos');
+            $configuracion5->configuracion = "Mensajes masivo";            
+            $configuracion5->save();
 
             $configuracion_fecha = new Configuracion_Fecha();           
             $configuracion_fecha->inicio = $request->input('fechaInicio');
@@ -37,7 +56,6 @@ class Configuraciones extends Controller
             foreach ($request->input('feriados') as $fechaFeriado) {
                 $feriado = new Feriado();
                 $feriado->fecha = $fechaFeriado;
-                $feriado->configuracion_id = $configuracion->id; // Establecer la relación
                 $feriado->save();
             }
 
@@ -48,10 +66,37 @@ class Configuraciones extends Controller
         }
     }
     public function obtenerconf(){
-        $configuraciones = Configuracion::all();
-         return response()->json($configuraciones, 200);
-       }
-       public function ambientesfechas($capacidad, $dia, $horarios , $fecha)
+        try{
+            $configuraciones = Configuracion::all();
+             return response()->json($configuraciones, 200);
+
+        }catch (\Exception $e) {
+            \Log::error('Error al obtener la configuración: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al obtener la configuración'], 500);
+        }        
+    }
+    public function obtenerconFecha(){
+       
+         try{
+            $configuraciones = Configuracion_Fecha::all();
+            return response()->json($configuraciones, 200);
+        }catch (\Exception $e) {
+            \Log::error('Error al obtener la configuración: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al obtener la configuración'], 500);
+        }
+    }
+    public function obtenerconfFeriados(){
+       
+         try{
+            $configuraciones = Feriado::all();
+            return response()->json($configuraciones, 200);
+        }catch (\Exception $e) {
+            \Log::error('Error al obtener la configuración: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al obtener la configuración'], 500);
+        }
+    }
+    
+    public function ambientesfechas($capacidad, $dia, $horarios , $fecha)
        {
            $horarios = json_decode($horarios, true);
        
@@ -77,18 +122,37 @@ class Configuraciones extends Controller
        
            $ambientesDisponibles = [];
            foreach ($ambientes as $ambiente) {
-               $solicitudes = DB::table('solicitudes')
-                   ->join('solicitud', 'solicitudes.id_solicitud', '=', 'solicitud.id_solicitud')
-                   ->where('solicitud.fecha_solicitud', $fecha)
-                   ->where('solicitudes.id_ambiente', $ambiente->id_ambiente)
-                   ->pluck('solicitud.id_solicitud')
-                   ->toArray();
-       
-               if (empty($solicitudes)) {
-                   $ambientesDisponibles[] = $ambiente;
-               }
-           }
-       
-           return response()->json($ambientesDisponibles, 200);
-       }
+            $solicitudes = DB::table('solicitudes')
+                ->join('solicitud', 'solicitudes.id_solicitud', '=', 'solicitud.id_solicitud')
+                ->where('solicitud.fecha_solicitud', $fecha)
+                ->where('solicitudes.id_ambiente', $ambiente->id_ambiente)
+                ->pluck('solicitud.id_solicitud')
+                ->toArray();
+        
+            $ambienteDisponible = true;
+            foreach ($solicitudes as $solicitudId) {
+                $horariosSolicitud = DB::table('solicitudes_horario')
+                    ->join('hora', 'solicitudes_horario.id_hora', '=', 'hora.id_hora')
+                    ->where('solicitudes_horario.id_solicitud', $solicitudId)
+                    ->get(['hora.hora_inicio', 'hora.hora_fin'])
+                    ->toArray();
+        
+                 foreach ($horariosSolicitud as $horarioSolicitud) {
+                    foreach ($horarios as $horario) {
+                        if ($horarioSolicitud->hora_inicio == $horario['hora_inicio'] && $horarioSolicitud->hora_fin == $horario['hora_fin']) {
+                            $ambienteDisponible = false;
+                            break 3; 
+                        }
+                    }
+                }
+            }
+        
+            if ($ambienteDisponible) {
+                $ambientesDisponibles[] = $ambiente;
+            }
+        }
+        
+        return response()->json($ambientesDisponibles, 200);
+        
+    }
 }

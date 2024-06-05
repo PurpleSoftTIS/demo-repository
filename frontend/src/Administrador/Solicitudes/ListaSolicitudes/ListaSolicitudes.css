@@ -144,66 +144,13 @@ position: relative;
 top: -28px;
 justify-content: center;
 }
-.contact-form-container {
-display: flex;
-justify-content: center;
-padding: 155px 20px;
-background-color: #fff;
-}
 
-.contenedor {
-  position: relative;
-width: 50%;
-height:auto;
-background-color: #011640;
-padding: 20px;
-}
-
-.contact-form-sub-heading-cta {
-background-color: #fff;
-border-radius: 6px;
-padding: 32px;
-max-width: 100%;
-}
-
-.contact-form-enter-details {
-font-size: 20px;
-line-height: 28px;
-}
-
-.contact-form-phone-parent {
-display: flex;
-flex-direction: column;
-gap: 12px;
-}
-
-.contact-form-phone {
-line-height: 16px;
-}
-
-.contact-form-rectangle {
-border: 1px solid #e5e7eb;
-background-color: #fff;
-height: 40px;
-border-radius: 4px;
-min-width: 250px;
-}
-
-.contact-form-rectangle:hover,
-.contact-form-rectangle:focus {
-border: 1px solid #011640;
-}
-
-.contact-form-cta-button {
-cursor: pointer;
-border: 0;
-padding: 12px 32px;
-background-color: #011640;
-border-radius: 4px;
-}
-
-.contact-form-cta-button:hover {
-background-color: #334a73;
+.detallesSol {
+position: relative;
+  width: 100%;
+  height: 480px;   
+  background-color: #ffffff;
+  display: inline-block;
 }
 
 /* VerSolicitud.css */
@@ -228,7 +175,7 @@ line-height: 16px;
 .input13,
 .input14 {
 border: 1px solid #e5e7eb;
-background-color: #fff;
+background-color: #000000;
 height: 40px;
 border-radius: 4px;
 min-width: 250px;
@@ -244,13 +191,12 @@ border: 1px solid #011640;
 }
 
 .input14 {
-margin-top: auto; /* Alinea el campo "Capacidad" en la parte inferior del contenedor */
+margin-top: auto; 
 }
 
 .label-here {
-margin-bottom: 8px; /* Añade espacio entre la etiqueta y el campo de entrada */
+margin-bottom: 8px; 
 }
-/* VerSolicitud.css */
 
 .overlay {
 position: fixed;
@@ -258,8 +204,8 @@ top: 0;
 left: 0;
 width: 100%;
 height: 100%;
-background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semi-transparente */
-z-index: 999; /* Asegura que el overlay esté por encima de otros elementos */
+background-color: rgba(0, 0, 0, 0.5); 
+z-index: 999; 
 display: flex;
 justify-content: center;
 align-items: center;
@@ -268,17 +214,17 @@ align-items: center;
 .formulario-emergente {
   position: relative;
   width: 800px;
-background-color: #fff;
-padding: 10px;
-border-radius: 8px;
-box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Sombra alrededor del formulario */
+  height: 500px;
+  background-color: #ffffff;
+  padding: 10px;
+  border-radius: 8px;
 }
 
-.tituloForm{
-  color: white;
+.textoForm,.tituloForm,.subtitulo{
+  color: rgb(0, 0, 0);
   font-size: 20px;
 }
-.dimensionForm,.textoForm{
-  color: white;
+.textoForm{
+  border: #000000;
 }
 

@@ -94,7 +94,7 @@ const Navbar = () => {
 
   const handleNotificationSubmit = (e) => {
     e.preventDefault();
-    fetch('http://127.0.0.1:8000/api/notifications', {
+    fetch('http://127.0.0.1:8000/api/notificationsMail', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -264,8 +264,9 @@ const Navbar = () => {
                   )}              
               </div>
               <li className="nav-item">
-                <NavLink className="nav-link" to='/Admin/AyudaAdmin'>Ayuda</NavLink> 
+                <NavLink className="nav-link" to='/Admin/inicio/UsoAmbientes'>Informe Ambientes</NavLink> 
               </li>
+              
             </ul>
           </div>          
           {isVisible &&(

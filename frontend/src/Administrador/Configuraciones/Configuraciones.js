@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './Configuraciones.css';
 import { useNavigate } from "react-router-dom";
 import { FaPlusCircle } from 'react-icons/fa';
@@ -8,12 +8,19 @@ const Configuraciones = () => {
 
   const [periodosAulaComun, setPeriodoAulaComun] = useState("");
   const [periodosLaboratorio, setPeriodosLaboratorio] = useState("");
+  const [periodosAuditorio, setPeriodosAuditorio] = useState("");
+  const [periodosUsuaro, setPeriodosUsuario] = useState("");
+
   const [fechaInicio, setFechaInicio] = useState("");
   const [fechaFin, setFechaFin] = useState("");
   const [mensajesMasivos, setMensajesMasivos] = useState("No");
 
   const [feriados, setFeriados] = useState([]);
   const [errors, setErrors] = useState({});
+
+  const [datosCarga, setDatosCarga] = useState({});
+  const [datosCargaFecha, setDatosCargaFecha] = useState({});
+  const [datosCargaFeriado, setDatosCargaFeriado] = useState([]);
 
   const handleAddFeriado = () => {
     setFeriados([...feriados, ""]);
@@ -28,6 +35,8 @@ const Configuraciones = () => {
     let formErrors = {};
     if (!periodosAulaComun) formErrors.periodosAulaComun = "Completa el campo";
     if (!periodosLaboratorio) formErrors.periodosLaboratorio = "Completa el campo";
+    if (!periodosAuditorio) formErrors.periodosAuditorio = "Completa el campo";
+    if (!periodosUsuaro) formErrors.periodosAuditorio = "Completa el campo";
     if (!fechaInicio) formErrors.fechaInicio = "Completa el campo";
     if (!fechaFin) formErrors.fechaFin = "Completa el campo";
     feriados.forEach((feriado, index) => {
@@ -39,6 +48,55 @@ const Configuraciones = () => {
     return Object.keys(formErrors).length === 0;
   };
 
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/configuraciones', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        setDatosCarga(data);
+        setPeriodoAulaComun(data.periodosAulaComun);
+        setPeriodosLaboratorio(data.periodosLaboratorio);
+        setPeriodosAuditorio(data.periodosAuditorio);
+        setPeriodosUsuario(data.periodosUsuaro);
+      })
+      .catch(error => console.error('Error al obtener los datos:', error));
+  }, []);
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/configuracionesFecha', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        setDatosCargaFecha(data);
+        setFechaInicio(data.fechaInicio);
+        setFechaFin(data.fechaFin);
+      })
+      .catch(error => console.error('Error al obtener los datos:', error));
+  }, []);
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/configuracionesFeriados', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        setDatosCargaFeriado(data);
+        setFeriados(data.feriados);
+      })
+      .catch(error => console.error('Error al obtener los datos:', error));
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -49,6 +107,8 @@ const Configuraciones = () => {
     const datosConf = {
       periodosAulaComun,
       periodosLaboratorio,
+      periodosAuditorio,
+      periodosUsuaro,
       fechaInicio,
       fechaFin,
       feriados,
@@ -71,6 +131,8 @@ const Configuraciones = () => {
         console.log("Registro exitoso:", data);
         setPeriodoAulaComun("");
         setPeriodosLaboratorio("");
+        setPeriodosAuditorio("");
+        setPeriodosUsuario("");
         setFechaInicio("");
         setFechaFin("");
         setFeriados([]);
@@ -105,6 +167,26 @@ const Configuraciones = () => {
             onChange={(e) => setPeriodosLaboratorio(e.target.value)}
           />
           {errors.periodosLaboratorio && <p className="error">{errors.periodosLaboratorio}</p>}
+        </label>
+        <label>
+          Periodos de Auditorio:
+          <input
+            type="text"
+            name="periodosAuditorio"
+            value={periodosAuditorio}
+            onChange={(e) => setPeriodosAuditorio(e.target.value)}
+          />
+          {errors.periodosAuditorio && <p className="error">{errors.periodosAuditorio}</p>}
+        </label>
+        <label>
+          Tiempo de respuesta en horas para el usuario:
+          <input
+            type="text"
+            name="periodosUsuaro"
+            value={periodosUsuaro}
+            onChange={(e) => setPeriodosUsuario(e.target.value)}
+          />
+          {errors.periodosAuditorio && <p className="error">{errors.periodosAuditorio}</p>}
         </label>
         <label>
           Límite de Fecha Inicio:
