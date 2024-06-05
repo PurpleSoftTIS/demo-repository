@@ -8,6 +8,46 @@
   max-width: 100%;
 }
 
+
+.docente-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Ajusta el margen inferior entre los docentes */
+}
+
+.docente-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.docente-label {
+  margin-right: 100px; /* Ajusta el margen derecho entre el nombre del docente y los grupos */
+}
+
+.grupo-checkbox-container {
+  display: flex;
+  align-items: center;
+}
+
+.grupo-label-wrapper {
+  display: flex;
+  align-items: center;
+  width: 70px; 
+}
+
+.grupo-checkbox-list {
+  display: flex;
+  flex-wrap: wrap; 
+}
+
+.grupo-checkbox-item {
+  margin-right: 30px; 
+}
+
+input[type="checkbox"] {
+  margin-top: 10px;
+}
+
 .contact-form-lorem-ipsum-dolor-si {
   align-self: stretch;
   height: 39.5px;

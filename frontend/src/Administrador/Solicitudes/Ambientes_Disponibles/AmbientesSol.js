@@ -1,105 +1,212 @@
 import React, { useState, useEffect } from 'react';
-import './AmbientesSol.css'; // Ajusta la importación del CSS según la ubicación real del archivo CSS
-import { useNavigate, useLocation } from "react-router-dom";
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import './AmbientesSol.css';
 
-const AmbientesSol = () => {
-    const navigate = useNavigate();
-    const { state: datos2 } = useLocation();
-    const { materia, carrera, docente, numeroEstudiantes, diaSeleccionado, horaSeleccionada } = datos2 || {};
-    const [ambientesDisponibles, setAmbientesDisponibles] = useState([]);
-    const [json, setJson] = useState([]);
-    useEffect(() => {
-      if (numeroEstudiantes) {
-          fetch(`http://127.0.0.1:8000/api/ambientesDispo/${numeroEstudiantes}/${diaSeleccionado}/${horaSeleccionada}/${horaSeleccionada}`)
+const AmbientesSol = () => {  
+  
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [date, setDate] = useState([]);
+  const solicitud = location.state;
+  const [mostrarAmbientesDisponibles, setMostrarAmbientesDisponibles] = useState(true);
+  const [contiguous, setContiguous] = useState([]);
+  
+  const obtenerDiaDeFecha = (fecha) => {
+      const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado'];
+      const fechaObj = new Date(fecha);
+      return diasSemana[fechaObj.getDay()];
+  };
+
+  const horasString = solicitud.horas;
+  const horasSeparadas = horasString.split(', ').map(hora => {
+      const [horaInicio, horaFin] = hora.split(' - ');
+      return { "hora_inicio": horaInicio, "hora_fin": horaFin };
+  });
+
+
+  useEffect(() => {
+      const capacidad = solicitud.numero_estudiantes;
+      const fechaSolicitud = solicitud.fecha_solicitud; 
+      const dia = obtenerDiaDeFecha(fechaSolicitud);
+      const horarios = horasSeparadas;
+      const horariosJSON = JSON.stringify(horarios);
+      console.log(dia);
+      console.log(horariosJSON);
+
+      fetch(`http://127.0.0.1:8000/api/ambientesDisponibless/${capacidad}/${dia}/${horariosJSON}/${fechaSolicitud}`)
+          .then((response) => {
+              if (!response.ok) {
+                  throw new Error('Error al obtener los ambientes disponibles');
+              }
+              return response.json();
+          })
+          .then((data) => {
+              console.log('Ambientes disponibles:', data);
+              setDate(data);
+              setMostrarAmbientesDisponibles(true);
+          })
+          .catch((error) => {
+              console.error('Error al obtener los ambientes disponibles:', error);
+          });
+
+      }, []);
+      const AsignarAula = (ambientes) => {
+          const aula = ambientes[0];
+          const dataToSend = {
+              id_ambiente: aula.id_ambiente,
+              id_solicitud: solicitud.id_solicitud,
+          };
+          console.log(dataToSend);
+          fetch('http://127.0.0.1:8000/api/asignarAula', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(dataToSend),
+          })
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error('Error al asignar el aula');
+              }
+              return response.json();
+          })
+          .then(data => {
+              console.log('Aula asignada:', data);
+              navigate('/Admin/ListaSolicitudes');
+
+          })
+          .catch(error => {
+              console.error('Error al asignar el aula:', error);
+          });
+      };
+      const handleMostrarContiguos = () => {
+          const capacidad = 20;
+          const fechaSolicitud = solicitud.fecha_solicitud;
+          const dia = obtenerDiaDeFecha(fechaSolicitud);
+          const horarios = horasSeparadas;
+          const horariosJSON = JSON.stringify(horarios);
+
+          fetch(`http://127.0.0.1:8000/api/ambientesContiguos/${capacidad}/${dia}/${horariosJSON}`)
               .then(response => {
                   if (!response.ok) {
-                      throw new Error('Error al cargar ambientes  disponibles');
+                      throw new Error('Error al cargar ambientes contiguos');
                   }
                   return response.json();
               })
               .then(data => {
-                setAmbientesDisponibles(data);
+                  setContiguous(data);
+                  setMostrarAmbientesDisponibles(false);
+                  console.log("Ambientes contiguos:", data);
               })
               .catch(error => {
-                  console.error('Error al cargar los ambientes disponibles:', error);
+                  console.error('Error al cargar los ambientes contiguos:', error);
               });
-          }       
-      }, [numeroEstudiantes,diaSeleccionado,horaSeleccionada]); 
-    
-  
-    const agregarMore = (ambiente) => { 
-      // Agrega el ambiente seleccionado al estado json
-      setJson(prevJson => [...prevJson, {        
-        edificio: ambiente.edificio, 
-        numero_piso: ambiente.numero_piso, 
-        nombre_ambiente: ambiente.nombre_ambiente 
-      }]);
-    }
-  
-    const EnviarSolicitud = () => {
-      const data = {
-        materia,
-        carrera,
-        docente,
-        numeroEstudiantes,
-        diaSeleccionado,
-        horaSeleccionada,
-        ambientes: json  // Agrega el estado json al objeto de datos a enviar
       };
-      console.log("Datos a enviar:", data); 
-      fetch("http://127.0.0.1:8000/api/registrarSolicitud", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data) 
-      })
-      .then(response => {
-        if (response.ok) {
-          console.log("Registro exitoso");
-          navigate('/Usuario/Usu/Reservas');
-        } else {
-          console.error("Error en el registro");
-        }
-      })
-      .catch(error => {
-        console.error("Error en la solicitud:", error);
-      });
-    };
-  
-    return (
-      <div className="container" style={{ height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <div style={{ height: '4vh' }}></div>
-        <h2 style={{ margin: 0, textAlign: 'center' }}>Ambientes Disponibles:</h2>
-        <table className="table table-hover">
-          <thead className="thead">
-            <tr>
-              <th>Nro.</th>
-              <th>Edificio</th>
-              <th>Piso</th>
-              <th>Aula</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {ambientesDisponibles.map((ambiente, index) => (
-              <tr key={index} className="fila-lista">
-                <td>{index + 1}</td>
-                <td>{ambiente.edificio}</td>
-                <td>{ambiente.numero_piso}</td>
-                <td>{ambiente.nombre_ambiente}</td>
-                <td>
-                  <button className="btn btn-editar mr-2" onClick={() => agregarMore(ambiente)}>Reservar</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <button onClick={EnviarSolicitud}>
-          Enviar Solicitud
-        </button>
+    const rechazarsolicitud= () => {
+      const id_solicitud=solicitud.id_solicitud;
+
+        fetch(`http://127.0.0.1:8000/api/rechazarsolicitud/${id_solicitud}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Error al cambiar el estado de la solicitud');
+                }
+                console.log('Solicitud actualizada:', response);
+                return response.json();
+            })
+            .then((data) => {
+                navigate('/Admin/ListaSolicitudes');
+            }) 
+            .catch((error) => {
+                console.error(error);
+            });
+      };
+ 
+  return (
+      <div className="container" style={{ minHeight: '78.7vh' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h2 style={{ margin: 0 }}>Ambientes Disponibles:</h2>                
+          </div>
+          <div className='sugerencias'>
+              <button className="btn btn-editar mr-2" onClick={handleMostrarContiguos}>Sugerencias</button>               
+              <button className="btn btn-editar mr-2" onClick={rechazarsolicitud}>Rechazar</button>               
+
+         </div>
+          <div className='atras'>
+          <NavLink className="btn btn-editar mr-2" to='/Usuario/Usu/DetallesSolitud' activeClassName="active">Atras</NavLink>        
+
+          </div>
+          
+          <div style={{ display: 'flex', justifyContent: 'Right', alignItems: 'center', marginTop: '15px' }}>
+          </div>
+          {mostrarAmbientesDisponibles ? (
+              
+                  <table className="table table-hover">
+                      <thead className="thead">
+                          <tr>
+                              <th>Aula</th>
+                              <th>Edificio</th>
+                              <th>Capacidad</th>
+                              <th>Nro. Piso</th>
+                              <th>Acciones</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {date.map((dato) => (
+                              <tr key={dato.id_ambiente} className="fila-lista">
+                                  <td>{dato.nombre_ambiente}</td>
+                                  <td>{dato.edificio}</td>
+                                  <td>{dato.capacidad}</td>
+                                  <td>{dato.numero_piso}</td>             
+                                  <td>
+                                      <button className="btn btn-editar mr-2" onClick={() => AsignarAula([dato])}>Asignar</button>               
+
+                                  </td>
+                              </tr>
+                          ))}
+                      </tbody>
+                  </table>
+              ) : 
+          
+          (
+              contiguous.length > 0 ? (
+                  <table className="table table-hover">
+                      <thead className="thead">
+                          <tr>
+                              <th>Aulas</th>
+                              <th>Edificio</th>
+                              <th>Capacidad</th>
+                              <th>Nro. Piso</th>
+                              <th>Acciones</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {contiguous.map((group, index) => (
+                              <tr key={index} className="fila-lista">
+                                  <td>{group.map(room => room.nombre_ambiente).join(", ")}</td>
+                                  <td>{group[0].nombre_edificio}</td>
+                                  <td>{group.map(room => room.capacidad).reduce((total, capacity) => total + capacity, 0)}</td>
+                                  <td>{group[0].numero_piso}</td>
+                                  <td>
+                                      <button className="btn btn-editar mr-2" onClick={() => AsignarAula(group)}>Sugerir</button> 
+                                                                              <button className="btn btn-editar mr-2" onClick={() => AsignarAula(group)}>Sugerir</button>               
+            
+                                  </td>
+                              </tr>
+                          ))}
+                      </tbody>
+                  </table>
+              ) : (
+                  <p>No hay ambientes contiguos disponibles.</p>
+              )
+          )}
       </div>
-    );
+  );
 }
 
 export default AmbientesSol

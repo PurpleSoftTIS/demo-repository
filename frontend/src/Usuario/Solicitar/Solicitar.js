@@ -20,7 +20,6 @@ const Solicitar = () => {
   const [date, setDate] = useState(new Date());
   const [materias, setMaterias] = useState([]); 
   const [horariosDisponibles, setHorariosDisponibles] = useState([]);
-  const [formData, setFormData] = useState([]); 
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedDay, setSelectedDay] = useState(''); 
   const [selectedOption, setSelectedOption] = useState('');
@@ -43,7 +42,6 @@ const Solicitar = () => {
     }
   };
   console.log(cantidadPeriodos);
- 
     useEffect(() => {
     if (date) {
       fetch(`http://127.0.0.1:8000/api/obtenerHoras`)
@@ -354,18 +352,18 @@ const Solicitar = () => {
           {showErrorMessage && <p className="error">{showErrorMessage}</p>}
         </div>
         <select 
-            id="menuMotivo" 
-            value={valor} 
-            onChange={(e) => setValor(e.target.value)} 
-            className="input"
-          >   <label htmlFor="menuMotivo" className="label">Seleccione la cantidad de periodos:</label>
+  id="menuMotivo" 
+  value={valor} 
+  onChange={(e) => setValor(e.target.value)} 
+  className="input"
+>   <label htmlFor="menuMotivo" className="label">Seleccione la cantidad de periodos:</label>
 
-          <option value="">Seleccione la cantidad de periodos</option>
-          
-          {Array.from({ length: cantidadPeriodos }, (_, i) => i + 1).map((periodo) => (
-            <option key={periodo} value={periodo}>{periodo}</option>
-          ))}
-        </select>
+  <option value="">Seleccione la cantidad de periodos</option>
+  
+  {Array.from({ length: cantidadPeriodos }, (_, i) => i + 1).map((periodo) => (
+    <option key={periodo} value={periodo}>{periodo}</option>
+  ))}
+</select>
 
         
 <div className='motivo'>

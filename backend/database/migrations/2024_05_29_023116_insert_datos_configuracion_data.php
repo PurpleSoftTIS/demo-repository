@@ -16,18 +16,23 @@ class InsertDatosConfiguracionData extends Migration
         Configuracion::create([
             'configuracion' => 'Aula Comun',
             'valor' => '2'
-            ]);
-            Configuracion::create([
-                'configuracion' => 'Laboratorios',
-                'valor' => '7'
-            ]);
-                Configuracion::create([
-                    'configuracion' => 'Mensajes masivo',
-                    'valor' => '0'
-                ]);
-        
-
-        
+        ]);
+        Configuracion::create([
+            'configuracion' => 'Laboratorios',
+            'valor' => '7'
+        ]);
+        Configuracion::create([
+            'configuracion' => 'Auditorio',
+            'valor' => '4'
+        ]);
+        Configuracion::create([
+            'configuracion' => 'Tiempo de respuesta Usuario',
+            'valor' => '24'
+        ]);
+        Configuracion::create([
+            'configuracion' => 'Mensajes masivo',
+            'valor' => '0'
+        ]);        
     }
 
     /**
