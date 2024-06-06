@@ -14,14 +14,20 @@
  }
  .atras
  {
-  margin-left: 1100px;
+  margin-left: 1000px;
   margin-top: -40px;
 
 
  }
+.ubicacion{
+ margin-top: -40px;
+ margin-left: -210px;
+
+
+}
   .contenedorsito {
     width: 80%;
-    max-width: 600px; /* Ajusta este valor según tus necesidades */
+    max-width: 600px; 
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 10px;
