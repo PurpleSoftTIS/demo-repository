@@ -221,7 +221,7 @@ const ListaSolicitudes = () => {
  
 
 return (
-    <div className="container" style={{ minHeight: '78.7vh' }}>
+    <div className="containerr" style={{ minHeight: '78.7vh' }}>
       <div style={{ height: '4vh' }}></div>
       <div
         style={{

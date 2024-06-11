@@ -204,11 +204,11 @@ function ListaAulas() {
     
   }
   return (
-    <div className="containerDos" style={{ minHeight: '78.7vh' }}>
-      <div className='encabezado'>
-        <div className='contenido'>
+    <div className="containerDoss" style={{ minHeight: '78.7vh' }}>
+      <div className='encabezados'>
+        <div className='contenidoss'>
           <h2 >Ambientes Registrados:</h2>
-          <div>
+          <div className='buscado'>
 
             <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador' />
             
@@ -255,7 +255,7 @@ function ListaAulas() {
           </div>
         </div>
       </div>
-      <div className='tablas'>
+      <div className='tablass'>
           <table className="table table-hover">
             <thead className="thead">
               <tr>

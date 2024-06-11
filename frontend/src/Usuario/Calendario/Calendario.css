@@ -60,4 +60,50 @@
   .calendar-container {
     width: 75%; /* Aproximadamente equivalente a col-md-9 */
   }
-  
+  .contenidoTres{
+    position: absolute;
+    z-index: 9999; 
+    display: inline-table;
+    background: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    font-size: 18px;
+    top: 30%;
+    left: 50%;
+    border-radius: none;
+    border: 5px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); 
+    justify-content: center;
+    align-items: center;
+    width: 350px;
+    height: 400px;
+    padding: 10px;
+  }
+  .Titulos{
+    margin-top: 45px;
+    font-weight: bold; 
+
+  }
+  .Dato{
+    position: relative;
+  }
+  .iconos2{
+    position: relative;
+    left: 280px;
+    top:-70px
+  }
+  .iconos2:hover{
+    background: black;
+  }
+  .rbc-toolbar{
+    position: relative;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); 
+
+  }
+  .rbc-toolbar-label{
+    color: green;
+    font-size: large;
+  }
+ 
+  .rbc-day-bg:hover{
+    background-color: #6d87bb;
+  }

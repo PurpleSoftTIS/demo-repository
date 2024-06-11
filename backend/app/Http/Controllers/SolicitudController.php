@@ -270,21 +270,16 @@ class SolicitudController extends Controller
             return response()->json(['error' => 'Error al obtener los datos de los ambientes por solicitud'], 500);
         }
     }
-    public function ambientesContiguos($capacidad, $dia, $horarios)
+    public function ambientesContiguos($dia, $horarios , $fecha)
     {
-        \Illuminate\Support\Facades\Log::info('Capacidad: ' . $capacidad);
-        \Illuminate\Support\Facades\Log::info('Día: ' . $dia);
-        \Illuminate\Support\Facades\Log::info('Horarios: ' . print_r($horarios, true));
-    
         $horarios = json_decode($horarios, true);
     
-        $aulasDisponibles = DB::table('ambiente')
+        $query = DB::table('ambiente')
             ->join('ubicacion', 'ambiente.id_ubicacion', '=', 'ubicacion.id_ubicacion')
-            ->select('ambiente.*', 'ubicacion.edificio as nombre_edificio', 'ambiente.numero_piso')
-            ->where('ambiente.capacidad', '>=', $capacidad);
+            ;
     
         foreach ($horarios as $horario) {
-            $aulasDisponibles->whereExists(function ($query) use ($dia, $horario) {
+            $query->whereExists(function ($query) use ($dia, $horario) {
                 $query->select(DB::raw(1))
                     ->from('diashabiles')
                     ->join('dia', 'diashabiles.id_dia', '=', 'dia.id_dia')
@@ -297,22 +292,43 @@ class SolicitudController extends Controller
             });
         }
     
-        $aulasDisponibles = $aulasDisponibles->get();
+        $ambientes = $query->get();
     
-        $aulasPorEdificioYPiso = [];
-        foreach ($aulasDisponibles as $aula) {
-            $aulasPorEdificioYPiso[$aula->nombre_edificio][$aula->numero_piso][] = $aula;
-        }
-    
-        $combinacionesValidas = [];
-        foreach ($aulasPorEdificioYPiso as $edificio => $aulasEnEdificio) {
-            foreach ($aulasEnEdificio as $numero_piso => $aulasEnPiso) {
-                $combinacionesValidas = array_merge($combinacionesValidas, $this->generarCombinaciones($aulasEnPiso, $capacidad));
-            }
-        }
-    
-        return response()->json($combinacionesValidas, 200);
-    }
+        $ambientesDisponibles = [];
+        foreach ($ambientes as $ambiente) {
+         $solicitudes = DB::table('solicitudes')
+             ->join('solicitud', 'solicitudes.id_solicitud', '=', 'solicitud.id_solicitud')
+             ->where('solicitud.fecha_solicitud', $fecha)
+             ->where('solicitudes.id_ambiente', $ambiente->id_ambiente)
+             ->pluck('solicitud.id_solicitud')
+             ->toArray();
+     
+         $ambienteDisponible = true;
+         foreach ($solicitudes as $solicitudId) {
+             $horariosSolicitud = DB::table('solicitudes_horario')
+                 ->join('hora', 'solicitudes_horario.id_hora', '=', 'hora.id_hora')
+                 ->where('solicitudes_horario.id_solicitud', $solicitudId)
+                 ->get(['hora.hora_inicio', 'hora.hora_fin'])
+                 ->toArray();
+     
+              foreach ($horariosSolicitud as $horarioSolicitud) {
+                 foreach ($horarios as $horario) {
+                     if ($horarioSolicitud->hora_inicio == $horario['hora_inicio'] && $horarioSolicitud->hora_fin == $horario['hora_fin']) {
+                         $ambienteDisponible = false;
+                         break 3; 
+                     }
+                 }
+             }
+         }
+     
+         if ($ambienteDisponible) {
+             $ambientesDisponibles[] = $ambiente;
+         }
+     }
+     
+     return response()->json($ambientesDisponibles, 200);
+     
+}
     
     private function generarCombinaciones($aulas, $capacidad) {
         $combinacionesValidas = [];
@@ -374,5 +390,28 @@ class SolicitudController extends Controller
             return response()->json(['error' => 'Error al obtener los docentes por materia'], 500);
         }
     }
+    public function asignarAmbientes(Request $datos)
+{
+    
+    \Log::info('Datos recibidos del frontend: ' . json_encode($datos->all()));
+    $ambientes=$datos->all();
+    
+    foreach($ambientes as $ambiente){
+        $id_ambiente= $ambiente['id_ambiente'];
+        $id_solicitud= $ambiente['id_solicitud'];
+        $solicitud= Solicitud::where('id_solicitud',$id_solicitud)->first();
+        $estado="aceptado";
+        $solicitud->estado_solicitud = $estado;
+        $solicitud->save();
+        $solicitudes=new Solicitudes();
+        $solicitudes->id_ambiente = $id_ambiente;
+        $solicitudes->id_solicitud = $id_solicitud;  
+        $solicitudes->save(); 
+      
+ }
+ return response()->json(['message' => 'Los Aulas Se Asignaron corectamente'], 200);
+
+    
+}
     
 }
