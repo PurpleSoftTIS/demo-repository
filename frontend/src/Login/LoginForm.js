@@ -15,6 +15,8 @@ import Ico7 from "../assets/IconosLan/IcoFacultad.png";
 import Ico8 from "../assets/IconosLan/IcoFacultadEscudo.png";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
+import { NavLink } from 'react-router-dom';
+
 
 const LoginForm = () => {
 const navigate = useNavigate();   
@@ -256,7 +258,7 @@ const [showPassword, setShowPassword] = useState(false);
                         <div className="navbar-collapse" id="navbarNav">
                             <ul className="navbar-nav ml-auto menus">
                                 <li className="nav-item">
-                                    <button className="nav-link pricing">Acerca de</button>
+                                    <NavLink className="nav-link pricing" to='/Calendario' activeclassname="active">Calendario</NavLink>        
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link pricing" href="https://www.umss.edu.bo/" target="_blank" rel="noreferrer">UMSS</a> 

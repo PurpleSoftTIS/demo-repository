@@ -64,8 +64,6 @@ function AdminRoutes() {
       <Route path='/Mensaje/ConfiguracionError' element={<MensajeConfError/>}/> 
       <Route path='/AsignarAmbiente' element={<Asignar_ambiente/>}/> 
       <Route path='/Informe/Informe' element={<Informe/>}/> 
-
-
     </Routes>
     <Footer/>
   </div>
@@ -81,12 +79,10 @@ function UserRoutes() {
       <Route path='/Usu/Solicitar' element={<Solicitar />} />
       <Route path='/Usu/SolicitarCon' element={<SolicitarCon1 />} />
       <Route path='/Usu/Reservas' element={<MisSolicitudes />} />
-      <Route path='/Usu/Ayuda' element={<Ayuda />} /> 
       <Route path='/Mensaje/Exitoso' element={<MensajeExitosoU/>}/>
       <Route path='/Mensaje/Error' element={<MensajeErrorU/>}/>
       <Route path='/Mensaje/NoEncontrado' element={<MensajeNoEncontrado/>} />
       <Route path='/Usu/AmbientesDis' element={<AmbientesDis/>} />
-      <Route path='/Calendario' element={<Calendario/>} />
     </Routes>
     <Footer/>
   </div>        
@@ -151,7 +147,9 @@ function App() {
           <Route path="/Admin/*" element={<PrivateAdminRoute element={<AdminRoutes />} />} />
           <Route path="/Usuario/*" element={<PrivateUserRoute element={<UserRoutes />} />} />
           <Route path='/Gest/*' element={<PrivateGestRoute element={<GestRoutes />} />} />
-          <Route path='/Rest/*' element={<PrivateRestRoute element={<RestRoutes />} />} />     
+          <Route path='/Rest/*' element={<PrivateRestRoute element={<RestRoutes />} />} /> 
+          <Route path='/Calendario' element={<Calendario/>} />
+    
         </Routes>
       )}
     </Router>
