@@ -153,8 +153,8 @@ const ListaDocentes = () => {
     resultado = docentes;
   }else{
     resultado = docentes.filter((docente) =>
-      docente.id_docente.toString().toLowerCase().includes(buscar.toLowerCase())||
-      docente.nombre.toString().toLowerCase().includes(buscar.toLowerCase())||
+    docente.id_docente.toString().toLowerCase().includes(buscar.toLowerCase())||
+    docente.nombre.toString().toLowerCase().includes(buscar.toLowerCase())||
     docente.apellido_paterno.toString().toLowerCase().includes(buscar.toLowerCase())||
     docente.apellido_materno.toString().toLowerCase().includes(buscar.toLowerCase())||
     docente.codigo_docente.toString().toLowerCase().includes(buscar.toLowerCase())||
@@ -166,16 +166,15 @@ const ListaDocentes = () => {
   }
   return (
     
-    <div className="container" style={{ minHeight: '78.7vh' }}>
-      <div style={{ height: '4vh' }}></div>  
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <div className="containerDos" style={{ minHeight: '78.7vh',display: 'flex' }}>
+      <div >
         <h2 style={{ margin: 0 }}>Docentes Registrados:</h2>
         <div>
-        <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador' />
-          <button className="butn butn-filtro">Filtros</button>
-          <NavLink to="/Admin/Registro/Docentes" className="butn butn-nuevo">
-            Nuevo Docente<FaPlus className="icon" />
-          </NavLink>
+          <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador' />
+            <button className="butn butn-filtro">Filtros</button>
+            <NavLink to="/Admin/Registro/Docentes" className="butn butn-nuevo">
+              Nuevo Docente<FaPlus className="icon" />
+            </NavLink>
         </div>
       </div>
       <div style={{ display: 'flex', justifyContent: 'right', alignItems: 'center', marginTop: '15px' }}>
@@ -195,7 +194,7 @@ const ListaDocentes = () => {
           </button>
         </div>
       </div>
-      <table className="table table-hover">
+      <table className="tables table-hover">
         <thead className="thead">
           <tr>
             <th>Nro. de Docente</th>

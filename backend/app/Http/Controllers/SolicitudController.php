@@ -58,6 +58,7 @@ class SolicitudController extends Controller
         ->get();
         return response()->json($datosSolicitados, 200);
     }
+
     public function registrarSolicitud(Request $datos){
         try {
             \Log::info('Datos recibidos del frontend: ' . json_encode($datos->all()));
@@ -66,10 +67,8 @@ class SolicitudController extends Controller
             $usuario=Usuario::where('correo_electronico',$correo)->first();
             $id_usuario=$usuario->id_usuario;
             $docente=Docente::where('id_usuario',$id_usuario)->first();
-            $idDocente=$docente->id_docente;  
-   
-            $solicitud = new Solicitud();           
-            
+            $idDocente=$docente->id_docente;     
+            $solicitud = new Solicitud();                 
             $numero_estudiantes=$datosReserva['cantidadEstudiantes'];
             $solicitud->numero_estudiantes=$numero_estudiantes;
             $fecha = Carbon::createFromFormat('d/m/Y', $datosReserva['fechaSeleccionada'])->format('Y-m-d');
@@ -89,17 +88,11 @@ class SolicitudController extends Controller
                 ->where('hora_fin', $horaFin)
                 ->first();
                 $id_hora = $horaCoincidente->id_hora;
-
                 $solicitudHora=new Solicitudes_horario ();
                 $solicitudHora->id_solicitud = $id_solicitud;
                 $solicitudHora->id_hora = $id_hora;
                 $solicitudHora->save();
-
-
-
-
-        }
-            
+            }            
             $solicitudesDo=new Solicitudes_docentes ();
             $solicitudesDo->id_docente = $idDocente;
             $solicitudesDo->id_solicitud = $id_solicitud;
@@ -295,8 +288,7 @@ class SolicitudController extends Controller
         $solicitudes = new Solicitudes();
         $solicitudes->id_ambiente = $id_ambiente;
         $solicitudes->id_solicitud = $id_solicitud;  
-        $solicitudes->save();
-    
+        $solicitudes->save();    
         return response()->json(['message' => 'El aula se asignó correctamente'], 200);
     }
     public function docentesPorMateria($materia)
@@ -388,5 +380,28 @@ class SolicitudController extends Controller
      
      return response()->json($ambientesDisponibles, 200);
      
+}
+public function asignarAmbientes(Request $datos)
+{
+    
+    \Log::info('Datos recibidos del frontend: ' . json_encode($datos->all()));
+    $ambientes=$datos->all();
+    
+    foreach($ambientes as $ambiente){
+        $id_ambiente= $ambiente['id_ambiente'];
+        $id_solicitud= $ambiente['id_solicitud'];
+        $solicitud= Solicitud::where('id_solicitud',$id_solicitud)->first();
+        $estado="aceptado";
+        $solicitud->estado_solicitud = $estado;
+        $solicitud->save();
+        $solicitudes=new Solicitudes();
+        $solicitudes->id_ambiente = $id_ambiente;
+        $solicitudes->id_solicitud = $id_solicitud;  
+        $solicitudes->save(); 
+      
+ }
+ return response()->json(['message' => 'Los Aulas Se Asignaron corectamente'], 200);
+
+    
 }
 }

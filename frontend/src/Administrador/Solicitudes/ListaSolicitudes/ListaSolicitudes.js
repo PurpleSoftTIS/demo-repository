@@ -66,7 +66,7 @@ const ListaSolicitudes = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const aceptarsolicitud = (solicitud) => {
-    navigate("/Admin/AsignarAmbiente", { state: solicitud });
+    navigate("/Admin/Ambientes/AmbientesSol", { state: solicitud });
    
       console.log(solicitud);
   };
@@ -218,13 +218,10 @@ const ListaSolicitudes = () => {
     );
     
   } 
-  const sugerencias = () => {
-    navigate("/Admin/Ambientes/AmbientesSol");
-
-};
+ 
 
 return (
-    <div className="container" style={{ minHeight: '78.7vh' }}>
+    <div className="containerr" style={{ minHeight: '78.7vh' }}>
       <div style={{ height: '4vh' }}></div>
       <div
         style={{

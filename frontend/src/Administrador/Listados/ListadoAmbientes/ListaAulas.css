@@ -1,11 +1,22 @@
-.container {
-  user-select: none;
+.containerDos {
+  position: relative;
+  display: flex;
+  
+
+
 }
 input[type="text"] {
   padding: 8px;
   border-radius: 5px;
   border: 1px solid #ccc;
   margin-right: 5px;
+}
+.buscado{
+
+margin-left: 877.7px;
+margin-top: -40px;
+
+
 }
 .butn {
   margin-left: 5px;
@@ -65,8 +76,9 @@ input[type="text"] {
 .table {
   width: 110%;
   border-collapse: none;
-  margin-top: 40px;
+  margin-top: 500px;
   user-select: text;
+  position: relative;
 }
 .table thead th {
   border-top: none; 
@@ -200,8 +212,23 @@ width: 150px;
 height: 40px;
 border-radius: 5px;
 }
+
 .btnIm:hover {
 background-color: #1f8036;
 border-color: #1f8036;
 transform: translateY(-2px);
+}
+
+
+
+.tablas{
+  position: relative;
+  margin-top: 500px;
+  width: auto;
+  height: auto;
+}
+.encabezado{
+  position: relative;
+  width: 800px;
+  height: 200px;
 }

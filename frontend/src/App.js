@@ -6,7 +6,7 @@ import { React, Router, Routes, Route, Navigate, HomeUno, Ambientes, Docentes, N
         AmbientesActualizar,Footer,ListaMaterias,MensajeExitosoU,
         MensajeErrorU,MensajeActExito,MensajeActError,DocentesActualizar,MensajeDatExito,MensajeDatError
       ,PasswordResetForm,MensajeNoEncontrado,AmbientesDis,AmbientesSol,MisSolicitudes,AyudaAdmin,
-      Configuraciones,SolicitarCon1,MensajeConfExitoso,MensajeConfError,Asignar_ambiente} from './importaciones';
+      Configuraciones,SolicitarCon1,MensajeConfExitoso,MensajeConfError,Asignar_ambiente,Calendario} from './importaciones';
        
 function PrivateAdminRoute({ element }) {
   const { urole } = useContext(UserContext);
@@ -85,6 +85,7 @@ function UserRoutes() {
       <Route path='/Mensaje/Error' element={<MensajeErrorU/>}/>
       <Route path='/Mensaje/NoEncontrado' element={<MensajeNoEncontrado/>} />
       <Route path='/Usu/AmbientesDis' element={<AmbientesDis/>} />
+      <Route path='/Calendario' element={<Calendario/>} />
     </Routes>
     <Footer/>
   </div>        

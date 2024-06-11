@@ -122,15 +122,9 @@ public function ambientesAll()
     $ambientes = DB::table('ambiente')
         ->select(
             'ambiente.*',
-            'ubicacion.*',
-            'dia.*',
-            'hora.*',            
+            'ubicacion.*',                      
         )
         ->join('ubicacion', 'ambiente.id_ubicacion', '=', 'ubicacion.id_ubicacion')
-        ->join('diashabiles', 'ambiente.id_ambiente', '=', 'diashabiles.id_ambiente')
-        ->join('horario', 'diashabiles.id_horario', '=', 'horario.id_horario')
-        ->join('dia', 'horario.id_dia', '=', 'dia.id_dia')
-        ->join('hora', 'horario.id_hora', '=', 'hora.id_hora')
         ->get();
 
     return response()->json($ambientes, 200);
@@ -365,6 +359,7 @@ public function MateriasObtener($Correo)
         // Si no se encontró el usuario, retorna un error con un código de estado 404
         return response()->json(["error" => "No se encontró el usuario con el correo electrónico proporcionado."], 404);
     }
+
 }
 
 }

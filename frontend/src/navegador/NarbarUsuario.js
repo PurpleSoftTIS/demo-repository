@@ -136,16 +136,19 @@ const NarbarUsuario = () => {
                   {showDropdown2 && (
                       <div className="menu">
                           <NavLink className="opciones" to='/Usuario/Usu/Solicitar' activeclassname="active">Indivudual</NavLink>
-                          <NavLink className="opciones" to='/Usuario/Usu/SolicitarCon1' activeclassname="active">Conjunta</NavLink>
+                          <NavLink className="opciones" to='/Usuario/Usu/SolicitarCon' activeclassname="active">Conjunta</NavLink>
                       </div>              
                   )}              
               </div>             
               <li className="nav-item">
-                <NavLink className="nav-link" to='/Usuario/Usu/Reservas'>Reservas</NavLink>
+                <NavLink className="nav-link" to='/Usuario/Usu/Reservas'>Mis Solicitudes</NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to='/Usuario/Usu/Ayuda'>Ayuda</NavLink>
-              </li>              
+                <NavLink className="nav-link" to='/Usuario/Usu/AmbientesDis'>Ambientes Disponibles</NavLink>
+              </li>  
+              <li className="nav-item">
+                <NavLink className="nav-link" to='/Usuario/Calendario'>Calendario</NavLink>
+              </li>                            
             </ul>
           </div>          
           <div className='InicioSesion'>
