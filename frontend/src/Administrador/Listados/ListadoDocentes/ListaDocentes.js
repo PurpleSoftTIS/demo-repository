@@ -177,7 +177,7 @@ const ListaDocentes = () => {
             </NavLink>
         </div>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'right', alignItems: 'center', marginTop: '15px' }}>
+      <div >
         <div>
           <label htmlFor="inputGroupFile" className="butn butn-csv">
                 Importar<FaFileCsv className="icon" />

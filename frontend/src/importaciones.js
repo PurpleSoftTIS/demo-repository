@@ -42,6 +42,7 @@ import MensajeConfError from './Mensajes/MensajeConfError';
 import Asignar_ambiente from './Administrador/Solicitudes/Asignar_Ambientes/Asignar_ambiente';
 import Calendario from './Usuario/Calendario/Calendario';
 import AmbientesSol from './Administrador/Solicitudes/Ambientes_Disponibles/AmbientesSol';
+import Informe from './Administrador/Informe/Informe';
 
 export {
   React,Router,Routes,Route,HomeUno,Ambientes,Docentes,Navbar,RegistrarMateria,
@@ -50,5 +51,5 @@ export {
   Footer,ListaMaterias,MensajeExitosoU,MensajeErrorU,MensajeActExito,MensajeActError
   ,DocentesActualizar,MensajeDatExito,MensajeDatError,ListaSolicitudesUr,Navigate,PasswordResetForm,
   MensajeNoEncontrado,AmbientesDis,AmbientesSol,MisSolicitudes,AyudaAdmin,Configuraciones,SolicitarCon1,
-  MensajeConfExitoso,MensajeConfError,Asignar_ambiente,Calendario
+  MensajeConfExitoso,MensajeConfError,Asignar_ambiente,Calendario,Informe
 };
