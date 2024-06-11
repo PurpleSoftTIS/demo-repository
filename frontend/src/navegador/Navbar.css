@@ -1,5 +1,6 @@
 .navbar {
     background-color: #050259;
+    position: fixed;
   }
 .navbar-nav .nav-link,
 .navbar-nav .dropdown-toggle {
@@ -83,7 +84,7 @@
     display: inline-block;
 }
 .menu {
-    position: absolute;
+    position: fixed;
     top: calc(100% + 10px);
     left: 0; 
     background: rgb(11, 11, 119);
@@ -93,7 +94,7 @@
     padding-bottom: 2px;
 }
 .sesion {
-    position: absolute;
+    position: fixed;
     top: calc(100% + 0px); 
     height: 85px; 
     width: 140px; 
@@ -189,7 +190,7 @@
 
 }
 .HomeReload{
-    position: relative;
+    position: fixed;
     flex-wrap: wrap; 
     justify-content: flex-end;
     margin-right: 25%;
@@ -197,7 +198,7 @@
 }
 
 .iconosTec{
-  position: relative; 
+  position: fixed; 
   display: flex;
   flex-wrap: wrap; 
   justify-content: flex-end;
