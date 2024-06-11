@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Calendar, dayjsLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import dayjs from 'dayjs';
 import "dayjs/locale/es";
 import './Calendario.css';
 
-
 dayjs.locale("es");
 
 const Calendario = () => {
   const localizer = dayjsLocalizer(dayjs);
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [currentView, setCurrentView] = useState('month'); 
+  const calendarRef = useRef(null);  
   
+  useEffect(() => {
+    setCurrentDate(new Date());
+  }, []);
 
   const events = [
       {
@@ -54,16 +59,16 @@ const Calendario = () => {
 
   const components = {
       event: props => {
-          const {data} = props.event;
-          console.log(data)
-          return(
+          const { data } = props.event;
+          console.log(data);
+          return (
               <div>
-              {props.title}
+                  {props.title}
               </div>
-          )
-      } 
-      
+          );
+      }
   };
+
   const messages = {
       date: 'Fecha',
       time: 'Hora',
@@ -82,34 +87,70 @@ const Calendario = () => {
       noEventsInRange: 'No hay eventos en este rango',
       showMore: total => `+ Ver más (${total})`,
   };
-  
+
+  const handleNavigate = date => {
+    setCurrentDate(date);
+  };
+
+  const handleViewChange = view => {
+    setCurrentView(view);
+    calendarRef.current.props.onView(view);
+  };
+
+  const handleToday = () => {
+    const today = new Date();
+    setCurrentDate(today);
+    calendarRef.current.props.onNavigate(today);
+  };
+
+  const handlePrevious = () => {
+    const newDate = dayjs(currentDate).subtract(1, currentView === 'month' ? 'month' : currentView === 'week' ? 'week' : 'day').toDate();
+    setCurrentDate(newDate);
+    calendarRef.current.props.onNavigate(newDate);
+  };
+
+  const handleNext = () => {
+    const newDate = dayjs(currentDate).add(1, currentView === 'month' ? 'month' : currentView === 'week' ? 'week' : 'day').toDate();
+    setCurrentDate(newDate);
+    calendarRef.current.props.onNavigate(newDate);
+  };
+
   return (
-      <div style={{
-          height: "90vh",
-          width: "70vw",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center"
-      }}>
-          <Calendar
-              localizer={localizer}
-              events={events}
-              views={['month', 'week', 'day']}
-              toolbar={true}
-              defaultDate={new Date()} // Default date should be a Date object
-              min={dayjs('2024-12-18T06:45:00').toDate()} // Convert to Date
-              max={dayjs('2024-12-18T22:45:00').toDate()} // Convert to Date
-              step={30}
-              timeslots={3}
-              messages={messages}
-              components={components}
-              formats={{
-                  dayHeaderFormat:date =>{
-                      console.log(date)
-                      return dayjs(date).format("ddd mm YYYY");
-                  }
-              }}
-          />
+      <div className="container">
+          <aside className="sidebar">
+              <h2>{dayjs(currentDate).format('MMMM YYYY')}</h2>
+              <button onClick={handleToday}>Hoy</button>
+              <button onClick={handlePrevious}>Anterior</button>
+              <button onClick={handleNext}>Siguiente</button>
+              <button onClick={() => handleViewChange('month')}>Mes</button>
+              <button onClick={() => handleViewChange('week')}>Semana</button>
+              <button onClick={() => handleViewChange('day')}>Día</button>
+          </aside>
+          <div className="calendar-container">
+              <Calendar
+                  ref={calendarRef}
+                  localizer={localizer}
+                  events={events}
+                  views={['month', 'week', 'day']}
+                  toolbar={false}
+                  defaultDate={new Date()}
+                  min={dayjs('2024-12-18T06:45:00').toDate()}
+                  max={dayjs('2024-12-18T22:45:00').toDate()}
+                  step={30}
+                  timeslots={3}
+                  messages={messages}
+                  components={components}
+                  formats={{
+                      dayHeaderFormat: date => {
+                          console.log(date);
+                          return dayjs(date).format("ddd mm YYYY");
+                      }
+                  }}
+                  onNavigate={handleNavigate}
+                  view={currentView}  
+                  onView={setCurrentView}  
+              />
+          </div>
       </div>
   );
 }
