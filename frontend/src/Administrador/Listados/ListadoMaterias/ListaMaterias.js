@@ -118,7 +118,7 @@ const ListaMaterias = () => {
   return (
     <div className="container" style={{ minHeight: '78.7vh' }}>
       <div style={{ height: '4vh' }}></div>  
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div >
         <h2 style={{ margin: 0 }}>Materias Registradas:</h2>
         <div>
         <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador' />
@@ -128,7 +128,7 @@ const ListaMaterias = () => {
           </NavLink>
         </div>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'Right', alignItems: 'center', marginTop: '15px' }}>
+      <div >
         <div>
           {loading && <div className="spinner-border text-primary" role="status"></div>}
           <input type="file" onChange={handleFileChange} />

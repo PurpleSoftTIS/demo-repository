@@ -101,10 +101,9 @@ const RegistrarDiaHoras = () => {
         return (
           <div className="col-md-6">
             <div className="row">
-              <div className="square4 mx-auto my-5">
+              <div className="square10 mx-auto my-5">
                 <h4 className="text-center">Selecciona Las Horas</h4>
                 <div className="row justify-content-center">
-                  {/* Primera columna */}
                   <div className="col text-center">
                     <ul className="list-unstyled">
                       {firstFiveHours.map(hour => (
@@ -121,7 +120,6 @@ const RegistrarDiaHoras = () => {
                       ))}
                     </ul>
                   </div>
-                  {/* Segunda columna */}
                   <div className="col text-center">
                     <ul className="list-unstyled">
                       {secondFiveHours.map(hour => (
@@ -200,13 +198,13 @@ const RegistrarDiaHoras = () => {
       });
     };
     return (
-      <div className="container text-center mt-5">
-         <div className="container text-center mt-5">
-          <div className="square mx-auto my-5 text-center ">
+      <div className="containerr text-center mt-5">
+         <div className="containerr text-center mt-5">
+          <div className="square9 mx-auto my-5 text-center ">
          
       <h4>Días y Horas Hábiles para el Ambiente</h4>
     
-            <div className="row justify-content-center">
+            <div className="rowjustify-content-center">
               <div className="col-md-6 text-center ">
                 <h4>Selecciona un día</h4>
                 <div className="days-container">

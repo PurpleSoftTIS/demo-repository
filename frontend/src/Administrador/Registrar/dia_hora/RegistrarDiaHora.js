@@ -6,22 +6,20 @@ import { NavLink } from 'react-router-dom';
 
 const RegistrarDiaHora = () => {
     var exitoso = true;
-    const [selectedDay, setSelectedDay] = useState("");// Estado para almacenar el día seleccionado
+    const [selectedDay, setSelectedDay] = useState("");
     const [selectedHours, setSelectedHours] = useState({});
   
     const { state: datosAmbiente } = useLocation();
 
-    // Función para manejar el cambio de día seleccionado
     const handleDayClick = (day) => {
       setSelectedDay(day);
-      // Verificar si ya hay selecciones guardadas para el día seleccionado
+     
       if (!selectedHours[day]) {
-        // Si no hay selecciones previas, inicializa el estado para el día seleccionado
+        
         setSelectedHours(prevState => ({ ...prevState, [day]: {} }));
       }
     };
   
-    // Función para manejar el cambio de horario seleccionado
     const handleHourChange = (event) => {
       const { id, checked } = event.target;
       setSelectedHours(prevState => ({
@@ -54,7 +52,6 @@ const RegistrarDiaHora = () => {
     
     
     
-    // Función para mostrar los horarios según el día seleccionado
     const showHours = () => {
       if (selectedDay && selectedHours[selectedDay]) {
         return (
@@ -126,10 +123,9 @@ const RegistrarDiaHora = () => {
       }
     };
     const createJSON = () => {
-      // Combinar los datos del ambiente con los días y horas seleccionados
       const json = {
-        datosAmbiente, // Datos del ambiente
-        diasHoras: {} // Días y horas seleccionados
+        datosAmbiente, 
+        diasHoras: {} 
       };
       for (const day in selectedHours) {
         const hours = selectedHours[day];
@@ -138,12 +134,10 @@ const RegistrarDiaHora = () => {
       return JSON.stringify(json, null, 2);
     };
   
-    // Función para manejar el evento de clic en el botón "Registrar Ambiente"
     const handleRegistrarAmbiente = () => {
       const json = createJSON();
-      console.log("Datos a enviar:", json); // Imprimir el JSON en la consola
+      console.log("Datos a enviar:", json); 
   
-      // Aquí puedes enviar el JSON a una API
       fetch("http://127.0.0.1:8000/api/registrarambiente", {
         method: "POST",
         headers: {
@@ -166,9 +160,9 @@ const RegistrarDiaHora = () => {
       });
     };
     return (
-      <div className="container text-center mt-5" style={{ height: '70.7vh' }}>
-         <div className="container text-center mt-5">
-          <div className="square mx-auto my-5 text-center ">
+      <div className="diashoras text-center mt-5" style={{ height: '70.7vh' }}>
+         <div className="diashoras text-center mt-5">
+          <div className="square9 mx-auto my-5 text-center ">
          
       <h4>Días y Horas Hábiles para el Ambiente</h4>
     

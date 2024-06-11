@@ -1,4 +1,4 @@
-.square {
+.square9 {
     width: 750px; 
     height: 470px; 
     border-radius: 10px; 
@@ -111,6 +111,20 @@
            
              
          }
+         .square10 {
+            width: 400px; /* Ancho del cuadrado */
+             height: 320px; /* Altura del cuadrado */
+             background-color: #F2F0F2; /* Color de fondo (blanco) */
+             border: 1px solid #ced4da; /* Borde del cuadrado */
+             box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.9); /* Sombra del cuadrado */
+             padding: 20px; /* Espaciado interno */
+             border-radius: 8px; /* Borde redondeado */
+             position: relative; /* O absolute, según sea necesario */
+             top: -370px;
+             left: 300px;
+             
+         }
+        
         
          .day-btn {
             font-size: 15px; /* Cambiar el tamaño del texto */

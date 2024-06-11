@@ -56,7 +56,7 @@ Route::get('/listaAmbiente', [AmbienteController::class, 'index']);
 Route::get('/ambientesDispo/{capacidad}/{dia}/{hora_inicio}/{hora_fin}', [AmbienteController::class, 'ambientesDis']);
 Route::get('/ambientesDisponibles/{capacidad}/{dia}/{horarios}', [AmbienteObtenerController::class, 'ambientesDisponibles']);
 Route::get('/obtenerTodasSolicitudes', [SolicitudController::class, 'obtenerSolicitudTodas']);
-Route::get('/ambientesContiguos/{capacidad}/{dia}/{horas}', [SolicitudController::class, 'ambientesContiguos']);
+Route::get('/ambientesContiguos/{dia}/{horas}/{fecha}', [SolicitudController::class, 'ambientesContiguos']);
 Route::get('/notifications', [NotificationController::class, 'index']);
 Route::get('/notifications/count/{userMail}', [NotificationController::class, 'getNotificationCount']);
 Route::get('/ambientesDisponibless/{capacidad}/{dia}/{horarios}/{fecha}', [Configuraciones::class, 'ambientesfechas']);
