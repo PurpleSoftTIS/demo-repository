@@ -31,13 +31,12 @@ class SolicitudController extends Controller
                 'solicitud.fecha_solicitud', 'solicitud.estado_solicitud', 'solicitud.fecha_solicitud', 'solicitud.motivo',
                 DB::raw("GROUP_CONCAT(CONCAT(hora.hora_inicio, ' - ', hora.hora_fin) SEPARATOR ', ') as horas"),
                 'usuario.nombre', 'usuario.apellido_paterno', 'usuario.apellido_materno',
-                'materia.nombre_materia', 'solicitud.id_solicitud', 'solicitud.numero_estudiantes'
-            )
+                'materia.nombre_materia','solicitud.created_at', 'solicitud.id_solicitud', 'solicitud.numero_estudiantes'   )
             ->where('solicitud.estado_solicitud', 'pendi') 
             ->groupBy(
                 'usuario.nombre', 'usuario.apellido_paterno', 'usuario.apellido_materno',
                 'materia.nombre_materia', 'solicitud.fecha_solicitud', 'solicitud.estado_solicitud',
-                'solicitud.fecha_solicitud', 'solicitud.motivo', 'solicitud.id_solicitud', 'solicitud.numero_estudiantes'
+                'solicitud.fecha_solicitud','solicitud.created_at','solicitud.motivo', 'solicitud.id_solicitud', 'solicitud.numero_estudiantes'
             )
             ->get();
 
@@ -71,7 +70,10 @@ class SolicitudController extends Controller
             $solicitud = new Solicitud();                 
             $numero_estudiantes=$datosReserva['cantidadEstudiantes'];
             $solicitud->numero_estudiantes=$numero_estudiantes;
-            $fecha = Carbon::createFromFormat('d/m/Y', $datosReserva['fechaSeleccionada'])->format('Y-m-d');
+
+
+            $fecha = Carbon::createFromFormat('m/d/Y', $datosReserva['fechaSeleccionada'])->format('Y-m-d');
+
             $solicitud->fecha_solicitud = $fecha;
             $motivo=$datosReserva['motivo'];
             $solicitud->motivo=$motivo;

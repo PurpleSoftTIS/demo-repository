@@ -115,42 +115,42 @@ const ListaSolicitudes = () => {
 
   const [mostrarOpciones, setMostrarOpciones] = useState(false); 
 
-  const mostrarFormularioParaSolicitud = (solicitud) => {
-      if(solicitud.tipo_solicitud ==="individual"){
-        setFormData({
-          docente: solicitud.nombre,
-          materia: solicitud.nombre_materia,
-          grupo: solicitud.grupo,
-          aula: solicitud.nombre_ambiente,
-          capacidad: solicitud.numero_estudiantes,
-          tipo_de_solicitud: solicitud.tipo_solicitud,
-          fecha: solicitud.fecha_solicitud,
-          hora: solicitud.hora_inicio,
-          motivo: solicitud.motivo
-        });
-        setMostrarFormulario(true);
-        setMostrarFormularioCon(false);
+    const mostrarFormularioParaSolicitud = (solicitud) => {
+        if(solicitud.tipo_solicitud ==="individual"){
+          setFormData({
+            docente: solicitud.nombre,
+            materia: solicitud.nombre_materia,
+            grupo: solicitud.grupo,
+            aula: solicitud.nombre_ambiente,
+            capacidad: solicitud.numero_estudiantes,
+            tipo_de_solicitud: solicitud.tipo_solicitud,
+            fecha: solicitud.fecha_solicitud,
+            hora: solicitud.hora_inicio,
+            motivo: solicitud.motivo
+          });
+          setMostrarFormulario(true);
+          setMostrarFormularioCon(false);
 
-      }else{
-        setFormData({
-          docente: solicitud.nombre,
-          materia: solicitud.nombre_materia,
-          grupo: solicitud.grupo,
-          aula: solicitud.nombre_ambiente,
-          capacidad: solicitud.numero_estudiantes,
-          tipo_de_solicitud: solicitud.tipo_solicitud,
-          fecha: solicitud.fecha_solicitud,
-          hora: solicitud.hora_inicio,
-          motivo: solicitud.motivo
-        });
-        setMostrarFormulario(true);
-        setMostrarFormularioCon(false);
+        }else{
+          setFormData({
+            docente: solicitud.nombre,
+            materia: solicitud.nombre_materia,
+            grupo: solicitud.grupo,
+            aula: solicitud.nombre_ambiente,
+            capacidad: solicitud.numero_estudiantes,
+            tipo_de_solicitud: solicitud.tipo_solicitud,
+            fecha: solicitud.fecha_solicitud,
+            hora: solicitud.horas, 
+            motivo: solicitud.motivo
+          });
+          setMostrarFormulario(true);
+          setMostrarFormularioCon(false);
 
-        setDocente(solicitud.nombre); 
-        setAulas(solicitud.nombre_ambiente); 
-      
-      }
-      
+          setDocente(solicitud.nombre); 
+          setAulas(solicitud.nombre_ambiente); 
+        
+        }
+        
   };
 
   const cerrarFormulario = () => {
@@ -356,99 +356,95 @@ return (
         </Modal.Footer>
       </Modal>
       {mostrarFormulario && (
-        <div className="overlay" onClick={cerrarFormulario}>
-          <div className="formulario-emergente" onClick={(e) => e.stopPropagation()}>
-            <div className="contedorForm">
-              <section className="contenedor">
-                  <b className="tituloForm">Detalles de Solicitud</b>
-                  {Object.entries(formularioData).map(([key, value]) => (
-                    <div key={key} className="dimensionForm">
-                    <div className="contenido">{key.replace(/_/g, ' ').charAt(0).toUpperCase() + key.replace(/_/g, ' ').slice(1)}</div>
-                      <input
-                        className="textoForm"
-                        disabled type="text"
-                        name={key}
-                        value={value}
-                        onChange={handleChange}                        
-                      />
-                    </div>
-                  ))}
-                
-              </section>
-            </div>
-          </div>
-        </div>
-      )}
-        
-      {mostrarFormularioCon && (
-         <div className="overlay" onClick={cerrarFormulario}>
-         <div className="formulario-emergente" onClick={(e) => e.stopPropagation()}>
-           <div className="contact-form-container">
-             <section className="contenedor">
-               <div className="contact-form-sub-heading-cta">
-                 <b className="contact-form-enter-details">Detalles de Solicitud</b>
-                 <div className="contact-form-phone-parent">
-                   <div className="contact-form-phone">Docentes que reservaron:</div>
-                      <select id="concat-form-rectangle" value={selectedOption} onChange={handleSelectChange} className="select" >
-                        {docente.map((docente, index) => (
-                          <option key={index} value={docente.id} >
-                          {docente.nombre}
-                          </option>
-                        ))}
-                    </select>
-                 </div>
-                 <div className="contact-form-phone-parent">
-                   <div className="contact-form-phone">Materia</div>
-                   <label className="contact-form-rectangle" type="text"/>
-                 </div>
-                 
-                 <div className="input-group">
-                   <div className="input2">
-                     <div className="label-here">Aula</div>
-                     <select id="menu" value={selectedOption} onChange={handleSelectChange} className="select" >
-                        {aulas.map((aula, index) => (
-                          <option key={index} value={aula.id} >
-                            {aula.nombre}
-                          </option>
-                        ))}
-                      </select>
-                   </div>
-                   <div className="input2">
-                     <div className="label-here">Grupo</div>
-                     <label className="contact-form-rectangle" type="text"  />
-                   
-                   </div>
-                   <div className="input2">
-                     <div className="label-here">Capacidad</div>
-                       <label className="contact-form-rectangle" type="text" />
-                   </div>  
-                 </div>
-                 <div className="contact-form-phone-parent">
-                   <div className="contact-form-phone">Tipo de Solicitud</div>
-                   <label className="contact-form-rectangle" type="text"/>
-                 </div>
-                 <div className="input-group">
-                   <div className="input2">
-                     <div className="label-here">Fecha</div>
-                     <label className="contact-form-rectangle"  type="text"/>
-         
-                   </div>
-                   <div className="input2">
-                     <div className="label-here">Hora</div>
-                     <label className="contact-form-rectangle"  type="text"  />
-                   
-                   </div>
-                 </div>
-                 <div className="contact-form-phone-parent">
-                   <div className="contact-form-phone">Motivo</div>
-                   <label className="contact-form-rectangle" type="text"  />
-                 </div>
-                 
+       <div className="overlay" onClick={cerrarFormulario}>
+       <div className="formulario-emergente" onClick={(e) => e.stopPropagation()}>
+         <div className="contedorForm">
+           <section className="contenedor">
+             <b className="tituloForm">Detalles de Solicitud</b>
+             {Object.entries(formularioData).map(([key, value]) => (
+               <div key={key} className="dimensionForm">
+                 <div className="contenido">{key.replace(/_/g, ' ').charAt(0).toUpperCase() + key.replace(/_/g, ' ').slice(1)}</div>
+                 <input
+                   className="textoForm"
+                   disabled
+                   type="text"
+                   name={key}
+                   value={value}
+                   onChange={handleChange}
+                 />
                </div>
-             </section>
-           </div>
+             ))}
+           </section>
          </div>
        </div>
+     </div>
+      )}
+
+      {mostrarFormularioCon && (
+        <div className="overlay" onClick={cerrarFormulario}>
+        <div className="formulario-emergentess" onClick={(e) => e.stopPropagation()}>
+          <div className="contact-form-container">
+            <section className="contenedor">
+              <div className="contact-form-sub-heading-cta">
+                <b className="contact-form-enter-details">Detalles de Solicitud</b>
+                <div className="contact-form-phone-parent">
+                  <div className="contact-form-phone">Docentes que reservaron:</div>
+                  <select id="concat-form-rectangle" value={selectedOption} onChange={handleSelectChange} className="select">
+                    {docente.map((docente, index) => (
+                      <option key={index} value={docente.id}>
+                        {docente.nombre}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="contact-form-phone-parent">
+                  <div className="contact-form-phone">Materia</div>
+                  <label className="contact-form-rectangle" type="text"/>
+                </div>
+                <div className="input-group">
+                  <div className="input2">
+                    <div className="label-here">Aula</div>
+                    <select id="menu" value={selectedOption} onChange={handleSelectChange} className="select">
+                      {aulas.map((aula, index) => (
+                        <option key={index} value={aula.id}>
+                          {aula.nombre}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="input2">
+                    <div className="label-here">Grupo</div>
+                    <label className="contact-form-rectangle" type="text"/>
+                  </div>
+                  <div className="input2">
+                    <div className="label-here">Capacidad</div>
+                    <label className="contact-form-rectangle" type="text"/>
+                  </div>
+                </div>
+                <div className="contact-form-phone-parent">
+                  <div className="contact-form-phone">Tipo de Solicitud</div>
+                  <label className="contact-form-rectangle" type="text"/>
+                </div>
+                <div className="input-group">
+                  <div className="input2">
+                    <div className="label-here">Fecha</div>
+                    <label className="contact-form-rectangle" type="text"/>
+                  </div>
+                  <div className="input2">
+                    <div className="label-here">Hora</div>
+                    <label className="contact-form-rectangle" type="text"/>
+                  </div>
+                </div>
+                <div className="contact-form-phone-parent">
+                  <div className="contact-form-phone">Motivo</div>
+                  <label className="contact-form-rectangle" type="text"/>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+      
       )}
     </div>
 );
