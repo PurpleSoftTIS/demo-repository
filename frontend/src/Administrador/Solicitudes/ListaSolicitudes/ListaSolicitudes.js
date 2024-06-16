@@ -71,27 +71,31 @@ const ListaSolicitudes = () => {
       console.log(solicitud);
   };
 
-  const rechazarsolicitud= (id_solicitud) => {
-    fetch(`http://127.0.0.1:8000/api/rechazarsolicitud/${id_solicitud}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+  const aceptarSugerencias = (solicitud) => {
+    fetch('http://127.0.0.1:8000/api/asignarSugerencia', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(solicitud), 
     })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error('Error al cambiar el estado de la solicitud');
-            }
-            console.log('Solicitud actualizada:', response);
-            return response.json();
-        })
-        .then((data) => {
-            console.log('Datos de la solicitud actualizada:', data);
-        })
-        .catch((error) => {
-            console.error(error);
-        });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Error al asignar sugerencia');
+        }
+        console.log('Solicitud actualizada:', response);
+        
+        return response.json();
+   
+      })
+      .then((data) => {
+        console.log('Datos de la solicitud actualizada:', data);
+      })
+      .catch((error) => {
+        console.error('Error al enviar solicitud:', error);
+      });
   };
+  
 
 
   useEffect(() => {
@@ -116,14 +120,14 @@ const ListaSolicitudes = () => {
   const [mostrarOpciones, setMostrarOpciones] = useState(false); 
 
     const mostrarFormularioParaSolicitud = (solicitud) => {
-        if(solicitud.tipo_solicitud ==="individual"){
+
+        if(solicitud.tipo_solicitud ==="individua"){
           setFormData({
-            docente: solicitud.nombre,
+            docente: solicitud.nombreCompleto,
             materia: solicitud.nombre_materia,
-            grupo: solicitud.grupo,
-            aula: solicitud.nombre_ambiente,
+            grupo: solicitud.grupos,
             capacidad: solicitud.numero_estudiantes,
-            tipo_de_solicitud: solicitud.tipo_solicitud,
+            tipo_de_solicitud:solicitud.estado_solicitud,
             fecha: solicitud.fecha_solicitud,
             hora: solicitud.hora_inicio,
             motivo: solicitud.motivo
@@ -133,10 +137,10 @@ const ListaSolicitudes = () => {
 
         }else{
           setFormData({
-            docente: solicitud.nombre,
+            docente: solicitud.nombres_docentes
+            ,
             materia: solicitud.nombre_materia,
             grupo: solicitud.grupo,
-            aula: solicitud.nombre_ambiente,
             capacidad: solicitud.numero_estudiantes,
             tipo_de_solicitud: solicitud.tipo_solicitud,
             fecha: solicitud.fecha_solicitud,
@@ -184,14 +188,23 @@ const ListaSolicitudes = () => {
     setSolicitudes(solicitudesPendientes);
   };  
   const mostrarSolicitudesTodas = () => {
-    setMostrarSolicitudesTodas(true); 
 
-    const solicitudesMostrables = solicitudesTodas.map(solicitud => {
-        const { id_solicitud, nombre, apellido_paterno, apellido_materno, nombre_materia, motivo, fecha_solicitud, hora_inicio, hora_fin } = solicitud;
-        return { id_solicitud, nombre, apellido_paterno, apellido_materno, nombre_materia, motivo, fecha_solicitud, hora_inicio, hora_fin };
-    });
+    fetch('http://127.0.0.1:8000/api/obtenerSolicitudSugeridas', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        setSolicitudes(data);
+        setMostrarSolicitudesTodas(true); 
+        console.log(data);
 
-    setSolicitudes(solicitudesMostrables);
+        console.log("datos",data);
+      })
+      .catch(error => console.error('Error al obtener los datos:', error));
+
   };
   const handleChange = (e) => {
       const { name, value } = e.target;
@@ -218,6 +231,7 @@ const ListaSolicitudes = () => {
     );
     
   } 
+  
  
 
 return (
@@ -245,7 +259,7 @@ return (
                 onClick={() => {
                   setMostrarOpciones(false);
                   mostrarSolicitudesTodas();
-                }}>Todas
+                }}>Sugerencias
               </button>
               <button 
                 className="butn butn-filtro" 
@@ -270,7 +284,7 @@ return (
             <th>Motivo</th>
             <th>Fecha</th>
             <th>Hora</th>
-            {!mostrarSolicitudesTodass && <th>Acciones</th>}
+           <th>Acciones</th>
 
           </tr>
         </thead>
@@ -290,6 +304,12 @@ return (
               {!mostrarSolicitudesTodass && (
                 <td>
                   <button className="btn btn-editar mr-2" onClick={() => aceptarsolicitud(solicitud)}>Asignar</button>
+
+                </td>
+              )}
+              {mostrarSolicitudesTodass && (
+                <td>
+                  <button className="btn btn-editar mr-2" onClick={() => aceptarSugerencias(solicitud)}>Asignar</button>
 
                 </td>
               )}
@@ -382,7 +402,7 @@ return (
 
       {mostrarFormularioCon && (
         <div className="overlay" onClick={cerrarFormulario}>
-        <div className="formulario-emergentess" onClick={(e) => e.stopPropagation()}>
+        <div className="formulario-emergentes" onClick={(e) => e.stopPropagation()}>
           <div className="contact-form-container">
             <section className="contenedor">
               <div className="contact-form-sub-heading-cta">
@@ -403,17 +423,7 @@ return (
                 </div>
                 <div className="input-group">
                   <div className="input2">
-                    <div className="label-here">Aula</div>
-                    <select id="menu" value={selectedOption} onChange={handleSelectChange} className="select">
-                      {aulas.map((aula, index) => (
-                        <option key={index} value={aula.id}>
-                          {aula.nombre}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="input2">
-                    <div className="label-here">Grupo</div>
+                  <div className="label-here">Grupo</div>
                     <label className="contact-form-rectangle" type="text"/>
                   </div>
                   <div className="input2">
@@ -431,7 +441,7 @@ return (
                     <label className="contact-form-rectangle" type="text"/>
                   </div>
                   <div className="input2">
-                    <div className="label-here">Hora</div>
+                    <div className="labell-here">Hora</div>
                     <label className="contact-form-rectangle" type="text"/>
                   </div>
                 </div>

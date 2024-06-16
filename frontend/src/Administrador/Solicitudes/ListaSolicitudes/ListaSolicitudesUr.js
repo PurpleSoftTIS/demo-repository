@@ -260,27 +260,8 @@ return (
 
         <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador'/>
 
-          <button 
-            className="butn butn-filtro" 
-            onClick={() => setMostrarOpciones(!mostrarOpciones)}>Solicitudes</button>
-            {mostrarOpciones && (
-            <div className="opciones-solicitudes">
-              <button 
-                className="butn butn-filtro" 
-                onClick={() => {
-                  setMostrarOpciones(false);
-                  mostrarSolicitudesTodas();
-                }}>Todas
-              </button>
-              <button 
-                className="butn butn-filtro" 
-                onClick={() => {
-                 setMostrarOpciones(false);
-                 mostrarSolicitudesPendientes();
-              }}>Pendientes</button>
-
-            </div>
-          )}
+          
+        
     <button className="butn butn-filtro" onClick={handleShow}>Filtros</button>
                 </div>
               </div>
@@ -465,7 +446,7 @@ return (
                    </div>
                  </div>
                  <div className="contact-form-phone-parent">
-                   <div className="contact-form-phone">Motivo</div>
+                   <div className="motivo">Motivo</div>
                    <label className="contact-form-rectangle" type="text"  />
                  </div>
                  

@@ -13,7 +13,7 @@ class CreateSolicitudesTable extends Migration
      */
     public function up()
     {
-        Schema::create('solicitudes', function (Blueprint $table) {
+       Schema::create('solicitudes', function (Blueprint $table) {
             $table->foreignId("id_solicitud")->constrained("solicitud", "id_solicitud");
             $table->foreignId("id_ambiente")->constrained("ambiente", "id_ambiente");
             $table->timestamps();

@@ -40,6 +40,7 @@ Route::get('/carreras', [CarreraController::class, 'index']);
 Route::get('/materias/{id}', [MateriaController::class, 'show']);
 Route::get('/obtenerHoras', [SolicitudController::class, 'obtenerHora']);
 Route::get('/obtenerSol', [SolicitudController::class, 'obtenerSolicitud']);
+Route::get('/obtenerSolicitudSugeridas', [SolicitudController::class, 'obtenerSolicitudSugeridas']);
 Route::get('/SolicitudUrgencias', [SolicitudUrgencia::class, 'urgencias']);
 Route::get('/ReservasDocentes/{setEmailC}', [RerservasUsuario::class, 'reservasDocentes']);
 Route::get('/obtenerMara/{Correo}', [AmbienteController::class, 'MateriasObtener']);
@@ -74,6 +75,7 @@ Route::post('/masivoDocentes', [CargaDocente::class, 'cargaDocentes']);
 Route::post('/importMaterias', [MateriaController::class, 'import']);
 Route::post('/registrarSolicitud',[SolicitudController::class,'registrarSolicitud']);
 Route::post('/registrarSolicitudConjunta',[SolicitudController::class,'registrarSolicitudConjunta']);
+Route::post('/asignarSugerencia', [SolicitudController::class, 'asignarSugerencia']);
 
 Route::post('/enviarcorreo', [CorreoController::class, 'enviarCorreo']);
 Route::post('/verificarCodigo', [CorreoController::class, 'verificarCodigo']);

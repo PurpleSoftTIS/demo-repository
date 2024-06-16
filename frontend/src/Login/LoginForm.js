@@ -273,8 +273,8 @@ const [showPassword, setShowPassword] = useState(false);
         <h4 className="Mensaje">Plataforma de gestión de reservas para ambientes de la FCYT, diseñada para docentes y autoridades de la Universidad Mayor de San Simón</h4>
         <div className="content">  
             <Row className="justify-content-center">
-                <div className="contenido" > 
-                    <div className="DatosLogin">
+                <Col md={6} className="mb-3" > 
+                    <Container>
                         <Row className="justify-content-center">
                             <Col xs={12} sm={10} md={8} lg={6}> {/* Define el ancho del formulario en diferentes tamaños de pantalla */}
                                 <div className="login-box">
@@ -388,11 +388,11 @@ const [showPassword, setShowPassword] = useState(false);
                                 </div>
                             </Col>
                         </Row>
-                    </div>
-                </div>
+                    </Container>
+                </Col>
                 <Col md={6} className="mb-3">
                     <div className="d-flex justify-content-center align-items-center imagen" style={{ height: '100%' }}>
-                        <img src={logop} alt="imagen comp" className="imagen" width={"550px"} height={"550px"} />                         
+                        <img src={logop} alt="imagen comp" className="img-fluid" />                         
                     </div>
                 </Col>
             </Row>
@@ -434,3 +434,5 @@ const [showPassword, setShowPassword] = useState(false);
 };
 
 export default LoginForm;
+
+

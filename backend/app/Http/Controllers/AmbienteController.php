@@ -156,11 +156,10 @@ public function ambientesDi($capacidad)
             $horas = [];
             $horarios = Horario::where('id_dia', $diaHabil->id_dia)->get();
             foreach ($horarios as $horario) {                
-                // Obtener las horas de inicio y fin para este horario
                 $horaInicio = Hora::find($horario->id_hora)->hora_inicio;
-                $horaInicioSinCeros = substr($horaInicio, 0, -3); // Obtiene los primeros cinco caracteres (HH:mm) de la cadena
+                $horaInicioSinCeros = substr($horaInicio, 0, -3); 
                 $horaFin = Hora::find($horario->id_hora)->hora_fin;
-                $horaFinSinCeros = substr($horaFin, 0, -3); // Obtiene los primeros cinco caracteres (HH:mm) de la cadena
+                $horaFinSinCeros = substr($horaFin, 0, -3); 
                 $horas[] = "$horaInicioSinCeros-$horaFinSinCeros";
             }
 
@@ -189,25 +188,19 @@ public function ambientesDi($capacidad)
 public function actualizarAmb(Request $request, $id_ambiente)
 {
     try {
-        // Encontrar el ambiente existente
         $ambiente = Ambiente::findOrFail($id_ambiente);
         $ambiente->capacidad = $request->input('capacidadEstudiantes');
         $ambiente->tipo_ambiente = $request->input('Tipo');
         $ambiente->numero_piso = $request->input('piso');
         $ambiente->save();
 
-        // Obtener las relaciones existentes de diasHabiles
         $diasHabiles = Diashabiles::where('id_ambiente', $id_ambiente)->get();
         foreach ($diasHabiles as $diaHabil) {
-            // Eliminar los horarios asociados al día
             Horario::where('id_dia', $diaHabil->id_dia)->delete();
-            // Eliminar las entradas en Diashabiles
             Diashabiles::where('id_dia', $diaHabil->id_dia)->where('id_ambiente', $id_ambiente)->delete();
-            // Finalmente, eliminar la entrada en Dia
             Dia::where('id_dia', $diaHabil->id_dia)->delete();
         }
 
-        // Procesar las nuevas relaciones de días y horarios
         $diasHoras = $request->input('diasHoras');
         foreach ($diasHoras as $day => $horas) {
             $dia = new Dia();
@@ -321,7 +314,6 @@ public function CargaMasivaDias(Request $request)
             $horarios->id_dia = $iddia;
             $horarios->save();
         } else {
-            // Ambiente no encontrado, registrar un error
             \Log::error('El ambiente con nombre ' . $nombreAmbiente . ' no fue encontrado.');
         }
     }
@@ -340,10 +332,8 @@ public function MateriasObtener($Correo)
         $docente = Docente::where('id_usuario', $idUsuario)->first();
 
         if ($docente) {
-            //  el ID del docente
             $idDocente = $docente->id_docente;
 
-            // Obtener las materias asociadas al docente
             $materiasDelDocente = DB::table('materia')
                 ->select('materia.*')
                 ->join('materia_docente', 'materia.id_materia', '=', 'materia_docente.id_materia')
@@ -352,11 +342,9 @@ public function MateriasObtener($Correo)
 
             return response()->json($materiasDelDocente, 200);
         } else {
-            // Si no se encontró el docente, retorna un error con un código de estado 404
             return response()->json(["error" => "No se encontró el docente asociado al usuario con el correo electrónico proporcionado."], 404);
         }
     } else {
-        // Si no se encontró el usuario, retorna un error con un código de estado 404
         return response()->json(["error" => "No se encontró el usuario con el correo electrónico proporcionado."], 404);
     }
 

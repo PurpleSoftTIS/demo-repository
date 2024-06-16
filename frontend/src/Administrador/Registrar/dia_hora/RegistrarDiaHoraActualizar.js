@@ -204,7 +204,10 @@ const RegistrarDiaHoras = () => {
          
       <h4>Días y Horas Hábiles para el Ambiente</h4>
     
-            <div className="rowjustify-content-center">
+            <div className="rowjustify
+            
+            
+            -content-center">
               <div className="col-md-6 text-center ">
                 <h4>Selecciona un día</h4>
                 <div className="days-container">

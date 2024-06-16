@@ -74,7 +74,7 @@ class MateriaController extends Controller
     public function eliminarTodo()
     {
         try {
-            // Desactivar restricciones de clave externa
+            
             DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
             // Eliminar todas las filas de la tabla materia_docente
@@ -116,7 +116,7 @@ class MateriaController extends Controller
             ->join('docente', 'materia_docente.id_docente', '=', 'docente.id_docente')
             ->join('usuario', 'docente.id_usuario', '=', 'usuario.id_usuario')
             ->where('materia.nombre_materia', $nombre_materia)
-            ->where('usuario.correo_electronico', '!=', $correo_usuario) // Excluir al usuario que realiza la solicitud
+            ->where('usuario.correo_electronico', '!=', $correo_usuario) 
             ->get();
 
         return response()->json($docentesPorMateria, 200);
