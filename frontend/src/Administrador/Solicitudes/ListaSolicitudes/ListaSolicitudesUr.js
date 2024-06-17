@@ -97,22 +97,19 @@ const ListaSolicitudes = () => {
 
 
   useEffect(() => {
-      fetch('http://127.0.0.1:8000/api/obtenerSol', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-        .then(response => response.json())
-        .then(data => {
-          setSolicitudes(data);
-          filtrarSolicitudess(data); 
-
-          console.log("datos",data);
-        })
-        .catch(error => console.error('Error al obtener los datos:', error));
+    fetch('http://127.0.0.1:8000/api/obtenerSolicitudUrgentes', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      setSolicitudes(data);
+     console.log("datos",data);
+    })
+    .catch(error => console.error('Error al obtener los datos:', error));
   }, []);
-
 
 
   const [mostrarOpciones, setMostrarOpciones] = useState(false); 
@@ -209,22 +206,13 @@ const ListaSolicitudes = () => {
 
     const filtradas = solicitudesData.filter(solicitud => {
       const fechaSolicitud = new Date(solicitud.fecha_solicitud);
-      return fechaSolicitud >= hoy && fechaSolicitud <= dosDiasDespues;
+      return fechaSolicitud >= hoy && fechaSolicitud <= dosDiasDespues &&
+             (solicitud.motivo.trim().includes('Examen Final') || solicitud.motivo.trim().includes('Examen de mesa'));
     });
 
-    const ordenPrioridad = {
-      'Examen final': 1,
-      'Examen de mesa ': 2,
-      'Segunda instancia ': 3,
-
-    };
-
-    filtradas.sort((a, b) => {
-      return ordenPrioridad[a.motivo] - ordenPrioridad[b.motivo];
-    });
-
-    setSolicitudesFiltradas(filtradas);
+    return filtradas;
   };
+  
   const buscardor = (e) => {
     setBuscar(e.target.value);
     console.log(e.target.value);
@@ -281,7 +269,7 @@ return (
           </tr>
         </thead>
         <tbody>
-        {solicitudesFiltradas.map((solicitud) => (
+        {solicitudes.map((solicitud) => (
             <tr key={solicitud.id_solicitud}
               className="fila-lista"
               onClick={() => mostrarFormularioParaSolicitud(solicitud)}

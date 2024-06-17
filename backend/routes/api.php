@@ -49,6 +49,8 @@ Route::get('/configuraciones', [Configuraciones::class, 'obtenerconf']);
 Route::get('/configuracionesFecha', [Configuraciones::class, 'obtenerconFecha']);
 Route::get('/configuracionesFeriados', [Configuraciones::class, 'obtenerconfFeriados']);
 Route::get('/docentesPorMateria/{Materia}',[SolicitudController::class,'docentesPorMateria']);
+Route::get('/obtenerSolicitudUrgentes', [SolicitudController::class, 'obtenerSolicitudUrgentes']);
+
 
 Route::get('/docentes', [DocenteController::class, 'index']);
 Route::get('/usuarios', [UsuarioController::class, 'index']);
@@ -87,7 +89,7 @@ Route::post('/notifications/mark-as-read/{userMail}', [NotificationController::c
 Route::post('/asignarAula', [SolicitudController::class, 'asignarAula']);
 Route::post('/registrarSolicitudConjunta',[SolicitudController::class,'registrarSolicitudConjunta']);
 Route::post('/asignarAmbientes', [SolicitudController::class, 'asignarAmbientes']);
-
+Route::post('/eliminarSolicitudesAntiguas',[SolicitudController::class,'rechazarSolicitudesAntiguas']);
 //Elimnar datos
 Route::delete('/docentes/{id_docente}', [DocenteController::class, 'eliminar']);
 Route::delete('/borrar/{id_ambiente}', [DeleteAmbienteController::class, 'borrarAmbiente']);

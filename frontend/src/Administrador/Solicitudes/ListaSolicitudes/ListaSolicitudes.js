@@ -187,25 +187,42 @@ const ListaSolicitudes = () => {
   
     setSolicitudes(solicitudesPendientes);
   };  
-  const mostrarSolicitudesTodas = () => {
-
-    fetch('http://127.0.0.1:8000/api/obtenerSolicitudSugeridas', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
+  const mostrarSolicitudesTodas = async () => {
+    try {
+      const eliminarResponse = await fetch('http://127.0.0.1:8000/api/eliminarSolicitudesAntiguas', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      if (!eliminarResponse.ok) {
+        throw new Error('Error al eliminar las solicitudes antiguas');
       }
-    })
-      .then(response => response.json())
-      .then(data => {
-        setSolicitudes(data);
-        setMostrarSolicitudesTodas(true); 
-        console.log(data);
-
-        console.log("datos",data);
-      })
-      .catch(error => console.error('Error al obtener los datos:', error));
-
+  
+      const eliminarData = await eliminarResponse.json();
+      console.log('Respuesta de eliminación:', eliminarData);
+  
+      const obtenerResponse = await fetch('http://127.0.0.1:8000/api/obtenerSolicitudSugeridas', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      if (!obtenerResponse.ok) {
+        throw new Error('Error al obtener los datos');
+      }
+  
+      const data = await obtenerResponse.json();
+      setSolicitudes(data);
+      setMostrarSolicitudesTodas(true);
+      console.log('Datos:', data);
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
   };
+  
   const handleChange = (e) => {
       const { name, value } = e.target;
       setFormData(prevState => ({

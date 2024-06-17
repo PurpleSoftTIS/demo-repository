@@ -18,8 +18,11 @@ const Asignar_ambiente = () => {
 
     const obtenerDiaDeFecha = (fecha) => {
         const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-        const fechaObj = new Date(fecha);
-        return diasSemana[fechaObj.getDay()];
+        
+        const [year, month, day] = fecha.split('-').map(Number);
+        const fechaObj = new Date(Date.UTC(year, month - 1, day));
+        
+        return diasSemana[fechaObj.getUTCDay()];
     };
 
     const horasString = solicitud.horas;
@@ -34,7 +37,8 @@ const Asignar_ambiente = () => {
         const dia = obtenerDiaDeFecha(fechaSolicitud);
         const horarios = horasSeparadas;
         const horariosJSON = JSON.stringify(horarios);
-
+        console.log(dia);
+        console.log(fechaSolicitud);
         fetch(`http://127.0.0.1:8000/api/ambientesDisponibless/${capacidad}/${dia}/${horariosJSON}/${fechaSolicitud}`)
             .then((response) => {
                 if (!response.ok) {
