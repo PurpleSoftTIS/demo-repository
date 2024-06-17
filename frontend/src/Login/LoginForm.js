@@ -235,7 +235,7 @@ const [showPassword, setShowPassword] = useState(false);
     };
 
   return (
-    <div className="hero-6" style={{ height: '100vh' }}>
+    <div className="hero-6" style={{ minHeight: '78.7vh' }}>
         <div>
             <nav className="navbar navbar-expand-lg nav-bare">
                 <Link to="/" className="navbar-brand logon">

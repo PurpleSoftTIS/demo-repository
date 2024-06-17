@@ -20,7 +20,6 @@ class DocenteController extends Controller
             DB::raw("CONCAT(usuario.nombre, '  ', usuario.apellido_paterno, '  ',
             usuario.apellido_materno) AS nombre_completo")        
         )
-       
         ->get();
     return response()->json($usuariosConDocentes, 200);
 }
@@ -42,13 +41,10 @@ class DocenteController extends Controller
     {
         try {
             DB::statement('SET FOREIGN_KEY_CHECKS=0');
-
             Docente::truncate();
-            Usuario::truncate(); 
-                
+            Usuario::truncate();   
             DB::statement("ALTER TABLE usuario AUTO_INCREMENT = 1");
             DB::statement("ALTER TABLE docente AUTO_INCREMENT = 1");
-    
             return response()->json(['message' => 'Todos los docentes y usuarios eliminados correctamente'], 200);
         } catch (\Exception $e) {
             \Log::error('Error al intentar eliminar todos los docentes y usuarios: ' . $e->getMessage());
@@ -57,25 +53,25 @@ class DocenteController extends Controller
     }
     
     public function verificarCredenciales(Request $request)
-{
-    $request->validate([
-        'correo_electronico' => 'required|email',
-        'contraseña' => 'nullable|string', 
-    ]);    
-    $usuario = Usuario::where('correo_electronico', $request->correo_electronico)->first();   
-    if (!$usuario) {
-        return response()->json(['correcta' => false, 'mensaje' => 'Correo electrónico no registrado'], 404);
-    }    
-    if ($request->filled('contraseña')) {
-        $contraseña_encriptada = $this->encriptar($request->contraseña); 
-        if ($usuario->contraseña !== $contraseña_encriptada) {
-            return response()->json(['correcta' => false, 'mensaje' => 'Contraseña incorrecta'], 401);
-        }
-    } else {
-        return response()->json(['correcta' => false, 'mensaje' => 'Contraseña no proporcionada'], 400);
-    }    
-    return response()->json(['exists' => true, 'correcta' => true, 'nombre' => $usuario->nombre]);
-}
+    {
+        $request->validate([
+            'correo_electronico' => 'required|email',
+            'contraseña' => 'nullable|string', 
+        ]);    
+        $usuario = Usuario::where('correo_electronico', $request->correo_electronico)->first();   
+        if (!$usuario) {
+            return response()->json(['correcta' => false, 'mensaje' => 'Correo electrónico no registrado'], 404);
+        }    
+        if ($request->filled('contraseña')) {
+            $contraseña_encriptada = $this->encriptar($request->contraseña); 
+            if ($usuario->contraseña !== $contraseña_encriptada) {
+                return response()->json(['correcta' => false, 'mensaje' => 'Contraseña incorrecta'], 401);
+            }
+        } else {
+            return response()->json(['correcta' => false, 'mensaje' => 'Contraseña no proporcionada'], 400);
+        }    
+        return response()->json(['exists' => true, 'correcta' => true, 'nombre' => $usuario->nombre]);
+    }
 
 
     private function encriptar($texto) {
@@ -101,22 +97,17 @@ class DocenteController extends Controller
     }
 
     public function editarDocentes(Request $request, $id_docente){
-        
             $docente = Docente::find($id_docente);
-    
             $id_usuario = $docente->id_usuario;
-    
             $usuario = Usuario::find($id_usuario);
             $usuario->nombre = $request->input('nombres');
             $usuario->apellido_paterno = $request->input('apellidoPaterno');
             $usuario->apellido_materno = $request->input('apellidoMaterno');
             $usuario->correo_electronico = $request->input('correo');
             $usuario->save();
-            
             $docente->tipo_docente = $request->input('tipo');
             $docente->codigo_docente = $request->input('codigoDocente');
             $docente->save();
-            
             return response()->json(['message' => 'Usuario y docente actualizados correctamente'], 200);
             
         
@@ -126,18 +117,14 @@ class DocenteController extends Controller
     {
         try {
             $usuario = Usuario::findOrFail($request->id);
-
             // Encriptar la nueva contraseña
             $nuevaPass = $this->encriptar($request->nuevopwd);
-
             $usuario->contraseña = $nuevaPass;
             $usuario->save();
-
             return response()->json(['message' => 'Contraseña restablecida correctamente'], 200);
         } catch (\Exception $e) {
             \Log::error('Error al intentar restablecer la contraseña: ' . $e->getMessage());
             return response()->json(['error' => 'Error al restablecer la contraseña'], 500);
         }
     } 
-    
 }

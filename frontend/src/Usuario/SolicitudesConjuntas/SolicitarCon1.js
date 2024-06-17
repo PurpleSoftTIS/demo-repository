@@ -221,7 +221,6 @@ const SolicitarCon1 = () => {
   const handleNextStep = () => {
     const tipoNumero = /^\d+$/;
     const dataToSend = {
-       
     };
 
     if (!selecionMateria || !selectedMateria) {
@@ -263,10 +262,7 @@ const SolicitarCon1 = () => {
     setSelectedMotivo(event.target.value);
   };
   const EnviarDatos = () => {
- 
-
     const horaSeleccionadaObj = horariosDisponibles.find(hora => hora.id_hora.toString() === selectedOption.toString());
-
     if (horaSeleccionadaObj) {
       const horaInicio = horaSeleccionadaObj.hora_inicio;
       const periodosGenerados = generarPeriodos(horaInicio, parseInt(valor), 90); 
@@ -449,6 +445,7 @@ const SolicitarCon1 = () => {
       <option>Examen Segundo Parcial</option>
       <option>Examen Final</option>
       <option>Examen Segunda instancia</option>
+      <option>Examen de Mesa</option>
       <option>Reemplazo de  clases</option>
       <option>Elecciones</option>
       <option>Asamblea de estudiantes</option>

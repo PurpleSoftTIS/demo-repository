@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import './ListaDocentes.css';
+import './ListaAulas.css';
 import { FaPlus, FaFileCsv, FaTrash } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
-import Ico1 from "../../../assets/IcoGood.png";
-import Ico2 from "../../../assets/IcoState.png";
+import Ico1 from "../../assets/IcoGood.png";
+import Ico2 from "../../assets/IcoState.png";
 import { useNavigate } from "react-router-dom";
 import { read, utils } from 'xlsx';
 
@@ -11,8 +11,8 @@ import { read, utils } from 'xlsx';
 const ListaDocentes = () => {
   const navigate = useNavigate(); 
   const [docentes, setDocentes] = useState([]);
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-  const [showDeleteDocente, setShowDeleteDocente] = useState(false);
+  const [Advertencia, setShowDeleteConfirmation] = useState(false);
+  const [Advertencia2, setShowDeleteDocente] = useState(false);
   const [docenteToDelete, setDocenteToDelete] = useState([]);
   const [buscar, setBuscar] = useState("");
 
@@ -164,103 +164,100 @@ const ListaDocentes = () => {
     );
     
   }
-  return (
-    
-    <div className="containerDos" style={{ minHeight: '78.7vh',display: 'flex' }}>
-      <div >
-        <h2 style={{ margin: 0 }}>Docentes Registrados:</h2>
-        <div>
-          <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador' />
-            <button className="butn butn-filtro">Filtros</button>
-            <NavLink to="/Admin/Registro/Docentes" className="butn butn-nuevo">
-              Nuevo Docente<FaPlus className="icon" />
-            </NavLink>
-        </div>
-      </div>
-      <div >
-        <div>
+  return (    
+    <div className="containerDoss" style={{ minHeight: '78.7vh' }}>
+      <div className='encabezados'>
+        <div className='contenidoss'>
+          <h2 className='TituloAm'>Docentes Registrados:</h2>
+          <div className='buscado'>
+            <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador' />
+              <button className="butn butn-filtro">Filtros</button>
+              <NavLink to="/Admin/Registro/Docentes" className="butn butn-nuevo">
+                Nuevo Docente<FaPlus className="icon" />
+              </NavLink>
+          </div>
+        </div> 
+        <div className='importar'>        
           <label htmlFor="inputGroupFile" className="butn butn-csv">
-                Importar<FaFileCsv className="icon" />
-              </label>
-              <input
-                id="inputGroupFile"
-                type="file"
-                accept=".csv"
-                style={{ display: 'none' }}
-                onChange={cargaMasiva} // Asociado a la importación de ambientes
-          />          
+              Importar<FaFileCsv className="icon" />
+          </label>
+              <input id="inputGroupFile" type="file" accept=".csv" style={{ display: 'none' }}
+                onChange={cargaMasiva}
+              />          
           <button className="butn butn-borrar" onClick={borrarTodo}>
             Borrar Todo<FaTrash className="icon"/>
-          </button>
-        </div>
-      </div>
-      <table className="table table-hover">
-        <thead className="thead">
-          <tr>
-            <th>Nro. de Docente</th>
-            <th>Nombre</th>
-            <th>Apellido Paterno</th>
-            <th>Apellido Materno</th>
-            <th>Codigo Docente</th>
-            <th>Correo</th>            
-            <th>Tipo</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {resultado.map(docente => (
-            <tr key={docente.id_docente} className="fila-lista">
-              <td>{docente.id_docente}</td>
-              <td>{docente.nombre}</td>
-              <td>{docente.apellido_paterno}</td>
-              <td>{docente.apellido_materno}</td>
-              <td>{docente.codigo_docente}</td>
-              <td>{docente.correo_electronico}</td>
-              <td>{docente.tipo_docente}</td>
-              <td>
-                {docente.estado_docente === "activo" ? (
-                  <img className="iconos2" src={Ico1} alt="Activo" width="50px" height="50px" />
-                ) : (
-                  <img className="iconos2" src={Ico2} alt="Inactivo" width="50px" height="50px" />
-                )}
-              </td>
-              <td>
-              <button className="btn btn-editar mr-2" onClick={() => editarDocente(docente)}>Editar</button>
-                <button className="btn btn-eliminar" onClick={() => eliminarDocenteYUsuario(docente.id_docente, docente.id_usuario)}>Eliminar</button>
-              </td>
+          </button>        
+        </div>       
+      </div>      
+      <div className='tablass'>
+        <table className="table table-hover">
+          <thead className="thead">
+            <tr>
+              <th>Nro. de Docente</th>
+              <th>Nombre</th>
+              <th>Apellido Paterno</th>
+              <th>Apellido Materno</th>
+              <th>Codigo Docente</th>
+              <th>Correo</th>            
+              <th>Tipo</th>
+              <th>Estado</th>
+              <th>Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      {showDeleteConfirmation && (
-        <div className="overlay">
-          <div className="Advertencia">
-            <div className="text">
-              <h3 className="til1">Advertencia</h3>
-              <p className="til2">¿Estás seguro de eliminar todos los registros?</p>
-            </div>
-            <div className="botones">
-              <button className="conf" onClick={eliminarTodosDocentes}>Sí</button>
-              <button className="ref" onClick={cancelarBorrarTodo}>No</button>
+          </thead>
+          <tbody>
+            {resultado.map(docente => (
+              <tr key={docente.id_docente} className="fila-lista">
+                <td>{docente.id_docente}</td>
+                <td>{docente.nombre}</td>
+                <td>{docente.apellido_paterno}</td>
+                <td>{docente.apellido_materno}</td>
+                <td>{docente.codigo_docente}</td>
+                <td>{docente.correo_electronico}</td>
+                <td>{docente.tipo_docente}</td>
+                <td className='iconos'>
+                  {docente.estado_docente === "activo" ? (
+                    <img src={Ico1} alt="Activo" width="60px" height="60px" />
+                  ) : (
+                    <img src={Ico2} alt="Inactivo" width="60px" height="60px" />
+                  )}
+                </td>
+                <td>
+                <button className="btn btn-editar mr-2" onClick={() => editarDocente(docente)}>Editar</button>
+                  <button className="btn btn-eliminar" onClick={() => eliminarDocenteYUsuario(docente.id_docente, docente.id_usuario)}>Eliminar</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {Advertencia && (
+          <div className="overlay">
+            <div className="Advertencia">
+              <div className="text">
+                <h3 className="til1">Advertencia</h3>
+                <p className="til2">¿Estás seguro de eliminar todos los registros?</p>
+              </div>
+              <div className="botones">
+                <button className="conf" onClick={eliminarTodosDocentes}>Sí</button>
+                <button className="ref" onClick={cancelarBorrarTodo}>No</button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-      {showDeleteDocente && (
-        <div className="overlay">
-          <div className="Advertencia">
-            <div className="text">
-              <h3 className="til1">Advertencia</h3>
-              <p className="til2">¿Estás seguro de eliminar este docente?</p>
-            </div>
-            <div className="botones">
-              <button className="conf" onClick={confirmarEliminarDocente}>Sí</button>
-              <button className="ref" onClick={cancelarEliminarDocente}>No</button>
+        )}
+        {Advertencia2 && (
+          <div className="overlay">
+            <div className="Advertencia">
+              <div className="text">
+                <h3 className="til1">Advertencia</h3>
+                <p className="til2">¿Estás seguro de eliminar este docente?</p>
+              </div>
+              <div className="botones">
+                <button className="conf" onClick={confirmarEliminarDocente}>Sí</button>
+                <button className="ref" onClick={cancelarEliminarDocente}>No</button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 

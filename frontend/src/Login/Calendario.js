@@ -1,380 +1,259 @@
-import React, { useEffect, useState,useContext,useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Calendar, dayjsLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import dayjs from 'dayjs';
 import "dayjs/locale/es";
 import './Calendario.css';
-import Ico1 from "../assets/IcoQuit.png";
-import "./LoginForm.css";
-import { NavLink } from 'react-router-dom';
-
-
+import Ico1 from "../assets/IcoQuitBase.png";
+import { useNavigate } from 'react-router-dom';
 
 dayjs.locale("es");
 
 const Calendario = () => {
+    const navigate = useNavigate();
     const localizer = dayjsLocalizer(dayjs);
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [currentView, setCurrentView] = useState('month'); 
-  const calendarRef = useRef(null);  
-  
-  const [solicitudes, setSolicitudes] = useState([]);
-  const [showDropdown2, setShowDropdown2] = useState(false);
+    const [currentDate, setCurrentDate] = useState(new Date());
+    const [currentView, setCurrentView] = useState('month'); 
+    const calendarRef = useRef(null);  
+    const [showCalendar, setShowCalendar] = useState(false);
+    const [solicitudes, setSolicitudes] = useState([]);
+    const [showDropdown2, setShowDropdown2] = useState(false);
+    const [showSmallCalendar, setShowSmallCalendar] = useState(false);
+    const [nombreDocente, setNombreDocente] = useState("");
+    const [tipoSolicitud, setTipoSolicitud] = useState("");
+    const [materia, setMateria] = useState("");
+    const [carrera, setCarrera] = useState("");
+    const [motivo, setMotivo] = useState("");
+    const [grupo, setGrupo] = useState("");
+    const [cantidadEst, setCantidadEst] = useState("");
+    const [aula, setAula] = useState("");
+    const [edificio, setEdificio] = useState("");
+    const [tipoAmbiente, setTipoAmbiente] = useState("");
+    const [piso, setPiso] = useState("");
 
-  const [nommbreDocente, setNombreDocente] = useState("");
-  const [tipoSolicitud, setTipoSolicitud] = useState("");
-  const [materia, setMateria] = useState("");
-  const [carrera, setCarrera] = useState("");
-  const [motivo, setMotivo] = useState("");
-  const [grupo, setGrupo] = useState("");
-  const [cantidadEst, setCantidadEst] = useState("");
-  const [aula, setAula] = useState("");
-  const [edificio, setEdificio] = useState("");
-  const [tipoAmbiente, setTipoAmbiente] = useState("");
-  const [piso, setPiso] = useState("");
+    useEffect(() => {
+        fetch('http://127.0.0.1:8000/api/obtenerTodasSolicitudes', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            setSolicitudes(data);
+            console.log("datos", data);
+        })
+        .catch(error => console.error('Error al obtener los datos:', error));
+    }, []);
 
-  useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/obtenerSol', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => response.json())
-      .then(data => {
-        setSolicitudes(data);
-        
-        console.log("datos",data);
-      })
-      .catch(error => console.error('Error al obtener los datos:', error));
-}, []);
+    const transformSolicitudesToEvents = (solicitudes) => {
+        const events = [];
 
-  const events = [
-      {
-          start: dayjs('2024-06-05T06:45:00').toDate(),
-          end: dayjs('2024-06-05T08:15:00').toDate(),
-          title: "Reserva 1",
-          data: {
-              TipoSolicitud: 'Invididual',
-              NombreDocente: 'Corina',
-              EstadoSolicitud: 'Aceptado',
-              Materia: 'Introduccion a la programacion',
-              Grupo: 2,
-              carrera: '',
+        solicitudes.forEach(solicitud => {
+            const horas = solicitud.horas.split(', ');
+            const startTime = horas[0].split(' - ')[0];
+            const endTime = horas[horas.length - 1].split(' - ')[1];
+            const startDate = dayjs(`${solicitud.fecha_solicitud}T${startTime}`).toDate();
+            const endDate = dayjs(`${solicitud.fecha_solicitud}T${endTime}`).toDate();
 
-          }
-      },
-      {
-        start: dayjs('2024-06-05T06:45:00').toDate(),
-        end: dayjs('2024-06-05T08:15:00').toDate(),
-        title: "Reserva 1",
-        data: {
-            TipoSolicitud: 'Invididual',
-            NombreDocente: 'Corina',
-            EstadoSolicitud: 'Aceptado',
-            Materia: 'Introduccion a la programacion',
-            Grupo: 2,
-        }
-    },
-    {
-        start: dayjs('2024-06-05T06:45:00').toDate(),
-        end: dayjs('2024-06-05T08:15:00').toDate(),
-        title: "Reserva 1",
-        data: {
-            TipoSolicitud: 'Invididual',
-            NombreDocente: 'Corina',
-            EstadoSolicitud: 'Aceptado',
-            Materia: 'Introduccion a la programacion',
-            Grupo: 2,
-        }
-    },
-    {
-        start: dayjs('2024-06-05T06:45:00').toDate(),
-        end: dayjs('2024-06-05T08:15:00').toDate(),
-        title: "Reserva 1",
-        data: {
-            TipoSolicitud: 'Invididual',
-            NombreDocente: 'Corina',
-            EstadoSolicitud: 'Aceptado',
-            Materia: 'Introduccion a la programacion',
-            Grupo: 2,
-        }
-    },
-    {
-        start: dayjs('2024-06-05T06:45:00').toDate(),
-        end: dayjs('2024-06-05T08:15:00').toDate(),
-        title: "Reserva 1",
-        data: {
-            TipoSolicitud: 'Invididual',
-            NombreDocente: 'Corina',
-            EstadoSolicitud: 'Aceptado',
-            Materia: 'Introduccion a la programacion',
-            Grupo: 2,
-        }
-    },
-    {
-        start: dayjs('2024-06-05T06:45:00').toDate(),
-        end: dayjs('2024-06-05T08:15:00').toDate(),
-        title: "Reserva 1",
-        data: {
-            TipoSolicitud: 'Invididual',
-            NombreDocente: 'Corina',
-            EstadoSolicitud: 'Aceptado',
-            Materia: 'Introduccion a la programacion',
-            Grupo: 2,
-        }
-    },
-    {
-        start: dayjs('2024-06-05T06:45:00').toDate(),
-        end: dayjs('2024-06-05T08:15:00').toDate(),
-        title: "Reserva 1",
-        data: {
-            TipoSolicitud: 'Invididual',
-            NombreDocente: 'Corina',
-            EstadoSolicitud: 'Aceptado',
-            Materia: 'Introduccion a la programacion',
-            Grupo: 2,
-        }
-    },
-    {
-        start: dayjs('2024-06-05T06:45:00').toDate(),
-        end: dayjs('2024-06-05T08:15:00').toDate(),
-        title: "Reserva 1",
-        data: {
-            TipoSolicitud: 'Invididual',
-            NombreDocente: 'Corina',
-            EstadoSolicitud: 'Aceptado',
-            Materia: 'Introduccion a la programacion',
-            Grupo: 2,
-        }
-    },
-    {
-        start: dayjs('2024-06-05T06:45:00').toDate(),
-        end: dayjs('2024-06-05T08:15:00').toDate(),
-        title: "Reserva 1",
-        data: {
-            TipoSolicitud: 'Invididual',
-            NombreDocente: 'Corina',
-            EstadoSolicitud: 'Aceptado',
-            Materia: 'Introduccion a la programacion',
-            Grupo: 2,
-        }
-    },
-    {
-        start: dayjs('2024-06-05T115:45:00').toDate(),
-        end: dayjs('2024-06-05T17:15:00').toDate(),
-        title: "Reserva 1",
-        data: {
-            TipoSolicitud: 'Invididual',
-            NombreDocente: 'Corina',
-            EstadoSolicitud: 'Aceptado',
-            Materia: 'Introduccion a la programacion',
-            Grupo: 2,
-        }
-    },
-    {
-        start: dayjs('2024-06-05T20:15:00').toDate(),
-        end: dayjs('2024-06-05T21:45:00').toDate(),
-        title: "Reserva 1",
-        data: {
-            TipoSolicitud: 'Invididual',
-            NombreDocente: 'Corina',
-            EstadoSolicitud: 'Aceptado',
-            Materia: 'Introduccion a la programacion',
-            Grupo: 2,
-        }
-    },
-      {
-          start: dayjs('2024-06-06T15:45:00').toDate(),
-          end: dayjs('2024-06-06T17:15:00').toDate(),
-          title: "Reserva 2",
-          data: {
-              TipoSolicitud: 'Invididual',
-              NombreDocente: 'Corina',
-              EstadoSolicitud: 'Aceptado',
-              Materia: 'Introduccion a la programacion',
-              Grupo: 2,
-
-          }
-      },
-      {
-        start: dayjs('2024-06-05T8:15:00').toDate(),
-        end: dayjs('2024-06-0509:45:00').toDate(),
-        title: "Reserva 2",
-        data: {
-            TipoSolicitud: 'Invididual',
-            NombreDocente: 'Corina',
-            EstadoSolicitud: 'Aceptado',
-            Materia: 'Introduccion a la programacion',
-            Grupo: 2,
-
-        }
-    },
-      {
-          start: dayjs('2024-06-18T18:45:00').toDate(),
-          end: dayjs('2024-06-18T20:15:00').toDate(),
-          title: "Reserva 3",
-          data: {
-              TipoSolicitud: 'Invididual',
-              NombreDocente: 'Corina',
-              EstadoSolicitud: 'Aceptado',
-              Materia: 'Introduccion a la programacion',
-              Grupo: 2,
-          }
-      }
-  ];
-  const showDetails = () => {
-    setShowDropdown2(!showDropdown2);
-  };
-  const cargaDocente = () => {
-        setNombreDocente(solicitudes.nombre);
-        setAula(solicitudes.nombre);
-        setCantidadEst(solicitudes.nombre);
-        setCarrera(solicitudes.nombre);
-        setEdificio(solicitudes.nombre);
-        setGrupo(solicitudes.nombre);
-        setMateria(solicitudes.nombre);
-        setMotivo(solicitudes.nombre);
-        setPiso(solicitudes.nombre);
-
-  };
-  
-  const components = {
-
-      event: props => {
-          const {data} = props.event;
-          console.log(data)
-          return(
-              <div onClick={showDetails}>
-                {props.title}
-              </div>
-          )
-      } 
-      
-  };
-  const messages = {
-      date: 'Fecha',
-      time: 'Hora',
-      event: 'Evento',
-      allDay: 'Todo el día',
-      week: 'Semana',
-      work_week: 'Semana laboral',
-      day: 'Día',
-      month: 'Mes',
-      previous: 'Anterior',
-      next: 'Siguiente',
-      yesterday: 'Ayer',
-      tomorrow: 'Mañana',
-      today: 'Hoy',
-      agenda: 'Agenda',
-      noEventsInRange: 'No hay eventos en este rango',
-      showMore: total => `+ Ver más (${total})`,
-  };
-  const handleNavigate = date => {
-    setCurrentDate(date);
-  };
-
-  const handleViewChange = view => {
-    setCurrentView(view);
-    calendarRef.current.props.onView(view);
-  };
-
-  const handleToday = () => {
-    const today = new Date();
-    setCurrentDate(today);
-    calendarRef.current.props.onNavigate(today);
-  };
-
-  const handlePrevious = () => {
-    const newDate = dayjs(currentDate).subtract(1, currentView === 'month' ? 'month' : currentView === 'week' ? 'week' : 'day').toDate();
-    setCurrentDate(newDate);
-    calendarRef.current.props.onNavigate(newDate);
-  };
-
-  const handleNext = () => {
-    const newDate = dayjs(currentDate).add(1, currentView === 'month' ? 'month' : currentView === 'week' ? 'week' : 'day').toDate();
-    setCurrentDate(newDate);
-    calendarRef.current.props.onNavigate(newDate);
-  };
- 
-  return (
-    <div className="container">
-    <aside className="sidebar">
-        <h2>{dayjs(currentDate).format('MMMM YYYY')}</h2>
-        <button onClick={handleToday}>Hoy</button>
-        <button onClick={handlePrevious}>Anterior</button>
-        <button onClick={handleNext}>Siguiente</button>
-        <button onClick={() => handleViewChange('month')}>Mes</button>
-        <button onClick={() => handleViewChange('week')}>Semana</button>
-        <button onClick={() => handleViewChange('day')}>Día</button>
-    </aside>
-    <div className="calendar-container">
-        <Calendar
-            ref={calendarRef}
-            localizer={localizer}
-            events={events}
-            views={['month', 'week', 'day']}
-            toolbar={false} // Ocultar el toolbar del calendario
-            defaultDate={new Date()}
-            min={dayjs('2024-12-18T06:45:00').toDate()}
-            max={dayjs('2024-12-18T22:45:00').toDate()}
-            step={30}
-            timeslots={3}
-            messages={messages}
-            components={components}
-            formats={{
-                dayHeaderFormat: date => {
-                    console.log(date);
-                    return dayjs(date).format("ddd mm YYYY");
+            events.push({
+                start: startDate,
+                end: endDate,
+                title: `Materia: ${solicitud.nombre_materia}\nGrupo: ${solicitud.grupo}`,
+                data: {
+                    NombreDocente: solicitud.nombre,
+                    TipoSolicitud: solicitud.tipo_solicitud,
+                    Materia: solicitud.nombre_materia,
+                    Carrera: solicitud.nombre_carrera,
+                    Motivo: solicitud.motivo,
+                    Grupo: solicitud.grupo,
+                    Cantidad_de_Estudiantes: solicitud.numero_estudiantes,
+                    Aula: solicitud.aula,
+                    Edificio: solicitud.edificio,
+                    Tipo_Ambiente: solicitud.tipo_ambiente,
+                    Piso: solicitud.piso,
+                    EstadoSolicitud: solicitud.estado_solicitud,
                 }
-            }}
-            onNavigate={handleNavigate}
-            view={currentView}  
-            onView={setCurrentView}  
-        />
-    </div>
-    {showDropdown2 && (
-                      <div className="contenidoTres">
-                        <img className="iconos2" src={Ico1} alt="logo" width="35px" height="35px" onClick={showDetails}/> 
-                        <label  className='Titulos' value={nommbreDocente}>
-                            Corina Justina Flores Villarroel</label>
-                        <br></br>
-                        <label className='Dato'value={tipoSolicitud}>
-                            Tipo solicitud: Invididual</label>
-                        <br></br>
-                        <label className='Dato'value={materia}>
-                            Materia: Metodos y tecnicas de programacion</label>
-                        <br></br>
-                        <label className='Dato' value={carrera}>
-                            Carrera: Ingeniria Informatica</label>
-                        <br></br>
-                        <label className='Dato'value={motivo}>
-                             Motivo: Examen Primer Parcial</label>
-                        <br></br>
-                        <label className='Dato'value={grupo}>
-                            Grupo: 3</label>
-                        <br></br>
-                        <label className='Dato'value={cantidadEst}>
-                            Cantidad de estudiandes: 200</label>
-                        <br></br>
-                        <label className='Dato' value={aula}>
-                            Aula: 690A</label>
-                        <br></br>
-                        <label className='Dato'value={edificio}>
-                            Edificio: Edificio Academico 2</label>
-                        <br></br>
-                        <label className='Dato'value={piso}>
-                            Piso: Edificio Academico 2</label>
-                        <br></br>
-                        <label className='Dato'value={tipoAmbiente}>
-                            Tipo aula: Aula Comun</label>
-                        </div>              
-            
-            )} 
-        <NavLink className="nav-link pricing" to='/' activeclassname="active">Atras</NavLink>        
+            });
+        });
 
-</div>
-  );
+        return events;
+    };
+
+    const events = transformSolicitudesToEvents(solicitudes);
+
+    const showDetails = (data) => {
+        setShowDropdown2(!showDropdown2);
+        setNombreDocente(data.NombreDocente);
+        setTipoSolicitud(data.TipoSolicitud);
+        setMateria(data.Materia);
+        setCarrera(data.Carrera);
+        setMotivo(data.Motivo);
+        setGrupo(data.Grupo);
+        setCantidadEst(data.Cantidad_de_Estudiantes);
+        setAula(data.Aula);
+        setEdificio(data.Edificio);
+        setTipoAmbiente(data.Tipo_Ambiente);
+        setPiso(data.Piso);
+    };
+
+    const components = {
+        event: props => {
+            const { data } = props.event;
+            return (
+                <div onClick={() => showDetails(data)}>
+                    {props.title}
+                </div>
+            );
+        }
+    };
+
+    const messages = {
+        date: 'Fecha',
+        time: 'Hora',
+        event: 'Evento',
+        allDay: 'Todo el día',
+        week: 'Semana',
+        work_week: 'Semana laboral',
+        day: 'Día',
+        month: 'Mes',
+        previous: 'Anterior',
+        next: 'Siguiente',
+        yesterday: 'Ayer',
+        tomorrow: 'Mañana',
+        today: 'Hoy',
+        agenda: 'Agenda',
+        noEventsInRange: 'No hay eventos en este rango',
+        showMore: total => `+ Ver más (${total})`,
+    };
+
+    const handleNavigate = date => {
+        setCurrentDate(date);
+    };
+
+    const handleViewChange = view => {
+        setCurrentView(view);
+        setShowSmallCalendar(view === 'week' || view === 'day');
+        calendarRef.current.props.onView(view);
+    };
+
+    const handleToday = () => {
+        const today = new Date();
+        setCurrentDate(today);
+        calendarRef.current.props.onNavigate(today);
+    };
+    const handlePrevious = () => {
+        const newDate = dayjs(currentDate).subtract(1, currentView === 'month' ? 'month' : currentView === 'week' ? 'week' : 'day').toDate();
+        setCurrentDate(newDate);
+        calendarRef.current.props.onNavigate(newDate);
+    };
+    const handleNext = () => {
+        const newDate = dayjs(currentDate).add(1, currentView === 'month' ? 'month' : currentView === 'week' ? 'week' : 'day').toDate();
+        setCurrentDate(newDate);
+        calendarRef.current.props.onNavigate(newDate);
+    };
+    const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
+    const reloadPage = () => {
+        window.location.reload();
+    };
+
+    const backPage = () => {
+        navigate('/Admin/Registro/AmbientesActualizar');             
+    };
+    
+    return (
+        <div className='Contenedor'>
+            <h1 className='Titulo'>
+                Calendario
+            </h1>
+            <div className="container">
+                <aside className="sidebar">
+                    <h2>{capitalizeFirstLetter(dayjs(currentDate).format('dddd DD MMMM YYYY'))}</h2>
+                    <button className='botones' onClick={handleToday}>Hoy</button>
+                    <button className='botones' onClick={handlePrevious}>Anterior</button>
+                    <button className='botones' onClick={handleNext}>Siguiente</button>
+                    <button className='botones' onClick={() => handleViewChange('month')}>Mes</button>
+                    <button className='botones' onClick={() => handleViewChange('week')}>Semana</button>
+                    <button className='botones' onClick={() => handleViewChange('day')}>Día</button>
+                    <button className="botones3" onClick={backPage}>Atras</button>       
+                    <button className="botones2" onClick={reloadPage}>Recargar</button>
+                    {showCalendar && (
+                        <div className='calendar-popup'>
+                            <Calendar
+                            minDate={new Date()}
+                            maxDate={new Date(2026, 11, 31)}
+                            
+                            />
+                        </div>
+                    )}
+                    {showSmallCalendar && (
+                        <div className="small-calendar-container">
+                            <Calendar
+                                localizer={localizer}
+                                events={events}
+                                views={['month']}
+                                defaultView="month"
+                                toolbar={false}
+                                style={{ height: 200, width: 200 }} // Ajusta el tamaño según sea necesario
+                            />
+                        </div>
+                    )}
+                </aside>
+                <div className="calendar-container">
+                    <Calendar
+                        ref={calendarRef}
+                        localizer={localizer}
+                        events={events}
+                        views={['month', 'week', 'day']}
+                        toolbar={false} // Ocultar el toolbar del calendario
+                        defaultDate={new Date()}
+                        min={dayjs('2024-12-18T06:45:00').toDate()}
+                        max={dayjs('2024-12-18T22:45:00').toDate()}
+                        step={30}
+                        timeslots={3}
+                        messages={messages}
+                        components={components}
+                        formats={{
+                            dayHeaderFormat: date => dayjs(date).format("ddd MM YYYY")
+                        }}
+                        onNavigate={handleNavigate}
+                        view={currentView}  
+                        onView={setCurrentView}  
+                    />
+                </div>
+                {showDropdown2 && (
+                    <div className="contenidoTres">
+                        <div className='parteSuperior'>
+                            <h3 className='tituloIni'>Detalles de la solicitud</h3>
+                            <img className="iconos3" src={Ico1} alt="logo" width="35px" height="35px" onClick={() => setShowDropdown2(false)}/> 
+                        </div>
+                        <h4 className='nombreTitulo'>Docente Solicitante:</h4>
+                        <label className='Dato'>{nombreDocente}</label>
+                        <h4 className='nombreTitulo'>Tipo solicitud:</h4>
+                        <label className='Dato'>{tipoSolicitud}</label>
+                        <h4 className='nombreTitulo'>Materia:</h4>
+                        <label className='Dato'>{materia}</label>
+                        <h4 className='nombreTitulo'>Carrera:</h4>
+                        <label className='Dato'>{carrera}</label>
+                        <h4 className='nombreTitulo'>Motivo:</h4>
+                        <label className='Dato'>{motivo}</label>
+                        <h4 className='nombreTitulo'>Grupo:</h4>
+                        <label className='Dato'>{grupo}</label>
+                        <h4 className='nombreTitulo'>Cantidad de estudiantes:</h4>
+                        <label className='Dato'> {cantidadEst}</label>
+                        <h4 className='nombreTitulo'>Aula:</h4>
+                        <label className='Dato'>{aula}</label>
+                        <h4 className='nombreTitulo'>Edificio:</h4>
+                        <label className='Dato'>{edificio}</label>
+                        <h4 className='nombreTitulo'>Piso:</h4>
+                        <label className='Dato'>{piso}</label>
+                        <h4 className='nombreTitulo'>Tipo aula:</h4>
+                        <label className='Dato'>{tipoAmbiente}</label>
+                    </div>
+                )} 
+            </div>
+        </div>
+    );
 }
 
 export default Calendario;

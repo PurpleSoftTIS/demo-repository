@@ -31,6 +31,9 @@ const NarbarUsuario = () => {
         }
         setShowNotification(false);
       }
+      if (dropdownRef2.current && !dropdownRef2.current.contains(event.target)) {
+          setShowDropdown2(false);
+        }      
     };
 
     document.body.addEventListener('click', handleClickOutside);
@@ -131,7 +134,7 @@ const NarbarUsuario = () => {
             <li className="nav-item">
               <NavLink className="nav-link" to='/Usuario/Inicio/HomeDos'>Inicio</NavLink> 
             </li>
-              <div className="dropdown-container" ref={dropdownRef2}>
+              <div className="dropdown-container">
                   <button className="nav-link dropdown-toggle" onClick={toggleDropdown2} style={{ cursor: 'pointer' }}>Solicitar</button>
                   {showDropdown2 && (
                       <div className="menu">
@@ -145,10 +148,7 @@ const NarbarUsuario = () => {
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to='/Usuario/Usu/AmbientesDis'>Ambientes Disponibles</NavLink>
-              </li>  
-              <li className="nav-item">
-                <NavLink className="nav-link" to='/Usuario/Calendario'>Calendario</NavLink>
-              </li>                            
+              </li>                              
             </ul>
           </div>          
           <div className='InicioSesion'>

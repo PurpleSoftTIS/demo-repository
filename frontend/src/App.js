@@ -63,7 +63,7 @@ function AdminRoutes() {
       <Route path='/Mensaje/ConfiguracionExitosa' element={<MensajeConfExitoso/>}/> 
       <Route path='/Mensaje/ConfiguracionError' element={<MensajeConfError/>}/> 
       <Route path='/AsignarAmbiente' element={<Asignar_ambiente/>}/> 
-      <Route path='/Informe/Informe' element={<Informe/>}/> 
+      <Route path='/Informe' element={<Informe/>}/> 
     </Routes>
     <Footer/>
   </div>

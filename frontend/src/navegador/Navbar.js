@@ -16,12 +16,13 @@ const Navbar = () => {
   const dropdownRef2 = useRef(null);
   const dropdownRef = useRef(null);
   const { setUrole } = useContext(UserContext);
-  const [showSesion, setShwoSesion] = useState(false);
+  const [showSesion, setShowSesion] = useState(false);
   const sesionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(true);
   const [showNotification, setShowNotification] = useState(false);
   const [notificationInput, setNotificationInput] = useState('');
   const notificationRef = useRef(null);
+  const sesionRef2 = useRef(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editNotificationContent, setEditNotificationContent] = useState('');
   const [selectedNotificationId, setSelectedNotificationId] = useState(null);
@@ -41,11 +42,15 @@ const Navbar = () => {
         setShowDropdown(false); 
       }
       if (sesionRef.current && !sesionRef.current.contains(event.target)) {
-        setShwoSesion(false);
+        setShowSesion(false);
       }
-      if (notificationRef.current && !notificationRef.current.contains(event.target)) {
-        setShowNotification(false);
+      if (dropdownRef2.current && !dropdownRef2.current.contains(event.target)) {
+        setShowDropdown2(false); 
       }
+      if (sesionRef2.current && !sesionRef2.current.contains(event.target)) {
+        setShowSesion(false);
+      }
+      
     };
 
     document.body.addEventListener('click', handleClickOutside);
@@ -79,7 +84,7 @@ const Navbar = () => {
     setShowDropdown2(!showDropdown2);
   };
   const toggleSesion = ()=>{
-    setShwoSesion(!showSesion);
+    setShowSesion(!showSesion);
 
   };
   const toggleNotification = () => {
@@ -173,7 +178,12 @@ const Navbar = () => {
   const handleConf = () => {
     navigate("/Admin/Configuraciones")
   }
-
+  const handleOptionClick = () => {
+    setShowDropdown(false); 
+  };
+  const handleOptionClick2 = () => {
+    setShowDropdown2(false); 
+  };
   return (
     <div className='barraNavAdmi'>
       <nav className="navbar navbar-expand-lg">
@@ -248,8 +258,8 @@ const Navbar = () => {
                   <button className="nav-link dropdown-toggle" onClick={toggleDropdown2} style={{ cursor: 'pointer' }}>Solicitudes</button>
                   {showDropdown2 && (
                       <div className="menu">
-                          <NavLink className="opciones" to='/Admin/ListaSolicitudes' activeclassname="active">Todas</NavLink>
-                          <NavLink className="opciones" to='/Admin/ListaSolicitudesUr' activeclassname="active">Urgentes</NavLink>
+                          <NavLink className="opciones" to='/Admin/ListaSolicitudes' activeclassname="active" onClick={handleOptionClick2}>Todas</NavLink>
+                          <NavLink className="opciones" to='/Admin/ListaSolicitudesUr' activeclassname="active" onClick={handleOptionClick2}>Urgentes</NavLink>
                       </div>              
                   )}              
               </div>
@@ -257,15 +267,14 @@ const Navbar = () => {
                   <button className="nav-link dropdown-toggle" onClick={toggleDropdown} style={{ cursor: 'pointer' }}>Registrar</button>
                   {showDropdown && (
                       <div className="menu">
-                          <NavLink className="opciones" to='/Admin/Listas/ListaAmbientes' activeclassname="active">Ambiente</NavLink>
-                          <NavLink className="opciones" to='/Admin/Listas/ListaDocentes' activeclassname="active">Docente</NavLink>
-                          <NavLink className="opciones" to='/Admin/Listas/ListaMaterias' activeclassname="active">Materia</NavLink>
+                          
+                          <NavLink className="opciones" to='/Admin/Listas/ListaAmbientes' activeclassname="active" onClick={handleOptionClick}>Ambiente</NavLink>
+                          <NavLink className="opciones" to='/Admin/Listas/ListaDocentes' activeclassname="active" onClick={handleOptionClick}>Docente</NavLink>
+                          <NavLink className="opciones" to='/Admin/Listas/ListaMaterias' activeclassname="active" onClick={handleOptionClick}>Materia</NavLink>
                       </div>              
                   )}              
               </div>
-              <li className="nav-item">
-                <NavLink className="nav-link" to='/Admin/inicio/UsoAmbientes'>Informe Ambientes</NavLink> 
-              </li>
+             
               
             </ul>
           </div>          

@@ -360,6 +360,11 @@ input:-webkit-autofill:active {
 }
 .logos2{
   margin-left: 40px;
+  position: relative;
+  top: 35px;
+  left: 100px;
+  height: 100px;
+
 }
 .mainfooter2{
   padding: 20px;
@@ -394,7 +399,10 @@ position: relative;
 display: flex;
 flex-wrap: wrap; 
 justify-content: flex-end;
-height: 100px;
+  top: 30px;
+  left: 1%;
+  height: 100px;
+
 
 }
 .description2{

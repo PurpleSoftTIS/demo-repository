@@ -1,230 +1,182 @@
-.container {
-  user-select: none;
-}
-input[type="text"] {
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  margin-right: 5px;
-}
-.butn {
-  margin-left: 5px;
-  margin-right: 5px;
-  padding: 8px 15px;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-}
-.butn .icon {
-  margin-left: 5px; 
-}
-.butn-nuevo {
-  background-color: #050259;
-  border-color: #050259;
-  text-decoration: none;
-  padding: 9px 15px;
-}
-.butn-nuevo:hover {
-  background-color: #011640;
-  border-color: #011640;
-  transform: translateY(-2px);
-}
-.butn-filtro {
-  color: #28a745;
-  border-width: 2px;
-  border-color: #28a745; 
-  background-color: transparent; 
-  font-weight: 2px;
-}
-.butn-filtro:hover{
-  color: #1f8036; 
-  border-color: #1f8036;
-  background-color: rgba(0, 255, 81, 0.1);
-}
-.butn-csv {
-  background-color: #28a745;
-  border-color: #28a745;
-}
-.butn-csv:hover {
-  background-color: #1f8036;
-  border-color: #1f8036;
-  transform: translateY(-2px);
-}
-.butn-borrar {
-  background-color: #dc3545;
-  border-color: #dc3545;
-}
-.butn-borrar:hover {
-  background-color: #bd2130;
-  border-color: #bd2130;
-  transform: translateY(-2px);
-}
-.table {
-  width: 100%;
-  border-collapse: none;
-  margin-top: 40px;
-  user-select: text;
-}
-.table thead th {
-  border-top: none; 
-  background-color: #F3F4F6;
-  color: #1F2937;
-  padding: 10px;
-  border: none;
-  text-align: center;
-}
-.table thead th:first-child {
-  border-top-left-radius: 10px;
-}
-.table thead th:last-child {
-  border-top-right-radius: 10px;
-}
-.table tbody td {
-  border-top: 1px solid #dee2e6;
-  border-bottom: 1px solid #dee2e6;
-  padding: 10px;
-  text-align: center;
-  vertical-align: middle;
-}
-.fila-lista:hover {
-  background-color: #f8f9fa; 
-  height: 70px;
-
-}
-.btn {
-  margin-left: 5px;
-  margin-right: 5px;
-}
-.btn-editar {
-  color: #007bff;
-  border-width: 2px;
-  border-color: #007bff; 
-  background-color: transparent; 
-  font-weight: 2px;
-}
-.btn-editar:hover {
-  color: #0056b3; 
-  border-color: #0056b3;
-  background-color: rgba(0, 123, 255, 0.1);
-  transform: translateY(-2px); 
-}
-.btn-eliminar {
-  color: #dc3545; 
-  border-width: 2px;
-  border-color: #dc3545; 
-  background-color: transparent;
-  font-weight: 2px;
-}
-.btn-eliminar:hover {
-  color: #bd2130; 
-  border-color: #bd2130; 
-  background-color: rgba(220, 53, 69, 0.1); 
-  transform: translateY(-2px);
-}
-.btn-sugerencia{
-  color: #610de8; 
-  border-width: 2px;
-  border-color: #610de8; 
-  background-color: transparent;
-  font-weight: 2px;
-}
-.btn-sugerencia:hover{
-  color: #610de8; 
-  border-color: #610de8; 
-  background-color: rgba(220, 53, 69, 0.1); 
-  transform: translateY(-2px);
-}
-
-
-.iconos2{
-position: relative;
-top: -28px;
-justify-content: center;
-}
-
-.detallesSol {
-position: relative;
-  width: 100%;
-  height: 480px;   
-  background-color: #ffffff;
-  display: inline-block;
-}
-
-/* VerSolicitud.css */
-
-.input-group {
-display: flex;
-flex-wrap: wrap;
-gap: 12px;
-}
-
-.input2 {
-flex: 1;
-display: flex;
-flex-direction: column;
-}
-
-.label-here {
-line-height: 16px;
-}
-
-.input12,
-.input13,
-.input14 {
-border: 1px solid #e5e7eb;
-background-color: #000000;
-height: 40px;
-border-radius: 4px;
-min-width: 250px;
-}
-
-.input12:hover,
-.input12:focus,
-.input13:hover,
-.input13:focus,
-.input14:hover,
-.input14:focus {
-border: 1px solid #011640;
-}
-
-.input14 {
-margin-top: auto; 
-}
-
-.label-here {
-margin-bottom: 8px; 
-}
-
 .overlay {
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background-color: rgba(0, 0, 0, 0.5); 
-z-index: 999; 
-display: flex;
-justify-content: center;
-align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  z-index: 1000; 
 }
+.butn-filtro{
+ 
+margin-left: -10px;
+
+}
+
 
 .formulario-emergente {
-  position: relative;
-  width: 800px;
-  height: 500px;
-  background-color: #ffffff;
-  padding: 10px;
+  background-color: rgb(216, 49, 49);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 90%; 
+  max-width: 900px; 
+  max-height: 90%; 
+  overflow-y: auto; 
+}
+
+
+.contenedorForm {
+  text-align: center;
+  background-color: rgb(7, 47, 158);
+  width: 100%;
+  height: auto; 
+  padding: 20px; 
+  border-radius: 8px; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+
+.tituloForm {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.contenido {
+  color: white;
+}
+
+
+.textoForm {
+  width: 100%;
+  padding: 8px;
+  font-size: 1rem;
+  color: black; 
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
+}
+
+
+.dimensionForm {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+
+.input2 {
+  flex: 1;
+  margin-right: 10px;
+  padding: 8px;
   border-radius: 8px;
 }
 
-.textoForm,.tituloForm,.subtitulo{
-  color: rgb(0, 0, 0);
-  font-size: 20px;
-}
-.textoForm{
-  border: #000000;
+
+.motivo {
+  margin-bottom: 5px;
+  display: inline-block;
+  background-color: white;
+  padding: 1px 8px;
+  border-radius: 8px;
+  font-weight: bold;
 }
 
+
+.contact-form-rectangle {
+  width: 100%;
+  padding: 8px;
+  font-size: 1rem;
+  background-color: white;
+  color: black; 
+  border: 1px solid #ccc; 
+  border-radius: 5px;
+}
+
+
+.contact-form-rectangle.fecha,
+.contact-form-rectangle.hora {
+  background-color: white;
+}
+
+
+
+
+.buscado{
+  margin-left: 60%;
+  margin-top: 30px;
+}
+@media (max-width: 768px) {
+  .formulario-emergente {
+    width: 95%; 
+    padding: 15px; 
+  }
+
+  .contenedorForm {
+    padding: 15px; 
+  }
+
+  .tituloForm {
+    font-size: 1.2rem; 
+  }
+
+  .textoForm {
+    font-size: 0.9rem; 
+  }
+
+  .contact-form-rectangle {
+    font-size: 0.9rem; 
+  }
+
+  .input2 {
+    margin-right: 0;
+    margin-bottom: 10px; 
+  }
+}
+
+@media (max-width: 480px) {
+  .formulario-emergente {
+    width: 100%; 
+    padding: 10px; 
+  }
+
+  .contenedorForm {
+    padding: 10px; 
+  }
+
+  .tituloForm {
+    font-size: 1rem; 
+  }
+
+  .textoForm {
+    font-size: 0.8rem; 
+  }
+
+  .contact-form-rectangle {
+    font-size: 0.8rem; 
+  }
+}
+.contenido{
+  color: black;
+}
+.tablass{
+  position: relative;
+  margin-top: 50px;
+  width: 90%;
+  height: auto;
+  margin-left: 100px;
+}
+.encabezado{
+  position: relative;
+  width: 800px;
+  height: 200px;
+}
+.buscador{
+  position: relative;
+  width: 200px;
+}
