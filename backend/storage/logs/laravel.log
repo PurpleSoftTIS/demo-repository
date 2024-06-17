@@ -1,1 +1,2 @@
 [2024-06-16 02:47:03] local.INFO: Datos recibidos del frontend: [{"id_ambiente":10,"id_solicitud":9},{"id_ambiente":112,"id_solicitud":9}]  
+[2024-06-17 18:37:45] local.INFO: Datos recibidos del frontend: {"correo":"florescorina49@gmail.com","fechaSeleccionada":"18\/6\/2024","diaSeleccionado":"Martes","materiaSeleccionada":"Metodos y tecnicas de progrmacion","grupo":null,"cantidadEstudiantes":"50","tipoAmbiente":"Aula Comun","cantidadPeriodos":"1","periodos":[{"horaInicio":"11:15:00","horaFin":"12:45:00"}],"motivo":"Examen Primer Parcial","grupos":["5"]}  

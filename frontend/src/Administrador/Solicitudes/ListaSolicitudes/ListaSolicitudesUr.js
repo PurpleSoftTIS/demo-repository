@@ -97,63 +97,58 @@ const ListaSolicitudes = () => {
 
 
   useEffect(() => {
-      fetch('http://127.0.0.1:8000/api/obtenerSol', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-        .then(response => response.json())
-        .then(data => {
-          setSolicitudes(data);
-          filtrarSolicitudess(data); 
-
-          console.log("datos",data);
-        })
-        .catch(error => console.error('Error al obtener los datos:', error));
+    fetch('http://127.0.0.1:8000/api/obtenerSolicitudUrgentes', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      setSolicitudes(data);
+     console.log("datos",data);
+    })
+    .catch(error => console.error('Error al obtener los datos:', error));
   }, []);
-
 
 
   const [mostrarOpciones, setMostrarOpciones] = useState(false); 
 
   const mostrarFormularioParaSolicitud = (solicitud) => {
-      if(solicitud.tipo_solicitud ==="individual"){
-        setFormData({
-          docente: solicitud.nombre,
-          materia: solicitud.nombre_materia,
-          grupo: solicitud.grupo,
-          aula: solicitud.nombre_ambiente,
-          capacidad: solicitud.numero_estudiantes,
-          tipo_de_solicitud: solicitud.tipo_solicitud,
-          fecha: solicitud.fecha_solicitud,
-          hora: solicitud.hora_inicio,
-          motivo: solicitud.motivo
-        });
-        setMostrarFormulario(true);
-        setMostrarFormularioCon(false);
 
-      }else{
-        setFormData({
-          docente: solicitud.nombre,
-          materia: solicitud.nombre_materia,
-          grupo: solicitud.grupo,
-          aula: solicitud.nombre_ambiente,
-          capacidad: solicitud.numero_estudiantes,
-          tipo_de_solicitud: solicitud.tipo_solicitud,
-          fecha: solicitud.fecha_solicitud,
-          hora: solicitud.hora_inicio,
-          motivo: solicitud.motivo
-        });
-        setMostrarFormulario(true);
-        setMostrarFormularioCon(false);
+    if(solicitud.tipo_solicitud ==="individua"){
+      setFormData({
+        docente: solicitud.nombreCompleto,
+        materia: solicitud.nombre_materia,
+        grupos: solicitud.grupos,
+        capacidad: solicitud.numero_estudiantes,
+        tipo_de_solicitud:solicitud.estado_solicitud,
+        fecha: solicitud.fecha_solicitud,
+        hora: solicitud.hora_inicio,
+        motivo: solicitud.motivo
+      });
+      setMostrarFormulario(true);
+      setMostrarFormularioCon(false);
 
-        setDocente(solicitud.nombre); 
-        setAulas(solicitud.nombre_ambiente); 
-      
-      }
-      
-  };
+    }else{
+      setFormData({
+        docente: solicitud.nombres_docentes
+        ,
+        materia: solicitud.nombre_materia,
+        grupos: solicitud.grupos,
+        capacidad: solicitud.numero_estudiantes,
+        tipo_de_solicitud: solicitud.tipo_solicitud,
+        fecha: solicitud.fecha_solicitud,
+        hora: solicitud.horas, 
+        motivo: solicitud.motivo
+      });
+      setMostrarFormulario(true);
+      setMostrarFormularioCon(false);
+      setDocente(solicitud.nombre); 
+      setAulas(solicitud.nombre_ambiente);         
+    }
+    
+};
 
   const cerrarFormulario = () => {
       setMostrarFormulario(false);
@@ -209,22 +204,13 @@ const ListaSolicitudes = () => {
 
     const filtradas = solicitudesData.filter(solicitud => {
       const fechaSolicitud = new Date(solicitud.fecha_solicitud);
-      return fechaSolicitud >= hoy && fechaSolicitud <= dosDiasDespues;
+      return fechaSolicitud >= hoy && fechaSolicitud <= dosDiasDespues &&
+             (solicitud.motivo.trim().includes('Examen Final') || solicitud.motivo.trim().includes('Examen de mesa'));
     });
 
-    const ordenPrioridad = {
-      'Examen final': 1,
-      'Examen de mesa ': 2,
-      'Segunda instancia ': 3,
-
-    };
-
-    filtradas.sort((a, b) => {
-      return ordenPrioridad[a.motivo] - ordenPrioridad[b.motivo];
-    });
-
-    setSolicitudesFiltradas(filtradas);
+    return filtradas;
   };
+  
   const buscardor = (e) => {
     setBuscar(e.target.value);
     console.log(e.target.value);
@@ -247,19 +233,25 @@ const ListaSolicitudes = () => {
 
 return (
     <div className="containerr" style={{ minHeight: '78.7vh' }}>
-      <div className='encabezados'>
-      <div className='contenidoss'>
-            <h2 className='TituloAm'>Solicitudes Urgentes:</h2>
-            <div className='buscado'>
-            <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador'/>
+      <div style={{ height: '4vh' }}></div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <h2 style={{ margin: 0 }}>Solicitudes:</h2>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
 
-            
-            <button className="butn butn-filtro" onClick={handleShow}>Filtros</button>
-          </div>
-        </div>
-      </div>
+        <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador'/>
+
+          
         
-      <div className='tablass'>
+    <button className="butn butn-filtro" onClick={handleShow}>Filtros</button>
+                </div>
+              </div>
+
       <table className="table table-hover">
         <thead className="thead">
           <tr>
@@ -275,7 +267,7 @@ return (
           </tr>
         </thead>
         <tbody>
-        {solicitudesFiltradas.map((solicitud) => (
+        {solicitudes.map((solicitud) => (
             <tr key={solicitud.id_solicitud}
               className="fila-lista"
               onClick={() => mostrarFormularioParaSolicitud(solicitud)}
@@ -379,6 +371,7 @@ return (
           </div>
         </div>
       )}
+        
       {mostrarFormularioCon && (
          <div className="overlay" onClick={cerrarFormulario}>
          <div className="formulario-emergente" onClick={(e) => e.stopPropagation()}>
@@ -449,8 +442,6 @@ return (
          </div>
        </div>
       )}
-      </div>
-      
     </div>
 );
 };

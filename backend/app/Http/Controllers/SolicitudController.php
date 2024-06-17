@@ -57,6 +57,9 @@ class SolicitudController extends Controller
     }
     public function obtenerSolicitudUrgentes() {
         try {
+            $fechaActual = \Carbon\Carbon::now();
+            $fechaLimite = $fechaActual->copy()->addDays(2)->toDateString(); // Fecha límite es hoy + 2 días
+    
             $datosSolicitudes = DB::table('solicitud')
                 ->join('solicitudes_horario', 'solicitudes_horario.id_solicitud', '=', 'solicitud.id_solicitud')
                 ->join('hora', 'hora.id_hora', '=', 'solicitudes_horario.id_hora')
@@ -66,22 +69,23 @@ class SolicitudController extends Controller
                 ->join('solicitudes_materias', 'solicitudes_materias.id_solicitud', '=', 'solicitud.id_solicitud')
                 ->join('materia', 'materia.id_materia', '=', 'solicitudes_materias.id_materia')
                 ->select(
-                    'solicitud.fecha_solicitud', 'solicitud.estado_solicitud', 'solicitud.fecha_solicitud', 'solicitud.motivo',
+                    'solicitud.fecha_solicitud', 'solicitud.estado_solicitud', 'solicitud.motivo',
                     DB::raw("GROUP_CONCAT(CONCAT(hora.hora_inicio, ' - ', hora.hora_fin) SEPARATOR ', ') as horas"),
-                    'usuario.nombre', 'usuario.apellido_paterno', 'usuario.apellido_materno',
-                    'materia.nombre_materia', 'solicitud.id_solicitud', 'solicitud.numero_estudiantes'
+                    DB::raw("GROUP_CONCAT(DISTINCT CONCAT(usuario.nombre, ' ', usuario.apellido_paterno, ' ', usuario.apellido_materno)) as nombres_docentes"),
+                    'materia.nombre_materia', 'solicitud.created_at', 'solicitud.id_solicitud', 'solicitud.numero_estudiantes',
+                    DB::raw("MIN(usuario.nombre) as nombre"),
+                    DB::raw("MIN(usuario.apellido_paterno) as apellido_paterno"),
+                    DB::raw("MIN(usuario.apellido_materno) as apellido_materno")
                 )
-                ->where(function($query) {
-                    $query->where('solicitud.motivo', 'Examen Primer Parcial')
-                        ->orWhere('solicitud.motivo', 'Examen Segunda instancia')
-                        ->orWhere('solicitud.motivo', 'Examen Segundo Parcial')
-                        ->orWhere('solicitud.motivo', 'Examen Final')
-                        ->orWhere('solicitud.motivo', 'Examen de mesa');
-                })                 
+                ->where('solicitud.estado_solicitud', 'pendi')
+                ->where(function($query) use ($fechaActual, $fechaLimite) {
+                    $query->where('solicitud.fecha_solicitud', '>=', $fechaActual->toDateString())
+                          ->where('solicitud.fecha_solicitud', '<=', $fechaLimite)
+                          ->whereIn('solicitud.motivo', ['Examen de mesa','Examen Segunda instancia', 'Examen final','Examen Segundo Parcial','Examen Primer Parcial']);
+                })
                 ->groupBy(
-                    'usuario.nombre', 'usuario.apellido_paterno', 'usuario.apellido_materno',
-                    'materia.nombre_materia', 'solicitud.fecha_solicitud', 'solicitud.estado_solicitud',
-                    'solicitud.fecha_solicitud', 'solicitud.motivo', 'solicitud.id_solicitud', 'solicitud.numero_estudiantes'
+                    'solicitud.fecha_solicitud', 'solicitud.estado_solicitud', 'solicitud.motivo',
+                    'materia.nombre_materia', 'solicitud.created_at', 'solicitud.id_solicitud', 'solicitud.numero_estudiantes'
                 )
                 ->get();
     
@@ -549,4 +553,37 @@ public function asignarSugerencia(Request $request)
 
 
 }   
+public function rechazarSolicitudesAntiguas() {
+    try {
+        $fechaActual = \Carbon\Carbon::now();
+        $fechaLimite = $fechaActual->subDays(2)->toDateTimeString();
+
+        DB::beginTransaction();
+
+        $solicitudesAntiguas = DB::table('solicitud')
+            ->where('estado_solicitud', 'sugerencias')
+            ->where('created_at', '<', $fechaLimite) // Usar created_at en lugar de updated_at
+            ->get();
+
+        foreach ($solicitudesAntiguas as $solicitud) {
+            DB::table('solicitud')
+                ->where('id_solicitud', $solicitud->id_solicitud)
+                ->update(['estado_solicitud' => 'rechazado']);
+            
+            $solicitudRelacionada = Solicitudes::where('id_solicitud', $solicitud->id_solicitud)->first();
+            if ($solicitudRelacionada) {
+                $solicitudRelacionada->delete();
+            }
+        }
+
+        DB::commit();
+
+        return response()->json(['message' => 'Solicitudes antiguas actualizadas y eliminadas correctamente.'], 200);
+    } catch (\Exception $e) {
+        DB::rollBack();
+        \Log::error('Error al intentar actualizar y eliminar solicitudes antiguas: ' . $e->getMessage());
+        return response()->json(['error' => 'Error al actualizar y eliminar las solicitudes'], 500);
+    }
+}
+
 }

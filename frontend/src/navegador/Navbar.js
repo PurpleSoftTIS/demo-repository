@@ -9,6 +9,7 @@ import { UserContext } from '../Context/UserContext';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isTrue, setIsTrue] = useState(false);
   const [showDropdown2, setShowDropdown2] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [notifications, setNotifications] = useState([]);
@@ -26,6 +27,22 @@ const Navbar = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editNotificationContent, setEditNotificationContent] = useState('');
   const [selectedNotificationId, setSelectedNotificationId] = useState(null);
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/configuraciones')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error al obtener los tipos de ambientes');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setIsTrue(data);
+        console.log(data);
+      })
+      .catch(error => {
+        console.error('Error al obtener los tipos de ambientes:', error);
+      });
+  }, []);
   
   const checkVisibility = () => {
     if (window.innerWidth > 990) {

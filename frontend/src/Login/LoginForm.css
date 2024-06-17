@@ -424,16 +424,34 @@ justify-content: flex-end;
 }
 
 @media screen and (max-width: 480px) {
-
   .iconosTec2 {
-    justify-content: space-around; 
+    position: relative;
+    right: 500px;
+  }
+  .logos2{
+    position: relative;
+    margin-left: 30px;
+
+  }
+  img{
+    width: 20px;
+    height: 20px;
+  }
+  .textoDos{
+    font-size: 12px;
   }
   .HomeReload{
       justify-content: space-around; 
-
   }
-
+  .Titulo-inicio{
+    font-size: 16px;
+  }
+  .Mensaje{
+    font-size: 13px;
+  }
 }
+
+
 .error2{
   color: #ffffff;
   background-color: #071d5f;

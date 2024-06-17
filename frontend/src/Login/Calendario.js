@@ -73,7 +73,7 @@ const Calendario = () => {
                     Tipo_Ambiente: solicitud.tipo_ambiente,
                     Piso: solicitud.piso,
                     EstadoSolicitud: solicitud.estado_solicitud,
-                }
+                }//76988846
             });
         });
 

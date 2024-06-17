@@ -40,7 +40,7 @@ Route::get('/carreras', [CarreraController::class, 'index']);
 Route::get('/materias/{id}', [MateriaController::class, 'show']);
 Route::get('/obtenerHoras', [SolicitudController::class, 'obtenerHora']);
 Route::get('/obtenerSol', [SolicitudController::class, 'obtenerSolicitud']);
-Route::get('/obtenerSolUrg', [SolicitudController::class, 'obtenerSolicitudUrgentes']);
+Route::get('/obtenerSolicitudUrgentes', [SolicitudController::class, 'obtenerSolicitudUrgentes']);
 Route::get('/obtenerSolicitudSugeridas', [SolicitudController::class, 'obtenerSolicitudSugeridas']);
 
 Route::get('/ReservasDocentes/{setEmailC}', [RerservasUsuario::class, 'reservasDocentes']);
@@ -84,6 +84,7 @@ Route::post('/asignarAula', [SolicitudController::class, 'asignarAula']);
 Route::post('/registrarSolicitudConjunta',[SolicitudController::class,'registrarSolicitudConjunta']);
 Route::post('/asignarSugerencia', [SolicitudController::class, 'asignarSugerencia']);
 Route::post('/asignarAmbientes', [SolicitudController::class, 'asignarAmbientes']);
+Route::post('/eliminarSolicitudesAntiguas',[SolicitudController::class,'rechazarSolicitudesAntiguas']);
 
 //Elimnar datos
 Route::delete('/docentes/{id_docente}', [DocenteController::class, 'eliminar']);
