@@ -3,11 +3,12 @@ import './Navbar.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import logo from '../assets/LogoDefinitivo.jpeg';
 import userLogo from '../assets/IcoAdmi.png';
-import { FaBars, FaBell, FaEdit, FaTrash } from 'react-icons/fa';
+import { FaBars, FaBell, FaEdit, FaTrash, FaComments, FaArrowLeft } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { UserContext } from '../Context/UserContext';
 
 const Navbar = () => {
+  const baseURL = 'http://127.0.0.1:8000/api';
   const [isOpen, setIsOpen] = useState(false);
   const [showDropdown2, setShowDropdown2] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -15,7 +16,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const dropdownRef2 = useRef(null);
   const dropdownRef = useRef(null);
-  const { setUrole } = useContext(UserContext);
+  const { setUserC, setEmailC, setUrole } = useContext(UserContext);
   const [showSesion, setShowSesion] = useState(false);
   const sesionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(true);
@@ -26,6 +27,16 @@ const Navbar = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editNotificationContent, setEditNotificationContent] = useState('');
   const [selectedNotificationId, setSelectedNotificationId] = useState(null);
+  const [activeTab, setActiveTab] = useState('mensajes');
+  const [contacts, setContacts] = useState([]);
+  const [conversationContacts, setConversationContacts] = useState([]); // Add this state
+  const [messages, setMessages] = useState([]);
+  const [selectedContact, setSelectedContact] = useState(null);
+  const [mensajeInput, setMensajeInput] = useState('');
+  const usuarioId = sessionStorage.getItem('id');
+  const usuarioTipo = "Administrador"; // Actualizado para obtener el tipo de usuario desde sessionStorage
+  const [showMensajes, setShowMensajes] = useState(false); 
+  const mensajesRef = useRef(null); 
   
   const checkVisibility = () => {
     if (window.innerWidth > 990) {
@@ -50,7 +61,9 @@ const Navbar = () => {
       if (sesionRef2.current && !sesionRef2.current.contains(event.target)) {
         setShowSesion(false);
       }
-      
+      if (mensajesRef.current && !mensajesRef.current.contains(event.target)) {
+        setShowMensajes(false);
+      }
     };
 
     document.body.addEventListener('click', handleClickOutside);
@@ -77,6 +90,39 @@ const Navbar = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (usuarioId && usuarioTipo) {
+      fetchContacts(usuarioId, usuarioTipo);
+      fetchConversationContacts(usuarioId, usuarioTipo);
+    }
+  }, [usuarioId, usuarioTipo]);
+
+  const fetchContacts = (userId, userType) => {
+    fetch(`${baseURL}/mensajes/contacts/${userId}/${userType}`)
+      .then(response => response.json())
+      .then(data => setContacts(data))
+      .catch(error => console.error('Error fetching contacts:', error));
+  };
+
+  const fetchConversationContacts = (userId, userType) => {
+    fetch(`${baseURL}/mensajes/conversationContacts/${userId}/${userType}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => setConversationContacts(data))
+      .catch(error => console.error('Error fetching conversation contacts:', error));
+  };
+
+  const fetchMessages = (senderId, senderType, receiverId, receiverType) => {
+    fetch(`${baseURL}/mensajes/${senderId}/${senderType}/${receiverId}/${receiverType}`)
+      .then(response => response.json())
+      .then(data => setMessages(data))
+      .catch(error => console.error('Error fetching messages:', error));
+  };
+
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
@@ -90,9 +136,18 @@ const Navbar = () => {
   const toggleNotification = () => {
     setShowNotification(!showNotification);
   };
+
+  const toggleMensajes = () => {
+    setShowMensajes(!showMensajes); // Alternar visibilidad de mensajes
+  };
   
   const handleLogout = () => {
-    sessionStorage.removeItem('role'); // Eliminar el item 'role' del sessionStorage
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('email');
+    sessionStorage.removeItem('role');
+    sessionStorage.removeItem('id');
+    setUserC(null);
+    setEmailC(null);
     setUrole(null);
     navigate("/");
   };
@@ -184,6 +239,45 @@ const Navbar = () => {
   const handleOptionClick2 = () => {
     setShowDropdown2(false); 
   };
+
+  const handleContactClick = (contact) => {
+    setSelectedContact(contact);
+    fetchMessages(usuarioId, usuarioTipo, contact.id, contact.tipo);
+    setShowMensajes(true); // Ensure showMensajes stays open
+  };
+
+  const handleBackClick = () => {
+    setSelectedContact(null);
+  };
+
+  const handleMensajeSubmit = (e) => {
+    e.preventDefault();
+
+    if (!mensajeInput.trim() || !selectedContact) return;
+
+    const newMensaje = {
+      sender_id: usuarioId,
+      sender_type: usuarioTipo,
+      receiver_id: selectedContact.id,
+      receiver_type: selectedContact.tipo,
+      contenido: mensajeInput
+    };
+
+    fetch(`${baseURL}/mensajes`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newMensaje),
+    })
+    .then(response => response.json())
+    .then(data => {
+      setMessages([...messages, data]);
+      setMensajeInput('');
+    })
+    .catch(error => console.error('Error sending message:', error));
+  };
+
   return (
     <div className='barraNavAdmi'>
       <nav className="navbar navbar-expand-lg">
@@ -231,7 +325,75 @@ const Navbar = () => {
                 </form>
               </div>
             )}
-          </div> 
+          </div>
+          <div className="mensajes-container" ref={mensajesRef}>
+            <button className={`bell-icon ${showMensajes ? 'active' : ''}`} onClick={toggleMensajes}>
+              <FaComments style={{ color: 'white' }} />
+            </button>
+            {showMensajes && (
+              <div className="mensajes-menu">
+                {selectedContact ? (
+                  <div>
+                    <div className="chat-header">
+                      <button className="back-button" onClick={handleBackClick}>
+                        <FaArrowLeft />
+                      </button>
+                      <h3>{selectedContact.nombre}</h3>
+                    </div>
+                    <div className="chat-container">
+                      <div className="messages-list">
+                        {messages.map((mensaje) => (
+                          <div key={mensaje.id} className={`message ${mensaje.sender_id === usuarioId && mensaje.sender_type === usuarioTipo ? 'sent' : 'received'}`}>
+                            <p>{mensaje.contenido}</p>
+                          </div>
+                        ))}
+                      </div>
+                      <form className="message-form" onSubmit={handleMensajeSubmit}>
+                        <input
+                          type="text"
+                          className="message-input"
+                          placeholder="Escribe un mensaje"
+                          value={mensajeInput}
+                          onChange={(e) => setMensajeInput(e.target.value)}
+                        />
+                        <button type="submit" className="message-submit">Enviar</button>
+                      </form>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="mensajes-tabs">
+                      <button onClick={() => setActiveTab('mensajes')} className={activeTab === 'mensajes' ? 'mensaje-active' : ''}>Mensajes</button>
+                      <button onClick={() => setActiveTab('usuarios')} className={activeTab === 'usuarios' ? 'mensaje-active' : ''}>Usuarios</button>
+                      <button onClick={() => setActiveTab('admin')} className={activeTab === 'admin' ? 'mensaje-active' : ''}>Admin</button>
+                    </div>
+                    <div className="mensajes-content">
+                      <div className="mensajes-section" style={{ display: activeTab === 'mensajes' ? 'block' : 'none' }}>
+                        <h2>Mensajes</h2>
+                        {conversationContacts.length === 0 ? (
+                          <p>No hay conversaciones abiertas.</p>
+                        ) : (
+                          conversationContacts.map((contact) => (
+                            <div key={contact.id} className="contact-item" onClick={() => handleContactClick(contact)}>
+                              <p>{contact.nombre}</p>
+                            </div>
+                          ))
+                        )}
+                      </div>
+                      <div className="contacts-section" style={{ display: activeTab === 'usuarios' || activeTab === 'admin' ? 'block' : 'none' }}>
+                        <h2>{activeTab === 'usuarios' ? 'Usuarios' : 'Admin'}</h2>
+                        {contacts.filter(contact => contact.tipo === (activeTab === 'usuarios' ? 'Usuario' : 'Administrador')).map((contact) => (
+                          <div key={contact.id} className="contact-item" onClick={() => handleContactClick(contact)}>
+                            <p>{contact.nombre}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>  
           {!isVisible &&(
             <div className={`InicioSesion ${showSesion ? 'active' : ''}`} ref={sesionRef}>
               <button className="usuario" onClick={toggleSesion} >
@@ -252,7 +414,7 @@ const Navbar = () => {
           <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarNav">
             <ul className="navbar-nav mx-auto">
               <li className="nav-item">
-                <NavLink className="nav-link" to='/Admin/inicio/HomeUno'>Inicio</NavLink> 
+                <NavLink className="nav-link" to='/'>Inicio</NavLink> 
               </li>              
               <div className="dropdown-container" ref={dropdownRef2}>
                   <button className="nav-link dropdown-toggle" onClick={toggleDropdown2} style={{ cursor: 'pointer' }}>Solicitudes</button>

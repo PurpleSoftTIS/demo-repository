@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Docente;
 use Illuminate\Http\Request;
 use App\Models\Usuario;
+use App\Models\Administrador;
 use DB;
 
 
@@ -57,8 +58,14 @@ class DocenteController extends Controller
         $request->validate([
             'correo_electronico' => 'required|email',
             'contraseña' => 'nullable|string', 
-        ]);    
-        $usuario = Usuario::where('correo_electronico', $request->correo_electronico)->first();   
+        ]);
+
+        $usuario = Usuario::where('correo_electronico', $request->correo_electronico)->first();
+        $rol = 'user';
+        if (!$usuario) {
+            $usuario = Administrador::where('correo_electronico', $request->correo_electronico)->first();
+            $rol = 'admin';
+        }
         if (!$usuario) {
             return response()->json(['correcta' => false, 'mensaje' => 'Correo electrónico no registrado'], 404);
         }    
@@ -69,8 +76,8 @@ class DocenteController extends Controller
             }
         } else {
             return response()->json(['correcta' => false, 'mensaje' => 'Contraseña no proporcionada'], 400);
-        }    
-        return response()->json(['exists' => true, 'correcta' => true, 'nombre' => $usuario->nombre]);
+        }
+        return response()->json(['exists' => true, 'correcta' => true, 'nombre' => $usuario->nombre ?? 'Administrador', 'rol' => $rol, 'id' => $usuario->getKey() ]);
     }
 
 

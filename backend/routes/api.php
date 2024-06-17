@@ -16,6 +16,7 @@ use App\Http\Controllers\CorreoController;
 use App\Http\Controllers\Configuraciones;
 use App\Http\Controllers\AmbienteObtenerController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\MensajeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;   
 
@@ -42,7 +43,9 @@ Route::get('/obtenerHoras', [SolicitudController::class, 'obtenerHora']);
 Route::get('/obtenerSol', [SolicitudController::class, 'obtenerSolicitud']);
 Route::get('/obtenerSolUrg', [SolicitudController::class, 'obtenerSolicitudUrgentes']);
 Route::get('/obtenerSolicitudSugeridas', [SolicitudController::class, 'obtenerSolicitudSugeridas']);
-
+Route::get('/mensajes/{sender_id}/{sender_type}/{receiver_id}/{receiver_type}', [MensajeController::class, 'getMessages']);
+Route::get('/mensajes/contacts/{user_id}/{user_type}', [MensajeController::class, 'getContacts']);
+Route::get('/mensajes/conversationContacts/{user_id}/{user_type}', [MensajeController::class, 'getConversationContacts']);
 Route::get('/ReservasDocentes/{setEmailC}', [RerservasUsuario::class, 'reservasDocentes']);
 Route::get('/obtenerMara/{Correo}', [AmbienteController::class, 'MateriasObtener']);
 Route::get('/obtenerGrupos/{Materia}', [MateriaController::class, 'GruposObtener']);
@@ -84,6 +87,7 @@ Route::post('/asignarAula', [SolicitudController::class, 'asignarAula']);
 Route::post('/registrarSolicitudConjunta',[SolicitudController::class,'registrarSolicitudConjunta']);
 Route::post('/asignarSugerencia', [SolicitudController::class, 'asignarSugerencia']);
 Route::post('/asignarAmbientes', [SolicitudController::class, 'asignarAmbientes']);
+Route::post('/mensajes', [MensajeController::class, 'store']);
 
 //Elimnar datos
 Route::delete('/docentes/{id_docente}', [DocenteController::class, 'eliminar']);
