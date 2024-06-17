@@ -379,6 +379,7 @@ const Solicitar = () => {
       <option>Examen Segundo Parcial</option>
       <option>Examen Final</option>
       <option>Examen Segunda instancia</option>
+      <option>Examen de Mesa</option>
       <option>Reemplazo de  clases</option>
       <option>Elecciones</option>
       <option>Asamblea de estudiantes</option>

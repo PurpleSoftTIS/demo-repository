@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import '../ListadoAmbientes/ListaAulas.css'
+import './ListaAulas.css';
 import { FaPlus, FaFileCsv, FaTrash } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom'; 
-import Ico1 from "../../../assets/IcoGood.png";
-import Ico2 from "../../../assets/IcoState.png";
+import Ico1 from "../../assets/IcoGood.png";
+import Ico2 from "../../assets/IcoState.png";
 import { useNavigate } from "react-router-dom";
 
 const ListaMaterias = () => {
@@ -116,30 +116,30 @@ const ListaMaterias = () => {
   }
   
   return (
-    <div className="container" style={{ minHeight: '78.7vh' }}>
-      <div style={{ height: '4vh' }}></div>  
-      <div >
-        <h2 style={{ margin: 0 }}>Materias Registradas:</h2>
-        <div>
-        <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador' />
-          <button className="butn butn-filtro">Filtros</button>
-          <NavLink to="/Admin/Registro/Materias" className="butn butn-nuevo">
-            Nueva Materia<FaPlus className="icon" />
-          </NavLink>
+    <div className="containerDoss" style={{ minHeight: '78.7vh' }}>
+      <div className='encabezados'>
+        <div  className='contenidoss'>
+          <h2 className='TituloAm'>Materias Registradas:</h2>
+          <div className='buscado'>
+          <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador' />
+            <button className="butn butn-filtro">Filtros</button>
+            <NavLink to="/Admin/Registro/Materias" className="butn butn-nuevo">
+              Nueva Materia<FaPlus className="icon" />
+            </NavLink>
+          </div>
         </div>
-      </div>
-      <div >
-        <div>
-          {loading && <div className="spinner-border text-primary" role="status"></div>}
-          <input type="file" onChange={handleFileChange} />
-          <button className="butn butn-csv" onClick={handleImportClick}>
-            Importar<FaFileCsv className="icon"/>
-          </button>
-          <button className="butn butn-borrar" onClick={() => setAdvertenciaBorrarTodo(true)}>
-            Borrar Todo<FaTrash className="icon"/>
-          </button>
+        <div  className='importar2'>
+            {loading && <div className="spinner-border text-primary" role="status"></div>}
+            <input type="file" onChange={handleFileChange} />
+            <button className="butn butn-csv" onClick={handleImportClick}>
+              Importar<FaFileCsv className="icon"/>
+            </button>
+            <button className="butn butn-borrar" onClick={() => setAdvertenciaBorrarTodo(true)}>
+              Borrar Todo<FaTrash className="icon"/>
+            </button>
         </div>
-      </div>
+      </div>  
+      <div className='tablass'>
       <table className="table table-hover">
         <thead className="thead">
           <tr>
@@ -162,11 +162,11 @@ const ListaMaterias = () => {
               <td>{materia.grupo}</td>
               <td>{materia.nombre_carrera}</td>
               <td>{materia.nombre_completo_docente}</td>
-              <td>
+              <td className='iconos'>
                 {materia.estado_materia === "activo" ? (
-                  <img className="iconos2" src={Ico1} alt="Activo" width="60px" height="60px" />
+                  <img  src={Ico1} alt="Activo" width="60px" height="60px" />
                 ) : (
-                  <img className="iconos2" src={Ico2} alt="Inactivo" width="60px" height="60px" />
+                  <img  src={Ico2} alt="Inactivo" width="60px" height="60px" />
                 )}
               </td>
               <td>
@@ -205,6 +205,8 @@ const ListaMaterias = () => {
           </div>
         </div>
       )}
+      </div>
+     
     </div>
   );
 };

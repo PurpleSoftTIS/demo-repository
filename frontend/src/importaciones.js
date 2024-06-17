@@ -15,13 +15,12 @@ import HomeDos from './inicio/HomeDos';
 import ListaSolicitudes from './Administrador/Solicitudes/ListaSolicitudes/ListaSolicitudes';
 import ListaSolicitudesUr from './Administrador/Solicitudes/ListaSolicitudes/ListaSolicitudesUr';
 import Solicitar  from './Usuario/Solicitar/Solicitar';
-import { Ayuda } from './Usuario/Ayuda/Ayuda';
-import ListaAulas from './Administrador/Listados/ListadoAmbientes/ListaAulas';
+import ListaAulas from './Administrador/Listados/ListaAulas';
 import MensajeExitoso from './Mensajes/MensajeExitoso';
 import MensajeError from './Mensajes/MensajeError';
 import RegistrarDiaHoras from './Administrador/Registrar/dia_hora/RegistrarDiaHoraActualizar';
-import ListaMaterias from './Administrador/Listados/ListadoMaterias/ListaMaterias';
-import ListaDocentes from './Administrador/Listados/ListadoDocentes/ListaDocentes';
+import ListaMaterias from './Administrador/Listados/ListaMaterias';
+import ListaDocentes from './Administrador/Listados/ListaDocentes';
 import { Footer } from './navegador/Footer';
 import MensajeExitosoU from './Mensajes/MensajeExitosoU';
 import MensajeErrorU from './Mensajes/MensajeErrorU';
@@ -40,14 +39,14 @@ import SolicitarCon1 from './Usuario/SolicitudesConjuntas/SolicitarCon1';
 import MensajeConfExitoso from './Mensajes/MensajeConfExitoso';
 import MensajeConfError from './Mensajes/MensajeConfError';
 import Asignar_ambiente from './Administrador/Solicitudes/Asignar_Ambientes/Asignar_ambiente';
-import Calendario from './Usuario/Calendario/Calendario';
 import AmbientesSol from './Administrador/Solicitudes/Ambientes_Disponibles/AmbientesSol';
 import Informe from './Administrador/Informe/Informe';
+import Calendario from './Login/Calendario';
 
 export {
   React,Router,Routes,Route,HomeUno,Ambientes,Docentes,Navbar,RegistrarMateria,
-  LoginForm,RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Solicitar,
-  Ayuda, ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,AmbientesActualizar,
+  LoginForm,RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Solicitar
+  ,ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,AmbientesActualizar,
   Footer,ListaMaterias,MensajeExitosoU,MensajeErrorU,MensajeActExito,MensajeActError
   ,DocentesActualizar,MensajeDatExito,MensajeDatError,ListaSolicitudesUr,Navigate,PasswordResetForm,
   MensajeNoEncontrado,AmbientesDis,AmbientesSol,MisSolicitudes,AyudaAdmin,Configuraciones,SolicitarCon1,

@@ -19,6 +19,9 @@ const Informe = () => {
           <table className="table table-hover">
             <thead className="thead">
               <tr>
+                <th>Docente</th>
+                <th>Materia</th>
+                <th>Grupo</th>
                 <th>Ambiente</th>
                 <th>Edificio</th>
                 <th>Cantidad de Uso</th>

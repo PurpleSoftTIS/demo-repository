@@ -92,7 +92,8 @@ const Configuraciones = () => {
       .then(response => response.json())
       .then(data => {
         setDatosCargaFeriado(data);
-        setFeriados(data.feriados);
+        // Asegúrate de que la lista tenga al menos un campo vacío
+        setFeriados(data.feriados.length > 0 ? data.feriados : [""]);
       })
       .catch(error => console.error('Error al obtener los datos:', error));
   }, []);

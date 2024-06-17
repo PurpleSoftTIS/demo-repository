@@ -25,9 +25,11 @@ export const AmbientesDis = () => {
       };
     
     return (
-        <div className="container" style={{ minHeight: '100vh'}}>
-            <div style={{ height: '4vh' }}></div>
-            <h2 style={{ margin: 0, textAlign: 'center' }}>Ambientes:</h2>
+        <div className="container" style={{ minHeight: '78.7vh'}}>
+            <div className='encabezados'>
+                <h2 className='TituloAm'>Ambientes:</h2>
+            </div>
+            <div className='tablass'>
             <table className="table table-hover">
                 <thead className="thead">
                     <tr>
@@ -52,6 +54,8 @@ export const AmbientesDis = () => {
                     ))}
                 </tbody>
             </table>
+            </div>
+            
             
         </div>
     );

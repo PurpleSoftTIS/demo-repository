@@ -3,8 +3,8 @@ import './ListaAulas.css';
 import { FaPlus, FaFileCsv, FaTrash } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import Ico1 from '../../../assets/IcoGood.png';
-import Ico2 from '../../../assets/IcoState.png';
+import Ico1 from '../../assets/IcoGood.png';
+import Ico2 from '../../assets/IcoState.png';
 import { read, utils } from 'xlsx';
 
 function ListaAulas() {
@@ -207,23 +207,22 @@ function ListaAulas() {
     <div className="containerDoss" style={{ minHeight: '78.7vh' }}>
       <div className='encabezados'>
         <div className='contenidoss'>
-          <h2 >Ambientes Registrados:</h2>
+          <h2 className='TituloAm'>Ambientes Registrados:</h2>
           <div className='buscado'>
-
             <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador' />
-            
             <button className="butn butn-filtro">Filtros</button>
             <NavLink to="/Admin/Registro/Ambientes" className="butn butn-nuevo">
                 Nuevo Ambiente<FaPlus className="icon" />
             </NavLink>
+            <NavLink to="/Admin/Informe" className="butn butn-nuevo">
+                Generar Informe<FaPlus className="icon" />
+            </NavLink>
           </div>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'Right', alignItems: 'center', marginTop: '15px' }}>
-          <div>
+        <div className='importar'>
             <button className="butn butn-csv"  onClickCapture={importaciones}>
               Importar Datos<FaFileCsv className="icon" />
             </button>
-            
             {importar && (
               <div className='importaciones'>
               <label htmlFor="inputGroupFile" className="butn butn-csv">
@@ -248,11 +247,9 @@ function ListaAulas() {
                   />
                 </div>
               )}
-          
             <button className="butn butn-borrar" onClick={confirmacionEliminacionTodo}>
               Borrar Todo<FaTrash className="icon" />
             </button>
-          </div>
         </div>
       </div>
       <div className='tablass'>
@@ -278,11 +275,11 @@ function ListaAulas() {
                   <td>{aula.tipo_ambiente}</td>
                   <td>{aula.numero_piso}</td>
                   <td>{aula.capacidad}</td>
-                  <td>
+                  <td className='iconos'>
                     {aula.estado_ambiente === 'activo' ? (
-                      <img className="iconos2" src={Ico1} alt="Activo" width="60px" height="60px" />
+                      <img  src={Ico1} alt="Activo" width="60px" height="60px" />
                     ) : (
-                      <img className="iconos2" src={Ico2} alt="Inactivo" width="60px" height="60px" />
+                      <img  src={Ico2} alt="Inactivo" width="60px" height="60px" />
                     )}
                   </td>
                   <td>

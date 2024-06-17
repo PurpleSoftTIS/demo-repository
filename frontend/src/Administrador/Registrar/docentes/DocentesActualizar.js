@@ -186,7 +186,7 @@ const DocentesActualizar = () => {
         <form className="billing-info" data-animate-on-scroll>
         <button className="backon-button" type="button" onClick={() => navigate(-1)}></button>
           <div className="checkout-wrapper">
-            <div className="checkout">Registro de Docentes</div>
+            <div className="checkout">Actualizar de Docentes</div>
           </div>
           <div className="input-parent">
             <div className="inputi">

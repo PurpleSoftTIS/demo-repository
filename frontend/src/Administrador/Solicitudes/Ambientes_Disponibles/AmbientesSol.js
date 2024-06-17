@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import './AmbientesSol.css';
 
@@ -17,7 +17,7 @@ const Asignar_ambiente = () => {
     const [ambientesContiguosOriginales, setAmbientesContiguosOriginales] = useState([]);
 
     const obtenerDiaDeFecha = (fecha) => {
-        const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado'];
+        const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
         const fechaObj = new Date(fecha);
         return diasSemana[fechaObj.getDay()];
     };
@@ -147,6 +147,10 @@ const Asignar_ambiente = () => {
 
     const handleSelectAmbiente = (ambiente) => {
         setSelectedAmbientes(prevSelected => {
+            const ubicacionesSeleccionadas = prevSelected.map(a => a.edificio);
+            if (ubicacionesSeleccionadas.length > 0 && !ubicacionesSeleccionadas.includes(ambiente.edificio)) {
+                alert('Ha seleccionado dos ambientes en diferentes ubicaciones.');
+            }
             if (prevSelected.includes(ambiente)) {
                 return prevSelected.filter(a => a !== ambiente);
             } else {
@@ -163,12 +167,13 @@ const Asignar_ambiente = () => {
             setContiguous(ambientesEnUbicacion);
         }
     };
+
     const enviarAmbientesAsignar = () => {
         const dataToSend = selectedAmbientes.map(ambiente => ({
             id_ambiente: ambiente.id_ambiente,
             id_solicitud: solicitud.id_solicitud,
         }));
-        console.log("deslmas",dataToSend);
+        console.log("deslmas", dataToSend);
         fetch('http://127.0.0.1:8000/api/asignarAmbientes', {
             method: 'POST',
             headers: {
@@ -204,7 +209,7 @@ const Asignar_ambiente = () => {
             </div>
             <div className='atras'>
                 <button className="btn btn-editar mr-2" onClick={handleAtrasClick}>
-                    {mostrarAmbientesDisponibles ? 'Atras' : 'Ambientes'}
+                    {mostrarAmbientesDisponibles ? 'Atrás' : 'Ambientes'}
                 </button>
                 {!mostrarAmbientesDisponibles && (
                     <div className='ubicacion'>

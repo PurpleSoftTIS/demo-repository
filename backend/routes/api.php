@@ -40,7 +40,9 @@ Route::get('/carreras', [CarreraController::class, 'index']);
 Route::get('/materias/{id}', [MateriaController::class, 'show']);
 Route::get('/obtenerHoras', [SolicitudController::class, 'obtenerHora']);
 Route::get('/obtenerSol', [SolicitudController::class, 'obtenerSolicitud']);
-Route::get('/SolicitudUrgencias', [SolicitudUrgencia::class, 'urgencias']);
+Route::get('/obtenerSolUrg', [SolicitudController::class, 'obtenerSolicitudUrgentes']);
+Route::get('/obtenerSolicitudSugeridas', [SolicitudController::class, 'obtenerSolicitudSugeridas']);
+
 Route::get('/ReservasDocentes/{setEmailC}', [RerservasUsuario::class, 'reservasDocentes']);
 Route::get('/obtenerMara/{Correo}', [AmbienteController::class, 'MateriasObtener']);
 Route::get('/obtenerGrupos/{Materia}', [MateriaController::class, 'GruposObtener']);
@@ -48,14 +50,13 @@ Route::get('/configuraciones', [Configuraciones::class, 'obtenerconf']);
 Route::get('/configuracionesFecha', [Configuraciones::class, 'obtenerconFecha']);
 Route::get('/configuracionesFeriados', [Configuraciones::class, 'obtenerconfFeriados']);
 Route::get('/docentesPorMateria/{Materia}',[SolicitudController::class,'docentesPorMateria']);
-
 Route::get('/docentes', [DocenteController::class, 'index']);
 Route::get('/usuarios', [UsuarioController::class, 'index']);
 Route::get('/materias', [MateriaController::class, 'index']);
 Route::get('/listaAmbiente', [AmbienteController::class, 'index']);
 Route::get('/ambientesDispo/{capacidad}/{dia}/{hora_inicio}/{hora_fin}', [AmbienteController::class, 'ambientesDis']);
 Route::get('/ambientesDisponibles/{capacidad}/{dia}/{horarios}', [AmbienteObtenerController::class, 'ambientesDisponibles']);
-Route::get('/obtenerTodasSolicitudes', [SolicitudController::class, 'obtenerSolicitudTodas']);
+Route::get('/obtenerTodasSolicitudes', [SolicitudController::class, 'obtenerTodasSolicitudes']);
 Route::get('/ambientesContiguos/{dia}/{horas}/{fecha}', [SolicitudController::class, 'ambientesContiguos']);
 Route::get('/notifications', [NotificationController::class, 'index']);
 Route::get('/notifications/count/{userMail}', [NotificationController::class, 'getNotificationCount']);
@@ -81,6 +82,8 @@ Route::post('/notificationsMail', [NotificationController::class, 'storeMail']);
 Route::post('/notifications/mark-as-read/{userMail}', [NotificationController::class, 'markAsRead']);
 Route::post('/asignarAula', [SolicitudController::class, 'asignarAula']);
 Route::post('/registrarSolicitudConjunta',[SolicitudController::class,'registrarSolicitudConjunta']);
+Route::post('/asignarSugerencia', [SolicitudController::class, 'asignarSugerencia']);
+Route::post('/asignarAmbientes', [SolicitudController::class, 'asignarAmbientes']);
 
 //Elimnar datos
 Route::delete('/docentes/{id_docente}', [DocenteController::class, 'eliminar']);
