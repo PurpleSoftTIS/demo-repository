@@ -233,25 +233,17 @@ const ListaSolicitudes = () => {
 
 return (
     <div className="containerr" style={{ minHeight: '78.7vh' }}>
-      <div style={{ height: '4vh' }}></div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        <h2 style={{ margin: 0 }}>Solicitudes:</h2>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-
-        <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador'/>
-
-          
+      <div className='encabezados'>
+      <div className='contenidoss'>
+          <h2 className='TituloAm'>Solicitudes:</h2>
+          <div className='buscado'>
+            <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador'/>
+            <button className="butn butn-filtro" onClick={handleShow}>Filtros</button>
+          </div>
+        </div>
+      </div>
         
-    <button className="butn butn-filtro" onClick={handleShow}>Filtros</button>
-                </div>
-              </div>
-
+      <div className='tablass' >
       <table className="table table-hover">
         <thead className="thead">
           <tr>
@@ -313,7 +305,6 @@ return (
           </Button>
         </Modal.Footer>
       </Modal>
-      
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Filtros</Modal.Title>
@@ -371,7 +362,6 @@ return (
           </div>
         </div>
       )}
-        
       {mostrarFormularioCon && (
          <div className="overlay" onClick={cerrarFormulario}>
          <div className="formulario-emergente" onClick={(e) => e.stopPropagation()}>
@@ -442,6 +432,10 @@ return (
          </div>
        </div>
       )}
+
+      </div>
+
+      
     </div>
 );
 };
