@@ -248,8 +248,7 @@ return (
         <thead className="thead">
           <tr>
             <th>Nro.</th>
-            <th>Docente</th>
-            
+            <th>Docente</th>            
             <th>Materia</th>
             <th>Motivo</th>
             <th>Fecha</th>
