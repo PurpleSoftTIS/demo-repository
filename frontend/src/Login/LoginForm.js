@@ -15,8 +15,6 @@ import Ico7 from "../assets/IconosLan/IcoFacultad.png";
 import Ico8 from "../assets/IconosLan/IcoFacultadEscudo.png";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../Context/UserContext";
-import { NavLink } from 'react-router-dom';
-
 
 const LoginForm = () => {
 const navigate = useNavigate();   
@@ -102,63 +100,51 @@ const [showPassword, setShowPassword] = useState(false);
         setErrorPassword("");
     }
 
+    fetch("http://127.0.0.1:8000/api/verificarCre", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ correo_electronico: email, contraseña: password }),
+    })       
+    .then((response) => {
+        
+        if (!response.ok) {
+            setErrorEmailValido("Ingrese una cuenta valida");
 
-    if (email === "purpleSoft@gmail.com" && password === "purplesoft2024") {
-        navigate("/Admin/Inicio/HomeUno");
-        sessionStorage.setItem('role', 'admin');
-        setUrole('admin');
-    }else{
-        if(email === "purpleSoft@gmail.com" && password !== "purplesoft2024"){
-            setErrorContraseñaValido("Contraseña incorrecta")
-        }else{
-            fetch("http://127.0.0.1:8000/api/verificarCre", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ correo_electronico: email, contraseña: password }),
-            })       
-            .then((response) => {
-                
-                if (!response.ok) {
-                    setErrorEmailValido("Ingrese una cuenta valida");
+            throw new Error("La solicitud al servidor falló");
+        }
 
-                    throw new Error("La solicitud al servidor falló");
-                }
-
-                return response.json(); // Convertir la respuesta a JSON
-            })
-            .then((data) => {
-                if (data && typeof data === 'object') {
-                    if (!data.exists) {
-                        console.log("El correo electrónico no existe");
-                    } else if (!data.correcta) {
-                        setErrorEmailValido("");
-                        setErrorContraseñaValido("Contraseña incorrecta");
-                    } else {
-                        sessionStorage.setItem('user', data.nombre);
-                        sessionStorage.setItem('email', correoElectronico);
-                        sessionStorage.setItem('role', 'user');
-                        setEmailC(correoElectronico);
-                        setUserC(data.nombre);
-                        setUrole('user');
-                        setErrorEmailValido("");
-                        setErrorContraseñaValido("");
-                        console.log("Nombre de usuario:", data.nombre);
-                        console.log("Correo electrónico:", correoElectronico);
-                        const rutaRedireccion = "/Usuario/Inicio/HomeDos" ;
-                        const estadoRedireccion = { state: correoElectronico };
-                        navigate(rutaRedireccion, estadoRedireccion);
-                    }
-                } else {
-                    console.error("La respuesta del servidor es inválida");
-                }
-            })
-            .catch((error) => {
-                console.error("Error en la solicitud:", error);
-            });
-            }                
-        }    
+        return response.json(); // Convertir la respuesta a JSON
+    })
+    .then((data) => {
+        if (data && typeof data === 'object') {
+            if (!data.exists) {
+                console.log("El correo electrónico no existe");
+            } else if (!data.correcta) {
+                setErrorEmailValido("");
+                setErrorContraseñaValido("Contraseña incorrecta");
+            } else {
+                sessionStorage.setItem('user', data.nombre);
+                sessionStorage.setItem('email', correoElectronico);
+                sessionStorage.setItem('role', data.rol);
+                sessionStorage.setItem('id', data.id);
+                setEmailC(correoElectronico);
+                setUserC(data.nombre);
+                setUrole(data.rol);
+                setErrorEmailValido("");
+                setErrorContraseñaValido("");
+                console.log("Nombre de usuario:", data.nombre);
+                console.log("Correo electrónico:", correoElectronico);
+                navigate("/");
+            }
+        } else {
+            console.error("La respuesta del servidor es inválida");
+        }
+    })
+    .catch((error) => {
+        console.error("Error en la solicitud:", error);
+    });    
     };
     const handleSubmitRestablecer = async (e) => {
         e.preventDefault();
@@ -235,7 +221,7 @@ const [showPassword, setShowPassword] = useState(false);
     };
 
   return (
-    <div className="hero-6" style={{ minHeight: '78.7vh' }}>
+    <div className="hero-6" style={{ height: '100vh' }}>
         <div>
             <nav className="navbar navbar-expand-lg nav-bare">
                 <Link to="/" className="navbar-brand logon">
@@ -258,7 +244,7 @@ const [showPassword, setShowPassword] = useState(false);
                         <div className="navbar-collapse" id="navbarNav">
                             <ul className="navbar-nav ml-auto menus">
                                 <li className="nav-item">
-                                    <NavLink className="nav-link pricing" to='/Calendario' activeclassname="active">Calendario</NavLink>        
+                                    <button className="nav-link pricing">Acerca de</button>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link pricing" href="https://www.umss.edu.bo/" target="_blank" rel="noreferrer">UMSS</a> 
