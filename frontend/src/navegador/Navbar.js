@@ -34,7 +34,7 @@ const Navbar = () => {
   const [messages, setMessages] = useState([]);
   const [selectedContact, setSelectedContact] = useState(null);
   const [mensajeInput, setMensajeInput] = useState('');
-  const usuarioId = sessionStorage.getItem('id');
+  const usuarioId = localStorage.getItem('id');
   const usuarioTipo = "Administrador";
   const [showMensajes, setShowMensajes] = useState(false); 
   const mensajesRef = useRef(null);
@@ -164,10 +164,10 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem('user');
-    sessionStorage.removeItem('email');
-    sessionStorage.removeItem('role');
-    sessionStorage.removeItem('id');
+    localStorage.removeItem('user');
+    localStorage.removeItem('email');
+    localStorage.removeItem('role');
+    localStorage.removeItem('id');
     setUserC(null);
     setEmailC(null);
     setUrole(null);

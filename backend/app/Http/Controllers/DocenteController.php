@@ -6,6 +6,7 @@ use App\Models\Docente;
 use Illuminate\Http\Request;
 use App\Models\Usuario;
 use App\Models\Administrador;
+use App\Models\Mensaje;
 use DB;
 
 
@@ -44,6 +45,7 @@ class DocenteController extends Controller
             DB::statement('SET FOREIGN_KEY_CHECKS=0');
             Docente::truncate();
             Usuario::truncate();   
+            Mensaje::truncate();
             DB::statement("ALTER TABLE usuario AUTO_INCREMENT = 1");
             DB::statement("ALTER TABLE docente AUTO_INCREMENT = 1");
             return response()->json(['message' => 'Todos los docentes y usuarios eliminados correctamente'], 200);

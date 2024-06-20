@@ -11,9 +11,9 @@ const UserProvider = ({ children }) => {
   // Cargar desde sessionStorage al inicializar
   useEffect(() => {
     if (urole === null){
-      const storedUser = sessionStorage.getItem('user');
-      const storedEmail = sessionStorage.getItem('email');
-      const storedRole = sessionStorage.getItem('role')
+      const storedUser = localStorage.getItem('user');
+      const storedEmail = localStorage.getItem('email');
+      const storedRole = localStorage.getItem('role')
       if (storedUser && storedEmail) {
         setUserC(storedUser);
         setEmailC(storedEmail);
