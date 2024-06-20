@@ -8,13 +8,13 @@
       "type": "image/x-icon"
     },
     {
-      "src": "LogoDefinitivo.jpg",
-      "type": "image/jpg",
+      "src": "LogoDefinitivo.jpeg",
+      "type": "image/jpeg",
       "sizes": "192x192"
     },
     {
-      "src": "LogoDefinitivo.jpg",
-      "type": "image/jpg",
+      "src": "LogoDefinitivo.jpeg",
+      "type": "image/jpeg",
       "sizes": "512x512"
     }
   ],
