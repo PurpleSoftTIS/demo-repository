@@ -126,10 +126,10 @@ const [showPassword, setShowPassword] = useState(false);
                 setErrorEmailValido("");
                 setErrorContraseñaValido("Contraseña incorrecta");
             } else {
-                sessionStorage.setItem('user', data.nombre);
-                sessionStorage.setItem('email', correoElectronico);
-                sessionStorage.setItem('role', data.rol);
-                sessionStorage.setItem('id', data.id);
+                localStorage.setItem('user', data.nombre);
+                localStorage.setItem('email', correoElectronico);
+                localStorage.setItem('role', data.rol);
+                localStorage.setItem('id', data.id);
                 setEmailC(correoElectronico);
                 setUserC(data.nombre);
                 setUrole(data.rol);
