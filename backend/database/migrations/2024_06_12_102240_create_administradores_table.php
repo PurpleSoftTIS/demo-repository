@@ -26,7 +26,7 @@ class CreateAdministradoresTable extends Migration
         Administrador::create([
             'correo_electronico' => 'purpleSoft@gmail.com',
             'contraseña' => $this->encriptar('purplesoft2024'),
-            'nombre' => 'purpleSoft',
+            'nombre' => 'purpleSoft', 
         ]);
     }
 
