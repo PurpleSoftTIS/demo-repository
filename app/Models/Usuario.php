@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Mensaje;
 
 class Usuario extends Model
 {
@@ -19,4 +20,13 @@ class Usuario extends Model
         "contraseña",
         "notification_count"
     ];
+    public function mensajesEnviados()
+    {
+        return $this->morphMany(Mensaje::class, 'sender');
+    }
+
+    public function mensajesRecibidos()
+    {
+        return $this->morphMany(Mensaje::class, 'receiver');
+    }
 }

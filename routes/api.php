@@ -16,6 +16,8 @@ use App\Http\Controllers\CorreoController;
 use App\Http\Controllers\Configuraciones;
 use App\Http\Controllers\AmbienteObtenerController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\MensajeController;
+use App\Http\Controllers\UsoAmbienteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;   
 
@@ -40,7 +42,11 @@ Route::get('/carreras', [CarreraController::class, 'index']);
 Route::get('/materias/{id}', [MateriaController::class, 'show']);
 Route::get('/obtenerHoras', [SolicitudController::class, 'obtenerHora']);
 Route::get('/obtenerSol', [SolicitudController::class, 'obtenerSolicitud']);
-Route::get('/SolicitudUrgencias', [SolicitudUrgencia::class, 'urgencias']);
+Route::get('/obtenerSolicitudUrgentes', [SolicitudController::class, 'obtenerSolicitudUrgentes']);
+Route::get('/obtenerSolicitudSugeridas', [SolicitudController::class, 'obtenerSolicitudSugeridas']);
+Route::get('/mensajes/{sender_id}/{sender_type}/{receiver_id}/{receiver_type}', [MensajeController::class, 'getMessages']);
+Route::get('/mensajes/contacts/{user_id}/{user_type}', [MensajeController::class, 'getContacts']);
+Route::get('/mensajes/conversationContacts/{user_id}/{user_type}', [MensajeController::class, 'getConversationContacts']);
 Route::get('/ReservasDocentes/{setEmailC}', [RerservasUsuario::class, 'reservasDocentes']);
 Route::get('/obtenerMara/{Correo}', [AmbienteController::class, 'MateriasObtener']);
 Route::get('/obtenerGrupos/{Materia}', [MateriaController::class, 'GruposObtener']);
@@ -48,18 +54,18 @@ Route::get('/configuraciones', [Configuraciones::class, 'obtenerconf']);
 Route::get('/configuracionesFecha', [Configuraciones::class, 'obtenerconFecha']);
 Route::get('/configuracionesFeriados', [Configuraciones::class, 'obtenerconfFeriados']);
 Route::get('/docentesPorMateria/{Materia}',[SolicitudController::class,'docentesPorMateria']);
-
 Route::get('/docentes', [DocenteController::class, 'index']);
 Route::get('/usuarios', [UsuarioController::class, 'index']);
 Route::get('/materias', [MateriaController::class, 'index']);
 Route::get('/listaAmbiente', [AmbienteController::class, 'index']);
 Route::get('/ambientesDispo/{capacidad}/{dia}/{hora_inicio}/{hora_fin}', [AmbienteController::class, 'ambientesDis']);
 Route::get('/ambientesDisponibles/{capacidad}/{dia}/{horarios}', [AmbienteObtenerController::class, 'ambientesDisponibles']);
-Route::get('/obtenerTodasSolicitudes', [SolicitudController::class, 'obtenerSolicitudTodas']);
-Route::get('/ambientesContiguos/{capacidad}/{dia}/{horas}', [SolicitudController::class, 'ambientesContiguos']);
+Route::get('/obtenerTodasSolicitudes', [SolicitudController::class, 'obtenerTodasSolicitudes']);
+Route::get('/ambientesContiguos/{dia}/{horas}/{fecha}', [SolicitudController::class, 'ambientesContiguos']);
 Route::get('/notifications', [NotificationController::class, 'index']);
 Route::get('/notifications/count/{userMail}', [NotificationController::class, 'getNotificationCount']);
 Route::get('/ambientesDisponibless/{capacidad}/{dia}/{horarios}/{fecha}', [Configuraciones::class, 'ambientesfechas']);
+Route::get('/informe-uso-ambientes', [UsoAmbienteController::class, 'obtenerInforme']);
 
 //Registrar Datos
 Route::post('/docentesRegistrar', [DocenteRegistrarController::class, 'registrar']);
@@ -81,6 +87,10 @@ Route::post('/notificationsMail', [NotificationController::class, 'storeMail']);
 Route::post('/notifications/mark-as-read/{userMail}', [NotificationController::class, 'markAsRead']);
 Route::post('/asignarAula', [SolicitudController::class, 'asignarAula']);
 Route::post('/registrarSolicitudConjunta',[SolicitudController::class,'registrarSolicitudConjunta']);
+Route::post('/asignarSugerencia', [SolicitudController::class, 'asignarSugerencia']);
+Route::post('/asignarAmbientes', [SolicitudController::class, 'asignarAmbientes']);
+Route::post('/mensajes', [MensajeController::class, 'store']);
+Route::post('/eliminarSolicitudesAntiguas',[SolicitudController::class,'rechazarSolicitudesAntiguas']);
 
 //Elimnar datos
 Route::delete('/docentes/{id_docente}', [DocenteController::class, 'eliminar']);
