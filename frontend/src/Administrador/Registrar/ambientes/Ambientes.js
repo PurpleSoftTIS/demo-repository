@@ -157,13 +157,13 @@ const Ambientes = () => {
         <div className="frame-div">
           <div className="input111">
             <div className="label-here6">Numero de Aula</div>
-            <input className="input12" placeholder="690E" type="text" onChange={(e) => setNombreAula(e.target.value)}/>
+            <input className="input-ta" placeholder="690E" type="text" onChange={(e) => setNombreAula(e.target.value)}/>
             {errorNombreAula && <p className="error">{errorNombreAula}</p>}
 
           </div>
           <div className="input111">
             <div className="label-here6">Capacidad de Estudiantes</div>
-            <input className="input13" placeholder="90" type="text" onChange={(e) => setCapacidadEstudiantes(e.target.value)}/>
+            <input className="input-ta" placeholder="90" type="text" onChange={(e) => setCapacidadEstudiantes(e.target.value)}/>
             {errorCapacidadEst && <p className="error">{errorCapacidadEst}</p>}
 
           </div>

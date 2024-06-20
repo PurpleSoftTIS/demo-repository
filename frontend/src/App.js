@@ -93,7 +93,7 @@ function GestRoutes() {
   return (
     <div>
       <Routes>
-        <Route path='/Ayuda' element={<h1>Ayuda</h1>}/>
+        <Route path='/Calendario' element={<Calendario/>} />
       </Routes>
     </div>
   );
@@ -148,7 +148,6 @@ function App() {
           <Route path="/Usuario/*" element={<PrivateUserRoute element={<UserRoutes />} />} />
           <Route path='/Gest/*' element={<PrivateGestRoute element={<GestRoutes />} />} />
           <Route path='/Rest/*' element={<PrivateRestRoute element={<RestRoutes />} />} /> 
-          <Route path='/Calendario' element={<Calendario/>} />
     
         </Routes>
       )}

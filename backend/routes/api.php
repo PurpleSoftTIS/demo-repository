@@ -17,6 +17,7 @@ use App\Http\Controllers\Configuraciones;
 use App\Http\Controllers\AmbienteObtenerController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\MensajeController;
+use App\Http\Controllers\UsoAmbienteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;   
 
@@ -64,6 +65,7 @@ Route::get('/ambientesContiguos/{dia}/{horas}/{fecha}', [SolicitudController::cl
 Route::get('/notifications', [NotificationController::class, 'index']);
 Route::get('/notifications/count/{userMail}', [NotificationController::class, 'getNotificationCount']);
 Route::get('/ambientesDisponibless/{capacidad}/{dia}/{horarios}/{fecha}', [Configuraciones::class, 'ambientesfechas']);
+Route::get('/informe-uso-ambientes', [UsoAmbienteController::class, 'obtenerInforme']);
 
 //Registrar Datos
 Route::post('/docentesRegistrar', [DocenteRegistrarController::class, 'registrar']);

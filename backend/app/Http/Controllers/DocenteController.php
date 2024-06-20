@@ -77,7 +77,7 @@ class DocenteController extends Controller
         } else {
             return response()->json(['correcta' => false, 'mensaje' => 'Contraseña no proporcionada'], 400);
         }
-        return response()->json(['exists' => true, 'correcta' => true, 'nombre' => $usuario->nombre ?? 'Administrador', 'rol' => $rol, 'id' => $usuario->getKey() ]);
+        return response()->json(['exists' => true, 'correcta' => true, 'nombre' => $usuario->nombre, 'rol' => $rol, 'id' => $usuario->getKey() ]);
     }
 
 

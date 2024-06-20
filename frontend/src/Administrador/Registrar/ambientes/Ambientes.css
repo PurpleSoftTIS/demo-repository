@@ -38,10 +38,10 @@ body {
   align-items: flex-start;
   justify-content: flex-start;
 }
-.input12,
+.input122,
 .input11,
 .input14,
-.input13,
+.input133,
 .input-ta,
 .label-here6 {
   font-weight: 500;
@@ -51,11 +51,11 @@ body {
   position: relative;
   line-height: 12px;
 }
-.input12,
+.input122,
 .input11,
 .input14,
 .input-ta,
-.input13 {
+.input133 {
   border: 1px solid #d1d5db;
   outline: 0;
   font-family: Inter;
@@ -69,18 +69,18 @@ body {
   padding: 12px 16px;
   color: #1f2937;
 }
-.input12:hover,
+.input122:hover,
 .input11:hover,
 .input14:hover,
-.input13:hover,
+.input133:hover,
 .input-ta:hover {
   border: 1px solid #010a26;
   box-sizing: border-box;
 }
-.input12:focus,
+.input122:focus,
 .input11:focus,
 .input14:focus,
-.input13:focus,
+.input133:focus,
 .input-ta:focus {
   border: 1px solid #010a26;
   box-sizing: border-box;

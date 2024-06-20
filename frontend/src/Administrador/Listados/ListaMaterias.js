@@ -61,8 +61,11 @@ const ListaMaterias = () => {
     }
   };  
 
-  const handleFileChange = (event) => { 
-    setFile(event.target.files[0]);
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setFile(file);
+    const label = document.querySelector('.customFileUpload');
+    label.textContent = file ? file.name : 'Seleccione CSV';
   };
 
   async function handleImportClick() {
@@ -117,29 +120,34 @@ const ListaMaterias = () => {
   
   return (
     <div className="containerDoss" style={{ minHeight: '78.7vh' }}>
-      <div className='encabezados'>
-        <div  className='contenidoss'>
-          <h2 className='TituloAm'>Materias Registradas:</h2>
-          <div className='buscado'>
+    <div className='encabezados'>
+      <div className='contenidoss'>
+        <h2 className='titulolistas'>Materias Registradas:</h2>
+        <div className='buscadox'>
           <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador' />
-            <button className="butn butn-filtro">Filtros</button>
-            <NavLink to="/Admin/Registro/Materias" className="butn butn-nuevo">
-              Nueva Materia<FaPlus className="icon" />
-            </NavLink>
-          </div>
+          <button className="butn butn-filtro">Filtros</button>
         </div>
-        <div  className='importar2'>
-            {loading && <div className="spinner-border text-primary" role="status"></div>}
-            <input type="file" onChange={handleFileChange} />
-            <button className="butn butn-csv" onClick={handleImportClick}>
-              Importar<FaFileCsv className="icon"/>
-            </button>
-            <button className="butn butn-borrar" onClick={() => setAdvertenciaBorrarTodo(true)}>
-              Borrar Todo<FaTrash className="icon"/>
-            </button>
-        </div>
-      </div>  
-      <div className='tablass'>
+      </div>
+      <div className='buttonses'>
+        {loading && <div className="spinner-border text-primary" role="status"></div>}
+        <input type="file" id="fileInput" onChange={handleFileChange} style={{ display: 'none' }} />
+        <label htmlFor="fileInput" className="customFileUpload">
+          Seleccione CSV
+        </label>
+        <NavLink to="/Admin/Registro/Materias" className="butn butn-nuevo">
+          Nueva Materia<FaPlus className="icon" />
+        </NavLink>
+      </div>
+      <div className='buttonses'>
+          <button className="butn butn-csv" onClick={handleImportClick}>
+            Importar<FaFileCsv className="icon"/>
+          </button>
+        <button className="butn butn-borrar" onClick={() => setAdvertenciaBorrarTodo(true)}>
+          Borrar Todo<FaTrash className="icon" />
+        </button>
+      </div>
+    </div>
+    <div className='tabla-contenedor'>
       <table className="table table-hover">
         <thead className="thead">
           <tr>
@@ -155,7 +163,7 @@ const ListaMaterias = () => {
         </thead>
         <tbody>
           {resultado.map((materia) => (
-              <tr key={materia.id_materia} className="fila-lista">
+            <tr key={materia.id_materia} className="fila-lista">
               <td>{materia.id_materia}</td>
               <td>{materia.codigo_materia}</td>
               <td>{materia.nombre_materia}</td>
@@ -164,14 +172,14 @@ const ListaMaterias = () => {
               <td>{materia.nombre_completo_docente}</td>
               <td className='iconos'>
                 {materia.estado_materia === "activo" ? (
-                  <img  src={Ico1} alt="Activo" width="60px" height="60px" />
+                  <img src={Ico1} alt="Activo" width="60px" height="60px" />
                 ) : (
-                  <img  src={Ico2} alt="Inactivo" width="60px" height="60px" />
+                  <img src={Ico2} alt="Inactivo" width="60px" height="60px" />
                 )}
               </td>
               <td>
-              <NavLink className="btn btn-editar mr-2" to={`/Admin/Editar/Materia/${materia.id_materia}`}>Editar</NavLink>
-              <button className="btn btn-eliminar" onClick={() => { setIdMateria(materia.id_materia); setAdvertenciaEliminar(true); }}>Eliminar</button>
+                <NavLink className="btn btn-editar" to={`/Admin/Editar/Materia/${materia.id_materia}`}>Editar</NavLink>
+                <button className="btn btn-eliminar" onClick={() => { setIdMateria(materia.id_materia); setAdvertenciaEliminar(true); }}>Eliminar</button>
               </td>
             </tr>
           ))}
@@ -184,7 +192,7 @@ const ListaMaterias = () => {
               <h3 className="til1">Advertencia</h3>
               <p className="til2">¿Estás seguro de eliminar todas las materias?</p>
             </div>
-            <div className="botones">
+            <div className="botonesx">
               <button className="conf" onClick={() => { setAdvertenciaBorrarTodo(false); borrarTodo(); }}>Sí</button>
               <button className="ref" onClick={() => setAdvertenciaBorrarTodo(false)}>No</button>
             </div>
@@ -198,16 +206,15 @@ const ListaMaterias = () => {
               <h3 className="til1">Advertencia</h3>
               <p className="til2">¿Estás seguro de eliminar esta materia?</p>
             </div>
-            <div className="botones">
+            <div className="botonesx">
               <button className="conf" onClick={() => { setAdvertenciaEliminar(false); eliminarMateria(idMateria); }}>Sí</button>
               <button className="ref" onClick={() => setAdvertenciaEliminar(false)}>No</button>
             </div>
           </div>
         </div>
       )}
-      </div>
-     
     </div>
+  </div>
   );
 };
 

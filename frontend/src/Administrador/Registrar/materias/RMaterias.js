@@ -218,7 +218,7 @@ const RegistrarMateria = () => {
       <div className="billing-info2" data-animate-on-scroll>
         <button className="backon-button" type="button" onClick={() => navigate(-1)}></button>
         <div className="checkout-frame">
-          <div className="checkout4">Actualizar Materia</div>
+          <div className="checkout4">{id ? 'Editar Materia' : 'Registrar Materia'}</div>
         </div>
         <div className="input-parent2">
           <div className="input19">

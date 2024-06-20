@@ -54,7 +54,7 @@ class MensajeController extends Controller
         $admins = Administrador::all()->map(function($admin, $index) {
             return [
                 'id' => $admin->id_administrador,
-                'nombre' => 'Admin' . ($index + 1),
+                'nombre' => 'Admin' . ' '. $admin->nombre,
                 'tipo' => 'Administrador'
             ];
         });
@@ -69,48 +69,101 @@ class MensajeController extends Controller
         // Mensajes enviados por el usuario
         $messagesSent = Mensaje::where('sender_id', $user_id)
             ->where('sender_type', $user_type)
-            ->distinct()
-            ->get(['receiver_id', 'receiver_type']);
-        
+            ->orderBy('created_at', 'desc') // Ordenar por el mensaje más reciente
+            ->get(['receiver_id', 'receiver_type', 'created_at']);
+
         // Mensajes recibidos por el usuario
         $messagesReceived = Mensaje::where('receiver_id', $user_id)
             ->where('receiver_type', $user_type)
-            ->distinct()
-            ->get(['sender_id', 'sender_type']);
-        
-        // Unificar contactos
-        $contacts = $messagesSent->map(function($message) {
-            return [
-                'id' => $message->receiver_id,
-                'tipo' => $message->receiver_type
-            ];
-        })->merge($messagesReceived->map(function($message) {
-            return [
-                'id' => $message->sender_id,
-                'tipo' => $message->sender_type
-            ];
-        }))->unique(function ($contact) {
-            return $contact['id'] . $contact['tipo'];
-        });
+            ->orderBy('created_at', 'desc') // Ordenar por el mensaje más reciente
+            ->get(['sender_id', 'sender_type', 'created_at']);
 
-        // Obtener datos completos de los contactos
-        $contactsData = $contacts->map(function($contact) {
-            if ($contact['tipo'] === 'Usuario') {
-                $user = Usuario::find($contact['id']);
-                return [
-                    'id' => $user->id_usuario,
-                    'nombre' => $user->nombre . ' ' . $user->apellido_paterno,
-                    'tipo' => 'Usuario'
-                ];
-            } else {
-                $admin = Administrador::find($contact['id']);
-                return [
-                    'id' => $admin->id_administrador,
-                    'nombre' => 'Admin' . $admin->id_administrador,
-                    'tipo' => 'Administrador'
-                ];
+        // Utilizamos un array asociativo para almacenar contactos únicos por nombre
+        $contactsData = [];
+
+        // Función para obtener datos completos de usuario o administrador
+        $getUserOrAdminData = function ($id, $type) {
+            if ($type === 'Usuario') {
+                $user = Usuario::find($id);
+                if ($user) {
+                    return [
+                        'id' => $user->id_usuario,
+                        'nombre' => $user->nombre . ' ' . $user->apellido_paterno,
+                        'tipo' => 'Usuario'
+                    ];
+                }
+            } elseif ($type === 'Administrador') {
+                $admin = Administrador::find($id);
+                if ($admin) {
+                    return [
+                        'id' => $admin->id_administrador,
+                        'nombre' => 'Admin' . ' '. $admin->nombre,
+                        'tipo' => 'Administrador'
+                    ];
+                }
             }
-        });
+            return null;
+        };
+
+        // Función para obtener el último mensaje entre el usuario y un contacto específico
+        $getLastMessage = function ($user_id, $user_type, $contact_id, $contact_type) {
+            return Mensaje::where(function ($query) use ($user_id, $user_type, $contact_id, $contact_type) {
+                $query->where('sender_id', $user_id)
+                    ->where('sender_type', $user_type)
+                    ->where('receiver_id', $contact_id)
+                    ->where('receiver_type', $contact_type);
+            })->orWhere(function ($query) use ($user_id, $user_type, $contact_id, $contact_type) {
+                $query->where('sender_id', $contact_id)
+                    ->where('sender_type', $contact_type)
+                    ->where('receiver_id', $user_id)
+                    ->where('receiver_type', $user_type);
+            })->orderBy('created_at', 'desc')->first();
+        };
+
+        // Agregar contactos con datos completos y último mensaje
+        foreach ($messagesSent as $message) {
+            $contactData = $getUserOrAdminData($message->receiver_id, $message->receiver_type);
+            if ($contactData && !isset($contactsData[$contactData['nombre']])) {
+                $lastMessage = $getLastMessage($user_id, $user_type, $contactData['id'], $contactData['tipo']);
+                $lastMessageDate = $lastMessage ? $lastMessage->created_at : null;
+
+                $contactsData[$contactData['nombre']] = array_merge($contactData, [
+                    'ultimo_mensaje_fecha' => $lastMessageDate,
+                ]);
+            } elseif ($contactData) {
+                $lastMessage = $getLastMessage($user_id, $user_type, $contactData['id'], $contactData['tipo']);
+                $lastMessageDate = $lastMessage ? $lastMessage->created_at : null;
+
+                if ($lastMessageDate > $contactsData[$contactData['nombre']]['ultimo_mensaje_fecha']) {
+                    $contactsData[$contactData['nombre']]['ultimo_mensaje_fecha'] = $lastMessageDate;
+                }
+            }
+        }
+
+        foreach ($messagesReceived as $message) {
+            $contactData = $getUserOrAdminData($message->sender_id, $message->sender_type);
+            if ($contactData && !isset($contactsData[$contactData['nombre']])) {
+                $lastMessage = $getLastMessage($user_id, $user_type, $contactData['id'], $contactData['tipo']);
+                $lastMessageDate = $lastMessage ? $lastMessage->created_at : null;
+
+                $contactsData[$contactData['nombre']] = array_merge($contactData, [
+                    'ultimo_mensaje_fecha' => $lastMessageDate,
+                ]);
+            } elseif ($contactData) {
+                $lastMessage = $getLastMessage($user_id, $user_type, $contactData['id'], $contactData['tipo']);
+                $lastMessageDate = $lastMessage ? $lastMessage->created_at : null;
+
+                if ($lastMessageDate > $contactsData[$contactData['nombre']]['ultimo_mensaje_fecha']) {
+                    $contactsData[$contactData['nombre']]['ultimo_mensaje_fecha'] = $lastMessageDate;
+                }
+            }
+        }
+
+        // Ordenar contactos por el último mensaje enviado
+        $contactsData = collect($contactsData)
+            ->sortByDesc('ultimo_mensaje_fecha')
+            ->values()
+            ->all();
 
         return response()->json($contactsData);
     }

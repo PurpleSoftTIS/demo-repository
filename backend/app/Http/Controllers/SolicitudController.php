@@ -12,6 +12,7 @@ use App\Models\Solicitudes_docentes;
 use App\Models\Materia;
 use App\Models\Solicitudes_materia;
 use App\Models\Solicitudes_horario;
+use App\Models\UsoAmbiente;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
@@ -444,7 +445,10 @@ class SolicitudController extends Controller
         $solicitudes = new Solicitudes();
         $solicitudes->id_ambiente = $id_ambiente;
         $solicitudes->id_solicitud = $id_solicitud;  
-        $solicitudes->save();    
+        $solicitudes->save();
+        $usoAmbiente = new UsoAmbiente();
+        $usoAmbiente->id_ambiente = $id_ambiente;
+        $usoAmbiente->save();    
         return response()->json(['message' => 'El aula se asignó correctamente'], 200);
     }
     public function docentesPorMateria($materia)
@@ -492,7 +496,10 @@ class SolicitudController extends Controller
             $solicitudes=new Solicitudes();
             $solicitudes->id_ambiente = $id_ambiente;
             $solicitudes->id_solicitud = $id_solicitud;  
-            $solicitudes->save(); 
+            $solicitudes->save();
+            $usoAmbiente = new UsoAmbiente();
+            $usoAmbiente->id_ambiente = $id_ambiente;
+            $usoAmbiente->save(); 
           
      }
      return response()->json(['message' => 'Los Aulas Se Asignaron corectamente'], 200);

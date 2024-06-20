@@ -168,28 +168,32 @@ const ListaDocentes = () => {
     <div className="containerDoss" style={{ minHeight: '78.7vh' }}>
       <div className='encabezados'>
         <div className='contenidoss'>
-          <h2 className='TituloAm'>Docentes Registrados:</h2>
-          <div className='buscado'>
+          <h2 className='titulolistas'>Docentes Registrados:</h2>
+          <div className='buscadox'>
             <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador' />
-              <button className="butn butn-filtro">Filtros</button>
-              <NavLink to="/Admin/Registro/Docentes" className="butn butn-nuevo">
-                Nuevo Docente<FaPlus className="icon" />
-              </NavLink>
+            <button className="butn butn-filtro">Filtros</button>
           </div>
-        </div> 
-        <div className='importar'>        
+        </div>
+        <div className='buttonses'>
           <label htmlFor="inputGroupFile" className="butn butn-csv">
-              Importar<FaFileCsv className="icon" />
+            Importar<FaFileCsv className="icon" />
           </label>
-              <input id="inputGroupFile" type="file" accept=".csv" style={{ display: 'none' }}
-                onChange={cargaMasiva}
-              />          
+          <input
+            id="inputGroupFile"
+            type="file"
+            accept=".csv"
+            style={{ display: 'none' }}
+            onChange={cargaMasiva}
+          />
           <button className="butn butn-borrar" onClick={borrarTodo}>
             Borrar Todo<FaTrash className="icon"/>
-          </button>        
-        </div>       
-      </div>      
-      <div className='tablass'>
+          </button>
+          <NavLink to="/Admin/Registro/Docentes" className="butn butn-nuevo">
+            Nuevo Docente<FaPlus className="icon" />
+          </NavLink>
+        </div>
+      </div>
+      <div className='tabla-contenedor'>
         <table className="table table-hover">
           <thead className="thead">
             <tr>
@@ -222,7 +226,7 @@ const ListaDocentes = () => {
                   )}
                 </td>
                 <td>
-                <button className="btn btn-editar mr-2" onClick={() => editarDocente(docente)}>Editar</button>
+                  <button className="btn btn-editar mr-2" onClick={() => editarDocente(docente)}>Editar</button>
                   <button className="btn btn-eliminar" onClick={() => eliminarDocenteYUsuario(docente.id_docente, docente.id_usuario)}>Eliminar</button>
                 </td>
               </tr>
@@ -236,7 +240,7 @@ const ListaDocentes = () => {
                 <h3 className="til1">Advertencia</h3>
                 <p className="til2">¿Estás seguro de eliminar todos los registros?</p>
               </div>
-              <div className="botones">
+              <div className="botonesx">
                 <button className="conf" onClick={eliminarTodosDocentes}>Sí</button>
                 <button className="ref" onClick={cancelarBorrarTodo}>No</button>
               </div>
@@ -250,7 +254,7 @@ const ListaDocentes = () => {
                 <h3 className="til1">Advertencia</h3>
                 <p className="til2">¿Estás seguro de eliminar este docente?</p>
               </div>
-              <div className="botones">
+              <div className="botonesx">
                 <button className="conf" onClick={confirmarEliminarDocente}>Sí</button>
                 <button className="ref" onClick={cancelarEliminarDocente}>No</button>
               </div>
@@ -260,7 +264,6 @@ const ListaDocentes = () => {
       </div>
     </div>
   );
-
-};
+}
 
 export default ListaDocentes;

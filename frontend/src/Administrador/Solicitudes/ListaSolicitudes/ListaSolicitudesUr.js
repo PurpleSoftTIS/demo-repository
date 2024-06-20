@@ -232,18 +232,18 @@ const ListaSolicitudes = () => {
  
 
 return (
-    <div className="containerr" style={{ minHeight: '78.7vh' }}>
+    <div className="containerDoss" style={{ minHeight: '78.7vh' }}>
       <div className='encabezados'>
       <div className='contenidoss'>
-          <h2 className='TituloAm'>Solicitudes:</h2>
-          <div className='buscado'>
+          <h2 className='titulolistas'>Solicitudes:</h2>
+          <div className='buscadoxe'>
             <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador'/>
             <button className="butn butn-filtro" onClick={handleShow}>Filtros</button>
           </div>
         </div>
       </div>
         
-      <div className='tablass' >
+      <div className='tabla-contenedor' >
       <table className="table table-hover">
         <thead className="thead">
           <tr>

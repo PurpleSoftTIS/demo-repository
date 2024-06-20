@@ -17,6 +17,7 @@ class Administrador extends Model
     protected $fillable = [
         'correo_electronico',
         'contraseña',
+        'nombre',
     ];
     public function mensajesEnviados()
     {

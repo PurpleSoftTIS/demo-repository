@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './ListaAulas.css';
-import { FaPlus, FaFileCsv, FaTrash } from 'react-icons/fa';
+import { FaPlus, FaFileCsv, FaTrash, FaChartBar } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Ico1 from '../../assets/IcoGood.png';
@@ -207,123 +207,124 @@ function ListaAulas() {
     <div className="containerDoss" style={{ minHeight: '78.7vh' }}>
       <div className='encabezados'>
         <div className='contenidoss'>
-          <h2 className='TituloAm'>Ambientes Registrados:</h2>
-          <div className='buscado'>
+          <h2 className='titulolistas'>Ambientes Registrados:</h2>
+          <div className='buscadox'>
             <input value={buscar} onChange={buscardor} type="text" placeholder="Buscar" className='buscador' />
             <button className="butn butn-filtro">Filtros</button>
+          </div>
+          <div className='buttonses'>
             <NavLink to="/Admin/Registro/Ambientes" className="butn butn-nuevo">
-                Nuevo Ambiente<FaPlus className="icon" />
+              Nuevo Ambiente<FaPlus className="icon" />
             </NavLink>
             <NavLink to="/Admin/Informe" className="butn butn-nuevo">
-                Generar Informe<FaPlus className="icon" />
+              Generar Informe<FaChartBar className="icon" />
             </NavLink>
           </div>
+          <div className='buttonses'>
+          <button className="butn butn-csv" onClickCapture={importaciones}>
+            Importar Datos<FaFileCsv className="icon" />
+          </button>
+          {importar && (
+            <div className='importaciones'>
+              <label htmlFor="inputGroupFile" className="butn butn-csv" style={{ marginTop: '7px' }}>
+                Importar Ambientes<FaFileCsv className="icon" />
+              </label>
+              <input
+                id="inputGroupFile"
+                type="file"
+                accept=".csv"
+                style={{ display: 'none' }}
+                onChange={handleArchivoSeleccionado} // Asociado a la importación de ambientes
+              />
+              <label htmlFor="inputGroupFile2" className="butn butn-csv" style={{ marginTop: '7px' }}>
+                Importar Dias y Horas<FaFileCsv className="icon" />
+              </label>
+              <input
+                id="inputGroupFile2"
+                type="file"
+                accept=".csv"
+                style={{ display: 'none' }}
+                onChange={handleArchivoDiasHorasSeleccionado} // Asociado a la importación de días y horas
+              />
+            </div>
+          )}
+          <button className="butn butn-borrar" onClick={confirmacionEliminacionTodo}>
+            Borrar Todo<FaTrash className="icon" />
+          </button>
         </div>
-        <div className='importar'>
-            <button className="butn butn-csv"  onClickCapture={importaciones}>
-              Importar Datos<FaFileCsv className="icon" />
-            </button>
-            {importar && (
-              <div className='importaciones'>
-              <label htmlFor="inputGroupFile" className="butn butn-csv">
-                  Importar Ambientes<FaFileCsv className="icon" />
-                </label>
-                <input
-                  id="inputGroupFile"
-                  type="file"
-                  accept=".csv"
-                  style={{ display: 'none' }}
-                  onChange={handleArchivoSeleccionado} // Asociado a la importación de ambientes
-                />
-                  <label htmlFor="inputGroupFile2" className="butn butn-csv">
-                    Importar Dias y Horas<FaFileCsv className="icon" />
-                  </label>
-                  <input
-                    id="inputGroupFile2"
-                    type="file"
-                    accept=".csv"
-                    style={{ display: 'none' }}
-                    onChange={handleArchivoDiasHorasSeleccionado} // Asociado a la importación de días y horas
-                  />
-                </div>
-              )}
-            <button className="butn butn-borrar" onClick={confirmacionEliminacionTodo}>
-              Borrar Todo<FaTrash className="icon" />
-            </button>
         </div>
       </div>
-      <div className='tablass'>
-          <table className="table table-hover">
-            <thead className="thead">
-              <tr>
-                <th>Nro Aula</th>
-                <th>Aula</th>
-                <th>Edificio</th>
-                <th>Tipo Ambiente</th>
-                <th>Nro Piso</th>
-                <th>Capacidad</th>
-                <th>Estado</th>
-                <th>Acciones</th>
+      <div className='tabla-contenedor'>
+        <table className="table table-hover">
+          <thead className="thead">
+            <tr>
+              <th>Nro Aula</th>
+              <th>Aula</th>
+              <th>Edificio</th>
+              <th>Tipo Ambiente</th>
+              <th>Nro Piso</th>
+              <th>Capacidad</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {resultado.map((aula) => (
+              <tr key={aula.id_ambiente} className="fila-lista">
+                <td>{aula.id_ambiente}</td>
+                <td>{aula.nombre_ambiente}</td>
+                <td>{aula.edificio}</td>
+                <td>{aula.tipo_ambiente}</td>
+                <td>{aula.numero_piso}</td>
+                <td>{aula.capacidad}</td>
+                <td className='iconos'>
+                  {aula.estado_ambiente === 'activo' ? (
+                    <img src={Ico1} alt="Activo" width="60px" height="60px" />
+                  ) : (
+                    <img src={Ico2} alt="Inactivo" width="60px" height="60px" />
+                  )}
+                </td>
+                <td>
+                  <button className="btn btn-editar" onClick={() => handleEditar(aula.id_ambiente)}>
+                    Editar
+                  </button>
+                  <button className="btn btn-eliminar" onClick={() => { borrar(aula.id_ambiente); }}>
+                    Eliminar
+                  </button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {resultado.map((aula) => (
-                <tr key={aula.id_ambiente} className="fila-lista">
-                  <td>{aula.id_ambiente}</td>
-                  <td>{aula.nombre_ambiente}</td>
-                  <td>{aula.edificio}</td>
-                  <td>{aula.tipo_ambiente}</td>
-                  <td>{aula.numero_piso}</td>
-                  <td>{aula.capacidad}</td>
-                  <td className='iconos'>
-                    {aula.estado_ambiente === 'activo' ? (
-                      <img  src={Ico1} alt="Activo" width="60px" height="60px" />
-                    ) : (
-                      <img  src={Ico2} alt="Inactivo" width="60px" height="60px" />
-                    )}
-                  </td>
-                  <td>
-                    <button className="btn btn-editar mr-2" onClick={() => handleEditar(aula.id_ambiente)}>
-                      Editar
-                    </button>
-                    <button className="btn btn-eliminar" onClick={() => {borrar(aula.id_ambiente); }}>
-                      Eliminar
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {Advertencia && (
-            <div className="overlay">
+            ))}
+          </tbody>
+        </table>
+        {Advertencia && (
+          <div className="overlay">
             <div className="Advertencia">
               <div className="text">
                 <h3 className="til1">Advertencia</h3>
                 <p className="til2">¿Estás seguro de eliminar todos los registros?</p>
               </div>
-              <div className="botones">
+              <div className="botonesx">
                 <button className="conf" onClick={borrarTodos}>Sí</button>
                 <button className="ref" onClick={cancelarBorrar}>No</button>
               </div>
             </div>
           </div>
-          )}
-          {Advertencia2 && (
-            <div className="overlay">
+        )}
+        {Advertencia2 && (
+          <div className="overlay">
             <div className="Advertencia">
               <div className="text">
                 <h3 className="til1">Advertencia</h3>
-                <p className="til2">¿Estás seguro de eliminar este docente?</p>
+                <p className="til2">¿Estás seguro de eliminar este Ambiente?</p>
               </div>
-              <div className="botones">
+              <div className="botonesx">
                 <button className="conf" onClick={borrarAmbiente}>Sí</button>
                 <button className="ref" onClick={cancelar}>No</button>
               </div>
             </div>
           </div>
-          )}
+        )}
       </div>
-      
     </div>
   );
 }

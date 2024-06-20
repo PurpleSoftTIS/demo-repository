@@ -25,11 +25,12 @@ export const AmbientesDis = () => {
       };
     
     return (
-        <div className="container" style={{ minHeight: '78.7vh'}}>
+        <div className="containerDoss" style={{ minHeight: '78.7vh'}}>
             <div className='encabezados'>
-                <h2 className='TituloAm'>Ambientes:</h2>
+                <h2 className='titulolistas'>Ambientes:</h2>
             </div>
-            <div className='tablass'>
+            <div style={{marginBottom: '50px'}}></div>       
+            <div className='tabla-contenedor'>
             <table className="table table-hover">
                 <thead className="thead">
                     <tr>

@@ -3,7 +3,7 @@ import './Navbar.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import logo from '../assets/LogoDefinitivo.jpeg';
 import userLogo from '../assets/IcoAdmi.png';
-import { FaBars, FaBell, FaEdit, FaTrash, FaComments, FaArrowLeft } from 'react-icons/fa';
+import { FaBars, FaBell, FaEdit, FaTrash, FaComments, FaArrowLeft, FaPaperPlane } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { UserContext } from '../Context/UserContext';
 
@@ -17,7 +17,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const dropdownRef2 = useRef(null);
   const dropdownRef = useRef(null);
-  const { setUserC, setEmailC, setUrole } = useContext(UserContext);
+  const { setUserC, setEmailC, setUrole, userC} = useContext(UserContext);
   const [showSesion, setShowSesion] = useState(false);
   const sesionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(true);
@@ -30,15 +30,18 @@ const Navbar = () => {
   const [selectedNotificationId, setSelectedNotificationId] = useState(null);
   const [activeTab, setActiveTab] = useState('mensajes');
   const [contacts, setContacts] = useState([]);
-  const [conversationContacts, setConversationContacts] = useState([]); // Add this state
+  const [conversationContacts, setConversationContacts] = useState([]);
   const [messages, setMessages] = useState([]);
   const [selectedContact, setSelectedContact] = useState(null);
   const [mensajeInput, setMensajeInput] = useState('');
   const usuarioId = sessionStorage.getItem('id');
-  const usuarioTipo = "Administrador"; // Actualizado para obtener el tipo de usuario desde sessionStorage
+  const usuarioTipo = "Administrador";
   const [showMensajes, setShowMensajes] = useState(false); 
-  const mensajesRef = useRef(null); 
-  
+  const mensajesRef = useRef(null);
+  const messagesListRef = useRef(null);
+  const bottomRef = useRef(null);
+  const nombre = userC;
+
   const checkVisibility = () => {
     if (window.innerWidth > 990) {
       setIsVisible(true);
@@ -65,6 +68,9 @@ const Navbar = () => {
       if (mensajesRef.current && !mensajesRef.current.contains(event.target)) {
         setShowMensajes(false);
       }
+      if (notificationRef.current && !notificationRef.current.contains(event.target)) {
+        setShowNotification(false);
+      }
     };
 
     document.body.addEventListener('click', handleClickOutside);
@@ -73,7 +79,7 @@ const Navbar = () => {
       if (window.innerWidth > 990) {
         setIsOpen(false);
         setIsVisible(true);
-      }else{
+      } else {
         setIsVisible(false);
       }
     };
@@ -119,9 +125,20 @@ const Navbar = () => {
 
   const fetchMessages = (senderId, senderType, receiverId, receiverType) => {
     fetch(`${baseURL}/mensajes/${senderId}/${senderType}/${receiverId}/${receiverType}`)
-      .then(response => response.json())
-      .then(data => setMessages(data))
-      .catch(error => console.error('Error fetching messages:', error));
+      .then((response) => response.json())
+      .then((data) => {
+        setMessages(data);
+        scrollToBottom();
+      })
+      .catch((error) => console.error('Error fetching messages:', error));
+  };
+
+  const scrollToBottom = () => {
+    setTimeout(() => {
+      if (messagesListRef.current) {
+        messagesListRef.current.scrollTop = messagesListRef.current.scrollHeight;
+      }
+    }, 200);
   };
 
   const toggleDropdown = () => {
@@ -130,18 +147,22 @@ const Navbar = () => {
   const toggleDropdown2 = () => {
     setShowDropdown2(!showDropdown2);
   };
-  const toggleSesion = ()=>{
+  const toggleSesion = () => {
     setShowSesion(!showSesion);
-
   };
   const toggleNotification = () => {
     setShowNotification(!showNotification);
   };
 
   const toggleMensajes = () => {
-    setShowMensajes(!showMensajes); // Alternar visibilidad de mensajes
+    setShowMensajes(!showMensajes);
+    fetchConversationContacts(usuarioId, usuarioTipo);
+    fetchContacts(usuarioId, usuarioTipo);
+    if (selectedContact) {
+      fetchMessages(usuarioId, usuarioTipo, selectedContact.id, selectedContact.tipo);
+    }
   };
-  
+
   const handleLogout = () => {
     sessionStorage.removeItem('user');
     sessionStorage.removeItem('email');
@@ -155,7 +176,7 @@ const Navbar = () => {
 
   const handleNotificationSubmit = (e) => {
     e.preventDefault();
-    fetch('http://127.0.0.1:8000/api/notificationsMail', {
+    fetch('http://127.0.0.1:8000/api/notifications', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -194,46 +215,42 @@ const Navbar = () => {
       },
       body: JSON.stringify({ content: editNotificationContent }),
     })
-    .then(response => response.json())
-    .then(data => {
-      // Actualizar la lista de notificaciones en el frontend con la notificación editada
-      const updatedNotifications = notifications.map(notification => {
-        if (notification.id === selectedNotificationId) {
-          return {
-            ...notification,
-            content: editNotificationContent,
-          };
-        }
-        return notification;
-      });
-      setNotifications(updatedNotifications);
-      // Cerrar el modal
-      handleCloseEditModal();
-    })
-    .catch(error => console.error('Error al editar la notificación:', error));
+      .then(response => response.json())
+      .then(data => {
+        const updatedNotifications = notifications.map(notification => {
+          if (notification.id === selectedNotificationId) {
+            return {
+              ...notification,
+              content: editNotificationContent,
+            };
+          }
+          return notification;
+        });
+        setNotifications(updatedNotifications);
+        handleCloseEditModal();
+      })
+      .catch(error => console.error('Error al editar la notificación:', error));
   };
 
   const handleDelete = (notificationId) => {
-    // Implementa la lógica para enviar la solicitud de eliminación al backend
-    // Aquí estoy suponiendo que estás usando una solicitud DELETE
     fetch(`http://127.0.0.1:8000/api/notifications/${notificationId}`, {
       method: 'DELETE',
     })
-    .then(response => {
-      if (response.ok) {
-        // Eliminar la notificación de la lista en el frontend
-        const updatedNotifications = notifications.filter(notification => notification.id !== notificationId);
-        setNotifications(updatedNotifications);
-      } else {
-        console.error('Error al eliminar la notificación:', response.status);
-      }
-    })
-    .catch(error => console.error('Error al eliminar la notificación:', error));
+      .then(response => {
+        if (response.ok) {
+          const updatedNotifications = notifications.filter(notification => notification.id !== notificationId);
+          setNotifications(updatedNotifications);
+        } else {
+          console.error('Error al eliminar la notificación:', response.status);
+        }
+      })
+      .catch(error => console.error('Error al eliminar la notificación:', error));
   };
 
   const handleConf = () => {
     navigate("/Admin/Configuraciones")
   }
+
   const handleOptionClick = () => {
     setShowDropdown(false); 
   };
@@ -244,11 +261,17 @@ const Navbar = () => {
   const handleContactClick = (contact) => {
     setSelectedContact(contact);
     fetchMessages(usuarioId, usuarioTipo, contact.id, contact.tipo);
-    setShowMensajes(true); // Ensure showMensajes stays open
+    setTimeout(() => {
+      setShowMensajes(true);
+    }, 100);
   };
 
   const handleBackClick = () => {
     setSelectedContact(null);
+    setTimeout(() => {
+      setShowMensajes(true);
+      fetchConversationContacts(usuarioId, usuarioTipo);
+    }, 100);
   };
 
   const handleMensajeSubmit = (e) => {
@@ -271,12 +294,13 @@ const Navbar = () => {
       },
       body: JSON.stringify(newMensaje),
     })
-    .then(response => response.json())
-    .then(data => {
-      setMessages([...messages, data]);
-      setMensajeInput('');
-    })
-    .catch(error => console.error('Error sending message:', error));
+      .then(response => response.json())
+      .then(data => {
+        setMessages([...messages, data]);
+        setMensajeInput('');
+        scrollToBottom();
+      })
+      .catch(error => console.error('Error sending message:', error));
   };
 
   return (
@@ -284,7 +308,7 @@ const Navbar = () => {
       <nav className="navbar navbar-expand-lg">
         <div className="container-fluid">
           <div className="logo-container">
-            <NavLink className="navbar-brand" to='/Admin/Inicio/HomeUno'>         
+            <NavLink className="navbar-brand" to='/'>         
               <img className="" src={logo} alt="logo" width='60px' height='60px' />
             </NavLink>
             <div className='nombre_empresa'>
@@ -327,64 +351,70 @@ const Navbar = () => {
               </div>
             )}
           </div>
-          <div className="mensajes-container" ref={mensajesRef}>
+          <div className='mensajes-container' ref={mensajesRef}>
             <button className={`bell-icon ${showMensajes ? 'active' : ''}`} onClick={toggleMensajes}>
               <FaComments style={{ color: 'white' }} />
             </button>
             {showMensajes && (
-              <div className="mensajes-menu">
+              <div className='mensajes-menu'>
                 {selectedContact ? (
                   <div>
-                    <div className="chat-header">
-                      <button className="back-button" onClick={handleBackClick}>
+                    <div className='chat-header'>
+                      <button className='back-button' onClick={handleBackClick}>
                         <FaArrowLeft />
                       </button>
                       <h3>{selectedContact.nombre}</h3>
                     </div>
-                    <div className="chat-container">
-                      <div className="messages-list">
+                    <div className='chat-container'>
+                      <div className='messages-list' ref={messagesListRef}>
                         {messages.map((mensaje) => (
-                          <div key={mensaje.id} className={`message ${mensaje.sender_id === usuarioId && mensaje.sender_type === usuarioTipo ? 'sent' : 'received'}`}>
+                          <div
+                            key={mensaje.id}
+                            className={`message ${mensaje.sender_id == usuarioId && mensaje.sender_type == usuarioTipo ? 'sent' : 'received'}`}
+                          >
                             <p>{mensaje.contenido}</p>
                           </div>
                         ))}
+                        <div ref={bottomRef} />
                       </div>
-                      <form className="message-form" onSubmit={handleMensajeSubmit}>
+                      <form className='message-form' onSubmit={handleMensajeSubmit}>
                         <input
-                          type="text"
-                          className="message-input"
-                          placeholder="Escribe un mensaje"
+                          type='text'
+                          className='message-input'
+                          placeholder='Escribe un mensaje'
                           value={mensajeInput}
                           onChange={(e) => setMensajeInput(e.target.value)}
                         />
-                        <button type="submit" className="message-submit">Enviar</button>
+                        <button type='submit' className='message-submit'>
+                          <FaPaperPlane />
+                        </button>
                       </form>
                     </div>
                   </div>
                 ) : (
                   <div>
-                    <div className="mensajes-tabs">
+                    <div className='mensajes-tabs'>
                       <button onClick={() => setActiveTab('mensajes')} className={activeTab === 'mensajes' ? 'mensaje-active' : ''}>Mensajes</button>
                       <button onClick={() => setActiveTab('usuarios')} className={activeTab === 'usuarios' ? 'mensaje-active' : ''}>Usuarios</button>
                       <button onClick={() => setActiveTab('admin')} className={activeTab === 'admin' ? 'mensaje-active' : ''}>Admin</button>
                     </div>
-                    <div className="mensajes-content">
-                      <div className="mensajes-section" style={{ display: activeTab === 'mensajes' ? 'block' : 'none' }}>
+                    <div className='mensajes-content'>
+                      <div className='mensajes-section' style={{ display: activeTab === 'mensajes' ? 'block' : 'none' }}>
                         <h2>Mensajes</h2>
                         {conversationContacts.length === 0 ? (
                           <p>No hay conversaciones abiertas.</p>
                         ) : (
                           conversationContacts.map((contact) => (
-                            <div key={contact.id} className="contact-item" onClick={() => handleContactClick(contact)}>
+                            <div key={contact.id} className='contact-item' onClick={() => handleContactClick(contact)}>
                               <p>{contact.nombre}</p>
                             </div>
                           ))
                         )}
                       </div>
-                      <div className="contacts-section" style={{ display: activeTab === 'usuarios' || activeTab === 'admin' ? 'block' : 'none' }}>
+                      <div className='contacts-section' style={{ display: activeTab === 'usuarios' || activeTab === 'admin' ? 'block' : 'none' }}>
                         <h2>{activeTab === 'usuarios' ? 'Usuarios' : 'Admin'}</h2>
-                        {contacts.filter(contact => contact.tipo === (activeTab === 'usuarios' ? 'Usuario' : 'Administrador')).map((contact) => (
-                          <div key={contact.id} className="contact-item" onClick={() => handleContactClick(contact)}>
+                        {contacts.filter((contact) => contact.tipo === (activeTab === 'usuarios' ? 'Usuario' : 'Administrador')).map((contact) => (
+                          <div key={contact.id} className='contact-item' onClick={() => handleContactClick(contact)}>
                             <p>{contact.nombre}</p>
                           </div>
                         ))}
@@ -437,8 +467,6 @@ const Navbar = () => {
                       </div>              
                   )}              
               </div>
-             
-              
             </ul>
           </div>          
           {isVisible &&(
@@ -446,7 +474,7 @@ const Navbar = () => {
               <button className="usuario" onClick={toggleSesion} >
                 <img className="" src={userLogo} alt="logo" width='50px' height='50px' />
               </button>
-              <button className='Rol'onClick={toggleSesion}>Administrador</button>
+              <button className='Rol'onClick={toggleSesion}>{nombre}</button>
                 {showSesion && (
                       <div className="sesion">
                           <button className="opciones" onClick={handleLogout}>Cerrar sesión</button>
@@ -472,7 +500,6 @@ const Navbar = () => {
         </div>
       )}
     </div>
-  
   )
 }
 

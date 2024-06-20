@@ -26,9 +26,9 @@ const DocentesActualizar = () => {
   const handleActualizacionDocente = (e) => {
     e.preventDefault();
     const nombres = document.querySelector(".input11").value.trim();
-    const apellidoPaterno = document.querySelector(".input12").value.trim();
-    const apellidoMaterno = document.querySelector(".input13").value.trim();
-    const correo = document.querySelector(".input14").value.trim();
+    const apellidoPaterno = document.querySelector(".input122").value.trim();
+    const apellidoMaterno = document.querySelector(".input133").value.trim();
+    const correo = document.querySelector(".input-ta").value.trim();
     const codigoDocente = document.querySelector(".input16").value.trim();
 
     if (!nombres || !apellidoPaterno || !apellidoMaterno || !correo || !tipo || !codigoDocente) {
@@ -197,19 +197,19 @@ const DocentesActualizar = () => {
             <div className="input-group">
               <div className="input2">
                 <div className="label-here">Apellido Paterno</div>
-                <input className="input12" placeholder="ApPaterno" type="text" value={apellidoPaterno} onChange={(e) => setApellidoPaterno(e.target.value)} />
+                <input className="input122" placeholder="ApPaterno" type="text" value={apellidoPaterno} onChange={(e) => setApellidoPaterno(e.target.value)} />
                 {errorApellidoPaterno && <p className="error">{errorApellidoPaterno}</p>}
               </div>
               <div className="input2">
                 <div className="label-here">Apellido Materno</div>
-                <input className="input13" placeholder="ApMaterno" type="text" value={apellidoMaterno} onChange={(e) => setApellidoMaterno(e.target.value)} />
+                <input className="input133" placeholder="ApMaterno" type="text" value={apellidoMaterno} onChange={(e) => setApellidoMaterno(e.target.value)} />
                 {errorApellidoMaterno && <p className="error">{errorApellidoMaterno}</p>}
               </div>
             </div>
             <div className="inputi">
               <div className="label-here">Correo</div>
               <input
-                className="input14"
+                className="input-ta"
                 placeholder="docente@docente.com"
                 type="text"
                 value={correo} onChange={(e) => setCorreo(e.target.value)}

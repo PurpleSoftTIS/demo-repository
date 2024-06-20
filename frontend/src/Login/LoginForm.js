@@ -245,7 +245,7 @@ const [showPassword, setShowPassword] = useState(false);
                         <div className="navbar-collapse" id="navbarNav">
                             <ul className="navbar-nav ml-auto menus">
                                 <li className="nav-item">
-                                    <NavLink to="/Calendario" className="nav-link pricing">Calendario</NavLink>
+                                    <NavLink to="/Gest/Calendario" className="nav-link pricing">Calendario</NavLink>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link pricing" href="https://www.umss.edu.bo/" target="_blank" rel="noreferrer">UMSS</a> 

@@ -18,6 +18,7 @@ class CreateAdministradoresTable extends Migration
             $table->id('id_administrador');
             $table->string('correo_electronico', 30)->unique();
             $table->string('contraseña', 100);
+            $table->string('nombre',20);
             $table->timestamps();
         });
 
@@ -25,6 +26,7 @@ class CreateAdministradoresTable extends Migration
         Administrador::create([
             'correo_electronico' => 'purpleSoft@gmail.com',
             'contraseña' => $this->encriptar('purplesoft2024'),
+            'nombre' => 'purpleSoft',
         ]);
     }
 
