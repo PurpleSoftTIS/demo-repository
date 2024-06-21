@@ -14,7 +14,7 @@ class CreateConfiguracionFechaTable extends Migration
     public function up()
     {
         Schema::create('configuracion_fecha', function (Blueprint $table) {
-            $table->date("inicio");
+            $table->date("inicio")->primary();
             $table->date("fin");
             $table->timestamps();
         });

@@ -14,7 +14,7 @@ class CreateFeriadosTable extends Migration
     public function up()
     {
         Schema::create('feriados', function (Blueprint $table) {
-            $table->date("fecha");
+            $table->date("fecha")->primary();;
             $table->timestamps();
         });
     }
