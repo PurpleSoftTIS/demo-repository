@@ -38,8 +38,8 @@ const ListaDocentes = () => {
     sessionStorage.setItem('listaDocentesCurrentPage', currentPage);
   }, [currentPage]);
 
-  const eliminarDocenteYUsuario = (id_docente, id_usuario) => {
-    setDocenteToDelete({ id_docente, id_usuario });
+  const eliminarDocenteYUsuario = (id_docente) => {
+    setDocenteToDelete(id_docente);
     setShowDeleteDocente(true);
   };
 

@@ -80,7 +80,8 @@ class SolicitudController extends Controller
                     'materia.nombre_materia', 'solicitud.created_at', 'solicitud.id_solicitud', 'solicitud.numero_estudiantes',
                     DB::raw("MIN(usuario.nombre) as nombre"),
                     DB::raw("MIN(usuario.apellido_paterno) as apellido_paterno"),
-                    DB::raw("MIN(usuario.apellido_materno) as apellido_materno")
+                    DB::raw("MIN(usuario.apellido_materno) as apellido_materno"),
+                    DB::raw("MIN(usuario.correo_electronico) as correo_electronico") 
                 )
                 ->where('solicitud.estado_solicitud', 'pendi')
                 ->where(function($query) use ($fechaActual, $fechaLimite) {
