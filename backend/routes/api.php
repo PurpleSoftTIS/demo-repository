@@ -50,9 +50,8 @@ Route::get('/mensajes/conversationContacts/{user_id}/{user_type}', [MensajeContr
 Route::get('/ReservasDocentes/{setEmailC}', [RerservasUsuario::class, 'reservasDocentes']);
 Route::get('/obtenerMara/{Correo}', [AmbienteController::class, 'MateriasObtener']);
 Route::get('/obtenerGrupos/{Materia}', [MateriaController::class, 'GruposObtener']);
-Route::get('/configuraciones', [Configuraciones::class, 'obtenerconf']);
-Route::get('/configuracionesFecha', [Configuraciones::class, 'obtenerconFecha']);
-Route::get('/configuracionesFeriados', [Configuraciones::class, 'obtenerconfFeriados']);
+Route::get('/configuraciones', [Configuraciones::class, 'obtenerConfiguraciones']);
+Route::get('/feriados', [Configuraciones::class, 'obtenerFeriados']);
 Route::get('/docentesPorMateria/{Materia}',[SolicitudController::class,'docentesPorMateria']);
 Route::get('/docentes', [DocenteController::class, 'index']);
 Route::get('/usuarios', [UsuarioController::class, 'index']);
@@ -81,25 +80,30 @@ Route::post('/registrarSolicitud',[SolicitudController::class,'registrarSolicitu
 Route::post('/enviarcorreo' , [CorreoController::class, 'enviarCorreo']);
 Route::post('/verificarCodigo', [CorreoController::class, 'verificarCodigo']);
 Route::post('/restablecercontrasena', [DocenteController::class, 'restablecerPasswd']);
-Route::post('/subirConfiguraciones', [Configuraciones::class, 'registrar']);
+Route::post('/registrarConfiguraciones', [Configuraciones::class, 'registrar']);
+Route::post('/registrarFeriados', [Configuraciones::class, 'registrarFeriado']);
 Route::post('/notifications', [NotificationController::class, 'store']);
 Route::post('/notificationsMail', [NotificationController::class, 'storeMail']);
 Route::post('/notifications/mark-as-read/{userMail}', [NotificationController::class, 'markAsRead']);
 Route::post('/asignarAula', [SolicitudController::class, 'asignarAula']);
+Route::post('/asignarAulaMail', [SolicitudController::class, 'asignarAulaMail']);
 Route::post('/registrarSolicitudConjunta',[SolicitudController::class,'registrarSolicitudConjunta']);
 Route::post('/asignarSugerencia', [SolicitudController::class, 'asignarSugerencia']);
 Route::post('/asignarAmbientes', [SolicitudController::class, 'asignarAmbientes']);
+Route::post('/asignarAmbientesMail', [SolicitudController::class, 'asignarAmbientesMail']);
 Route::post('/mensajes', [MensajeController::class, 'store']);
 Route::post('/eliminarSolicitudesAntiguas',[SolicitudController::class,'rechazarSolicitudesAntiguas']);
 
 //Elimnar datos
-Route::delete('/docentes/{id_docente}', [DocenteController::class, 'eliminar']);
+Route::delete('/docentes/{id_docente}', [DocenteController::class, 'eliminarDocente']);
 Route::delete('/borrar/{id_ambiente}', [DeleteAmbienteController::class, 'borrarAmbiente']);
 Route::delete('/materias/{id}', [MateriaController::class, 'destroy']);
 Route::delete('/materias', [MateriaController::class, 'eliminarTodo']);
 Route::delete('/borrarTodo',  [DeleteAmbienteController::class,'Borrartodo']);
 Route::delete('/borrarTodoDocente',  [DocenteController::class,'eliminarAll']);
 Route::delete('/notifications/{id}', [NotificationController::class, 'destroy']);
+Route::delete('/eliminarFeriado/{fecha}', [Configuraciones::class, 'eliminarFeriado']);
+Route::delete('/eliminarTodosFeriados', [Configuraciones::class, 'eliminarTodosFeriados']);
 
 //Actualizar datos
 Route::put('/ambiente/{id_ambiente}', [AmbienteController::class, 'actualizarAmbiente']);
@@ -107,5 +111,6 @@ Route::put ('/actualizar/{id_ambiente}',[AmbienteController::class,'actualizarAm
 Route::put('/materias/{id}', [MateriaRegistrarController::class, 'update']);
 Route::put('/actualizarDocente/{id_docente}', [DocenteController::class, 'editarDocentes']);
 Route::put('/aceptarsolicitud/{id}', [SolicitudController::class, 'aceptarSolicitud']);
-Route::put('/rechazarsolicitud/{id}', [SolicitudController::class, 'rechazarsolicitud']);
+Route::put('/rechazarsolicitud', [SolicitudController::class, 'rechazarsolicitud']);
+Route::put('/rechazarsolicitudMail', [SolicitudController::class, 'rechazarsolicitudMail']);
 Route::put('/notifications/{id}', [NotificationController::class, 'update']);

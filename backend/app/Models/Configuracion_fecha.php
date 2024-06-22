@@ -9,7 +9,8 @@ class Configuracion_fecha extends Model
 {
     use HasFactory;
     protected $table = 'configuracion_fecha';
-
+    protected $primaryKey = 'inicio'; 
+    
     protected $fillable =[        
         "inicio",
         "fin"       

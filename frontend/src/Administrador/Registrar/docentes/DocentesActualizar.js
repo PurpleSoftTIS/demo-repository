@@ -87,7 +87,7 @@ const DocentesActualizar = () => {
       setErrorCodigo("");
     }
 
-    if (correo.length > 30) {
+    if (correo.length > 50) {
         setErrorCorreo("Su correo no debe exceder los 30 caracteres");
         return;
     }else{
@@ -117,7 +117,7 @@ const DocentesActualizar = () => {
 
     console.log("Datos a enviar:", datosDocente);
 
-    fetch(`http://127.0.0.1:8000/api/docentes/${id_docente}`, {
+    fetch(`http://127.0.0.1:8000/api/actualizarDocente/${id_docente}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json"

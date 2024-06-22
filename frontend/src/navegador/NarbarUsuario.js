@@ -31,6 +31,7 @@ const NarbarUsuario = () => {
   const mensajesRef = useRef(null);
   const messagesListRef = useRef(null);
   const bottomRef = useRef(null);
+  const sesionRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -47,6 +48,9 @@ const NarbarUsuario = () => {
       }
       if (mensajesRef.current && !mensajesRef.current.contains(event.target)) {
         setShowMensajes(false);
+      }
+      if (sesionRef.current && !sesionRef.current.contains(event.target)) {
+        setShowSesion(false);
       }
     };
 
@@ -122,6 +126,7 @@ const NarbarUsuario = () => {
     localStorage.removeItem('email');
     localStorage.removeItem('role');
     localStorage.removeItem('id');
+    sessionStorage.clear();
     setUserC(null);
     setEmailC(null);
     setUrole(null);
@@ -322,7 +327,7 @@ const NarbarUsuario = () => {
               <li className='nav-item'>
                 <NavLink className='nav-link' to='/'>Inicio</NavLink>
               </li>
-              <div className='dropdown-container'>
+              <div className='dropdown-container' ref={dropdownRef2}>
                 <button className='nav-link dropdown-toggle' onClick={toggleDropdown2} style={{ cursor: 'pointer' }}>Solicitar</button>
                 {showDropdown2 && (
                   <div className='menu'>
@@ -339,7 +344,7 @@ const NarbarUsuario = () => {
               </li>
             </ul>
           </div>
-          <div className='InicioSesion'>
+          <div className='InicioSesion'  ref={sesionRef} >
             <button className='usuario' onClick={toggleSesion}>
               <img className='' src={userLogo} alt='logo' width='50px' height='50px' />
             </button>

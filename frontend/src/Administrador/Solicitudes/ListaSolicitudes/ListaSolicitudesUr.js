@@ -265,7 +265,6 @@ return (
             >
               <td>{solicitud.id_solicitud}</td>
               <td>{`${solicitud.nombre} ${solicitud.apellido_paterno} ${solicitud.apellido_materno}`}</td>
-
               <td>{solicitud.nombre_materia}</td>
               <td>{solicitud.motivo}</td>
               <td>{solicitud.fecha_solicitud}</td>
@@ -339,19 +338,20 @@ return (
       </Modal>
       {mostrarFormulario && (
         <div className="overlay" onClick={cerrarFormulario}>
-          <div className="formulario-emergente" onClick={(e) => e.stopPropagation()}>
+          <div className="formulario-emergente" onClick={(e) => e.stopPropagation()} style={{backgroundColor:'#050259'}}>
             <div className="contedorForm">
               <section className="contenedor">
                   <b className="tituloForm">Detalles de Solicitud</b>
                   {Object.entries(formularioData).map(([key, value]) => (
                     <div key={key} className="dimensionForm">
-                    <div className="contenido">{key.replace(/_/g, ' ').charAt(0).toUpperCase() + key.replace(/_/g, ' ').slice(1)}</div>
+                    <div className="contenido" style={{color:'white'}} >{key.replace(/_/g, ' ').charAt(0).toUpperCase() + key.replace(/_/g, ' ').slice(1)}</div>
                       <input
                         className="textoForm"
                         disabled type="text"
                         name={key}
                         value={value}
-                        onChange={handleChange}                        
+                        onChange={handleChange}   
+                        style={{color:'white'}}                     
                       />
                     </div>
                   ))}

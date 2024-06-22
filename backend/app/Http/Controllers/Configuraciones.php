@@ -1,63 +1,33 @@
 <?php
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Models\Configuracion;
-use App\Models\Configuracion_Fecha;
 use App\Models\Feriado;
 use DB;
+
 class Configuraciones extends Controller
 {
     public function registrar(Request $request)
     {
-        Configuracion::truncate();
-        Configuracion_Fecha::truncate();
-        Feriado::truncate();
         $request->validate([
             'periodosAulaComun' => 'required|string',
             'periodosLaboratorio' => 'required|string',
             'periodosAuditorio' => 'required|string',
+            'periodosUsuario' => 'required|string', // Corrige aquí
             'fechaInicio' => 'required|date',
             'fechaFin' => 'required|date',
-            'feriados' => 'required|array',
             'mensajesMasivos' => 'required|string'
         ]);
+
         try {
-            $configuracion1 = new Configuracion();
-            $configuracion1->valor = $request->input('periodosAulaComun');
-            $configuracion1->configuracion = "Aula Comun";            
-            $configuracion1->save();
-
-            $configuracion2 = new Configuracion();
-            $configuracion2->valor = $request->input('periodosLaboratorio');
-            $configuracion2->configuracion = "Laboratorios";            
-            $configuracion2->save();
-
-            $configuracion3 = new Configuracion();
-            $configuracion3->valor = $request->input('periodosAuditorio');
-            $configuracion3->configuracion = "Auditorio";            
-            $configuracion3->save();
-
-            $configuracion4 = new Configuracion();
-            $configuracion4->valor = $request->input('periodosUsuaro');
-            $configuracion4->configuracion = "Tiempo de respuesta Usuario";            
-            $configuracion4->save();
-
-            $configuracion5 = new Configuracion();
-            $configuracion5->valor = $request->input('mensajesMasivos');
-            $configuracion5->configuracion = "Mensajes masivo";            
-            $configuracion5->save();
-
-            $configuracion_fecha = new Configuracion_Fecha();           
-            $configuracion_fecha->inicio = $request->input('fechaInicio');
-            $configuracion_fecha->fin = $request->input('fechaFin');
-            $configuracion_fecha->save();
-
-            // Guardar los feriados
-            foreach ($request->input('feriados') as $fechaFeriado) {
-                $feriado = new Feriado();
-                $feriado->fecha = $fechaFeriado;
-                $feriado->save();
-            }
+            $this->updateOrCreateConfiguracion("Aula Comun", $request->input('periodosAulaComun'));
+            $this->updateOrCreateConfiguracion("Laboratorios", $request->input('periodosLaboratorio'));
+            $this->updateOrCreateConfiguracion("Auditorio", $request->input('periodosAuditorio'));
+            $this->updateOrCreateConfiguracion("Tiempo de respuesta Usuario", $request->input('periodosUsuario')); // Corrige aquí
+            $this->updateOrCreateConfiguracion("Mensajes masivo", $request->input('mensajesMasivos'));
+            $this->updateOrCreateConfiguracion("Fecha Inicio", $request->input('fechaInicio'));
+            $this->updateOrCreateConfiguracion("Fecha Fin", $request->input('fechaFin'));
 
             return response()->json(['message' => 'Configuración registrada correctamente'], 201);
         } catch (\Exception $e) {
@@ -65,34 +35,71 @@ class Configuraciones extends Controller
             return response()->json(['error' => 'Error al registrar la configuración'], 500);
         }
     }
-    public function obtenerconf(){
-        try{
-            $configuraciones = Configuracion::all();
-             return response()->json($configuraciones, 200);
 
-        }catch (\Exception $e) {
-            \Log::error('Error al obtener la configuración: ' . $e->getMessage());
-            return response()->json(['error' => 'Error al obtener la configuración'], 500);
-        }        
+    private function updateOrCreateConfiguracion($key, $value)
+    {
+        Configuracion::updateOrCreate(
+            ['configuracion' => $key],
+            ['valor' => $value]
+        );
     }
-    public function obtenerconFecha(){
-       
-         try{
-            $configuraciones = Configuracion_Fecha::all();
+
+    public function obtenerConfiguraciones()
+    {
+        try {
+            $configuraciones = Configuracion::all();
             return response()->json($configuraciones, 200);
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             \Log::error('Error al obtener la configuración: ' . $e->getMessage());
             return response()->json(['error' => 'Error al obtener la configuración'], 500);
         }
     }
-    public function obtenerconfFeriados(){
-       
-         try{
-            $configuraciones = Feriado::all();
-            return response()->json($configuraciones, 200);
-        }catch (\Exception $e) {
-            \Log::error('Error al obtener la configuración: ' . $e->getMessage());
-            return response()->json(['error' => 'Error al obtener la configuración'], 500);
+
+    public function obtenerFeriados()
+    {
+        try {
+            $feriados = Feriado::all();
+            return response()->json($feriados, 200);
+        } catch (\Exception $e) {
+            \Log::error('Error al obtener los feriados: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al obtener los feriados'], 500);
+        }
+    }
+
+    public function registrarFeriado(Request $request)
+    {
+        $request->validate([
+            'fecha' => 'required|date'
+        ]);
+
+        try {
+            Feriado::create(['fecha' => $request->input('fecha')]);
+            return response()->json(['message' => 'Feriado registrado correctamente'], 201);
+        } catch (\Exception $e) {
+            \Log::error('Error al intentar registrar el feriado: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al registrar el feriado'], 500);
+        }
+    }
+
+    public function eliminarFeriado($fecha)
+    {
+        try {
+            Feriado::where('fecha', $fecha)->delete();
+            return response()->json(['message' => 'Feriado eliminado correctamente'], 200);
+        } catch (\Exception $e) {
+            \Log::error('Error al intentar eliminar el feriado: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al eliminar el feriado'], 500);
+        }
+    }
+
+    public function eliminarTodosFeriados()
+    {
+        try {
+            Feriado::truncate();
+            return response()->json(['message' => 'Todos los feriados eliminados correctamente'], 200);
+        } catch (\Exception $e) {
+            \Log::error('Error al intentar eliminar todos los feriados: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al eliminar todos los feriados'], 500);
         }
     }
     
@@ -153,6 +160,5 @@ class Configuraciones extends Controller
         }
         
         return response()->json($ambientesDisponibles, 200);
-        
     }
 }
