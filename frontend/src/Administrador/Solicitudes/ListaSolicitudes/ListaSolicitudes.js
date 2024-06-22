@@ -153,7 +153,7 @@ const ListaSolicitudes = () => {
       setMostrarFormulario(false);
   };
   const filtrarSolicitudes = () => {
-    let solicitudesFiltradas = solicitudesPendientes; // Filtrar las solicitudes pendientes
+    let solicitudesFiltradas = solicitudesPendientes;
     if (motivo !== '') {
       solicitudesFiltradas = solicitudesPendientes.filter(solicitud => {
         return solicitud.motivo.toLowerCase().includes(motivo.toLowerCase());

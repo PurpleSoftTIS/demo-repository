@@ -33,9 +33,10 @@ class SolicitudController extends Controller
             ->join('solicitudes_materias', 'solicitudes_materias.id_solicitud', '=', 'solicitud.id_solicitud')
             ->join('materia', 'materia.id_materia', '=', 'solicitudes_materias.id_materia')
             ->select(
-                'solicitud.fecha_solicitud', 'solicitud.estado_solicitud', 'solicitud.motivo',
+                'solicitud.fecha_solicitud', 'solicitud.estado_solicitud', 'solicitud.motivo','solicitud.tipo_solicitud',
                 
-                DB::raw("GROUP_CONCAT(DISTINCT CONCAT(hora.hora_inicio, ' - ', hora.hora_fin) SEPARATOR ', ') as horas"),
+                DB::raw("GROUP_CONCAT(CONCAT(hora.hora_inicio, ' - ', hora.hora_fin) SEPARATOR ', ') as horas"),
+                DB::raw("GROUP_CONCAT(DISTINCT CONCAT(materia.grupo) SEPARATOR ', ') as grupos"),
                 DB::raw("GROUP_CONCAT(DISTINCT CONCAT(usuario.nombre, ' ', usuario.apellido_paterno, ' ', usuario.apellido_materno)) as nombres_docentes"),
         
                 'materia.nombre_materia', 'solicitud.created_at', 'solicitud.id_solicitud', 'solicitud.numero_estudiantes'
@@ -46,7 +47,7 @@ class SolicitudController extends Controller
                 )
             ->where('solicitud.estado_solicitud', 'pendi') 
             ->groupBy(
-                'solicitud.fecha_solicitud', 'solicitud.estado_solicitud', 'solicitud.motivo',
+                'solicitud.fecha_solicitud', 'solicitud.estado_solicitud', 'solicitud.motivo','solicitud.tipo_solicitud',
                 'materia.nombre_materia', 'solicitud.created_at', 'solicitud.id_solicitud', 'solicitud.numero_estudiantes'
             )
             ->get();
@@ -62,7 +63,7 @@ class SolicitudController extends Controller
     public function obtenerSolicitudUrgentes() {
         try {
             $fechaActual = \Carbon\Carbon::now();
-            $fechaLimite = $fechaActual->copy()->addDays(2)->toDateString(); 
+            $fechaLimite = $fechaActual->copy()->addDays(2)->toDateString(); // Fecha límite es hoy + 2 días
     
             $datosSolicitudes = DB::table('solicitud')
                 ->join('solicitudes_horario', 'solicitudes_horario.id_solicitud', '=', 'solicitud.id_solicitud')
@@ -74,7 +75,7 @@ class SolicitudController extends Controller
                 ->join('materia', 'materia.id_materia', '=', 'solicitudes_materias.id_materia')
                 ->select(
                     'solicitud.fecha_solicitud', 'solicitud.estado_solicitud', 'solicitud.motivo',
-                    DB::raw("GROUP_CONCAT(DISTINCT CONCAT(hora.hora_inicio, ' - ', hora.hora_fin) SEPARATOR ', ') as horas"),
+                    DB::raw("GROUP_CONCAT(CONCAT(hora.hora_inicio, ' - ', hora.hora_fin) SEPARATOR ', ') as horas"),
                     DB::raw("GROUP_CONCAT(DISTINCT CONCAT(usuario.nombre, ' ', usuario.apellido_paterno, ' ', usuario.apellido_materno)) as nombres_docentes"),
                     'materia.nombre_materia', 'solicitud.created_at', 'solicitud.id_solicitud', 'solicitud.numero_estudiantes',
                     DB::raw("MIN(usuario.nombre) as nombre"),
@@ -100,6 +101,7 @@ class SolicitudController extends Controller
             return response()->json(['error' => 'Error al obtener la solicitud'], 500);
         }
     }
+    /***/
     public function obtenerTodasSolicitudes() {
         try {
             $datosSolicitudes = DB::table('solicitud')
@@ -248,9 +250,6 @@ class SolicitudController extends Controller
                 $solicitudHora->id_solicitud = $id_solicitud;
                 $solicitudHora->id_hora = $id_hora;
                 $solicitudHora->save();
-
-
-
 
         }
             

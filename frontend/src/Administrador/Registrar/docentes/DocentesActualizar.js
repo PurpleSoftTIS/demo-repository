@@ -87,7 +87,7 @@ const DocentesActualizar = () => {
       setErrorCodigo("");
     }
 
-    if (correo.length > 30) {
+    if (correo.length > 50) {
         setErrorCorreo("Su correo no debe exceder los 30 caracteres");
         return;
     }else{

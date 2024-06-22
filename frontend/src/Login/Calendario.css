@@ -232,4 +232,6 @@
     .rbc-time-slot{
       border: none;
     }
-   
+   .rbc-off-range-bg{
+    background-color: #0000003f;
+   }
