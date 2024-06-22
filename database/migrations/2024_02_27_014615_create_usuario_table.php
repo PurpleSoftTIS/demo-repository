@@ -18,7 +18,7 @@ class CreateUsuarioTable extends Migration
             $table->string('nombre',20);
             $table->string('apellido_paterno',20);
             $table->string('apellido_materno',20);
-            $table->string('correo_electronico',30)->unique();
+            $table->string('correo_electronico',50)->unique();
             $table->string('contraseña', 100);
             $table->integer('notification_count')->default(0);
             $table->timestamps();

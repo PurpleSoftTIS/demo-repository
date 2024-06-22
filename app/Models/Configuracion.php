@@ -9,7 +9,6 @@ class Configuracion extends Model
 {
     use HasFactory;
     protected $table = 'configuracion';
-    protected $primaryKey = 'configuracion'; 
 
     protected $fillable =[
         "configuracion",

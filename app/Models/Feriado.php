@@ -10,7 +10,6 @@ class Feriado extends Model
 
     use HasFactory;
     protected $table = 'feriados';
-    protected $primaryKey = 'fecha'; 
     
     protected $fillable =[
         "fecha"        
