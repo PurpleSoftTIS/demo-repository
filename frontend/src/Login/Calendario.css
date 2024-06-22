@@ -1,6 +1,6 @@
 .Contenedor{
-  height: 100vh;
-  width: 100vw;
+  min-height: 100vh;
+  min-width: 100vw;
   background: linear-gradient(to bottom right, #010a26 60%, #bf0404 );
 }
 .container {

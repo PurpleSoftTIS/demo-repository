@@ -9,6 +9,11 @@ use App\Models\Dia;
 use App\Models\Hora;
 use  App\Models\Horario;
 use App\Models\Diashabiles;
+use App\Models\Solicitud;
+use App\Models\Solicitudes_docentes;
+use App\Models\Solicitudes_horario;
+use App\Models\Solicitudes_materia;
+use App\Models\Solicitudes;
 use DB;
 
 class DeleteAmbienteController extends Controller
@@ -22,10 +27,15 @@ class DeleteAmbienteController extends Controller
             Dia::truncate();
             Ambiente::truncate();
             Ubicacion::truncate();
+            Solicitudes::truncate();
+            Solicitudes_docentes::truncate();
+            Solicitudes_horario::truncate();
+            Solicitudes_materia::truncate();
+            Solicitud::truncate();
             DB::statement('ALTER TABLE dia AUTO_INCREMENT = 1');
             DB::statement('ALTER TABLE ambiente AUTO_INCREMENT = 1');
             DB::statement('ALTER TABLE ubicacion AUTO_INCREMENT = 1');   
-           
+            DB::statement('ALTER TABLE solicitud AUTO_INCREMENT = 1');
         
             return response()->json(['message' => 'Todos los datos han sido eliminados correctamente'], 200);
         } catch (\Exception $e) {

@@ -263,6 +263,37 @@
   transform: translateY(-2px);
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.page-button {
+  margin: 0 5px;
+  padding: 8px 12px;
+  border: 1px solid #050259;
+  background-color: white;
+  color: #050259;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.page-button:disabled {
+  opacity: 0;
+  cursor: default;
+}
+
+.page-button:hover:enabled {
+  background-color: #011640;
+  color: white;
+}
+
+.page-button.active {
+  background-color: #011640;
+  color: white;
+}
+
 @media (max-width: 768px) {
   .butn-container {
     display: flex;
