@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import { UserContext } from './Context/UserContext';
 import { React, Router, Routes, Route, Navigate, HomeUno, Ambientes, Docentes, Navbar, RegistrarMateria,
-        LoginForm, RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Solicitar, Ayuda,
+        LoginForm, RegistrarDiaHora, NarbarUsuario, HomeDos, ListaSolicitudes, Solicitar,
         ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,ListaSolicitudesUr,
         AmbientesActualizar,Footer,ListaMaterias,MensajeExitosoU,
         MensajeErrorU,MensajeActExito,MensajeActError,DocentesActualizar,MensajeDatExito,MensajeDatError
-      ,PasswordResetForm,MensajeNoEncontrado,AmbientesDis,AmbientesSol,MisSolicitudes,AyudaAdmin,
+      ,PasswordResetForm,MensajeNoEncontrado,AmbientesDis,AmbientesSol,MisSolicitudes,
       Configuraciones,SolicitarCon1,MensajeConfExitoso,MensajeConfError,Asignar_ambiente,Calendario,Informe} from './importaciones';
        
 function PrivateAdminRoute({ element }) {
@@ -38,7 +38,6 @@ function AdminRoutes() {
     <Navbar/> 
     <Routes>
       <Route path='/Inicio/HomeUno' element={<HomeUno/>}/>        
-      <Route path='/AyudaAdmin' element={<AyudaAdmin/>}/> 
       <Route path='/Configuraciones' element={<Configuraciones/>}/>
       <Route path='/ListaSolicitudes' element={<ListaSolicitudes />} />
       <Route path='/ListaSolicitudesUr' element={<ListaSolicitudesUr />} />

@@ -265,7 +265,6 @@ return (
             >
               <td>{solicitud.id_solicitud}</td>
               <td>{`${solicitud.nombre} ${solicitud.apellido_paterno} ${solicitud.apellido_materno}`}</td>
-
               <td>{solicitud.nombre_materia}</td>
               <td>{solicitud.motivo}</td>
               <td>{solicitud.fecha_solicitud}</td>

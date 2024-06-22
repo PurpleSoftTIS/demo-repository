@@ -93,7 +93,7 @@ Route::post('/mensajes', [MensajeController::class, 'store']);
 Route::post('/eliminarSolicitudesAntiguas',[SolicitudController::class,'rechazarSolicitudesAntiguas']);
 
 //Elimnar datos
-Route::delete('/docentes/{id_docente}', [DocenteController::class, 'eliminar']);
+Route::delete('/docentes/{id_docente}', [DocenteController::class, 'eliminarDocente']);
 Route::delete('/borrar/{id_ambiente}', [DeleteAmbienteController::class, 'borrarAmbiente']);
 Route::delete('/materias/{id}', [MateriaController::class, 'destroy']);
 Route::delete('/materias', [MateriaController::class, 'eliminarTodo']);

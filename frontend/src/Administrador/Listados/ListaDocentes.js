@@ -30,8 +30,8 @@ const ListaDocentes = () => {
       .catch(error => console.error('Error al obtener los datos:', error));
   }, []);
 
-  const eliminarDocenteYUsuario = (id_docente, id_usuario) => {
-    setDocenteToDelete({ id_docente, id_usuario });
+  const eliminarDocenteYUsuario = (id_docente) => {
+    setDocenteToDelete({ id_docente});
     setShowDeleteDocente(true);
   };
 
@@ -53,29 +53,17 @@ const ListaDocentes = () => {
   };
   
   const confirmarEliminarDocente = () => {
-    const { id_docente, id_usuario } = docenteToDelete;
-    fetch(`http://127.0.0.1:8000/api/docentes/${id_docente}`, {
+    fetch(`http://127.0.0.1:8000/api/docentes/${docenteToDelete}`, {
       method: 'DELETE',
     })
       .then(response => {
         if (response.ok) {
-          setDocentes(docentes.filter(docente => docente.id !== id_docente));
-          
-          return fetch(`http://127.0.0.1:8000/api/usuarios/${id_usuario}`, {
-            method: 'DELETE',
-          });
+          window.location.reload();
         } else {
           throw new Error('Error al eliminar el docente');
         }
       })
-      .then(response => {
-        if (response.ok) {
-          window.location.reload();
-        } else {
-          throw new Error('Error al eliminar el usuario');
-        }
-      })
-      .catch(error => console.error('Error al eliminar el docente y el usuario:', error));
+      .catch(error => console.error('Error al eliminar el docente:', error));
     setShowDeleteDocente(false);
     setDocenteToDelete(null);
   };
@@ -227,7 +215,7 @@ const ListaDocentes = () => {
                 </td>
                 <td>
                   <button className="btn btn-editar mr-2" onClick={() => editarDocente(docente)}>Editar</button>
-                  <button className="btn btn-eliminar" onClick={() => eliminarDocenteYUsuario(docente.id_docente, docente.id_usuario)}>Eliminar</button>
+                  <button className="btn btn-eliminar" onClick={() => eliminarDocenteYUsuario(docente.id_docente)}>Eliminar</button>
                 </td>
               </tr>
             ))}

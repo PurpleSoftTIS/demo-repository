@@ -55,9 +55,7 @@ export const AmbientesDis = () => {
                     ))}
                 </tbody>
             </table>
-            </div>
-            
-            
+            </div>           
         </div>
     );
 };

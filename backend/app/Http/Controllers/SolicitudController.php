@@ -30,10 +30,9 @@ class SolicitudController extends Controller
             ->join('solicitudes_materias', 'solicitudes_materias.id_solicitud', '=', 'solicitud.id_solicitud')
             ->join('materia', 'materia.id_materia', '=', 'solicitudes_materias.id_materia')
             ->select(
-                'solicitud.fecha_solicitud', 'solicitud.estado_solicitud', 'solicitud.motivo','solicitud.tipo_solicitud',
+                'solicitud.fecha_solicitud', 'solicitud.estado_solicitud', 'solicitud.motivo',
                 
-                DB::raw("GROUP_CONCAT(CONCAT(hora.hora_inicio, ' - ', hora.hora_fin) SEPARATOR ', ') as horas"),
-                DB::raw("GROUP_CONCAT(DISTINCT CONCAT(materia.grupo) SEPARATOR ', ') as grupos"),
+                DB::raw("GROUP_CONCAT(DISTINCT CONCAT(hora.hora_inicio, ' - ', hora.hora_fin) SEPARATOR ', ') as horas"),
                 DB::raw("GROUP_CONCAT(DISTINCT CONCAT(usuario.nombre, ' ', usuario.apellido_paterno, ' ', usuario.apellido_materno)) as nombres_docentes"),
         
                 'materia.nombre_materia', 'solicitud.created_at', 'solicitud.id_solicitud', 'solicitud.numero_estudiantes'
@@ -43,7 +42,7 @@ class SolicitudController extends Controller
                 )
             ->where('solicitud.estado_solicitud', 'pendi') 
             ->groupBy(
-                'solicitud.fecha_solicitud', 'solicitud.estado_solicitud', 'solicitud.motivo','solicitud.tipo_solicitud',
+                'solicitud.fecha_solicitud', 'solicitud.estado_solicitud', 'solicitud.motivo',
                 'materia.nombre_materia', 'solicitud.created_at', 'solicitud.id_solicitud', 'solicitud.numero_estudiantes'
             )
             ->get();
@@ -59,7 +58,7 @@ class SolicitudController extends Controller
     public function obtenerSolicitudUrgentes() {
         try {
             $fechaActual = \Carbon\Carbon::now();
-            $fechaLimite = $fechaActual->copy()->addDays(2)->toDateString(); // Fecha límite es hoy + 2 días
+            $fechaLimite = $fechaActual->copy()->addDays(2)->toDateString(); 
     
             $datosSolicitudes = DB::table('solicitud')
                 ->join('solicitudes_horario', 'solicitudes_horario.id_solicitud', '=', 'solicitud.id_solicitud')
@@ -71,7 +70,7 @@ class SolicitudController extends Controller
                 ->join('materia', 'materia.id_materia', '=', 'solicitudes_materias.id_materia')
                 ->select(
                     'solicitud.fecha_solicitud', 'solicitud.estado_solicitud', 'solicitud.motivo',
-                    DB::raw("GROUP_CONCAT(CONCAT(hora.hora_inicio, ' - ', hora.hora_fin) SEPARATOR ', ') as horas"),
+                    DB::raw("GROUP_CONCAT(DISTINCT CONCAT(hora.hora_inicio, ' - ', hora.hora_fin) SEPARATOR ', ') as horas"),
                     DB::raw("GROUP_CONCAT(DISTINCT CONCAT(usuario.nombre, ' ', usuario.apellido_paterno, ' ', usuario.apellido_materno)) as nombres_docentes"),
                     'materia.nombre_materia', 'solicitud.created_at', 'solicitud.id_solicitud', 'solicitud.numero_estudiantes',
                     DB::raw("MIN(usuario.nombre) as nombre"),
@@ -97,7 +96,6 @@ class SolicitudController extends Controller
             return response()->json(['error' => 'Error al obtener la solicitud'], 500);
         }
     }
-    /***/
     public function obtenerTodasSolicitudes() {
         try {
             $datosSolicitudes = DB::table('solicitud')
@@ -159,7 +157,10 @@ class SolicitudController extends Controller
             $solicitud = new Solicitud();                 
             $numero_estudiantes=$datosReserva['cantidadEstudiantes'];
             $solicitud->numero_estudiantes=$numero_estudiantes;
-            $fecha = Carbon::createFromFormat('d/m/Y', $datosReserva['fechaSeleccionada'])->format('Y-m-d');
+
+
+            $fecha = Carbon::createFromFormat('m/d/Y', $datosReserva['fechaSeleccionada'])->format('Y-m-d');
+
             $solicitud->fecha_solicitud = $fecha;
             $motivo=$datosReserva['motivo'];
             $solicitud->motivo=$motivo;
@@ -196,8 +197,11 @@ class SolicitudController extends Controller
             $solicitudMateria->id_materia=$idmateria;
             $solicitudMateria->id_solicitud=$id_solicitud;
             $solicitudMateria->save(); 
+            }
             
-        }          
+            
+            
+           
                 
         } catch (\Exception $e) {
             \Log::error('Error al registrar la solicitud: ' . $e->getMessage());
@@ -240,7 +244,11 @@ class SolicitudController extends Controller
                 $solicitudHora->id_solicitud = $id_solicitud;
                 $solicitudHora->id_hora = $id_hora;
                 $solicitudHora->save();
-            }
+
+
+
+
+        }
             
          $docentesSeleccionados = $datosReserva['docentesSeleccionados'];
             foreach ($docentesSeleccionados as $docenteSeleccionado) {
@@ -289,11 +297,9 @@ class SolicitudController extends Controller
             return response()->json(['error' => 'Error al registrar la solicitud'], 500);
         }
     }
-      
     public function aceptarSolicitud(Request $request, $id) {
         try {
             $solicitud = Solicitud::where('id_solicitud', $id)->first();
-    
             if ($solicitud) {
                 $estado = "aceptada";
                 $solicitud->estado_solicitud = $estado;
@@ -313,7 +319,7 @@ class SolicitudController extends Controller
             $solicitud = Solicitud::where('id_solicitud', $id)->first();
     
             if ($solicitud) {
-                $estado = "rechaza";
+                $estado = "rechazado";
                $solicitud->estado_solicitud = $estado;
                 $solicitud->save();
     
@@ -328,7 +334,6 @@ class SolicitudController extends Controller
     }
     public function obtenerDocentesPorSolicitud($idSolicitud) {
         try {
-            // Obtener los docentes asociados a la solicitud mediante su ID
             $docentes = DB::table('solicitud')
                 ->join('solicitudes_docentes', 'solicitudes_docentes.id_solicitud', '=', 'solicitud.id_solicitud')
                 ->join('docente', 'solicitudes_docentes.id_docente', '=', 'docente.id_docente')
@@ -344,7 +349,6 @@ class SolicitudController extends Controller
     }    
     public function obtenerAmbientesPorSolicitud($idSolicitud) {
         try {
-            // Obtener los ambientes asociados a la solicitud mediante su ID
             $ambientes = DB::table('solicitud')
                 ->join('ambiente', 'ambiente.id_ambiente', '=', 'solicitud.id_ambiente')
                 ->select('ambiente.*')
@@ -415,8 +419,7 @@ class SolicitudController extends Controller
      
      return response()->json($ambientesDisponibles, 200);
      
-}
-    
+    }    
     private function generarCombinaciones($aulas, $capacidad) {
         $combinacionesValidas = [];
         $totalAulas = count($aulas);
@@ -506,7 +509,7 @@ class SolicitudController extends Controller
     
         
     }
-public function obtenerSolicitudSugeridas() {
+    public function obtenerSolicitudSugeridas() {
     try {
         $datosSolicitudes = DB::table('solicitud')
         ->join('solicitudes_horario', 'solicitudes_horario.id_solicitud', '=', 'solicitud.id_solicitud')
@@ -545,8 +548,8 @@ public function obtenerSolicitudSugeridas() {
         \Log::error('Error al intentar obtener una solicitud: ' . $e->getMessage());
         return response()->json(['error' => 'Error al obtener la solicitud'], 500);
     }
-}
-public function asignarSugerencia(Request $request)
+    }
+    public function asignarSugerencia(Request $request)
 {
     $solicitud=$request->all();
     $id_solicitud= $solicitud['id_solicitud'];
@@ -559,38 +562,34 @@ public function asignarSugerencia(Request $request)
 
 
 
-}   
-public function rechazarSolicitudesAntiguas() {
-    try {
-        $fechaActual = \Carbon\Carbon::now();
-        $fechaLimite = $fechaActual->subDays(2)->toDateTimeString();
-
-        DB::beginTransaction();
-
-        $solicitudesAntiguas = DB::table('solicitud')
-            ->where('estado_solicitud', 'sugerencias')
-            ->where('created_at', '<', $fechaLimite) // Usar created_at en lugar de updated_at
-            ->get();
-
-        foreach ($solicitudesAntiguas as $solicitud) {
-            DB::table('solicitud')
-                ->where('id_solicitud', $solicitud->id_solicitud)
-                ->update(['estado_solicitud' => 'rechazado']);
-            
-            $solicitudRelacionada = Solicitudes::where('id_solicitud', $solicitud->id_solicitud)->first();
-            if ($solicitudRelacionada) {
-                $solicitudRelacionada->delete();
+    }   
+    public function rechazarSolicitudesAntiguas() {
+        try {
+            $fechaActual = \Carbon\Carbon::now();
+            $fechaLimite = $fechaActual->subDays(2)->toDateTimeString();
+    
+            DB::beginTransaction();
+    
+            // Obtener todas las solicitudes antiguas
+            $solicitudesAntiguas = Solicitud::where('estado_solicitud', 'sugerencias')
+                ->where('created_at', '<', $fechaLimite)
+                ->get();
+    
+            foreach ($solicitudesAntiguas as $solicitud) {
+                // Actualizar estado de la solicitud a 'rechazado'
+                $solicitud->update(['estado_solicitud' => 'rechazado']);
+                
+                // Eliminar la solicitud relacionada en el modelo Solicitudes
+                Solicitudes::where('id_solicitud', $solicitud->id_solicitud)->delete();
             }
+    
+            DB::commit();
+    
+            return response()->json(['message' => 'Solicitudes antiguas actualizadas y eliminadas correctamente.'], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Log::error('Error al intentar actualizar y eliminar solicitudes antiguas: ' . $e->getMessage());
+            return response()->json(['error' => 'Error al actualizar y eliminar las solicitudes'], 500);
         }
-
-        DB::commit();
-
-        return response()->json(['message' => 'Solicitudes antiguas actualizadas y eliminadas correctamente.'], 200);
-    } catch (\Exception $e) {
-        DB::rollBack();
-        \Log::error('Error al intentar actualizar y eliminar solicitudes antiguas: ' . $e->getMessage());
-        return response()->json(['error' => 'Error al actualizar y eliminar las solicitudes'], 500);
     }
-}
-
 }

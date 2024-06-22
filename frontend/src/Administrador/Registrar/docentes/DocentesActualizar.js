@@ -117,7 +117,7 @@ const DocentesActualizar = () => {
 
     console.log("Datos a enviar:", datosDocente);
 
-    fetch(`http://127.0.0.1:8000/api/docentes/${id_docente}`, {
+    fetch(`http://127.0.0.1:8000/api/actualizarDocente/${id_docente}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json"

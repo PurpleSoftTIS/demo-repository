@@ -25,20 +25,38 @@ class DocenteController extends Controller
         ->get();
     return response()->json($usuariosConDocentes, 200);
 }
-     public function eliminar($id_docente)
+public function eliminarDocente($id_docente)
 {
     try {
+        // Encuentra el docente
         $docente = Docente::findOrFail($id_docente);
         $id_usuario = $docente->id_usuario;
+        DB::table('materia_docente')->where('id_docente', $id_docente)->delete();
         $docente->delete();
+        // Encuentra y elimina el usuario
         $usuario = Usuario::findOrFail($id_usuario);
         $usuario->delete();
         return response()->json(['message' => 'Docente y usuario eliminados correctamente'], 200);
-        } catch (\Exception $e) {
-            \Log::error('Error al intentar eliminar el docente y usuario: ' . $e->getMessage());
-            return response()->json(['error' => 'Error al eliminar el docente y usuario'], 500);
-        }
+    } catch (\Exception $e) {
+        \Log::error('Error al intentar eliminar el docente y usuario: ' . $e->getMessage());
+        return response()->json(['error' => 'Error al eliminar el docente y usuario'], 500);
     }
+}
+
+    public function editarDocentes(Request $request, $id_docente){
+        $docente = Docente::find($id_docente);
+        $id_usuario = $docente->id_usuario;
+        $usuario = Usuario::find($id_usuario);
+        $usuario->nombre = $request->input('nombres');
+        $usuario->apellido_paterno = $request->input('apellidoPaterno');
+        $usuario->apellido_materno = $request->input('apellidoMaterno');
+        $usuario->correo_electronico = $request->input('correo');
+        $usuario->save();
+        $docente->tipo_docente = $request->input('tipo');
+        $docente->codigo_docente = $request->input('codigoDocente');
+        $docente->save();
+        return response()->json(['message' => 'Usuario y docente actualizados correctamente'], 200);        
+}
     public function eliminarAll()
     {
         try {
@@ -46,6 +64,7 @@ class DocenteController extends Controller
             Docente::truncate();
             Usuario::truncate();   
             Mensaje::truncate();
+
             DB::statement("ALTER TABLE usuario AUTO_INCREMENT = 1");
             DB::statement("ALTER TABLE docente AUTO_INCREMENT = 1");
             return response()->json(['message' => 'Todos los docentes y usuarios eliminados correctamente'], 200);
@@ -104,24 +123,7 @@ class DocenteController extends Controller
         }        
         return trim($morse_texto);
     }
-
-    public function editarDocentes(Request $request, $id_docente){
-            $docente = Docente::find($id_docente);
-            $id_usuario = $docente->id_usuario;
-            $usuario = Usuario::find($id_usuario);
-            $usuario->nombre = $request->input('nombres');
-            $usuario->apellido_paterno = $request->input('apellidoPaterno');
-            $usuario->apellido_materno = $request->input('apellidoMaterno');
-            $usuario->correo_electronico = $request->input('correo');
-            $usuario->save();
-            $docente->tipo_docente = $request->input('tipo');
-            $docente->codigo_docente = $request->input('codigoDocente');
-            $docente->save();
-            return response()->json(['message' => 'Usuario y docente actualizados correctamente'], 200);
-            
-        
-    }
-    
+   
     public function restablecerPasswd(Request $request)
     {
         try {

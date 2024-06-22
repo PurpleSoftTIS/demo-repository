@@ -297,8 +297,7 @@ return (
         {resultado.map((solicitud) => (
             <tr key={solicitud.id_solicitud}
               className="fila-lista"
-              onClick={() => mostrarFormularioParaSolicitud(solicitud)}
-            >
+              onClick={() => mostrarFormularioParaSolicitud(solicitud)}>
               <td>{solicitud.id_solicitud}</td>
               <td>{`${solicitud.nombre} ${solicitud.apellido_paterno} ${solicitud.apellido_materno}`}</td>
               <td>{solicitud.nombre_materia}</td>

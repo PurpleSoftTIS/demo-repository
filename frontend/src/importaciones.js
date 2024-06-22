@@ -33,7 +33,6 @@ import PasswordResetForm from './Login/PasswordResetForm';
 import MensajeNoEncontrado from './Mensajes/MensajeNoEncontrado';
 import { AmbientesDis } from './Usuario/Ambientes/AmbientesDis';
 import MisSolicitudes from './Usuario/Mis_Solicitudes/MisSolicitudes';
-import AyudaAdmin from './Administrador/Ayuda/AyudaAdmin';
 import Configuraciones from './Administrador/Configuraciones/Configuraciones';
 import SolicitarCon1 from './Usuario/SolicitudesConjuntas/SolicitarCon1';
 import MensajeConfExitoso from './Mensajes/MensajeConfExitoso';
@@ -49,6 +48,6 @@ export {
   ,ListaAulas, MensajeExitoso, MensajeError,ListaDocentes,RegistrarDiaHoras,AmbientesActualizar,
   Footer,ListaMaterias,MensajeExitosoU,MensajeErrorU,MensajeActExito,MensajeActError
   ,DocentesActualizar,MensajeDatExito,MensajeDatError,ListaSolicitudesUr,Navigate,PasswordResetForm,
-  MensajeNoEncontrado,AmbientesDis,AmbientesSol,MisSolicitudes,AyudaAdmin,Configuraciones,SolicitarCon1,
+  MensajeNoEncontrado,AmbientesDis,AmbientesSol,MisSolicitudes,Configuraciones,SolicitarCon1,
   MensajeConfExitoso,MensajeConfError,Asignar_ambiente,Calendario,Informe
 };
