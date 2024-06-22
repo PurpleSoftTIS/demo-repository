@@ -30,7 +30,7 @@ class SolicitudController extends Controller
         ->select(
             'solicitud.fecha_solicitud', 'solicitud.estado_solicitud', 'solicitud.motivo',
             
-            DB::raw("GROUP_CONCAT(CONCAT(hora.hora_inicio, ' - ', hora.hora_fin) SEPARATOR ', ') as horas"),
+            DB::raw("GROUP_CONCAT(DISTINCT CONCAT(hora.hora_inicio, ' - ', hora.hora_fin) SEPARATOR ', ') as horas"),
             DB::raw("GROUP_CONCAT(DISTINCT CONCAT(usuario.nombre, ' ', usuario.apellido_paterno, ' ', usuario.apellido_materno)) as nombres_docentes"),
     
             'materia.nombre_materia', 'solicitud.created_at', 'solicitud.id_solicitud', 'solicitud.numero_estudiantes'
@@ -472,20 +472,17 @@ public function rechazarSolicitudesAntiguas() {
 
         DB::beginTransaction();
 
-        $solicitudesAntiguas = DB::table('solicitud')
-            ->where('estado_solicitud', 'sugerencias')
-            ->where('created_at', '<', $fechaLimite) // Usar created_at en lugar de updated_at
+        // Obtener todas las solicitudes antiguas
+        $solicitudesAntiguas = Solicitud::where('estado_solicitud', 'sugerencias')
+            ->where('created_at', '<', $fechaLimite)
             ->get();
 
         foreach ($solicitudesAntiguas as $solicitud) {
-            DB::table('solicitud')
-                ->where('id_solicitud', $solicitud->id_solicitud)
-                ->update(['estado_solicitud' => 'rechazado']);
+            // Actualizar estado de la solicitud a 'rechazado'
+            $solicitud->update(['estado_solicitud' => 'rechazado']);
             
-            $solicitudRelacionada = Solicitudes::where('id_solicitud', $solicitud->id_solicitud)->first();
-            if ($solicitudRelacionada) {
-                $solicitudRelacionada->delete();
-            }
+            // Eliminar la solicitud relacionada en el modelo Solicitudes
+            Solicitudes::where('id_solicitud', $solicitud->id_solicitud)->delete();
         }
 
         DB::commit();
@@ -497,10 +494,12 @@ public function rechazarSolicitudesAntiguas() {
         return response()->json(['error' => 'Error al actualizar y eliminar las solicitudes'], 500);
     }
 }
+
+
 public function obtenerSolicitudUrgentes() {
     try {
         $fechaActual = \Carbon\Carbon::now();
-        $fechaLimite = $fechaActual->copy()->addDays(2)->toDateString(); // Fecha límite es hoy + 2 días
+        $fechaLimite = $fechaActual->copy()->addDays(2)->toDateString(); 
 
         $datosSolicitudes = DB::table('solicitud')
             ->join('solicitudes_horario', 'solicitudes_horario.id_solicitud', '=', 'solicitud.id_solicitud')
@@ -512,7 +511,7 @@ public function obtenerSolicitudUrgentes() {
             ->join('materia', 'materia.id_materia', '=', 'solicitudes_materias.id_materia')
             ->select(
                 'solicitud.fecha_solicitud', 'solicitud.estado_solicitud', 'solicitud.motivo',
-                DB::raw("GROUP_CONCAT(CONCAT(hora.hora_inicio, ' - ', hora.hora_fin) SEPARATOR ', ') as horas"),
+                DB::raw("GROUP_CONCAT(DISTINCT CONCAT(hora.hora_inicio, ' - ', hora.hora_fin) SEPARATOR ', ') as horas"),
                 DB::raw("GROUP_CONCAT(DISTINCT CONCAT(usuario.nombre, ' ', usuario.apellido_paterno, ' ', usuario.apellido_materno)) as nombres_docentes"),
                 'materia.nombre_materia', 'solicitud.created_at', 'solicitud.id_solicitud', 'solicitud.numero_estudiantes',
                 DB::raw("MIN(usuario.nombre) as nombre"),
