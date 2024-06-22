@@ -1,22 +1,22 @@
-import React, { useState, useEffect,useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import { useNavigate } from "react-router-dom";
 import { UserContext } from '../../Context/UserContext';
-import Ico1 from '../../assets/IcoMore.png';
-
+import { FormContext } from '../../Context/FormContext';
 import "./Solicitar.css";
 
 const Solicitar = () => {
   const navigate = useNavigate();
   const { emailC } = useContext(UserContext);
+  const { formDataC, feriados, fetchConfiguraciones, fetchFeriados } = useContext(FormContext);
   const correo = emailC;
   const [cantidad, setCantidad] = useState('');
   const [cantidadPeriodos,setCantidadPeriodos] = useState(0); 
   const [selecionMateria, setSelecionMateria] = useState('');
   const [valor, setValor] = useState('');
-  const [materia, setmateria] = useState('');
+  const [materia] = useState('');
   const [date, setDate] = useState(new Date());
   const [materias, setMaterias] = useState([]); 
   const [horariosDisponibles, setHorariosDisponibles] = useState([]);
@@ -24,26 +24,60 @@ const Solicitar = () => {
   const [selectedDay, setSelectedDay] = useState(''); 
   const [selectedOption, setSelectedOption] = useState('');
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const [errorInconpleto, setErrorIncompleto] = useState("");
   const [selectedMateria, setSelectedMateria] = useState(''); 
-  const [tipoAmbientes, setTipoAmbientes] = useState([]); // Nuevo estado para almacenar los tipos de ambientes
   const [selectedAmbiente, setSelectedAmbiente] = useState('');
   const [selectedMotivo, setSelectedMotivo] = useState(''); // Estado para almacenar el motivo seleccionado
   const [gruposPorMateria, setGruposPorMateria] = useState({}); // Estado para almacenar los grupos por materia
   const [selectedGrupos, setSelectedGrupos] = useState([]); // Estado para almacenar los grupos seleccionados
+  const [isLoading, setIsLoading] = useState(true);
+  const [showSystemClosedModal, setShowSystemClosedModal] = useState(false);
+
+  useEffect(() => {
+    const cargarDatos = async () => {
+      try {
+        await fetchConfiguraciones();
+        await fetchFeriados();
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error al cargar configuraciones y feriados:', error);
+      }
+    };
+    if (isLoading && correo) {
+      cargarDatos();
+    }
+  }, [correo]);
+  
+  useEffect(() => {
+    const checkSystemDateRange = () => {
+      if (!isLoading && formDataC.length > 0) {
+        const fechaInicioConfig = formDataC.find(conf => conf.configuracion === 'Fecha Inicio');
+        const fechaFinConfig = formDataC.find(conf => conf.configuracion === 'Fecha Fin');
+        const fechaInicio = fechaInicioConfig ? new Date(fechaInicioConfig.valor) : null;
+        const fechaFin = fechaFinConfig ? new Date(fechaFinConfig.valor) : null;
+        const fechaActual = new Date();
+  
+        if (fechaInicio && fechaFin && (fechaActual < fechaInicio || fechaActual > fechaFin)) {
+          setShowSystemClosedModal(true);
+        } else {
+          setShowSystemClosedModal(false);
+        }
+      }
+    };
+    checkSystemDateRange();
+  }, [isLoading, formDataC]);
 
   const BusquedaAmbiente = (event) => {
     const selectedAmbiente = event.target.value;
     setSelectedAmbiente(selectedAmbiente); 
-    const ambienteSeleccionado = tipoAmbientes.find(ambiente => ambiente["configuracion"] === selectedAmbiente);
+    const ambienteSeleccionado = formDataC.find(ambiente => ambiente["configuracion"] === selectedAmbiente);
     if (ambienteSeleccionado) {
       console.log(ambienteSeleccionado);
       setCantidadPeriodos(ambienteSeleccionado.valor);
     }
   };
-  console.log(cantidadPeriodos);
     useEffect(() => {
-    if (date) {
+    if(!isLoading){
+      if (date) {
       fetch(`http://127.0.0.1:8000/api/obtenerHoras`)
         .then(response => {
           if (!response.ok) {
@@ -58,13 +92,13 @@ const Solicitar = () => {
             return horaInicioA - horaInicioB;
           });
           setHorariosDisponibles(data);
-          console.log(data);
         })
         .catch(error => {
           console.error('Error al cargar las horas disponibles:', error);
         });
+      }
     }
-  }, [date]);  
+  }, [date, isLoading]);  
 
   
   useEffect(() => {
@@ -114,27 +148,6 @@ const Solicitar = () => {
     return periodos;
 }
 
-
-
-
-  
-  useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/configuraciones')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Error al obtener los tipos de ambientes');
-        }
-        return response.json();
-      })
-      .then(data => {
-        setTipoAmbientes(data);
-        console.log(data);
-      })
-      .catch(error => {
-        console.error('Error al obtener los tipos de ambientes:', error);
-      });
-  }, []);
-  
   const handleDateChange = (newDate) => {
     const dayOfWeek = newDate.toLocaleDateString('es-ES', { weekday: 'long' });
     const capitalizedDayOfWeek = dayOfWeek.charAt(0).toUpperCase() + dayOfWeek.slice(1);
@@ -170,40 +183,7 @@ const Solicitar = () => {
   const handleMateriaChange = (event) => {
     setSelectedMateria(event.target.value);
   };
-  const handleNextStep = () => {
-    const tipoNumero = /^\d+$/;
-    const dataToSend = {
-       
-    };
-
-    if (!selecionMateria || !selectedMateria) {
-      setErrorIncompleto("Por favor, complete todos los campos del formulario");
-      return;
-    } else {
-      setShowErrorMessage("");
-      if (!tipoNumero.test(selecionMateria)) {
-        setShowErrorMessage("Ingrese solo numeros");
-      } else {
-        setShowErrorMessage("");
-        if (!selectedOption) {
-          setShowErrorMessage("Seleccione una hora");
-          return;
-        }
-        const horaSeleccionadaObj = horariosDisponibles.find(hora => hora.id_hora.toString() === selectedOption.toString());
-
-        if (horaSeleccionadaObj) {
-          const horaInicio = horaSeleccionadaObj.hora_inicio;
-          const horaFin = horaSeleccionadaObj.hora_fin;
-          dataToSend.horaInicio = horaInicio;
-          dataToSend.horaFin = horaFin;
-          console.log(dataToSend);
-          navigate('/Usuario/Usu/Solicitar1', { state: dataToSend });
-        } else {
-          setShowErrorMessage("La hora seleccionada no es válida");
-        }
-      }
-    }
-  };
+  
   useEffect(() => {
     setSelectedGrupos([]);
   }, [selecionMateria]);
@@ -235,8 +215,6 @@ const Solicitar = () => {
         periodos: periodosGenerados,
         motivo: selectedMotivo,
         grupos:selectedGrupos
-
-
       };
 
       console.log("Datos a enviar:", dataToSend);
@@ -263,12 +241,39 @@ const Solicitar = () => {
       setShowErrorMessage("La hora seleccionada no es válida");
     }
   };
+
+  const isDateFeriado = (date) => {
+    return feriados.some(feriado => new Date(new Date(feriado.fecha).setDate(new Date(feriado.fecha).getDate() + 1)).toDateString() === date.toDateString());
+  };
+
+  const handleStepBack =() =>{
+    window.history.back();
+  }
   
   return (
-    <div className='contenedorGeneral' style={{minHeight: '100vh'}}>
+      <div className='contenedorGeneral'>
+      {isLoading ? (
+        <p>Cargando...</p>
+      ) : (
+        <>
+      {showSystemClosedModal && (
+        <div className="modal-sistema-cerrado">
+          <div className="modal-contenido">
+            <h2>Sistema Cerrado</h2>
+            <p>El sistema está cerrado y no se puede utilizar en este momento.</p>
+            <p>Fechas de uso del sistema:</p>
+            <p>Inicio: {formDataC.find(conf => conf.configuracion === 'Fecha Inicio')?.valor}</p>
+            <p>Fin: {formDataC.find(conf => conf.configuracion === 'Fecha Fin')?.valor}</p>
+            <div className='contenedorBtns'>
+              <button className='botonatrasSc' onClick={handleStepBack}>Atras</button>
+            </div>
+          </div>
+        </div>
+      )}
+      {!showSystemClosedModal && (
       <div className="contenedorsito">
         <div>
-          <h4>Selecciona una fecha:</h4>
+          <h4 style={{marginLeft: '0px'}}>Selecciona una fecha:</h4>
           <div className='calendar-input-container'>
             <input
               type="text"
@@ -284,8 +289,14 @@ const Solicitar = () => {
                   onChange={handleDateChange}
                   value={date}
                   minDate={new Date()}
-                  maxDate={new Date(2026, 11, 31)}
-                  
+                  maxDate = {new Date(
+                    new Date(formDataC.find(conf => conf.configuracion === 'Fecha Fin')?.valor)
+                      .setDate(
+                        new Date(formDataC.find(conf => conf.configuracion === 'Fecha Fin')?.valor)
+                          .getDate() + 1
+                      )
+                  )}
+                  tileDisabled={({ date }) => isDateFeriado(date)}
                 />
               </div>
             )}
@@ -343,11 +354,9 @@ const Solicitar = () => {
             className="input"
           >
             <option value="">Seleccione un tipo de ambiente</option>
-            {tipoAmbientes.map((ambiente, index) => (
-              <option key={index} value={ambiente["configuracion"]}>
-                {ambiente["configuracion"]}
-              </option>
-            ))}
+            <option value='Aula Comun'>Aula Comun</option>
+            <option value='Laboratorios'>Laboratorios</option>
+            <option value='Auditorio'>Auditorio</option>
           </select>
           {showErrorMessage && <p className="error">{showErrorMessage}</p>}
         </div>
@@ -366,7 +375,7 @@ const Solicitar = () => {
 </select>
 
         
-<div className='motivo'>
+<div className='motivosol'>
   <label htmlFor="menuMotivo" className="label">Motivo:</label>
   <select 
       className="input" 
@@ -387,9 +396,10 @@ const Solicitar = () => {
   </select>
   {showErrorMessage && selectedMotivo === '' && <p className="solo-numero">Este campo es obligatorio</p>}
 </div>
-        <div className='motivo'>
+        <div className='motivosol'>
           <label htmlFor="menuMotivo" className="label">Seleccione la hora inicio:</label>
           <select id="menu" value={selectedOption} onChange={handleSelectChange} className="select">
+            <option value="">Seleccione una hora</option>
             {horariosDisponibles.map((hora, index) => (
               <option key={index} value={hora.id_hora}>
                 {hora.hora_inicio}
@@ -398,11 +408,14 @@ const Solicitar = () => {
           </select>
           {showErrorMessage && selectedMateria === '' && <p className="solo-numero">Este campo es obligatorio</p>}
         </div>
-       
-        <button className="boton-siguiente" onClick={EnviarDatos}>Enviar</button>       
+        <div className='buttonsoli'>
+          <button className="boton-siguiente" onClick={EnviarDatos}>Enviar</button>       
+        </div>
       </div>
+      )}
+    </>
+    )} 
     </div>
   );
 }
-
 export default Solicitar;

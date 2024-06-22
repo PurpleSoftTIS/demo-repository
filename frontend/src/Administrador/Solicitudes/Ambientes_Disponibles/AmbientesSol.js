@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import {  useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import './AmbientesSol.css';
+import { FormContext } from '../../../Context/FormContext';
 
 const Asignar_ambiente = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const { formDataC, fetchConfiguraciones } = useContext(FormContext);
     const [date, setDate] = useState([]);
     const solicitud = location.state;
     const [mostrarAmbientesDisponibles, setMostrarAmbientesDisponibles] = useState(true);
@@ -15,6 +17,12 @@ const Asignar_ambiente = () => {
     const [mostrarBotonAtras, setMostrarBotonAtras] = useState(false);
     const [ubicacionesContiguas, setUbicacionesContiguas] = useState([]);
     const [ambientesContiguosOriginales, setAmbientesContiguosOriginales] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [loadingRechazar, setLoadingRechazar] = useState(false);
+
+    useEffect(() => {
+        fetchConfiguraciones();
+    }, []);
 
     const obtenerDiaDeFecha = (fecha) => {
         const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
@@ -64,13 +72,21 @@ const Asignar_ambiente = () => {
     };
 
     const AsignarAula = (ambientes) => {
+        const mensajesMasivo = formDataC.find(conf => conf.configuracion === 'Mensajes masivo');
+        const endpoint = mensajesMasivo && mensajesMasivo.valor === '1' 
+            ? 'http://127.0.0.1:8000/api/asignarAulaMail'
+            : 'http://127.0.0.1:8000/api/asignarAula';
+        
         const aula = ambientes[0];
         const dataToSend = {
             id_ambiente: aula.id_ambiente,
             id_solicitud: solicitud.id_solicitud,
+            correo_electronico: solicitud.correo_electronico
         };
-        console.log(dataToSend);
-        fetch('http://127.0.0.1:8000/api/asignarAula', {
+
+        setLoading(true); // Deshabilitar el botón y mostrar "..."
+
+        fetch(endpoint, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -89,6 +105,9 @@ const Asignar_ambiente = () => {
             })
             .catch(error => {
                 console.error('Error al asignar el aula:', error);
+            })
+            .finally(() => {
+                setLoading(false); // Rehabilitar el botón
             });
     };
 
@@ -122,27 +141,41 @@ const Asignar_ambiente = () => {
     };
 
     const rechazarsolicitud = () => {
-        const id_solicitud = solicitud.id_solicitud;
+        const mensajesMasivo = formDataC.find(conf => conf.configuracion === 'Mensajes masivo');
+        const endpoint = mensajesMasivo && mensajesMasivo.valor === '1'
+            ? `http://127.0.0.1:8000/api/rechazarsolicitudMail`
+            : `http://127.0.0.1:8000/api/rechazarsolicitud`;
+    
+        const dataToSend = {
+            id_solicitud: solicitud.id_solicitud,
+            correo_electronico: solicitud.correo_electronico
+        };
 
-        fetch(`http://127.0.0.1:8000/api/rechazarsolicitud/${id_solicitud}`, {
+        setLoadingRechazar(true); // Deshabilitar el botón y mostrar "Enviando..."
+    
+        fetch(endpoint, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
+            body: JSON.stringify(dataToSend)
         })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Error al cambiar el estado de la solicitud');
-                }
-                console.log('Solicitud actualizada:', response);
-                return response.json();
-            })
-            .then((data) => {
-                navigate('/Admin/ListaSolicitudes');
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Error al cambiar el estado de la solicitud');
+            }
+            console.log('Solicitud actualizada:', response);
+            return response.json();
+        })
+        .then((data) => {
+            navigate('/Admin/ListaSolicitudes');
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+        .finally(() => {
+            setLoadingRechazar(false); // Rehabilitar el botón
+        });
     };
 
     const handleSelectAmbiente = (ambiente) => {
@@ -169,12 +202,20 @@ const Asignar_ambiente = () => {
     };
 
     const enviarAmbientesAsignar = () => {
+        const mensajesMasivo = formDataC.find(conf => conf.configuracion === 'Mensajes masivo');
+        const endpoint = mensajesMasivo && mensajesMasivo.valor === '1' 
+            ? 'http://127.0.0.1:8000/api/asignarAmbientesMail'
+            : 'http://127.0.0.1:8000/api/asignarAmbientes';
+
         const dataToSend = selectedAmbientes.map(ambiente => ({
             id_ambiente: ambiente.id_ambiente,
             id_solicitud: solicitud.id_solicitud,
+            correo_electronico: solicitud.correo_electronico
         }));
-        console.log("deslmas", dataToSend);
-        fetch('http://127.0.0.1:8000/api/asignarAmbientes', {
+
+        setLoading(true); // Deshabilitar el botón y mostrar "..."
+
+        fetch(endpoint, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -193,6 +234,9 @@ const Asignar_ambiente = () => {
             })
             .catch(error => {
                 console.error('Error al asignar los ambientes:', error);
+            })
+            .finally(() => {
+                setLoading(false); // Rehabilitar el botón
             });
     };
 
@@ -205,7 +249,9 @@ const Asignar_ambiente = () => {
                 {mostrarBotonSugerencias && (
                     <button className="btn btn-editar mr-2" onClick={handleMostrarContiguos}>Sugerencias</button>
                 )}
-                <button className="btn btn-editar mr-2" onClick={rechazarsolicitud}>Rechazar</button>
+                <button className="btn btn-editar mr-2" onClick={rechazarsolicitud} disabled={loadingRechazar}>
+                    {loadingRechazar ? 'Enviando...' : 'Rechazar'}
+                </button>
             </div>
             <div className='atras'>
                 <button className="btn btn-editar mr-2" onClick={handleAtrasClick}>
@@ -245,7 +291,9 @@ const Asignar_ambiente = () => {
                                 <td>{dato.capacidad}</td>
                                 <td>{dato.numero_piso}</td>
                                 <td>
-                                    <button className="btn btn-editar mr-2" onClick={() => AsignarAula([dato])}>Asignar</button>
+                                    <button className="btn btn-editar mr-2" onClick={() => AsignarAula([dato])} disabled={loading}>
+                                        {loading ? 'Asignando...' : 'Asignar'}
+                                    </button>
                                 </td>
                             </tr>
                         ))}
@@ -283,7 +331,9 @@ const Asignar_ambiente = () => {
                                     ))}
                                 </tbody>
                             </table>
-                            <button className="btn btn-editar" onClick={enviarAmbientesAsignar}>Enviar Ambientes Asignar</button>
+                            <button className="btn btn-editar" onClick={enviarAmbientesAsignar} disabled={loading}>
+                                {loading ? 'Asignando...' : 'Enviar Ambientes Asignar'}
+                            </button>
                         </>
                     )}
                     {contiguous.length === 0 && (

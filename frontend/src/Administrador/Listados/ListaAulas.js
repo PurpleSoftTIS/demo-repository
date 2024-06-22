@@ -15,24 +15,34 @@ function ListaAulas() {
   const [ambienteToDelete, setAmbienteToDelete] = useState(null); 
   const [buscar, setBuscar] = useState("");
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(() => {
+    const savedPage = sessionStorage.getItem('listaAulasCurrentPage');
+    return savedPage ? parseInt(savedPage, 10) : 1;
+  });
+  const itemsPerPage = 10;
+
   const importaciones = () => {
-      setImportar(!importar);
-      
+    setImportar(!importar);
   };  
+
   const cancelarBorrar = () => {
     setAdvertencia(false); 
   };
+
   const confirmacionEliminacionTodo = () => {
     setAdvertencia(true); 
   };
+
   const borrar = (id_ambiente) => {
     setAmbienteToDelete(id_ambiente);
     setAdvertencia2(true); 
   }
+
   const cancelar = () => {
     setAmbienteToDelete(null);
     setAdvertencia2(false); 
   };
+
   const borrarTodos = () => {
     fetch(`http://127.0.0.1:8000/api/borrarTodo`, {
       method: 'DELETE',
@@ -40,14 +50,13 @@ function ListaAulas() {
         'Content-Type': 'application/json'
       },
     })
-    .then (response => {
+    .then(response => {
      if(response.ok){
-
       window.location.reload();
     }
-    
      });
   };
+
   const borrarAmbiente = () => {
     fetch(`http://127.0.0.1:8000/api/borrar/${ambienteToDelete}`, {  
       method: 'DELETE',
@@ -93,9 +102,7 @@ function ListaAulas() {
             navigate("/Admin/Mensaje/CargaMasiva");
           } else {
             navigate("/Admin/Mensaje/ErrorCargaMasiva");
-
             throw new Error('Error al enviar datos al servidor.');
-
           }
         } catch (error) {
           console.error('Error:', error);
@@ -105,6 +112,7 @@ function ListaAulas() {
       reader.readAsBinaryString(file);
     }
   };
+
   const handleArchivoDiasHorasSeleccionado = async (event) => {
     const files = event.target.files;
     if (files.length) {
@@ -129,11 +137,9 @@ function ListaAulas() {
           if (response.ok) {
             console.log('Datos enviados al servidor exitosamente.');
             navigate("/Admin/Mensaje/CargaMasiva");
-
           } else {
             navigate("/Admin/Mensaje/ErrorCargaMasiva");
             throw new Error('Error al enviar datos al servidor.');
-
           }
         } catch (error) {
           console.error('Error:', error);
@@ -143,6 +149,7 @@ function ListaAulas() {
       reader.readAsBinaryString(file);
     }
   };
+
   const handleEditar = (id_ambiente) => {
     fetch(`http://127.0.0.1:8000/api/ambiente/${id_ambiente}`, {
       method: 'PUT',
@@ -185,24 +192,73 @@ function ListaAulas() {
       });
   }, []);
 
+  useEffect(() => {
+    sessionStorage.setItem('listaAulasCurrentPage', currentPage);
+  }, [currentPage]);
+
   const buscardor = (e) => {
     setBuscar(e.target.value);
-    console.log(e.target.value);
+    setCurrentPage(1);  // Reset page to 1 when a search is performed
   }
+
   let resultado = [];
-  if(!buscar){
+  if (!buscar) {
     resultado = aulas;
-  }else{
+  } else {
     resultado = aulas.filter((aula) =>
-      aula.id_ambiente.toString().toLowerCase().includes(buscar.toLowerCase())||
-      aula.nombre_ambiente.toString().toLowerCase().includes(buscar.toLowerCase())||
-      aula.edificio.toString().toLowerCase().includes(buscar.toLowerCase())||
-      aula.tipo_ambiente.toString().toLowerCase().includes(buscar.toLowerCase())||
-      aula.numero_piso.toString().toLowerCase().includes(buscar.toLowerCase())||
-      aula.capacidad.toString().toLowerCase().includes(buscar.toLowerCase())    
+      aula.id_ambiente.toString().toLowerCase().includes(buscar.toLowerCase()) ||
+      aula.nombre_ambiente.toString().toLowerCase().includes(buscar.toLowerCase()) ||
+      aula.edificio.toString().toLowerCase().includes(buscar.toLowerCase()) ||
+      aula.tipo_ambiente.toString().toLowerCase().includes(buscar.toLowerCase()) ||
+      aula.numero_piso.toString().toLowerCase().includes(buscar.toLowerCase()) ||
+      aula.capacidad.toString().toLowerCase().includes(buscar.toLowerCase())
     );
-    
   }
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = resultado.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(resultado.length / itemsPerPage);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    const maxPagesToShow = 5;
+    let startPage, endPage;
+
+    if (totalPages <= maxPagesToShow) {
+      startPage = 1;
+      endPage = totalPages;
+    } else {
+      if (currentPage <= Math.ceil(maxPagesToShow / 2)) {
+        startPage = 1;
+        endPage = maxPagesToShow;
+      } else if (currentPage + Math.floor(maxPagesToShow / 2) >= totalPages) {
+        startPage = totalPages - maxPagesToShow + 1;
+        endPage = totalPages;
+      } else {
+        startPage = currentPage - Math.floor(maxPagesToShow / 2);
+        endPage = currentPage + Math.floor(maxPagesToShow / 2);
+      }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(
+        <button
+          key={i}
+          onClick={() => paginate(i)}
+          className={`page-button ${i === currentPage ? 'active' : ''}`}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    return pageNumbers;
+  };
+
   return (
     <div className="containerDoss" style={{ minHeight: '78.7vh' }}>
       <div className='encabezados'>
@@ -269,7 +325,7 @@ function ListaAulas() {
             </tr>
           </thead>
           <tbody>
-            {resultado.map((aula) => (
+            {currentItems.map((aula) => (
               <tr key={aula.id_ambiente} className="fila-lista">
                 <td>{aula.id_ambiente}</td>
                 <td>{aula.nombre_ambiente}</td>
@@ -325,6 +381,39 @@ function ListaAulas() {
           </div>
         )}
       </div>
+      {totalPages > 1 && (
+        <div className='pagination'>
+          <button
+            className="page-button"
+            onClick={() => paginate(1)}
+            disabled={currentPage === 1}
+          >
+            ««
+          </button>
+          <button
+            className="page-button"
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            «
+          </button>
+          {renderPageNumbers()}
+          <button
+            className="page-button"
+            onClick={() => paginate(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            »
+          </button>
+          <button
+            className="page-button"
+            onClick={() => paginate(totalPages)}
+            disabled={currentPage === totalPages}
+          >
+            »»
+          </button>
+        </div>
+      )}
     </div>
   );
 }

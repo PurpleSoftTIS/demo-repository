@@ -7,7 +7,6 @@ import Ico2 from "../../assets/IcoState.png";
 import { useNavigate } from "react-router-dom";
 import { read, utils } from 'xlsx';
 
-
 const ListaDocentes = () => {
   const navigate = useNavigate(); 
   const [docentes, setDocentes] = useState([]);
@@ -15,6 +14,11 @@ const ListaDocentes = () => {
   const [Advertencia2, setShowDeleteDocente] = useState(false);
   const [docenteToDelete, setDocenteToDelete] = useState([]);
   const [buscar, setBuscar] = useState("");
+  const [currentPage, setCurrentPage] = useState(() => {
+    const savedPage = sessionStorage.getItem('listaDocentesCurrentPage');
+    return savedPage ? parseInt(savedPage, 10) : 1;
+  });
+  const itemsPerPage = 10;
 
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/docentes', {
@@ -30,8 +34,12 @@ const ListaDocentes = () => {
       .catch(error => console.error('Error al obtener los datos:', error));
   }, []);
 
-  const eliminarDocenteYUsuario = (id_docente) => {
-    setDocenteToDelete({ id_docente});
+  useEffect(() => {
+    sessionStorage.setItem('listaDocentesCurrentPage', currentPage);
+  }, [currentPage]);
+
+  const eliminarDocenteYUsuario = (id_docente, id_usuario) => {
+    setDocenteToDelete({ id_docente, id_usuario });
     setShowDeleteDocente(true);
   };
 
@@ -134,24 +142,68 @@ const ListaDocentes = () => {
 
   const buscardor = (e) => {
     setBuscar(e.target.value);
-    console.log(e.target.value);
+    setCurrentPage(1);  // Reset page to 1 when a search is performed
   }
+
   let resultado = [];
   if(!buscar){
     resultado = docentes;
   }else{
     resultado = docentes.filter((docente) =>
-    docente.id_docente.toString().toLowerCase().includes(buscar.toLowerCase())||
-    docente.nombre.toString().toLowerCase().includes(buscar.toLowerCase())||
-    docente.apellido_paterno.toString().toLowerCase().includes(buscar.toLowerCase())||
-    docente.apellido_materno.toString().toLowerCase().includes(buscar.toLowerCase())||
-    docente.codigo_docente.toString().toLowerCase().includes(buscar.toLowerCase())||
-    docente.correo_electronico.toString().toLowerCase().includes(buscar.toLowerCase())||
-    docente.tipo_docente.toString().toLowerCase().includes(buscar.toLowerCase())    
-    
+      docente.id_docente.toString().toLowerCase().includes(buscar.toLowerCase())||
+      docente.nombre.toString().toLowerCase().includes(buscar.toLowerCase())||
+      docente.apellido_paterno.toString().toLowerCase().includes(buscar.toLowerCase())||
+      docente.apellido_materno.toString().toLowerCase().includes(buscar.toLowerCase())||
+      docente.codigo_docente.toString().toLowerCase().includes(buscar.toLowerCase())||
+      docente.correo_electronico.toString().toLowerCase().includes(buscar.toLowerCase())||
+      docente.tipo_docente.toString().toLowerCase().includes(buscar.toLowerCase())
     );
-    
   }
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = resultado.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(resultado.length / itemsPerPage);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    const maxPagesToShow = 5;
+    let startPage, endPage;
+
+    if (totalPages <= maxPagesToShow) {
+      startPage = 1;
+      endPage = totalPages;
+    } else {
+      if (currentPage <= Math.ceil(maxPagesToShow / 2)) {
+        startPage = 1;
+        endPage = maxPagesToShow;
+      } else if (currentPage + Math.floor(maxPagesToShow / 2) >= totalPages) {
+        startPage = totalPages - maxPagesToShow + 1;
+        endPage = totalPages;
+      } else {
+        startPage = currentPage - Math.floor(maxPagesToShow / 2);
+        endPage = currentPage + Math.floor(maxPagesToShow / 2);
+      }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(
+        <button
+          key={i}
+          onClick={() => paginate(i)}
+          className={`page-button ${i === currentPage ? 'active' : ''}`}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    return pageNumbers;
+  };
+
   return (    
     <div className="containerDoss" style={{ minHeight: '78.7vh' }}>
       <div className='encabezados'>
@@ -197,7 +249,7 @@ const ListaDocentes = () => {
             </tr>
           </thead>
           <tbody>
-            {resultado.map(docente => (
+            {currentItems.map(docente => (
               <tr key={docente.id_docente} className="fila-lista">
                 <td>{docente.id_docente}</td>
                 <td>{docente.nombre}</td>
@@ -250,6 +302,39 @@ const ListaDocentes = () => {
           </div>
         )}
       </div>
+      {totalPages > 1 && (
+        <div className='pagination'>
+          <button
+            className="page-button"
+            onClick={() => paginate(1)}
+            disabled={currentPage === 1}
+          >
+            ««
+          </button>
+          <button
+            className="page-button"
+            onClick={() => paginate(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            «
+          </button>
+          {renderPageNumbers()}
+          <button
+            className="page-button"
+            onClick={() => paginate(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            »
+          </button>
+          <button
+            className="page-button"
+            onClick={() => paginate(totalPages)}
+            disabled={currentPage === totalPages}
+          >
+            »»
+          </button>
+        </div>
+      )}
     </div>
   );
 }

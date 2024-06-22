@@ -6,11 +6,11 @@ import userLogo from '../assets/IcoAdmi.png';
 import { FaBars, FaBell, FaEdit, FaTrash, FaComments, FaArrowLeft, FaPaperPlane } from 'react-icons/fa';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { UserContext } from '../Context/UserContext';
+import { FormContext } from '../Context/FormContext';  // Asegúrate de importar el contexto correctamente
 
 const Navbar = () => {
   const baseURL = 'http://127.0.0.1:8000/api';
   const [isOpen, setIsOpen] = useState(false);
-  const [isTrue, setIsTrue] = useState(false);
   const [showDropdown2, setShowDropdown2] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [notifications, setNotifications] = useState([]);
@@ -18,6 +18,7 @@ const Navbar = () => {
   const dropdownRef2 = useRef(null);
   const dropdownRef = useRef(null);
   const { setUserC, setEmailC, setUrole, userC} = useContext(UserContext);
+  const { formDataC, fetchConfiguraciones } = useContext(FormContext);
   const [showSesion, setShowSesion] = useState(false);
   const sesionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(true);
@@ -41,6 +42,7 @@ const Navbar = () => {
   const messagesListRef = useRef(null);
   const bottomRef = useRef(null);
   const nombre = userC;
+  const [isSending, setIsSending] = useState(false); // Estado para el botón de envío de notificaciones
 
   const checkVisibility = () => {
     if (window.innerWidth > 990) {
@@ -51,7 +53,6 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setShowDropdown(false); 
@@ -152,6 +153,7 @@ const Navbar = () => {
   };
   const toggleNotification = () => {
     setShowNotification(!showNotification);
+    fetchConfiguraciones();
   };
 
   const toggleMensajes = () => {
@@ -168,6 +170,7 @@ const Navbar = () => {
     localStorage.removeItem('email');
     localStorage.removeItem('role');
     localStorage.removeItem('id');
+    sessionStorage.clear();
     setUserC(null);
     setEmailC(null);
     setUrole(null);
@@ -176,7 +179,15 @@ const Navbar = () => {
 
   const handleNotificationSubmit = (e) => {
     e.preventDefault();
-    fetch('http://127.0.0.1:8000/api/notificationsMail', {
+
+    const mensajesMasivo = formDataC.find(conf => conf.configuracion === 'Mensajes masivo');
+    const endpoint = mensajesMasivo && mensajesMasivo.valor === '1' 
+      ? `${baseURL}/notificationsMail`
+      : `${baseURL}/notifications`;
+
+    setIsSending(true); // Establecer el estado de envío a verdadero
+
+    fetch(endpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -187,6 +198,11 @@ const Navbar = () => {
       .then(data => {
         setNotifications([data, ...notifications]);
         setNotificationInput('');
+        setIsSending(false); // Establecer el estado de envío a falso
+      })
+      .catch(error => {
+        console.error('Error al enviar la notificación:', error);
+        setIsSending(false); // Establecer el estado de envío a falso en caso de error
       });
   };
 
@@ -346,7 +362,9 @@ const Navbar = () => {
                     value={notificationInput} 
                     onChange={(e) => setNotificationInput(e.target.value)} 
                   />
-                  <button type="submit">Enviar</button>
+                  <button type="submit" disabled={isSending} style={{ cursor: isSending ? 'default' : 'pointer', backgroundColor: isSending ? '#010a26': '' }}>
+                    {isSending ? 'Enviando...' : 'Enviar'}
+                  </button>
                 </form>
               </div>
             )}
