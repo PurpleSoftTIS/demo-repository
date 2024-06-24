@@ -299,7 +299,7 @@ body {
   color: #1f2937;
   font-family: Inter;
 }
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 470px) {
   .input15,
   .input16 {
     align-self: stretch;
@@ -391,7 +391,7 @@ body {
   text-transform: none;
   font-size: 15px; 
 }
-@media (min-width: 451px) {
+@media (min-width: 471px) {
   .backone-button {
       right: 35px;
        /* Ajusta el valor para pantallas normales */
@@ -401,7 +401,7 @@ body {
 }
 
 /* Estilos para pantalla de celular */
-@media (max-width: 450px) {
+@media (max-width: 470px) {
   .backone-button {
       right: 25px;
   }.backone-button::before {

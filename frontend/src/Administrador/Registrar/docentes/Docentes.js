@@ -8,7 +8,7 @@ const Docentes = () => {
   const [apellidoMaterno, setApellidoMaterno] = useState("");
   const [correo, setCorreo] = useState("");
   const [codigoDocente, setCodigoDocente] = useState("");
-  const [tipo, setTipo] = useState("De Base"); 
+  const [tipo, setTipo] = useState("De Base");
   const [codigoDocenteDisabled, setCodigoDocenteDisabled] = useState(false);
 
   const [errorNombres, setErrorNombres] = useState("");
@@ -17,12 +17,12 @@ const Docentes = () => {
   const [errorInconpleto, setErrorIncompleto] = useState("");
   const [errorCodigo, setErrorCodigo] = useState("");
   const [errorCorreo, setErrorCorreo] = useState("");
+  const [loading, setLoading] = useState(false); // Estado para manejar el estado de carga
   const navigate = useNavigate();
 
   const handleRegistroDocente = (e) => {
-    
     e.preventDefault();
-    // Obtener los valores de los campos del formulario
+    
     const nombres = document.querySelector(".input11").value.trim();
     const apellidoPaterno = document.querySelector(".input122").value.trim();
     const apellidoMaterno = document.querySelector(".input133").value.trim();
@@ -41,15 +41,16 @@ const Docentes = () => {
 
     const tipoNumero = /^\d+$/;
     const caracteresEspeciales = /[!#$%^&*()_+\-{};':"|,<>?]+/;
-   
 
     if (tipoNumero.test(nombres) && (caracteresEspeciales.test(nombres))) {
       setErrorNombres("Por favor, ingresa solo caracteres alfabéticos y espacios en el nombre");
       return;
     } 
     
-    
-    if (nombres.length > 30) {
+    if (nombres.length < 3) {
+      setErrorNombres("❌ Su nombre debe tener al menos 3 caracteres");
+      return;
+    } else if (nombres.length > 30) {
       setErrorNombres("❌ Su nombre no debe exceder los 30 caracteres");
       return;
     } else {
@@ -89,7 +90,8 @@ const Docentes = () => {
       setErrorCodigo("");
     }
 
-    if (correo.length > 30) {
+    const correoPattern = /^[^\s@]+@[^\s@]+\.[a-zA-Z]+$/;
+    if (correo.length > 50) {
         setErrorCorreo("Su correo no debe exceder los 30 caracteres");
         return;
     }else{
@@ -104,6 +106,9 @@ const Docentes = () => {
     if (!correo.includes('@')) {
         setErrorCorreo("Su correo debe contener @");
         return;
+    } else if (!correoPattern.test(correo)) {
+      setErrorCorreo("Su correo debe terminar con un punto seguido de letras (por ejemplo, .com, .net, .edu)");
+      return;
     }else{
         setErrorCorreo("");
     }
@@ -119,6 +124,8 @@ const Docentes = () => {
 
     console.log("Datos a enviar:", datosDocente);
 
+    setLoading(true); // Iniciar la carga
+
     fetch("http://127.0.0.1:8000/api/docentesRegistrar", {
       method: "POST",
       headers: {
@@ -127,27 +134,24 @@ const Docentes = () => {
       body: JSON.stringify(datosDocente)
     })
       .then(response => {
-        console.log("Respuesta del servidor:", response); // Imprimir la respuesta del servidor
+        console.log("Respuesta del servidor:", response);
         return response.json();
       })
       .then(data => {
-        // Manejar la respuesta del servidor
         console.log("Registro exitoso:", data);
         setNombres("");
         setApellidoPaterno("");
         setApellidoMaterno("");
         setCorreo("");
         setCodigoDocente("");
-
-          navigate("/Admin/Mensaje/RegistroExitoso");
-        // Aquí puedes mostrar un mensaje de éxito o redirigir a otra página
+        setLoading(false); // Detener la carga
+        navigate("/Admin/Mensaje/RegistroExitoso");
       })
       .catch(error => {
         console.error("Error al registrar el ambiente:", error);
-        navigate("/Admin/Mensaje/RegistroError")
-        // Aquí puedes mostrar un mensaje de error al usuario
+        setLoading(false); // Detener la carga en caso de error
+        navigate("/Admin/Mensaje/RegistroError");
       });
-
   };
 
   useEffect(() => {
@@ -179,7 +183,7 @@ const Docentes = () => {
       }
     };
   }, []);
-  
+
   const handleTipoChange = (e) => {
     setTipo(e.target.value);
     if (e.target.value === "Invitado") {
@@ -191,11 +195,10 @@ const Docentes = () => {
   };
 
   return (
-    <div className="contact-6" style={{ height: '94.4vh' }}>
-     
+    <div className="contact-6" style={{ height: '810px' }}>
       <div className="line" />
       <form className="billing-info" data-animate-on-scroll>
-      <button className="backon-button" type="button" onClick={() => navigate(-1)}></button>
+        <button className="backon-button" type="button" onClick={() => navigate(-1)}></button>
         <div className="checkout-wrapper">
           <div className="checkout">Registro de Docentes</div>
         </div>
@@ -226,7 +229,6 @@ const Docentes = () => {
               value={correo} onChange={(e) => setCorreo(e.target.value)}
             />
             {errorCorreo && <p className="error">{errorCorreo}</p>}
-
           </div>
         </div>
         <div className="input-container">
@@ -258,8 +260,15 @@ const Docentes = () => {
         {errorInconpleto && <p className="error">{errorInconpleto}</p>}
       </form>
       <div className="checkout1" data-animate-on-scroll>
-        <button className="button22" onClick={handleRegistroDocente}>
-        <div className="button-cta">Registrar Docente</div>
+        <button
+          className="button22"
+          onClick={handleRegistroDocente}
+          disabled={loading} // Deshabilitar botón durante la carga
+          style={{ cursor: loading ? 'default' : 'pointer' }} // Cambiar el cursor según el estado de carga
+        >
+          <div className="button-cta">
+            {loading ? "Registrando..." : "Registrar Docente"}
+          </div>
         </button>
       </div>
     </div>

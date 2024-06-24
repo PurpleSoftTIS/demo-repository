@@ -15,7 +15,7 @@ const HomeUno = () => {
   }, []);
 
   return (
-    <div className="container mt-5" style={{ height: '70.9vh' }}>
+    <div className="container mt-5" style={{ minHeight: '74.8vh' }}>
       <div className="row">
         <div className="col-md-6 d-flex flex-column align-items-center justify-content-center">
           <div className="text-center">

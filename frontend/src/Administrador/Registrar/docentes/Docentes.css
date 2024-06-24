@@ -230,11 +230,10 @@
   gap: 9px;
 }
 .billing-info {
-  width: 706px;
+  min-width: 706px;
   border-radius: 12px 12px 0 0;
   background-color: #fff;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) inset;
-  overflow: hidden;
   padding: 32px;
   box-sizing: border-box;
   gap: 24px;
@@ -342,7 +341,7 @@
     justify-content: center;
   }
 }
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 470px) {
   .filter-02,
   .frame-container {
     flex-direction: column;
@@ -368,6 +367,7 @@
     padding-top: 32px;
     padding-right: 20px;
     box-sizing: border-box;
+    min-width: auto;
   }
   .billing-info,
   .checkout1 {

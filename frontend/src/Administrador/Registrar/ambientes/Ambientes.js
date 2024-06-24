@@ -152,7 +152,7 @@ const Ambientes = () => {
       <form className="billing-info1" data-animate-on-scroll>
         <div className="checkout-container">
         <button className="backone-button" type="button" onClick={() => navigate(-1)}></button>
-          <h3 className="checkout2">Registro de Ambientes</h3>
+          <h3 className="checkout2">Registro Ambientes</h3>
         </div>
         <div className="frame-div">
           <div className="input111">

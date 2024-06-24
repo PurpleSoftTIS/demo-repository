@@ -25,7 +25,7 @@ const homePage = () => {
     <footer className='mainfooter'>
       <div className='footer'>
         <div className='description'>
-          <p className='text'>
+          <p className='textfott'>
             © 2024 PupleSoft Todos los Derechos reservados
           </p>            
         </div>

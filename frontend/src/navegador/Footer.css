@@ -6,7 +6,7 @@
     cursor: pointer;    
 }
 
-.text{
+.textfott{
     color: white;
     font-size: 18px;
     font-family: inherit;
@@ -18,7 +18,6 @@
     background-color: #050259;
     height: 70px;
     margin-top: 50px;  
-    margin-bottom: 20px;  
 }
 .footer{    
     display: flex;
@@ -44,20 +43,22 @@
     flex: 1; 
 }
 
-@media screen and (max-width: 768px) {
-    .footer {
-      flex-direction: column; 
-      align-items: center;
+@media screen and (max-width: 1068px) {
+    .mainfooter{
+      max-width: 100vw;
+      overflow: hidden;
     }
   }
   
   @media screen and (max-width: 480px) {
     .iconosTec {
-      justify-content: space-around; 
+      display: none; 
     }
     .HomeReload{
-        justify-content: space-around; 
-
+      margin-left: 28vw;
+    }
+    .textfott{
+      display: none;
     }
   }
   

@@ -235,7 +235,7 @@
   .input24.error-border {
     border-color: red;
   }
-  @media screen and (max-width: 450px) {
+  @media screen and (max-width: 470px) {
     .input24 {
       align-self: stretch;
       width: auto;
@@ -274,7 +274,7 @@
     z-index: 9999;
 }
 
-@media (min-width: 451px) {
+@media (min-width: 471px) {
   .backon-button {
       right: 35px;
        /* Ajusta el valor para pantallas normales */
@@ -284,7 +284,7 @@
 }
 
 /* Estilos para pantalla de celular */
-@media (max-width: 450px) {
+@media (max-width: 470px) {
   .backon-button {
       right: 25px;
   }.backon-button::before {
